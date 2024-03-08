@@ -11,7 +11,11 @@ import java.util.UUID;
 
 @Entity
 @Data
+<<<<<<< HEAD
 @Table(name="patient", schema = "clinlims")
+=======
+@Table(name="patient")
+>>>>>>> 370ee252d22176f73344c1d4099d2d0e7eff3b74
 public class Patient {
 
     @Id

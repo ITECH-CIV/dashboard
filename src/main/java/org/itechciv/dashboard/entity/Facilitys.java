@@ -9,7 +9,11 @@ import java.util.List;
 
 @Entity
 @Data
+<<<<<<< HEAD
 @Table(name="facilitys", schema = "clinlims")
+=======
+@Table(name="facilitys")
+>>>>>>> 370ee252d22176f73344c1d4099d2d0e7eff3b74
 public class Facilitys {
 
     @Id
