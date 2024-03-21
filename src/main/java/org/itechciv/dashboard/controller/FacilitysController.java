@@ -2,6 +2,7 @@ package org.itechciv.dashboard.controller;
 
 import java.util.Optional;
 import org.itechciv.dashboard.model.Facilitys;
+import org.itechciv.dashboard.model.Test;
 import org.itechciv.dashboard.response.Response;
 import org.itechciv.dashboard.response.Response.ResponseStatusEnum;
 import org.itechciv.dashboard.service.FacilitysService;
@@ -74,6 +75,37 @@ public class FacilitysController {
 		 if(facilitys.isPresent()) {
 			
 			 res =  new  Response(ResponseStatusEnum.SUCCESS,facilitys,"Enregistrement trouvé", true);
+			 result =new ResponseEntity<>(res, HttpStatus.OK);
+			
+		} else { 
+			res =  new  Response(ResponseStatusEnum.ERROR,null,"Facilitys introuvable", false); 
+	        result =new ResponseEntity<>(res,HttpStatus.NOT_FOUND);
+		}
+		
+		} catch(Exception ex) {
+			
+			res =  new  Response(ResponseStatusEnum.ERROR,null,ex.getMessage(), false);
+			result = new ResponseEntity<>(res,HttpStatus.NOT_FOUND);
+		}
+		return result;
+	}
+	
+	@RequestMapping(method = RequestMethod.GET, value="facilitys/getByCode")
+	@ResponseBody
+	public ResponseEntity<Response> getFacilitysByCode(String code) { 
+		
+		Response res = new Response(); 
+		
+		Facilitys f;
+		ResponseEntity<Response> result;
+		
+		try {
+		
+			f= facilitysService.getByCode(code); 
+		
+		 if(f != null) {
+			
+			 res =  new  Response(ResponseStatusEnum.SUCCESS,f,"Facilitys trouvé", true);
 			 result =new ResponseEntity<>(res, HttpStatus.OK);
 			
 		} else { 

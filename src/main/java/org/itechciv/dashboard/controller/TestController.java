@@ -3,6 +3,7 @@ package org.itechciv.dashboard.controller;
 import java.util.Optional;
 
 import org.itechciv.dashboard.model.Region;
+import org.itechciv.dashboard.model.SampleType;
 import org.itechciv.dashboard.model.Test;
 import org.itechciv.dashboard.response.Response;
 import org.itechciv.dashboard.response.Response.ResponseStatusEnum;
@@ -118,6 +119,35 @@ public class TestController {
 		return result;
 	}
 	
-	
 
+	@RequestMapping(method = RequestMethod.GET, value="test/getByName")
+	@ResponseBody
+	public ResponseEntity<Response> getSampleTypeByName(String name) { 
+		
+		Response res = new Response(); 
+		
+		Test test;
+		ResponseEntity<Response> result;
+		
+		try {
+		
+			test= testService.getByName(name); 
+		
+		 if(test != null) {
+			
+			 res =  new  Response(ResponseStatusEnum.SUCCESS,test,"Enregistrement trouvé", true);
+			 result =new ResponseEntity<>(res, HttpStatus.OK);
+			
+		} else { 
+			res =  new  Response(ResponseStatusEnum.ERROR,null,"Test introuvable", false); 
+	        result =new ResponseEntity<>(res,HttpStatus.NOT_FOUND);
+		}
+		
+		} catch(Exception ex) {
+			
+			res =  new  Response(ResponseStatusEnum.ERROR,null,ex.getMessage(), false);
+			result = new ResponseEntity<>(res,HttpStatus.NOT_FOUND);
+		}
+		return result;
+	}
 }

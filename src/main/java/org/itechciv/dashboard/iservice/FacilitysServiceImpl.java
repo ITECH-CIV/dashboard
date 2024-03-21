@@ -9,8 +9,10 @@ import org.apache.poi.ss.usermodel.Row;
 import org.apache.poi.xssf.usermodel.XSSFSheet;
 import org.apache.poi.xssf.usermodel.XSSFWorkbook;
 import org.itechciv.dashboard.model.Facilitys;
+import org.itechciv.dashboard.model.Test;
 import org.itechciv.dashboard.repository.FacilitysRepository;
 import org.itechciv.dashboard.response.Response;
+import org.itechciv.dashboard.response.Response.ResponseStatusEnum;
 import org.itechciv.dashboard.service.FacilitysService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -35,7 +37,6 @@ public class FacilitysServiceImpl extends GenericServiceImpl<Facilitys, Long> im
 				
 				List<Facilitys> listFacilitys = new ArrayList<Facilitys>();
 				Facilitys facilitys;  
-				
 				
 				try 
 				{
@@ -62,41 +63,46 @@ public class FacilitysServiceImpl extends GenericServiceImpl<Facilitys, Long> im
 			                
 			                if (cell.getColumnIndex() == 0) {
 			                	
-			                	//String chaine1 = (cell.getStringCellValue() != null) ? traitement.wordCasse(cell.getStringCellValue()) :"";
-			                	
-			                	//String chaine="" ;
-			                	  //String chaine = traitement.formatageChaine(chaine1);
-									/*
-									 * if( chaine!=null) {
-									 * 
-									 * region.setNomRegion(chaine);
-									 * 
-									 * }
-									 */
-			                	
-			               
+			                
 			                } 
 			                   
 		                }
-			            
-						/*
-						 * region = regionRepo.save(region);
-						 * 
-						 * listRegion.add(region);
-						 */
-			            
+			              
 					}
 					
 					fis.close();
 
-					//res = new Response(ResponseStatusEnum.SUCCESS, listRegion, "Region enregistré avec succès", true); 
+					res = new Response(ResponseStatusEnum.SUCCESS, listFacilitys, "Facilitys enregistré avec succès", true); 
 				} catch(Exception ex) {
-					//res =  new  Response(ResponseStatusEnum.INTERNAL_ERROR,null,ex.getMessage(), false);
+					res =  new  Response(ResponseStatusEnum.INTERNAL_ERROR,null,ex.getMessage(), false);
 				}
 				return res;
 				
-			} 
-
+			}
 	
 
+	@Override
+	public Facilitys getByCode(String code) {
+		
+		Facilitys f = new Facilitys();  
+		
+		try 
+		
+		{ 
+			f = facilitysRepo.findFacilitysByCode(code);
+			
+			if( f!=null)
+			{ 
+				return f;
+			} 
+			else 
+			{ 
+				return null;
+			}
+		}
+		catch(Exception ex) { 
+			ex.printStackTrace();
+			return null;
+		}	
+	}
 }
