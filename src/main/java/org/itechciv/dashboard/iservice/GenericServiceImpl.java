@@ -11,11 +11,12 @@ import org.itechciv.dashboard.service.GenericService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.jpa.repository.JpaRepository;
 
+
 public class GenericServiceImpl<T, ID extends Serializable> implements GenericService<T, ID> {
 	
-	@Autowired
-	private JpaRepository<T,ID > repository; 
-    
+	  @Autowired
+	  private JpaRepository<T,ID> repository; 
+	
 	@Override
 	public 	Response create(T e) { 
 		

@@ -1,16 +1,15 @@
 package org.itechciv.dashboard.service;
 
+import java.io.Serializable;
 import java.util.Optional;
 
 import org.itechciv.dashboard.response.Response;
 
-public interface GenericService<T, ID> {
+public interface GenericService<T, ID extends Serializable> {
 
 	Response create(T e);
 
 	Response getAll();
-
-	//T getOne(ID id);
 	
 	Optional<T> getOne(ID id);
 

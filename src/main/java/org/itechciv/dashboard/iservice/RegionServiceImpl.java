@@ -1,6 +1,5 @@
 package org.itechciv.dashboard.iservice;
 
-import java.util.UUID;
 
 import org.itechciv.dashboard.model.Region;
 import org.itechciv.dashboard.service.RegionService;
@@ -9,6 +8,6 @@ import org.springframework.transaction.annotation.Transactional;
 
 @Service
 @Transactional
-public class RegionServiceImpl extends GenericServiceImpl<Region, UUID> implements RegionService {
+public class RegionServiceImpl extends GenericServiceImpl<Region, Long> implements RegionService {
 
 }

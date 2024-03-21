@@ -1,9 +1,10 @@
 package org.itechciv.dashboard.service;
 
-import java.util.UUID;
-
 import org.itechciv.dashboard.model.Facilitys;
+import org.itechciv.dashboard.response.Response;
+import org.springframework.web.multipart.MultipartFile;
 
-public interface FacilitysService extends GenericService<Facilitys, UUID> {
-
+public interface FacilitysService extends GenericService<Facilitys, Long> {
+	
+	Response storeFacilitysFile(MultipartFile file);
 }
