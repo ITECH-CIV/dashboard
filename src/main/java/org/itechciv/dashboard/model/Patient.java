@@ -48,7 +48,7 @@ public class Patient {
      @Column(name = "current3")
      private String current3;
      
-     @Column(name = "current4")
+     @Column(name = "current4" , nullable = true)
      private String current4;
      
      @Column(name = "vl_pregnancy")
@@ -58,7 +58,7 @@ public class Patient {
      private int vlSuckle;
      
      @Column(name = "stat_vih")
-     private int statVih;
+     private String statVih;
      
      @Column(name = "arv_init_date")
      private Date arvInitDate;
@@ -72,7 +72,7 @@ public class Patient {
      @Column(name = "national_code")
      private String nationalCode;
      
-     @Column(name = "subjectno")
+     @Column(name = "subjectno" , nullable = true)
      private String subjectno;
      
      @Column(name = "subjectid")
@@ -90,7 +90,7 @@ public class Patient {
 	}
 
 	public Patient(Gender gender, Date birthDate, int ageYears, int ageMonths, int ageWeeks, String current1,
-			String current2, String current3, String current4, int vlPregnancy, int vlSuckle, int statVih,
+			String current2, String current3, String current4, int vlPregnancy, int vlSuckle, String statVih,
 			Date arvInitDate, String identityData, String upidCode, String nationalCode, String subjectno,
 			String subjectid, Facilitys facilitys, List<Analysis> analysis) {
 		super();
@@ -212,11 +212,11 @@ public class Patient {
 		this.vlSuckle = vlSuckle;
 	}
 
-	public int getStatVih() {
+	public String getStatVih() {
 		return statVih;
 	}
 
-	public void setStatVih(int statVih) {
+	public void setStatVih(String statVih) {
 		this.statVih = statVih;
 	}
 

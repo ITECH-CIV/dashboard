@@ -1,6 +1,7 @@
 package org.itechciv.dashboard.iservice;
 
 import java.io.FileInputStream;
+import java.time.LocalDateTime;
 import java.util.Iterator;
 import java.util.Objects;
 
@@ -15,10 +16,13 @@ import org.itechciv.dashboard.model.Patient;
 import org.itechciv.dashboard.model.Sample;
 import org.itechciv.dashboard.model.SampleType;
 import org.itechciv.dashboard.model.Test;
+import org.itechciv.dashboard.repository.AnalysisRepository;
+import org.itechciv.dashboard.repository.AnalysisResultRepository;
 import org.itechciv.dashboard.repository.FacilitysRepository;
+import org.itechciv.dashboard.repository.PatientRepository;
+import org.itechciv.dashboard.repository.SampleRepository;
+import org.itechciv.dashboard.repository.SampleTypeRepository;
 import org.itechciv.dashboard.repository.TestRepository;
-import org.itechciv.dashboard.response.Response;
-import org.itechciv.dashboard.response.Response.ResponseStatusEnum;
 import org.itechciv.dashboard.service.UploadService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -36,10 +40,25 @@ public class UploadServiceImpl implements UploadService {
 	@Autowired
 	private FacilitysRepository facilitysRepository;
 	
+	@Autowired
+	private PatientRepository  patientRepository;
+	
+	@Autowired
+	private AnalysisRepository  analysisRepository;
+	
+	@Autowired
+	private SampleTypeRepository  sampleTypeRepository;
+	
+	@Autowired
+	private SampleRepository  sampleRepository; 
+	
+	@Autowired
+	private AnalysisResultRepository  analysisResultRepository;
+	
 	@Override
-	public Response storeFile(MultipartFile file) {
+	public String storeFile(MultipartFile file) {
 		
-		Response res = new Response();
+		String res = null;
 		Test t = null;
 		Facilitys f = null;
 		Patient p = null;
@@ -51,68 +70,144 @@ public class UploadServiceImpl implements UploadService {
 		
 		try {
 			
-			FileInputStream fis = new FileInputStream(new File(file.getOriginalFilename()));			
-			XSSFWorkbook  workbook = new XSSFWorkbook(fis);
+			//FileInputStream fis = new FileInputStream(new File(file.getOriginalFilename()));
+			XSSFWorkbook workbook = new XSSFWorkbook(file.getInputStream());
+
+			//XSSFWorkbook  workbook = new XSSFWorkbook(fis);
 			XSSFSheet spreadsheet  = workbook.getSheetAt(0);
 			
 			//XSSFWorkbook workbook = new XSSFWorkbook(excel.getInputStream());
             //XSSFSheet sheet = workbook.getSheetAt(0);
             var updatedRows=0;
-            for(int i=8; i<spreadsheet.getPhysicalNumberOfRows();i++) {
+            for(int i=1; i<spreadsheet.getPhysicalNumberOfRows();i++) {
                 XSSFRow row = spreadsheet.getRow(i);
                  t = new Test();
                  f = new Facilitys();
                  
-                if(row.getCell(3)!=null && !Objects.equals(row.getCell(3).toString(), "")) {
+                if(row.getCell(3)!= null) {
                 	t = testRepository.findTestByName(row.getCell(3).getStringCellValue());
-                	
                 	if(t==null) {
-                		t.setStudy(row.getCell(3).getStringCellValue());;
-                		testRepository.save(t);
+                		Test inTest = new Test();
+                		inTest.setStudy(row.getCell(3).getStringCellValue());;
+                		t = testRepository.save(inTest);
                 	}
       
-                }else if(row.getCell(7)!=null && !Objects.equals(row.getCell(7).toString(), "")) {
-                	f = facilitysRepository.findFacilitysByCode(row.getCell(3).getStringCellValue());
-                	
+                }
+
+                if(row.getCell(7) !=  null) {
+                	f = facilitysRepository.findFacilitysByCode((int)row.getCell(7).getNumericCellValue());
+
                 	if(f==null) {
-                		f.setCodeSite(row.getCell(7).getStringCellValue());
-                		f.setNameSite(row.getCell(8).getStringCellValue());
-                		f.setCodeSiteDatim(row.getCell(9).getStringCellValue());
-                		f.setCodeSite(row.getCell(10).getStringCellValue());
+                		Facilitys inFacilitys = new Facilitys();
+                		inFacilitys.setCodeSite((int)row.getCell(7).getNumericCellValue());
+                		inFacilitys.setNameSite(row.getCell(8).getStringCellValue());
+                		inFacilitys.setCodeSiteDatim(row.getCell(9).getStringCellValue());
+                		inFacilitys.setNameSiteDatim(row.getCell(10).getStringCellValue());
                 		
-                		facilitysRepository.save(f);
+                		f = facilitysRepository.save(inFacilitys);
                 	}
-     	
-                }else if(row.getCell(2)!=null && !Objects.equals(row.getCell(2).toString(), "")
-                		 && row.getCell(4)!=null && !Objects.equals(row.getCell(4).toString(), "",
-                		 &&	row.getCell(2)!=null && !Objects.equals(row.getCell(2).toString(), "",
-                		 && row.getCell(2)!=null && !Objects.equals(row.getCell(2).toString(), "",
-                		 && row.getCell(2)!=null && !Objects.equals(row.getCell(2).toString(), "",
-                		 && row.getCell(2)!=null && !Objects.equals(row.getCell(2).toString(), "",
-                		 && row.getCell(2)!=null && !Objects.equals(row.getCell(2).toString(), "",
-                		 &&  row.getCell(2)!=null && !Objects.equals(row.getCell(2).toString(), "",
-                		 && row.getCell(2)!=null && !Objects.equals(row.getCell(2).toString(), "",
-                		 && row.getCell(2)!=null && !Objects.equals(row.getCell(2).toString(), "",
-                		 && row.getCell(2)!=null && !Objects.equals(row.getCell(2).toString(), "",
-                		 && row.getCell(2)!=null && !Objects.equals(row.getCell(2).toString(), "",
-                		 && row.getCell(2)!=null && !Objects.equals(row.getCell(2).toString(), "",
-                		 && row.getCell(2)!=null && !Objects.equals(row.getCell(2).toString(), "",
-                		 && row.getCell(2)!=null && !Objects.equals(row.getCell(2).toString(), "",
-                		 && row.getCell(2)!=null && !Objects.equals(row.getCell(2).toString(), "",
-                		 		 
-                				 
-                		)
+              }
+                
+                if(row.getCell(4)!=null && !Objects.equals(row.getCell(4).toString(), "")){
+                	p = patientRepository.findPatientByCode(row.getCell(4).getStringCellValue());
+
+                	
+                	if(p==null) {
+                		 Patient inPatient = new Patient();
+                		 //inPatient.setSubjectno(row.getCell(2).getStringCellValue());
+                		 inPatient.setSubjectid(row.getCell(4).getStringCellValue());
+            			 //p.setGender(row.getCell(11).getStringCellValue());
+            			 //p.setBirthDate(row.getCell(12).getStringCellValue());
+                		 inPatient.setAgeYears((int)row.getCell(13).getNumericCellValue());
+                		 inPatient.setAgeMonths((int)row.getCell(14).getNumericCellValue());
+                		 inPatient.setAgeWeeks((int)row.getCell(15).getNumericCellValue());
+                		 inPatient.setStatVih(row.getCell(23).getStringCellValue());
+            			 //p.setArvInitDate(row.getCell(26).getStringCellValue());
+                		 inPatient.setCurrent1(row.getCell(28).getStringCellValue());
+                		 inPatient.setCurrent2(row.getCell(29).getStringCellValue());
+                		 inPatient.setCurrent3(row.getCell(30).getStringCellValue());
+                		 //inPatient.setCurrent4(row.getCell(31).getStringCellValue());
+            			 //p.setVlPregnancy(row.getCell(42).getStringCellValue());
+            			 //p.setVlSuckle(row.getCell(43).getStringCellValue());
+                		 inPatient.setFacilitys(f);
+            			
+                		 p = patientRepository.save(inPatient);
+                	}
+                  			 
+               }
+                
+               
+                if(row.getCell(20)!=null){
+                	
+                		 a = new Analysis();
+            			 //a.setStartedDate(LocalDateTime.parse(row.getCell(20).getStringCellValue()));
+            			 //a.setCompletedDate(LocalDateTime.parse(row.getCell(21).getStringCellValue()));
+            			 //a.setReleasedDate(LocalDateTime.parse(row.getCell(22).getStringCellValue()));
+            			 a.setNamemed(row.getCell(24).getStringCellValue());
+            			 a.setNameprelev(row.getCell(25).getStringCellValue());
+            			 a.setVlreason(row.getCell(33).getStringCellValue());
+            			 //a.setReasonother(row.getCell(34).getStringCellValue());
+            			 a.setPatient(p);
+            			 a.setTest(t);
+            			 
+                		a = analysisRepository.save(a);
+                	}
+                  			 
+                if(row.getCell(18)!=null) {
+                	sp = sampleTypeRepository.findSampleTypeByName(row.getCell(18).getStringCellValue());
+                	
+                	if(sp==null) {
+                		SampleType inSampleType = new SampleType();
+                		inSampleType.setLabel(row.getCell(18).getStringCellValue());;
+                		sp = sampleTypeRepository.save(inSampleType);
+                	}
+      
+                } 
+                
+                
+                if(row.getCell(0)!=null){
+                	s = sampleRepository.findSampleByCode(row.getCell(0).getStringCellValue());
+
+                	if(s==null) {
+                		 s = new Sample();
+            			 s.setLabno(row.getCell(0).getStringCellValue());
+            			 s.setSampleStatus(row.getCell(1).getStringCellValue());
+            			 //s.setDrcpt(LocalDateTime.parse(row.getCell(5).getStringCellValue()));
+            			 //s.setDintv(LocalDateTime.parse(row.getCell(6).getStringCellValue()));
+            			 s.setSampleType(sp);
+            			 s.setAnalysis(a);
+            			 
+            			
+                		s =sampleRepository.save(s);
+                	}
+                  			 
+               }
+                
+                
+             
+                if(row.getCell(7)!=null && !Objects.equals(row.getCell(7).toString(), "")){
+
+                		 ar = new AnalysisResult();
+                		 ar.setViralLoad(Integer.parseInt(row.getCell(4).getStringCellValue()));
+                		 ar.setViralLoadLog(Double.parseDouble(row.getCell(2).getStringCellValue()));
+                		 ar.setAnalysis(a);
+            			
+                		
+                		 ar = analysisResultRepository.save(ar);
+                	}
+                  			 
+               
+                workbook.close();
             }
-			
-			
-			
 
-
-
+			res = "Fichier enregistré avec succès";
 			
+           
 		}catch(Exception ex) {
 			
-			res =  new  Response(ResponseStatusEnum.INTERNAL_ERROR,null,ex.getMessage(), false);
+			ex.printStackTrace();
+			return null;
+			
 		}
 		return res;
 

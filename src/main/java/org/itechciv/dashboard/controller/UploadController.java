@@ -30,14 +30,17 @@ public class UploadController {
 	  Response rep = new Response();
 	
 	  ResponseEntity<Response> result;
+	  
+	  String req = null;
 	
 	 
 	 try
 	  
-	 { 
-		 rep =uploadService.storeFile(file);
+	 {
+		 System.out.println("MESSAGE::::::::::::  " + file.getOriginalFilename());
+		 req = uploadService.storeFile(file);
 	 
-	 if(rep!=null) {
+	 if(req!=null) {
 	 
 	  result = new ResponseEntity<>(rep, HttpStatus.OK);
 	 

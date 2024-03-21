@@ -8,5 +8,5 @@ public interface FacilitysService extends GenericService<Facilitys, Long> {
 	
 	Response storeFacilitysFile(MultipartFile file);
 
-	Facilitys getByCode(String code);
+	Facilitys getByCode(int code);
 }

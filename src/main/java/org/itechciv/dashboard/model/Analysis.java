@@ -36,7 +36,7 @@ public class Analysis {
 	  @Column(name="nameprelev")
 	  private String nameprelev;
 	  
-	  @Column(name="vl_reason")
+	  @Column(name="vl_reason", nullable = true)
 	  private String vlreason;
 	  
 	  @Column(name="reason_other")

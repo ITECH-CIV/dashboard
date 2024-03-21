@@ -28,7 +28,7 @@ public class Facilitys {
 	  private String name;
 	  
 	  @Column(name = "code_site")
-	  private String codeSite;
+	  private int codeSite;
 	  
 	  @Column(name = "name_site")
 	  private String nameSite;
@@ -40,7 +40,7 @@ public class Facilitys {
 	  private String nameSiteDatim;
 	  
 	  @ManyToOne
-	  @JoinColumn(name ="districtId", nullable = false)
+	  @JoinColumn(name ="districtId", nullable = true)
 	  private District district; 
 	  
 	  @OneToMany(mappedBy = "facilitys")
@@ -50,7 +50,7 @@ public class Facilitys {
 		super();
 	}
 
-	public Facilitys(String code, String name, String codeSite, String nameSite, String codeSiteDatim,
+	public Facilitys(String code, String name, int codeSite, String nameSite, String codeSiteDatim,
 			String nameSiteDatim, District district, List<Patient> patients) {
 		super();
 		this.code = code;
@@ -87,11 +87,11 @@ public class Facilitys {
 		this.name = name;
 	}
 
-	public String getCodeSite() {
+	public int getCodeSite() {
 		return codeSite;
 	}
 
-	public void setCodeSite(String codeSite) {
+	public void setCodeSite(int codeSite) {
 		this.codeSite = codeSite;
 	}
 
@@ -134,5 +134,7 @@ public class Facilitys {
 	public void setPatients(List<Patient> patients) {
 		this.patients = patients;
 	}
- 
+	
+	
+
 }

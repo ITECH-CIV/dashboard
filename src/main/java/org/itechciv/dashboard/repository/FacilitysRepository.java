@@ -11,7 +11,7 @@ public interface FacilitysRepository extends JpaRepository<Facilitys, Long> {
 	@Query(value = "select f.*" + 
 			" from dashboard.facilitys f" + 
 			" where f.code_site =?1", nativeQuery = true)	
-	Facilitys findFacilitysByCode(String name); 
+	Facilitys findFacilitysByCode(int name); 
 
 
 }
