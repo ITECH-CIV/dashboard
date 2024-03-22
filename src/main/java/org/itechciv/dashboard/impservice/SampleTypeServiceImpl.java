@@ -1,34 +1,33 @@
-package org.itechciv.dashboard.iservice;
+package org.itechciv.dashboard.impservice;
 
+import org.itechciv.dashboard.iservice.SampleTypeService;
 import org.itechciv.dashboard.model.SampleType;
-import org.itechciv.dashboard.model.Test;
 import org.itechciv.dashboard.repository.SampleTypeRepository;
-import org.itechciv.dashboard.repository.TestRepository;
-import org.itechciv.dashboard.service.TestService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 @Service
 @Transactional
-public class TestServiceImpl extends GenericServiceImpl<Test, Long> implements TestService {
-	
+public class SampleTypeServiceImpl extends GenericServiceImpl<SampleType, Long> implements SampleTypeService {
+
 	@Autowired
-	private TestRepository testRepository;
+	private SampleTypeRepository sampletypeRepository;
+
 
 	@Override
-	public Test getByName(String name) {
+	public SampleType getByName(String name) {
 		
-		Test t = new Test();  
+		SampleType st = new SampleType();  
 		
 		try 
 		
 		{ 
-			t = testRepository.findTestByName(name);
+			st = sampletypeRepository.findSampleTypeByName(name);
 			
-			if( t!=null)
+			if( st!=null)
 			{ 
-				return t;
+				return st;
 			} 
 			else 
 			{ 
@@ -42,3 +41,6 @@ public class TestServiceImpl extends GenericServiceImpl<Test, Long> implements T
 	}
 
 }
+
+
+

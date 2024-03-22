@@ -20,7 +20,7 @@ public class AnalysisResult {
 	  @Column(name="viral_load")
 	  private String viralLoad;
 	  
-	  @Column(name="viral_load_log")
+	  @Column(name="viral_load_log" , nullable = true)
 	  private double viralLoadLog;
 	  
 	  @ManyToOne

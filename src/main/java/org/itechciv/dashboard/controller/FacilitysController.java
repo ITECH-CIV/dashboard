@@ -1,21 +1,19 @@
 package org.itechciv.dashboard.controller;
 
 import java.util.Optional;
+
+import org.itechciv.dashboard.iservice.FacilitysService;
 import org.itechciv.dashboard.model.Facilitys;
-import org.itechciv.dashboard.model.Test;
 import org.itechciv.dashboard.response.Response;
 import org.itechciv.dashboard.response.Response.ResponseStatusEnum;
-import org.itechciv.dashboard.service.FacilitysService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
-import org.springframework.web.multipart.MultipartFile;
 
 @RestController
 @RequestMapping("/api")
@@ -120,31 +118,4 @@ public class FacilitysController {
 		}
 		return result;
 	}
-	
-	/*
-	 * @RequestMapping(method = RequestMethod.POST, value="uploadfichier/region")
-	 * 
-	 * @ResponseBody public ResponseEntity<Response>
-	 * uploadFileRegion(@RequestParam("file") MultipartFile file) {
-	 * 
-	 * Response rep = new Response();
-	 * 
-	 * ResponseEntity<Response> result;
-	 * 
-	 * 
-	 * try
-	 * 
-	 * { rep =facilitysService.storeRegionFile(file);
-	 * 
-	 * if(rep!=null) {
-	 * 
-	 * result = new ResponseEntity<>(rep, HttpStatus.OK);
-	 * 
-	 * } else { result = new ResponseEntity<>(rep,HttpStatus.NOT_FOUND);
-	 * 
-	 * } } catch (Exception ex) {
-	 * 
-	 * result = new ResponseEntity<>(rep,HttpStatus.INTERNAL_SERVER_ERROR); } return
-	 * result; }
-	 */
 }

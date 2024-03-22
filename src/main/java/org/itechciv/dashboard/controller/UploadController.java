@@ -1,7 +1,7 @@
 package org.itechciv.dashboard.controller;
 
+import org.itechciv.dashboard.iservice.UploadService;
 import org.itechciv.dashboard.response.Response;
-import org.itechciv.dashboard.service.UploadService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -25,7 +25,7 @@ public class UploadController {
 	
 	  @RequestMapping(method = RequestMethod.POST, value="uploadfichier")
 	  @ResponseBody public ResponseEntity<Response>
-	  uploadFileRegion(@RequestParam("file") MultipartFile file) {
+	  uploadFile(@RequestParam("file") MultipartFile file) {
 	 
 	  Response rep = new Response();
 	
@@ -37,7 +37,12 @@ public class UploadController {
 	 try
 	  
 	 {
-		 System.out.println("MESSAGE::::::::::::  " + file.getOriginalFilename());
+		 System.out.println("MESSAGE-1::::::::::::  " + file.getOriginalFilename());
+		 System.out.println("MESSAGE-2::::::::::::  " + file.getName());
+	     System.out.println("MESSAGE-3::::::::::::  " + file.getContentType());
+	     System.out.println("MESSAGE-4::::::::::::  " +file.getOriginalFilename());
+	     System.out.println("MESSAGE-5::::::::::::  " +file.getSize());
+
 		 req = uploadService.storeFile(file);
 	 
 	 if(req!=null) {

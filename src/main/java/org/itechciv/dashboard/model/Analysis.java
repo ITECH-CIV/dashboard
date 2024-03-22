@@ -39,8 +39,11 @@ public class Analysis {
 	  @Column(name="vl_reason", nullable = true)
 	  private String vlreason;
 	  
-	  @Column(name="reason_other")
+	  @Column(name="reason_other", nullable = true)
 	  private String reasonother;
+	  
+	  @Column(name="analysis_status")
+	  private int analysisStatus;
 	  
 	  @ManyToOne
 	  @JoinColumn(name ="testId", nullable = false)
@@ -63,8 +66,8 @@ public class Analysis {
 
 
 	public Analysis(LocalDateTime startedDate, LocalDateTime completedDate, LocalDateTime releasedDate, String namemed,
-			String nameprelev, String vlreason, String reasonother, Test test, Patient patient, List<Sample> samples,
-			List<AnalysisResult> analysisResults) {
+			String nameprelev, String vlreason, String reasonother, int analysisStatus, Test test, Patient patient,
+			List<Sample> samples, List<AnalysisResult> analysisResults) {
 		super();
 		this.startedDate = startedDate;
 		this.completedDate = completedDate;
@@ -73,6 +76,7 @@ public class Analysis {
 		this.nameprelev = nameprelev;
 		this.vlreason = vlreason;
 		this.reasonother = reasonother;
+		this.analysisStatus = analysisStatus;
 		this.test = test;
 		this.patient = patient;
 		this.samples = samples;
@@ -157,6 +161,16 @@ public class Analysis {
 
 	public void setReasonother(String reasonother) {
 		this.reasonother = reasonother;
+	}
+
+
+	public int getAnalysisStatus() {
+		return analysisStatus;
+	}
+
+
+	public void setAnalysisStatus(int analysisStatus) {
+		this.analysisStatus = analysisStatus;
 	}
 
 

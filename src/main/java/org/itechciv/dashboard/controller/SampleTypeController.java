@@ -1,10 +1,11 @@
 package org.itechciv.dashboard.controller;
 
 import java.util.Optional;
+
+import org.itechciv.dashboard.iservice.SampleTypeService;
 import org.itechciv.dashboard.model.SampleType;
 import org.itechciv.dashboard.response.Response;
 import org.itechciv.dashboard.response.Response.ResponseStatusEnum;
-import org.itechciv.dashboard.service.SampleTypeService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;

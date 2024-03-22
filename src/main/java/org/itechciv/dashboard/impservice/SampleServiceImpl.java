@@ -1,8 +1,8 @@
-package org.itechciv.dashboard.iservice;
+package org.itechciv.dashboard.impservice;
 
+import org.itechciv.dashboard.iservice.SampleService;
 import org.itechciv.dashboard.model.Sample;
 import org.itechciv.dashboard.repository.SampleRepository;
-import org.itechciv.dashboard.service.SampleService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;

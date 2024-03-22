@@ -1,13 +1,13 @@
-package org.itechciv.dashboard.iservice;
+package org.itechciv.dashboard.impservice;
 
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
+import org.itechciv.dashboard.iservice.GenericService;
 import org.itechciv.dashboard.response.Response;
 import org.itechciv.dashboard.response.Response.ResponseStatusEnum;
-import org.itechciv.dashboard.service.GenericService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.jpa.repository.JpaRepository;
 

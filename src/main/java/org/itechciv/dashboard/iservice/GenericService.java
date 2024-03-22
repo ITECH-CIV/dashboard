@@ -1,4 +1,4 @@
-package org.itechciv.dashboard.service;
+package org.itechciv.dashboard.iservice;
 
 import java.io.Serializable;
 import java.util.Optional;

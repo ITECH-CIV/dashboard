@@ -1,7 +1,7 @@
-package org.itechciv.dashboard.iservice;
+package org.itechciv.dashboard.impservice;
 
+import org.itechciv.dashboard.iservice.DistrictService;
 import org.itechciv.dashboard.model.District;
-import org.itechciv.dashboard.service.DistrictService;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 

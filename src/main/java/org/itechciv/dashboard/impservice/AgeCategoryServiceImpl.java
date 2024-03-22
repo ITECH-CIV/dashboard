@@ -1,7 +1,7 @@
-package org.itechciv.dashboard.iservice;
+package org.itechciv.dashboard.impservice;
 
+import org.itechciv.dashboard.iservice.AgeCategoryService;
 import org.itechciv.dashboard.model.AgeCategory;
-import org.itechciv.dashboard.service.AgeCategoryService;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 

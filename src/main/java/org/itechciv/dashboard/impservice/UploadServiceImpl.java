@@ -1,14 +1,13 @@
-package org.itechciv.dashboard.iservice;
+package org.itechciv.dashboard.impservice;
 
-import java.io.FileInputStream;
+
 import java.time.LocalDateTime;
-import java.util.Iterator;
 import java.util.Objects;
 
-import org.apache.poi.ss.usermodel.Row;
 import org.apache.poi.xssf.usermodel.XSSFRow;
 import org.apache.poi.xssf.usermodel.XSSFSheet;
 import org.apache.poi.xssf.usermodel.XSSFWorkbook;
+import org.itechciv.dashboard.iservice.UploadService;
 import org.itechciv.dashboard.model.Analysis;
 import org.itechciv.dashboard.model.AnalysisResult;
 import org.itechciv.dashboard.model.Facilitys;
@@ -23,12 +22,10 @@ import org.itechciv.dashboard.repository.PatientRepository;
 import org.itechciv.dashboard.repository.SampleRepository;
 import org.itechciv.dashboard.repository.SampleTypeRepository;
 import org.itechciv.dashboard.repository.TestRepository;
-import org.itechciv.dashboard.service.UploadService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.multipart.MultipartFile;
-import java.io.File;
 
 @Service
 @Transactional
@@ -67,13 +64,13 @@ public class UploadServiceImpl implements UploadService {
 		Analysis a = null;
 		AnalysisResult ar = null;
 		
-		
 		try {
 			
 			//FileInputStream fis = new FileInputStream(new File(file.getOriginalFilename()));
 			XSSFWorkbook workbook = new XSSFWorkbook(file.getInputStream());
 
 			//XSSFWorkbook  workbook = new XSSFWorkbook(fis);
+			//SXSSF
 			XSSFSheet spreadsheet  = workbook.getSheetAt(0);
 			
 			//XSSFWorkbook workbook = new XSSFWorkbook(excel.getInputStream());
@@ -116,13 +113,15 @@ public class UploadServiceImpl implements UploadService {
                 		 Patient inPatient = new Patient();
                 		 //inPatient.setSubjectno(row.getCell(2).getStringCellValue());
                 		 inPatient.setSubjectid(row.getCell(4).getStringCellValue());
-            			 //p.setGender(row.getCell(11).getStringCellValue());
+                		 inPatient.setGender(row.getCell(11).getStringCellValue());
             			 //p.setBirthDate(row.getCell(12).getStringCellValue());
                 		 inPatient.setAgeYears((int)row.getCell(13).getNumericCellValue());
                 		 inPatient.setAgeMonths((int)row.getCell(14).getNumericCellValue());
                 		 inPatient.setAgeWeeks((int)row.getCell(15).getNumericCellValue());
                 		 inPatient.setStatVih(row.getCell(23).getStringCellValue());
             			 //p.setArvInitDate(row.getCell(26).getStringCellValue());
+                		 inPatient.setArvReg((int)row.getCell(27).getNumericCellValue());
+
                 		 inPatient.setCurrent1(row.getCell(28).getStringCellValue());
                 		 inPatient.setCurrent2(row.getCell(29).getStringCellValue());
                 		 inPatient.setCurrent3(row.getCell(30).getStringCellValue());
@@ -135,14 +134,15 @@ public class UploadServiceImpl implements UploadService {
                 	}
                   			 
                }
-                
+              
                
                 if(row.getCell(20)!=null){
                 	
                 		 a = new Analysis();
-            			 //a.setStartedDate(LocalDateTime.parse(row.getCell(20).getStringCellValue()));
-            			 //a.setCompletedDate(LocalDateTime.parse(row.getCell(21).getStringCellValue()));
-            			 //a.setReleasedDate(LocalDateTime.parse(row.getCell(22).getStringCellValue()));
+                		 a.setAnalysisStatus((int)row.getCell(19).getNumericCellValue());
+            			 a.setStartedDate(LocalDateTime.parse(row.getCell(20).getStringCellValue()));
+            			 a.setCompletedDate(LocalDateTime.parse(row.getCell(21).getStringCellValue()));
+            			 a.setReleasedDate(LocalDateTime.parse(row.getCell(22).getStringCellValue()));
             			 a.setNamemed(row.getCell(24).getStringCellValue());
             			 a.setNameprelev(row.getCell(25).getStringCellValue());
             			 a.setVlreason(row.getCell(33).getStringCellValue());
@@ -184,14 +184,17 @@ public class UploadServiceImpl implements UploadService {
                }
                 
                 if(row.getCell(7)!=null){
+            		 ar = new AnalysisResult();
+            		 ar.setViralLoad(row.getCell(16).getRawValue());
+            		 try {
+            			 ar.setViralLoadLog(row.getCell(17).getNumericCellValue());
 
-                		 ar = new AnalysisResult();
-                		 //ar.setViralLoad((row.getCell(16).getStringCellValue()));
-                		 ar.setViralLoadLog((int)row.getCell(7).getNumericCellValue());
-                		 ar.setAnalysis(a);
-            			
-                		
-                		 ar = analysisResultRepository.save(ar);
+            		 }catch(Exception ex) {
+            			 //ex.printStackTrace();
+            		 }
+            		
+            		 ar.setAnalysis(a);
+            		 ar = analysisResultRepository.save(ar);
                 	}
                   			 
                

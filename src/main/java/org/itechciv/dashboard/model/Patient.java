@@ -25,7 +25,7 @@ public class Patient {
      private Long id;
 
 	 @Column(name = "gender")
-     private Gender gender;
+     private String gender;
 
      @Column(name = "birth_date")
      private Date birthDate;
@@ -54,14 +54,18 @@ public class Patient {
      @Column(name = "vl_pregnancy")
      private int vlPregnancy;
      
-     @Column(name = "vl_suckle")
+     @Column(name = "vl_suckle", nullable = true)
      private int vlSuckle;
      
      @Column(name = "stat_vih")
      private String statVih;
      
+     @Column(name = "arv_reg")
+     private int arvReg;
+     
      @Column(name = "arv_init_date")
      private Date arvInitDate;
+     
      
      @Column(name = "identity_data")
      private String identityData;
@@ -89,9 +93,9 @@ public class Patient {
 		super();
 	}
 
-	public Patient(Gender gender, Date birthDate, int ageYears, int ageMonths, int ageWeeks, String current1,
+	public Patient(String gender, Date birthDate, int ageYears, int ageMonths, int ageWeeks, String current1,
 			String current2, String current3, String current4, int vlPregnancy, int vlSuckle, String statVih,
-			Date arvInitDate, String identityData, String upidCode, String nationalCode, String subjectno,
+			int arvReg, Date arvInitDate, String identityData, String upidCode, String nationalCode, String subjectno,
 			String subjectid, Facilitys facilitys, List<Analysis> analysis) {
 		super();
 		this.gender = gender;
@@ -106,6 +110,7 @@ public class Patient {
 		this.vlPregnancy = vlPregnancy;
 		this.vlSuckle = vlSuckle;
 		this.statVih = statVih;
+		this.arvReg = arvReg;
 		this.arvInitDate = arvInitDate;
 		this.identityData = identityData;
 		this.upidCode = upidCode;
@@ -124,11 +129,11 @@ public class Patient {
 		this.id = id;
 	}
 
-	public Gender getGender() {
+	public String getGender() {
 		return gender;
 	}
 
-	public void setGender(Gender gender) {
+	public void setGender(String gender) {
 		this.gender = gender;
 	}
 
@@ -220,6 +225,14 @@ public class Patient {
 		this.statVih = statVih;
 	}
 
+	public int getArvReg() {
+		return arvReg;
+	}
+
+	public void setArvReg(int arvReg) {
+		this.arvReg = arvReg;
+	}
+
 	public Date getArvInitDate() {
 		return arvInitDate;
 	}
@@ -284,5 +297,4 @@ public class Patient {
 		this.analysis = analysis;
 	}
 
-	
 }
