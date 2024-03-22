@@ -18,7 +18,7 @@ public class AnalysisResult {
       private Long id;
 	  
 	  @Column(name="viral_load")
-	  private int viralLoad;
+	  private String viralLoad;
 	  
 	  @Column(name="viral_load_log")
 	  private double viralLoadLog;
@@ -31,7 +31,7 @@ public class AnalysisResult {
 		super();
 	}
 
-	public AnalysisResult(int viralLoad, double viralLoadLog, Analysis analysis) {
+	public AnalysisResult(String viralLoad, double viralLoadLog, Analysis analysis) {
 		super();
 		this.viralLoad = viralLoad;
 		this.viralLoadLog = viralLoadLog;
@@ -46,11 +46,11 @@ public class AnalysisResult {
 		this.id = id;
 	}
 
-	public int getViralLoad() {
+	public String getViralLoad() {
 		return viralLoad;
 	}
 
-	public void setViralLoad(int viralLoad) {
+	public void setViralLoad(String viralLoad) {
 		this.viralLoad = viralLoad;
 	}
 
@@ -68,5 +68,6 @@ public class AnalysisResult {
 
 	public void setAnalysis(Analysis analysis) {
 		this.analysis = analysis;
-	} 
+	}
+
 }

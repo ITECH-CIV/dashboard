@@ -92,7 +92,7 @@ public class FacilitysController {
 	
 	@RequestMapping(method = RequestMethod.GET, value="facilitys/getByCode")
 	@ResponseBody
-	public ResponseEntity<Response> getFacilitysByCode(String code) { 
+	public ResponseEntity<Response> getFacilitysByCode(int code) { 
 		
 		Response res = new Response(); 
 		

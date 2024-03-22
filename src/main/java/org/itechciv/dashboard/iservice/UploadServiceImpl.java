@@ -169,27 +169,25 @@ public class UploadServiceImpl implements UploadService {
                 	s = sampleRepository.findSampleByCode(row.getCell(0).getStringCellValue());
 
                 	if(s==null) {
-                		 s = new Sample();
-            			 s.setLabno(row.getCell(0).getStringCellValue());
-            			 s.setSampleStatus(row.getCell(1).getStringCellValue());
+                		 Sample inSample = new Sample();
+                		 inSample.setLabno(row.getCell(0).getStringCellValue());
+                		 inSample.setSampleStatus(row.getCell(1).getStringCellValue());
             			 //s.setDrcpt(LocalDateTime.parse(row.getCell(5).getStringCellValue()));
             			 //s.setDintv(LocalDateTime.parse(row.getCell(6).getStringCellValue()));
-            			 s.setSampleType(sp);
-            			 s.setAnalysis(a);
+                		 inSample.setSampleType(sp);
+                		 inSample.setAnalysis(a);
             			 
             			
-                		s =sampleRepository.save(s);
+                		s =sampleRepository.save(inSample);
                 	}
                   			 
                }
                 
-                
-             
-                if(row.getCell(7)!=null && !Objects.equals(row.getCell(7).toString(), "")){
+                if(row.getCell(7)!=null){
 
                 		 ar = new AnalysisResult();
-                		 ar.setViralLoad(Integer.parseInt(row.getCell(4).getStringCellValue()));
-                		 ar.setViralLoadLog(Double.parseDouble(row.getCell(2).getStringCellValue()));
+                		 //ar.setViralLoad((row.getCell(16).getStringCellValue()));
+                		 ar.setViralLoadLog((int)row.getCell(7).getNumericCellValue());
                 		 ar.setAnalysis(a);
             			
                 		
