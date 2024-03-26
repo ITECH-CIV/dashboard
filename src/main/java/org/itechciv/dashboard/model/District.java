@@ -24,6 +24,9 @@ public class District {
 	    @Column(name="name")
 	    private String name;
 	    
+	    @Column(name="sequence_district")
+	    private int sequenceDistrict;
+	    
 	    @ManyToOne
 		@JoinColumn(name ="regionId", nullable = false)
 		private Region region; 
@@ -35,42 +38,20 @@ public class District {
 			super();
 		}
 
-		public District(String name, Region region, List<Facilitys> facilitys) {
+		public District(String name, int sequenceDistrict, Region region, List<Facilitys> facilitys) {
 			super();
 			this.name = name;
+			this.sequenceDistrict = sequenceDistrict;
 			this.region = region;
 			this.facilitys = facilitys;
 		}
 
-		public Long getId() {
-			return id;
-		}
-
-		public void setId(Long id) {
+		public District(Long id, String name, int sequenceDistrict, Region region, List<Facilitys> facilitys) {
+			super();
 			this.id = id;
-		}
-
-		public String getName() {
-			return name;
-		}
-
-		public void setName(String name) {
 			this.name = name;
-		}
-
-		public Region getRegion() {
-			return region;
-		}
-
-		public void setRegion(Region region) {
+			this.sequenceDistrict = sequenceDistrict;
 			this.region = region;
-		}
-
-		public List<Facilitys> getFacilitys() {
-			return facilitys;
-		}
-
-		public void setFacilitys(List<Facilitys> facilitys) {
 			this.facilitys = facilitys;
-		}
+		}	
 }

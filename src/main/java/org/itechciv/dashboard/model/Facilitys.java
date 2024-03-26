@@ -39,6 +39,27 @@ public class Facilitys {
 	  @Column(name = "name_site_datim")
 	  private String nameSiteDatim;
 	  
+	  @Column(name = "old_code_facilitys_dhis2")
+	  private String oldCodeFacilitysDHIS2;
+	  
+	  @Column(name = "old_facilitys_name")
+	  private String oldFacilityName;
+	  
+	  @Column(name = "unique_facilitys_id")
+	  private int uniqueFacilitysId;
+	  
+	  @Column(name = "new_facilitys_long_name")
+	  private String newFacilitysLongName;
+	  
+	  @Column(name = "new_facilitys_short_name")
+	  private String newFacilitysShortName;
+	  
+	  @Column(name = "statut_id")
+	  private String statutId;
+	  
+	  @Column(name = "facilitysCode")
+	  private String facilitysCode;
+	    
 	  @ManyToOne
 	  @JoinColumn(name ="districtId", nullable = true)
 	  private District district; 
@@ -51,7 +72,9 @@ public class Facilitys {
 	}
 
 	public Facilitys(String code, String name, int codeSite, String nameSite, String codeSiteDatim,
-			String nameSiteDatim, District district, List<Patient> patients) {
+			String nameSiteDatim, String oldCodeFacilitysDHIS2, String oldFacilityName, int uniqueFacilitysId,
+			String newFacilitysLongName, String newFacilitysShortName, String statutId, String facilitysCode,
+			District district, List<Patient> patients) {
 		super();
 		this.code = code;
 		this.name = name;
@@ -59,6 +82,13 @@ public class Facilitys {
 		this.nameSite = nameSite;
 		this.codeSiteDatim = codeSiteDatim;
 		this.nameSiteDatim = nameSiteDatim;
+		this.oldCodeFacilitysDHIS2 = oldCodeFacilitysDHIS2;
+		this.oldFacilityName = oldFacilityName;
+		this.uniqueFacilitysId = uniqueFacilitysId;
+		this.newFacilitysLongName = newFacilitysLongName;
+		this.newFacilitysShortName = newFacilitysShortName;
+		this.statutId = statutId;
+		this.facilitysCode = facilitysCode;
 		this.district = district;
 		this.patients = patients;
 	}
@@ -119,6 +149,62 @@ public class Facilitys {
 		this.nameSiteDatim = nameSiteDatim;
 	}
 
+	public String getOldCodeFacilitysDHIS2() {
+		return oldCodeFacilitysDHIS2;
+	}
+
+	public void setOldCodeFacilitysDHIS2(String oldCodeFacilitysDHIS2) {
+		this.oldCodeFacilitysDHIS2 = oldCodeFacilitysDHIS2;
+	}
+
+	public String getOldFacilityName() {
+		return oldFacilityName;
+	}
+
+	public void setOldFacilityName(String oldFacilityName) {
+		this.oldFacilityName = oldFacilityName;
+	}
+
+	public int getUniqueFacilitysId() {
+		return uniqueFacilitysId;
+	}
+
+	public void setUniqueFacilitysId(int uniqueFacilitysId) {
+		this.uniqueFacilitysId = uniqueFacilitysId;
+	}
+
+	public String getNewFacilitysLongName() {
+		return newFacilitysLongName;
+	}
+
+	public void setNewFacilitysLongName(String newFacilitysLongName) {
+		this.newFacilitysLongName = newFacilitysLongName;
+	}
+
+	public String getNewFacilitysShortName() {
+		return newFacilitysShortName;
+	}
+
+	public void setNewFacilitysShortName(String newFacilitysShortName) {
+		this.newFacilitysShortName = newFacilitysShortName;
+	}
+
+	public String getStatutId() {
+		return statutId;
+	}
+
+	public void setStatutId(String statutId) {
+		this.statutId = statutId;
+	}
+
+	public String getFacilitysCode() {
+		return facilitysCode;
+	}
+
+	public void setFacilitysCode(String facilitysCode) {
+		this.facilitysCode = facilitysCode;
+	}
+
 	public District getDistrict() {
 		return district;
 	}
@@ -134,7 +220,6 @@ public class Facilitys {
 	public void setPatients(List<Patient> patients) {
 		this.patients = patients;
 	}
-	
-	
 
+	
 }

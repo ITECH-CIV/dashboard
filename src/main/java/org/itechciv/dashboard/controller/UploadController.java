@@ -24,8 +24,8 @@ public class UploadController {
 	private UploadService uploadService;
 	
 	  @RequestMapping(method = RequestMethod.POST, value="uploadfichier")
-	  @ResponseBody public ResponseEntity<Response>
-	  uploadFile(@RequestParam("file") MultipartFile file) {
+	  @ResponseBody 
+	  public ResponseEntity<Response> uploadFile(@RequestParam("file") MultipartFile file) {
 	 
 	  Response rep = new Response();
 	

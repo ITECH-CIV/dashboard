@@ -140,9 +140,9 @@ public class UploadServiceImpl implements UploadService {
                 	
                 		 a = new Analysis();
                 		 a.setAnalysisStatus((int)row.getCell(19).getNumericCellValue());
-            			 a.setStartedDate(LocalDateTime.parse(row.getCell(20).getStringCellValue()));
-            			 a.setCompletedDate(LocalDateTime.parse(row.getCell(21).getStringCellValue()));
-            			 a.setReleasedDate(LocalDateTime.parse(row.getCell(22).getStringCellValue()));
+            			 //a.setStartedDate(LocalDateTime.parse(row.getCell(20).getStringCellValue()));
+            			 //a.setCompletedDate(LocalDateTime.parse(row.getCell(21).getStringCellValue()));
+            			 //a.setReleasedDate(LocalDateTime.parse(row.getCell(22).getStringCellValue()));
             			 a.setNamemed(row.getCell(24).getStringCellValue());
             			 a.setNameprelev(row.getCell(25).getStringCellValue());
             			 a.setVlreason(row.getCell(33).getStringCellValue());
