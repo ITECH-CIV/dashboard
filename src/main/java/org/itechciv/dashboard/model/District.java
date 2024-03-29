@@ -21,6 +21,9 @@ public class District {
 	    @GeneratedValue(strategy = GenerationType.IDENTITY)
 	    private Long id;
 		    
+	    @Column(name="code_district")
+	    private String codeDistrict;
+	    
 	    @Column(name="name")
 	    private String name;
 	    
@@ -38,20 +41,61 @@ public class District {
 			super();
 		}
 
-		public District(String name, int sequenceDistrict, Region region, List<Facilitys> facilitys) {
+		public District(String codeDistrict, String name, int sequenceDistrict, Region region,
+				List<Facilitys> facilitys) {
 			super();
+			this.codeDistrict = codeDistrict;
 			this.name = name;
 			this.sequenceDistrict = sequenceDistrict;
 			this.region = region;
 			this.facilitys = facilitys;
 		}
 
-		public District(Long id, String name, int sequenceDistrict, Region region, List<Facilitys> facilitys) {
-			super();
+		public Long getId() {
+			return id;
+		}
+
+		public void setId(Long id) {
 			this.id = id;
+		}
+
+		public String getCodeDistrict() {
+			return codeDistrict;
+		}
+
+		public void setCodeDistrict(String codeDistrict) {
+			this.codeDistrict = codeDistrict;
+		}
+
+		public String getName() {
+			return name;
+		}
+
+		public void setName(String name) {
 			this.name = name;
+		}
+
+		public int getSequenceDistrict() {
+			return sequenceDistrict;
+		}
+
+		public void setSequenceDistrict(int sequenceDistrict) {
 			this.sequenceDistrict = sequenceDistrict;
+		}
+
+		public Region getRegion() {
+			return region;
+		}
+
+		public void setRegion(Region region) {
 			this.region = region;
+		}
+
+		public List<Facilitys> getFacilitys() {
+			return facilitys;
+		}
+
+		public void setFacilitys(List<Facilitys> facilitys) {
 			this.facilitys = facilitys;
 		}	
 }

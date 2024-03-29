@@ -10,8 +10,10 @@ import org.apache.poi.xssf.usermodel.XSSFWorkbook;
 import org.itechciv.dashboard.iservice.UploadService;
 import org.itechciv.dashboard.model.Analysis;
 import org.itechciv.dashboard.model.AnalysisResult;
+import org.itechciv.dashboard.model.District;
 import org.itechciv.dashboard.model.Facilitys;
 import org.itechciv.dashboard.model.Patient;
+import org.itechciv.dashboard.model.Region;
 import org.itechciv.dashboard.model.Sample;
 import org.itechciv.dashboard.model.SampleType;
 import org.itechciv.dashboard.model.Test;
@@ -85,7 +87,7 @@ public class UploadServiceImpl implements UploadService {
                 	t = testRepository.findTestByName(row.getCell(3).getStringCellValue());
                 	if(t==null) {
                 		Test inTest = new Test();
-                		inTest.setStudy(row.getCell(3).getStringCellValue());;
+                		inTest.setStudy(row.getCell(3).getStringCellValue());
                 		t = testRepository.save(inTest);
                 	}
       
@@ -191,7 +193,7 @@ public class UploadServiceImpl implements UploadService {
 
             		 }catch(Exception ex) {
             			 //ex.printStackTrace();
-            		 }
+            			   System.out.println("Exception => " + ex.getMessage());            		 }
             		
             		 ar.setAnalysis(a);
             		 ar = analysisResultRepository.save(ar);
@@ -212,7 +214,32 @@ public class UploadServiceImpl implements UploadService {
 		}
 		return res;
 
+	}
 
+	@Override
+	public boolean storeLocaliteImport(MultipartFile file) {
+		
+		Region r = null;
+		District d = null;
+		Facilitys f = null;
+		
+		 
+		   try {
+			 //FileInputStream fis = new FileInputStream(new File(file.getOriginalFilename()));
+				XSSFWorkbook workbook = new XSSFWorkbook(file.getInputStream());
+
+				XSSFSheet spreadsheet  = workbook.getSheetAt(0);
+			
+			   return true;
+			   
+		   }catch(Exception ex) {
+			   
+			//ex.printStackTrace(); 
+			  System.out.println("Exception => " + ex.getMessage());
+			  return false;
+		   }
+		//return false;
+		   
 	}
 
 }

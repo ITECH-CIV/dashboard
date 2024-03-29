@@ -18,6 +18,9 @@ public class Region {
      @GeneratedValue(strategy = GenerationType.IDENTITY)
      private Long id;
 	 
+	 @Column(name="code_region", unique = true)
+	 private String codeRegion;
+	 
 	 @Column(name="name", unique = true)
 	 private String name;
 	 
@@ -28,8 +31,9 @@ public class Region {
 		super();
 	}
 
-	public Region(String name, List<District> districts) {
+	public Region(String codeRegion, String name, List<District> districts) {
 		super();
+		this.codeRegion = codeRegion;
 		this.name = name;
 		this.districts = districts;
 	}
@@ -40,6 +44,14 @@ public class Region {
 
 	public void setId(Long id) {
 		this.id = id;
+	}
+
+	public String getCodeRegion() {
+		return codeRegion;
+	}
+
+	public void setCodeRegion(String codeRegion) {
+		this.codeRegion = codeRegion;
 	}
 
 	public String getName() {
@@ -56,5 +68,5 @@ public class Region {
 
 	public void setDistricts(List<District> districts) {
 		this.districts = districts;
-	}	
+	}
 }

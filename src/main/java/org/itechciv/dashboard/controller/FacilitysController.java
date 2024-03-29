@@ -118,4 +118,68 @@ public class FacilitysController {
 		}
 		return result;
 	}
+	
+	@RequestMapping(method = RequestMethod.GET, value="facilitys/getByOldCode")
+	@ResponseBody
+	public ResponseEntity<Response> getFacilitysByOldCode(int code) { 
+		
+		Response res = new Response(); 
+		
+		Facilitys f;
+		ResponseEntity<Response> result;
+		
+		try {
+		
+			f= facilitysService.findFacilitysByOldCode(code); 
+		
+		 if(f != null) {
+			
+			 res =  new  Response(ResponseStatusEnum.SUCCESS,f,"Facilitys trouvé", true);
+			 result =new ResponseEntity<>(res, HttpStatus.OK);
+			
+		} else { 
+			res =  new  Response(ResponseStatusEnum.ERROR,null,"Facilitys introuvable", false); 
+	        result =new ResponseEntity<>(res,HttpStatus.NOT_FOUND);
+		}
+		
+		} catch(Exception ex) {
+			
+			res =  new  Response(ResponseStatusEnum.ERROR,null,ex.getMessage(), false);
+			result = new ResponseEntity<>(res,HttpStatus.NOT_FOUND);
+		}
+		return result;
+	}
+	
+	@RequestMapping(method = RequestMethod.GET, value="facilitys/getByOldName")
+	@ResponseBody
+	public ResponseEntity<Response> getFacilitysByOldName(String name) { 
+		
+		Response res = new Response(); 
+		
+		Facilitys f;
+		ResponseEntity<Response> result;
+		
+		try {
+		
+			f= facilitysService.findFacilitysByOldName(name); 
+		
+		 if(f != null) {
+			
+			 res =  new  Response(ResponseStatusEnum.SUCCESS,f,"Facilitys trouvé", true);
+			 result =new ResponseEntity<>(res, HttpStatus.OK);
+			
+		} else { 
+			res =  new  Response(ResponseStatusEnum.ERROR,null,"Facilitys introuvable", false); 
+	        result =new ResponseEntity<>(res,HttpStatus.NOT_FOUND);
+		}
+		
+		} catch(Exception ex) {
+			
+			res =  new  Response(ResponseStatusEnum.ERROR,null,ex.getMessage(), false);
+			result = new ResponseEntity<>(res,HttpStatus.NOT_FOUND);
+		}
+		return result;
+	}
+	
+	
 }

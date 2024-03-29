@@ -3,9 +3,6 @@ package org.itechciv.dashboard.model;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
-
-import org.itechciv.dashboard.enums.Gender;
-
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;

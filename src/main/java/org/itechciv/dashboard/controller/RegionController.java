@@ -193,5 +193,68 @@ public class RegionController {
 		}
 		return result;
 	}
+	
+
+	@RequestMapping(method = RequestMethod.GET, value="region/getByCode")
+	@ResponseBody
+	public ResponseEntity<Response> findRegionByCode(int code) { 
+		
+		Response res = new Response(); 
+		
+		Region region;
+		ResponseEntity<Response> result;
+		
+		try {
+		
+			region= regionService.findRegionByCode(code); 
+		
+		 if(region != null) {
+			
+			 res =  new  Response(ResponseStatusEnum.SUCCESS,region,"Enregistrement trouvé", true);
+			 result =new ResponseEntity<>(res, HttpStatus.OK);
+			
+		} else { 
+			res =  new  Response(ResponseStatusEnum.ERROR,null,"Region introuvable", false); 
+	        result =new ResponseEntity<>(res,HttpStatus.NOT_FOUND);
+		}
+		
+		} catch(Exception ex) {
+			
+			res =  new  Response(ResponseStatusEnum.ERROR,null,ex.getMessage(), false);
+			result = new ResponseEntity<>(res,HttpStatus.NOT_FOUND);
+		}
+		return result;
+	} 
+	
+	@RequestMapping(method = RequestMethod.GET, value="region/getByName")
+	@ResponseBody
+	public ResponseEntity<Response> findRegionByName(String name) { 
+		
+		Response res = new Response(); 
+		
+		Region region;
+		ResponseEntity<Response> result;
+		
+		try {
+		
+			region= regionService.findRegionByName(name); 
+		
+		 if(region != null) {
+			
+			 res =  new  Response(ResponseStatusEnum.SUCCESS,region,"Enregistrement trouvé", true);
+			 result =new ResponseEntity<>(res, HttpStatus.OK);
+			
+		} else { 
+			res =  new  Response(ResponseStatusEnum.ERROR,null,"Region introuvable", false); 
+	        result =new ResponseEntity<>(res,HttpStatus.NOT_FOUND);
+		}
+		
+		} catch(Exception ex) {
+			
+			res =  new  Response(ResponseStatusEnum.ERROR,null,ex.getMessage(), false);
+			result = new ResponseEntity<>(res,HttpStatus.NOT_FOUND);
+		}
+		return result;
+	}
 
 }

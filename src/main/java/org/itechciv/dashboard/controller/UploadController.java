@@ -33,7 +33,6 @@ public class UploadController {
 	  
 	  String req = null;
 	
-	 
 	 try
 	  
 	 {
@@ -48,7 +47,7 @@ public class UploadController {
 	 if(req!=null) {
 	 
 	  result = new ResponseEntity<>(rep, HttpStatus.OK);
-	 
+	  
 	 } else { 
 		 result = new ResponseEntity<>(rep,HttpStatus.NOT_FOUND);
 	 
@@ -61,4 +60,41 @@ public class UploadController {
 	 return result; 
 	 
 	  }
+	  
+		/*
+		 * @RequestMapping(method = RequestMethod.POST, value="uploadlocalite")
+		 * 
+		 * @ResponseBody public ResponseEntity<ResponseMessage>
+		 * uploadLocalite(@RequestParam("file") MultipartFile file) {
+		 * 
+		 * Response rep = new Response();
+		 * 
+		 * ResponseEntity<ResponseMessage> result;
+		 * 
+		 * String req = null;
+		 * 
+		 * try
+		 * 
+		 * { System.out.println("MESSAGE-1::::::::::::  " + file.getOriginalFilename());
+		 * System.out.println("MESSAGE-2::::::::::::  " + file.getName());
+		 * System.out.println("MESSAGE-3::::::::::::  " + file.getContentType());
+		 * System.out.println("MESSAGE-4::::::::::::  " +file.getOriginalFilename());
+		 * System.out.println("MESSAGE-5::::::::::::  " +file.getSize());
+		 * 
+		 * req = uploadService.storeFile(file);
+		 * 
+		 * if(req!=null) {
+		 * 
+		 * result = new ResponseEntity<>(rep, HttpStatus.OK);
+		 * 
+		 * } else { result = new ResponseEntity<>(rep,HttpStatus.NOT_FOUND);
+		 * 
+		 * } } catch (Exception ex) {
+		 * 
+		 * result = new ResponseEntity<>(rep,HttpStatus.INTERNAL_SERVER_ERROR); }
+		 * 
+		 * return result;
+		 * 
+		 * }
+		 */
 }

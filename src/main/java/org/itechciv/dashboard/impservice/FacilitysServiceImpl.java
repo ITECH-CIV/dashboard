@@ -40,4 +40,157 @@ public class FacilitysServiceImpl extends GenericServiceImpl<Facilitys, Long> im
 			return null;
 		}	
 	}
+
+	@Override
+	public Facilitys findFacilitysByOldCode(int code) {
+
+        Facilitys f = new Facilitys();  
+		
+		try 
+		
+		{ 
+			f = facilitysRepo.findFacilitysByOldCode(code);
+			
+			if( f!=null)
+			{ 
+				return f;
+			} 
+			else 
+			{ 
+				return null;
+			}
+		}
+		catch(Exception ex) { 
+			ex.printStackTrace();
+			return null;
+		}	
+
+	}
+
+	@Override
+	public Facilitys findFacilitysByOldName(String name) {
+
+       Facilitys f = new Facilitys();  
+		
+		try 
+		
+		{ 
+			f = facilitysRepo.findFacilitysByOldName(name);
+			
+			if( f!=null)
+			{ 
+				return f;
+			} 
+			else 
+			{ 
+				return null;
+			}
+		}
+		catch(Exception ex) { 
+			ex.printStackTrace();
+			return null;
+		}	
+		
+	}
+
+	@Override
+	public Facilitys findFacilitysByUniqueCode(int code) {
+		
+       Facilitys f = new Facilitys();  
+		
+		try 
+		
+		{ 
+			f = facilitysRepo.findFacilitysByUniqueCode(code);
+			
+			if( f!=null)
+			{ 
+				return f;
+			} 
+			else 
+			{ 
+				return null;
+			}
+		}
+		catch(Exception ex) { 
+			ex.printStackTrace();
+			return null;
+		}	
+	}
+
+	@Override
+	public Facilitys findFacilitysByNewLongName(String name) {
+
+		 Facilitys f = new Facilitys();  
+			
+			try 
+			
+			{ 
+				f = facilitysRepo.findFacilitysByNewLongName(name);
+				
+				if( f!=null)
+				{ 
+					return f;
+				} 
+				else 
+				{ 
+					return null;
+				}
+			}
+			catch(Exception ex) { 
+				ex.printStackTrace();
+				return null;
+			}	
+	}
+
+	@Override
+	public Facilitys findFacilitysByShortName(String name) {
+
+		Facilitys f = new Facilitys();  
+		
+		try 
+		
+		{ 
+			f = facilitysRepo.findFacilitysByShortName(name);
+			
+			if( f!=null)
+			{ 
+				return f;
+			} 
+			else 
+			{ 
+				return null;
+			}
+		}
+		catch(Exception ex) { 
+			ex.printStackTrace();
+			return null;
+		}	
+	}
+
+	@Override
+	public Facilitys findFacilitysByStatutId(String name) {
+
+
+       Facilitys f = new Facilitys();  
+		
+		try 
+		
+		{ 
+			f = facilitysRepo.findFacilitysByStatutId(name);
+			
+			if( f!=null)
+			{ 
+				return f;
+			} 
+			else 
+			{ 
+				return null;
+			}
+		}
+		catch(Exception ex) { 
+			ex.printStackTrace();
+			return null;
+		}	
+	}
 }
