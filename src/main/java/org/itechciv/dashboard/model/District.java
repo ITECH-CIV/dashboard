@@ -20,15 +20,9 @@ public class District {
 		@Id
 	    @GeneratedValue(strategy = GenerationType.IDENTITY)
 	    private Long id;
-		    
-	    @Column(name="code_district")
-	    private String codeDistrict;
-	    
+		
 	    @Column(name="name")
 	    private String name;
-	    
-	    @Column(name="sequence_district")
-	    private int sequenceDistrict;
 	    
 	    @ManyToOne
 		@JoinColumn(name ="regionId", nullable = false)
@@ -41,16 +35,6 @@ public class District {
 			super();
 		}
 
-		public District(String codeDistrict, String name, int sequenceDistrict, Region region,
-				List<Facilitys> facilitys) {
-			super();
-			this.codeDistrict = codeDistrict;
-			this.name = name;
-			this.sequenceDistrict = sequenceDistrict;
-			this.region = region;
-			this.facilitys = facilitys;
-		}
-
 		public Long getId() {
 			return id;
 		}
@@ -59,28 +43,12 @@ public class District {
 			this.id = id;
 		}
 
-		public String getCodeDistrict() {
-			return codeDistrict;
-		}
-
-		public void setCodeDistrict(String codeDistrict) {
-			this.codeDistrict = codeDistrict;
-		}
-
 		public String getName() {
 			return name;
 		}
 
 		public void setName(String name) {
 			this.name = name;
-		}
-
-		public int getSequenceDistrict() {
-			return sequenceDistrict;
-		}
-
-		public void setSequenceDistrict(int sequenceDistrict) {
-			this.sequenceDistrict = sequenceDistrict;
 		}
 
 		public Region getRegion() {
@@ -97,5 +65,5 @@ public class District {
 
 		public void setFacilitys(List<Facilitys> facilitys) {
 			this.facilitys = facilitys;
-		}	
+		}
 }

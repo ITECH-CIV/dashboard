@@ -5,7 +5,7 @@ public class ResponseMessage {
 	  private String message;
 
 	public ResponseMessage(String message) {
-		super();
+		//super();
 		this.message = message;
 	}
 

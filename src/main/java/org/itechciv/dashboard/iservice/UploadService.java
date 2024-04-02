@@ -7,4 +7,6 @@ public interface UploadService {
 	String storeFile(MultipartFile file);
 	
 	boolean storeLocaliteImport(MultipartFile file); 
+	boolean storeExcelImport(MultipartFile file);
+	boolean storeLocalite(MultipartFile file);
 }

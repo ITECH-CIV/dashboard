@@ -1,7 +1,5 @@
 package org.itechciv.dashboard.helper;
 
-import org.itechciv.dashboard.response.Response.ResponseStatusEnum;
-
 public class Reponse { 
 	
 	public enum ResponseStatusEnum{ SUCCESS,ERROR,WARNING,NO_ACCESS,NO_CONTENT,INTERNAL_ERROR };
