@@ -1,12 +1,16 @@
 package org.itechciv.dashboard.impservice;
+import org.apache.poi.ss.usermodel.DataFormatter;
 import org.apache.poi.xssf.usermodel.XSSFRow;
 import org.apache.poi.xssf.usermodel.XSSFSheet;
 import org.apache.poi.xssf.usermodel.XSSFWorkbook;
+import org.itechciv.dashboard.helper.Constants;
 import org.itechciv.dashboard.iservice.UploadService;
 import org.itechciv.dashboard.model.District;
 import org.itechciv.dashboard.model.Facilitys;
 import org.itechciv.dashboard.model.Region;
+import org.itechciv.dashboard.model.Test;
 import org.itechciv.dashboard.repository.AnalysisRepository;
+import org.itechciv.dashboard.repository.DietRepository;
 import org.itechciv.dashboard.repository.DistrictRepository;
 import org.itechciv.dashboard.repository.FacilitysRepository;
 import org.itechciv.dashboard.repository.PatientRepository;
@@ -14,6 +18,8 @@ import org.itechciv.dashboard.repository.RegionRepository;
 import org.itechciv.dashboard.repository.SampleRepository;
 import org.itechciv.dashboard.repository.SampleTypeRepository;
 import org.itechciv.dashboard.repository.TestRepository;
+import org.itechciv.dashboard.repository.VihTypeRepository;
+import org.itechciv.dashboard.repository.VlReasonRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -47,7 +53,16 @@ public class UploadServiceImpl implements UploadService {
 	@Autowired
 	private DistrictRepository districtRepository;
 	
-	//private final DataFormatter dataFormatter = new DataFormatter();
+	@Autowired
+	private DietRepository dietRepository;
+	
+	@Autowired
+	private VihTypeRepository vihTypeRepository;
+	
+	@Autowired
+	private VlReasonRepository vlReasonRepository;
+	
+	private final DataFormatter dataFormatter = new DataFormatter();
 	
 	//IMPORT LOCALITE: Region, District, Facilitys
 	@Override
@@ -124,8 +139,82 @@ public class UploadServiceImpl implements UploadService {
 
 	@Override
 	public boolean storeExcelImport(MultipartFile file) {
-		// TODO Auto-generated method stub
-		return false;
-	}
+		
+		Test t = null;
+		Facilitys f = null;
+		
+		try { 
+			
+			XSSFWorkbook workbook = new XSSFWorkbook(file.getInputStream());
+			XSSFSheet spreadsheet  = workbook.getSheetAt(0);
 
+			 for(int i=7; i<spreadsheet.getPhysicalNumberOfRows();i++) {
+	              XSSFRow row = spreadsheet.getRow(i);
+	              
+	              t = new Test();
+	              
+	            if(row.getCell(3)!=null) {
+            	  t = testRepository.findTestByName(row.getCell(3).getStringCellValue());
+	                
+	                if(t==null) {
+	                	Test inTest = new Test();
+	                	inTest.setName(Constants.TEST_NAME);
+	                	inTest.setStudy(row.getCell(3).getStringCellValue());
+	                	
+	                	t = testRepository.save(inTest);
+	                } 
+	              }
+	            
+	            if(row.getCell(7) != null) {
+	            	String str = String.valueOf(row.getCell(7).getRawValue());
+	            	
+	            	try {
+					     f = facilitysRepository.findFacilitysByOldCode(str);
+					     //Si facilitys est null  
+					     if(f==null) {
+				    		Facilitys inFacilitys = new Facilitys();
+				    		 try {
+				    			 inFacilitys.setOldCodeFacilitysDHIS2(str);
+	                		 }catch(Exception ex) {
+	              			       System.out.println("Exception => " + ex.getMessage());     
+	                		 }	                		
+	                		inFacilitys.setNameSite(row.getCell(8).getStringCellValue()); 
+	                		try {
+				    			 inFacilitys.setCodeSiteDatim(row.getCell(9).getStringCellValue());
+	                		 }catch(Exception ex) {
+	              			       System.out.println("Exception => " + ex.getMessage());     
+	                		 }
+	                		try {
+				    			 inFacilitys.setNameSiteDatim(row.getCell(10).getStringCellValue());
+	                		 }catch(Exception ex) {
+	              			       System.out.println("Exception => " + ex.getMessage());     
+	                		 }
+	                	    f =  facilitysRepository.save(inFacilitys);              		
+					     }else {
+					    	 //Si facilitys existe alors faire une mise à jour à partir du fichier
+					    	 f.setNameSite(row.getCell(8).getStringCellValue());
+					    	 f.setCodeSiteDatim(row.getCell(9).getStringCellValue());
+					    	 f.setNameSiteDatim(row.getCell(10).getStringCellValue());
+					    	
+					    	f = facilitysRepository.saveAndFlush(f); 
+					     }
+					     
+					     
+					     
+					     
+	            	}catch(Exception ex) {
+	            		ex.printStackTrace();
+	            	}
+	            }	
+/**********************************************LIMIT ***************************************/	            
+                workbook.close();
+			 }
+            return true;
+			
+		}catch(Exception ex) {
+			ex.printStackTrace();
+			System.out.println("Exception => " + ex.getMessage());
+			return false;
+		}		
+	}
 }
