@@ -28,7 +28,7 @@ public class Sample  {
     @Column(name="lab_no")
     private String labno;
     
-    @Column(name="sample_status")
+    @Column(name="sample_status", nullable = true)
     private String sampleStatus;
     
     @Column(name = "drcpt")
@@ -50,20 +50,6 @@ public class Sample  {
 
 	public Sample() {
 		super();
-	}
-
-	public Sample(String label, String description, String labno, String sampleStatus, LocalDateTime drcpt,
-			LocalDateTime dintv, LocalDateTime timestamp, SampleType sampleType, Analysis analysis) {
-		super();
-		this.label = label;
-		this.description = description;
-		this.labno = labno;
-		this.sampleStatus = sampleStatus;
-		this.drcpt = drcpt;
-		this.dintv = dintv;
-		this.timestamp = timestamp;
-		this.sampleType = sampleType;
-		this.analysis = analysis;
 	}
 
 	public Long getId() {
@@ -144,5 +130,12 @@ public class Sample  {
 
 	public void setAnalysis(Analysis analysis) {
 		this.analysis = analysis;
+	}
+
+	@Override
+	public String toString() {
+		return "Sample [id=" + id + ", label=" + label + ", description=" + description + ", labno=" + labno
+				+ ", sampleStatus=" + sampleStatus + ", drcpt=" + drcpt + ", dintv=" + dintv + ", timestamp="
+				+ timestamp + ", sampleType=" + sampleType + ", analysis=" + analysis + "]";
 	}
 }

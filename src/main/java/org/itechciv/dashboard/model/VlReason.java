@@ -2,6 +2,7 @@ package org.itechciv.dashboard.model;
 
 import java.util.ArrayList;
 import java.util.List;
+
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
@@ -11,23 +12,20 @@ import jakarta.persistence.OneToMany;
 import jakarta.persistence.Table;
 
 @Entity
-@Table(name = "test", schema = "dashboard")
-public class Test {
+@Table(name = "vl_reason", schema = "dashboard")
+public class VlReason {
 	
 	@Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @Column(name = "study")
-    private String study;
-    
     @Column(name = "name")
     private String name;
     
-    @OneToMany(mappedBy = "test")
-	private List<Analysis> analysis = new ArrayList<>();
+    @OneToMany(mappedBy = "vlReason")
+  	private List<Analysis> analysis = new ArrayList<>();
 
-	public Test() {
+	public VlReason() {
 		super();
 	}
 
@@ -37,14 +35,6 @@ public class Test {
 
 	public void setId(Long id) {
 		this.id = id;
-	}
-
-	public String getStudy() {
-		return study;
-	}
-
-	public void setStudy(String study) {
-		this.study = study;
 	}
 
 	public String getName() {
@@ -65,6 +55,6 @@ public class Test {
 
 	@Override
 	public String toString() {
-		return "Test [id=" + id + ", study=" + study + ", name=" + name + ", analysis=" + analysis + "]";
+		return "VlReason [id=" + id + ", name=" + name + ", analysis=" + analysis + "]";
 	}
 }

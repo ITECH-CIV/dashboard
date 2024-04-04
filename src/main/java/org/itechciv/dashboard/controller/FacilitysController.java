@@ -121,7 +121,7 @@ public class FacilitysController {
 	
 	@RequestMapping(method = RequestMethod.GET, value="facilitys/getByOldCode")
 	@ResponseBody
-	public ResponseEntity<Response> getFacilitysByOldCode(int code) { 
+	public ResponseEntity<Response> getFacilitysByOldCode(String code) { 
 		
 		Response res = new Response(); 
 		

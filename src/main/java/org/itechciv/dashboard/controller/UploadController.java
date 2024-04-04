@@ -21,126 +21,10 @@ import org.springframework.web.multipart.MultipartFile;
 @CrossOrigin
 public class UploadController {
 	
-
 	@Autowired
 	private UploadService uploadService;
 	
-	  @RequestMapping(method = RequestMethod.POST, value="uploadfichier")
-	  @ResponseBody 
-	  public ResponseEntity<Response> uploadFiles(@RequestParam("file") MultipartFile file) {
-	 
-	  Response rep = new Response();
-	
-	  ResponseEntity<Response> result;
-	  
-	  String req = null;
-	
-	 try
-	  
-	 {
-		 System.out.println("MESSAGE-1::::::::::::  " + file.getOriginalFilename());
-		 System.out.println("MESSAGE-2::::::::::::  " + file.getName());
-	     System.out.println("MESSAGE-3::::::::::::  " + file.getContentType());
-	     System.out.println("MESSAGE-4::::::::::::  " +file.getOriginalFilename());
-	     System.out.println("MESSAGE-5::::::::::::  " +file.getSize());
-
-		 req = uploadService.storeFile(file);
-	 
-	 if(req!=null) {
-	 
-	  result = new ResponseEntity<>(rep, HttpStatus.OK);
-	  
-	 } else { 
-		 result = new ResponseEntity<>(rep,HttpStatus.NOT_FOUND);
-	 
-	  } 
-	 } catch (Exception ex) {
-	 
-	  result = new ResponseEntity<>(rep,HttpStatus.INTERNAL_SERVER_ERROR); 
-	  } 
-	 
-	 return result; 
-	 
-	  }
-	  
-	  @RequestMapping(method = RequestMethod.POST, value="upload/excel")
-	  @ResponseBody 
-	  public ResponseEntity<Response> uploadFile(@RequestParam("file") MultipartFile file) {
-	 
-	  Response rep = new Response();
-	
-	  ResponseEntity<Response> result;
-	  
-	  String req = null;
-	
-	 try
-	  
-	 {
-		 System.out.println("MESSAGE-1::::::::::::  " + file.getOriginalFilename());
-		 System.out.println("MESSAGE-2::::::::::::  " + file.getName());
-	     System.out.println("MESSAGE-3::::::::::::  " + file.getContentType());
-	     System.out.println("MESSAGE-4::::::::::::  " +file.getOriginalFilename());
-	     System.out.println("MESSAGE-5::::::::::::  " +file.getSize());
-
-		 req = uploadService.storeFile(file);
-	 
-	 if(req!=null) {
-	 
-	  result = new ResponseEntity<>(rep, HttpStatus.OK);
-	  
-	 } else { 
-		 result = new ResponseEntity<>(rep,HttpStatus.NOT_FOUND);
-	 
-	  } 
-	 } catch (Exception ex) {
-	 
-	  result = new ResponseEntity<>(rep,HttpStatus.INTERNAL_SERVER_ERROR); 
-	  } 
-	 
-	 return result; 
-	 
-	  }
-	  
-	  
-		
-	  @RequestMapping(method = RequestMethod.POST, value="uploadlocalite")
-	  @ResponseBody
-	  public ResponseEntity<ResponseMessage> uploadLocalite(@RequestParam("file") MultipartFile file) {		
-	 
-	  boolean req;
-	  String message = null;
-	  
-	  try
-	  
-	  { 
-	   System.out.println("MESSAGE-1::::::::::::  " + file.getOriginalFilename());
-	   System.out.println("MESSAGE-2::::::::::::  " + file.getName());
-	   System.out.println("MESSAGE-3::::::::::::  " + file.getContentType());
-	   System.out.println("MESSAGE-4::::::::::::  " +file.getOriginalFilename());
-	   System.out.println("MESSAGE-5::::::::::::  " +file.getSize());
-	  
-	   req = uploadService.storeLocaliteImport(file);
-	  
-	   if(req) {
-	   
-		   message = ConstantMessage.INSERTED;
-	       return ResponseEntity.status(HttpStatus.OK).body(new ResponseMessage(message));
-
-	
-	 } else { 
-		 
-		   message = ConstantMessage.FAILED;
-		   return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(new ResponseMessage(message));
-
-	  } 
-	 } catch (Exception ex) {
-	  
-		  message = ConstantMessage.FAILED;
-		   return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(new ResponseMessage(message));
-
-	 } 
-	}
-	  
+	 //Controller relatif à l'import de localité - Region, District et Facilitys
 	  @RequestMapping(method = RequestMethod.POST, value="upload/localite")
 	  @ResponseBody
 	  public ResponseEntity<ResponseMessage> uploadLocalites(@RequestParam("file") MultipartFile file) {		
@@ -160,61 +44,49 @@ public class UploadController {
 	   req = uploadService.storeLocaliteImport(file);
 	  
 	   if(req) {
-	   
 		   message = ConstantMessage.INSERTED;
-	       return ResponseEntity.status(HttpStatus.OK).body(new ResponseMessage(message));
+	       return ResponseEntity.status(HttpStatus.OK).body(new ResponseMessage(message, null));
 
 	
 	 } else { 
-		 
 		   message = ConstantMessage.FAILED;
-		   return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(new ResponseMessage(message));
-
+	       return ResponseEntity.status(HttpStatus.NOT_FOUND).body(new ResponseMessage(message, null));
 	  } 
 	 } catch (Exception ex) {
-	  
-		  message = ConstantMessage.FAILED;
-		   return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(new ResponseMessage(message));
-
+		  message = ConstantMessage.ERROR;
+	      return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(new ResponseMessage(message, ex.getMessage()));
 	 } 
 	}
-	  
-	  @RequestMapping(method = RequestMethod.POST, value="upload/fichier")
-	  @ResponseBody
-	  public ResponseEntity<ResponseMessage> uploadExcelLocalite(@RequestParam("file") MultipartFile file) {		
+	  //Controller relatif à l'import de fichier - OpenElis
+	  @RequestMapping(method = RequestMethod.POST, value="upload/excel")
+	  @ResponseBody 
+	  public ResponseEntity<ResponseMessage> uploadFile(@RequestParam("file") MultipartFile file) {
 	 
-	  boolean req;
-	  String message = null;
+		  boolean req;
+		  String message = null;
+		  
+	      try
 	  
-	  try
-	  
-	  { 
-	   System.out.println("MESSAGE-1::::::::::::  " + file.getOriginalFilename());
-	   System.out.println("MESSAGE-2::::::::::::  " + file.getName());
-	   System.out.println("MESSAGE-3::::::::::::  " + file.getContentType());
-	   System.out.println("MESSAGE-4::::::::::::  " +file.getOriginalFilename());
-	   System.out.println("MESSAGE-5::::::::::::  " +file.getSize());
-	  
-	   req = uploadService.storeLocalite(file);
-	  
-	   if(req) {
-	   
-		   message = ConstantMessage.INSERTED;
-	       return ResponseEntity.status(HttpStatus.OK).body(new ResponseMessage(message));
+	    {
+		 System.out.println("MESSAGE-1::::::::::::  " + file.getOriginalFilename());
+		 System.out.println("MESSAGE-2::::::::::::  " + file.getName());
+	     System.out.println("MESSAGE-3::::::::::::  " + file.getContentType());
+	     System.out.println("MESSAGE-4::::::::::::  " +file.getOriginalFilename());
+	     System.out.println("MESSAGE-5::::::::::::  " +file.getSize());
 
-	
-	 } else { 
-		 
-		   message = ConstantMessage.FAILED;
-		   return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(new ResponseMessage(message));
-
-	  } 
-	 } catch (Exception ex) {
-	  
-		  message = ConstantMessage.FAILED;
-		   return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(new ResponseMessage(message));
-
-	 } 
-	}
-		 
+		 req = uploadService.storeExcelImport(file);
+	 
+		 if(req) {
+			 message = ConstantMessage.INSERTED;
+		     return ResponseEntity.status(HttpStatus.OK).body(new ResponseMessage(message, null));
+		 } else { 
+			 message = ConstantMessage.FAILED;
+		     return ResponseEntity.status(HttpStatus.NOT_FOUND).body(new ResponseMessage(message, null));
+		  } 
+		 } catch (Exception ex) {
+			  //ex.printStackTrace();
+			  message = ConstantMessage.ERROR;
+		      return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(new ResponseMessage(message, ex.getMessage()));
+		  } 	 
+	}	
 }

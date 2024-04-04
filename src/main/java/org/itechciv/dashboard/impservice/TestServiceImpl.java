@@ -38,5 +38,4 @@ public class TestServiceImpl extends GenericServiceImpl<Test, Long> implements T
 			return null;
 		}	
 	}
-
 }

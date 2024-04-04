@@ -42,7 +42,7 @@ public class FacilitysServiceImpl extends GenericServiceImpl<Facilitys, Long> im
 	}
 
 	@Override
-	public Facilitys findFacilitysByOldCode(int code) {
+	public Facilitys findFacilitysByOldCode(String code) {
 
         Facilitys f = new Facilitys();  
 		

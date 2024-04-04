@@ -30,15 +30,18 @@ public class Analysis {
 	  @Column(name = "released_date")
 	  private LocalDateTime releasedDate;
 	  
-	  @Column(name="namemed")
-	  private String namemed;
-	   
-	  @Column(name="nameprelev")
-	  private String nameprelev;
+	  @Column(name = "arv_reg")
+	  private int arvReg;
 	  
-	  @Column(name="vl_reason", nullable = true)
-	  private String vlreason;
+	  @Column(name = "result")
+	  private int result;
 	  
+	  @Column(name = "result_other")
+	  private int resultOther;
+	  
+	  @Column(name = "viral_load_log")
+	  private double viralLoadLog;
+	     
 	  @Column(name="reason_other", nullable = true)
 	  private String reasonother;
 	  
@@ -55,162 +58,157 @@ public class Analysis {
 	  
 	  @OneToMany(mappedBy = "analysis")
 	  private List<Sample> samples = new ArrayList<>();
+		
+	  @ManyToOne
+	  @JoinColumn(name ="dietId", nullable = false)
+	  private Diet diet; 
 	  
-	  @OneToMany(mappedBy = "analysis")
-	  private List<AnalysisResult> analysisResults = new ArrayList<>();
-
+	  @ManyToOne
+	  @JoinColumn(name ="vihTypeId", nullable = false)
+	  private VihType vihType; 
+	  
+	  @ManyToOne
+	  @JoinColumn(name ="vlReasonId", nullable = false)
+	  private VlReason vlReason;
 
 	public Analysis() {
 		super();
 	}
 
-
-	public Analysis(LocalDateTime startedDate, LocalDateTime completedDate, LocalDateTime releasedDate, String namemed,
-			String nameprelev, String vlreason, String reasonother, int analysisStatus, Test test, Patient patient,
-			List<Sample> samples, List<AnalysisResult> analysisResults) {
-		super();
-		this.startedDate = startedDate;
-		this.completedDate = completedDate;
-		this.releasedDate = releasedDate;
-		this.namemed = namemed;
-		this.nameprelev = nameprelev;
-		this.vlreason = vlreason;
-		this.reasonother = reasonother;
-		this.analysisStatus = analysisStatus;
-		this.test = test;
-		this.patient = patient;
-		this.samples = samples;
-		this.analysisResults = analysisResults;
-	}
-
-
 	public Long getId() {
 		return id;
 	}
-
 
 	public void setId(Long id) {
 		this.id = id;
 	}
 
-
 	public LocalDateTime getStartedDate() {
 		return startedDate;
 	}
-
 
 	public void setStartedDate(LocalDateTime startedDate) {
 		this.startedDate = startedDate;
 	}
 
-
 	public LocalDateTime getCompletedDate() {
 		return completedDate;
 	}
-
 
 	public void setCompletedDate(LocalDateTime completedDate) {
 		this.completedDate = completedDate;
 	}
 
-
 	public LocalDateTime getReleasedDate() {
 		return releasedDate;
 	}
-
 
 	public void setReleasedDate(LocalDateTime releasedDate) {
 		this.releasedDate = releasedDate;
 	}
 
-
-	public String getNamemed() {
-		return namemed;
+	public int getArvReg() {
+		return arvReg;
 	}
 
-
-	public void setNamemed(String namemed) {
-		this.namemed = namemed;
+	public void setArvReg(int arvReg) {
+		this.arvReg = arvReg;
 	}
 
-
-	public String getNameprelev() {
-		return nameprelev;
+	public int getResult() {
+		return result;
 	}
 
-
-	public void setNameprelev(String nameprelev) {
-		this.nameprelev = nameprelev;
+	public void setResult(int result) {
+		this.result = result;
 	}
 
-
-	public String getVlreason() {
-		return vlreason;
+	public int getResultOther() {
+		return resultOther;
 	}
 
-
-	public void setVlreason(String vlreason) {
-		this.vlreason = vlreason;
+	public void setResultOther(int resultOther) {
+		this.resultOther = resultOther;
 	}
 
+	public double getViralLoadLog() {
+		return viralLoadLog;
+	}
+
+	public void setViralLoadLog(double viralLoadLog) {
+		this.viralLoadLog = viralLoadLog;
+	}
 
 	public String getReasonother() {
 		return reasonother;
 	}
 
-
 	public void setReasonother(String reasonother) {
 		this.reasonother = reasonother;
 	}
-
 
 	public int getAnalysisStatus() {
 		return analysisStatus;
 	}
 
-
 	public void setAnalysisStatus(int analysisStatus) {
 		this.analysisStatus = analysisStatus;
 	}
-
 
 	public Test getTest() {
 		return test;
 	}
 
-
 	public void setTest(Test test) {
 		this.test = test;
 	}
-
 
 	public Patient getPatient() {
 		return patient;
 	}
 
-
 	public void setPatient(Patient patient) {
 		this.patient = patient;
 	}
-
 
 	public List<Sample> getSamples() {
 		return samples;
 	}
 
-
 	public void setSamples(List<Sample> samples) {
 		this.samples = samples;
 	}
 
-
-	public List<AnalysisResult> getAnalysisResults() {
-		return analysisResults;
+	public Diet getDiet() {
+		return diet;
 	}
 
-
-	public void setAnalysisResults(List<AnalysisResult> analysisResults) {
-		this.analysisResults = analysisResults;
+	public void setDiet(Diet diet) {
+		this.diet = diet;
 	}
 
+	public VihType getVihType() {
+		return vihType;
+	}
+
+	public void setVihType(VihType vihType) {
+		this.vihType = vihType;
+	}
+
+	public VlReason getVlReason() {
+		return vlReason;
+	}
+
+	public void setVlReason(VlReason vlReason) {
+		this.vlReason = vlReason;
+	}
+
+	@Override
+	public String toString() {
+		return "Analysis [id=" + id + ", startedDate=" + startedDate + ", completedDate=" + completedDate
+				+ ", releasedDate=" + releasedDate + ", arvReg=" + arvReg + ", result=" + result + ", resultOther="
+				+ resultOther + ", viralLoadLog=" + viralLoadLog + ", reasonother=" + reasonother + ", analysisStatus="
+				+ analysisStatus + ", test=" + test + ", patient=" + patient + ", samples=" + samples + ", diet=" + diet
+				+ ", vihType=" + vihType + ", vlReason=" + vlReason + "]";
+	}
 }

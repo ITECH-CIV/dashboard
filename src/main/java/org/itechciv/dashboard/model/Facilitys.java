@@ -40,7 +40,7 @@ public class Facilitys {
 	  private String nameSiteDatim;
 	  
 	  @Column(name = "old_code_facilitys_dhis2")
-	  private int oldCodeFacilitysDHIS2;
+	  private String oldCodeFacilitysDHIS2;
 	  
 	  @Column(name = "old_facilitys_name")
 	  private String oldFacilityName;
@@ -72,7 +72,7 @@ public class Facilitys {
 	}
 
 	public Facilitys(String code, String name, int codeSite, String nameSite, String codeSiteDatim,
-			String nameSiteDatim, int oldCodeFacilitysDHIS2, String oldFacilityName, int uniqueFacilitysId,
+			String nameSiteDatim, String oldCodeFacilitysDHIS2, String oldFacilityName, int uniqueFacilitysId,
 			String newFacilitysLongName, String newFacilitysShortName, String statutId, String facilitysCode,
 			District district, List<Patient> patients) {
 		super();
@@ -149,11 +149,11 @@ public class Facilitys {
 		this.nameSiteDatim = nameSiteDatim;
 	}
 
-	public int getOldCodeFacilitysDHIS2() {
+	public String getOldCodeFacilitysDHIS2() {
 		return oldCodeFacilitysDHIS2;
 	}
 
-	public void setOldCodeFacilitysDHIS2(int oldCodeFacilitysDHIS2) {
+	public void setOldCodeFacilitysDHIS2(String oldCodeFacilitysDHIS2) {
 		this.oldCodeFacilitysDHIS2 = oldCodeFacilitysDHIS2;
 	}
 
@@ -220,4 +220,16 @@ public class Facilitys {
 	public void setPatients(List<Patient> patients) {
 		this.patients = patients;
 	}
+
+	@Override
+	public String toString() {
+		return "Facilitys [id=" + id + ", code=" + code + ", name=" + name + ", codeSite=" + codeSite + ", nameSite="
+				+ nameSite + ", codeSiteDatim=" + codeSiteDatim + ", nameSiteDatim=" + nameSiteDatim
+				+ ", oldCodeFacilitysDHIS2=" + oldCodeFacilitysDHIS2 + ", oldFacilityName=" + oldFacilityName
+				+ ", uniqueFacilitysId=" + uniqueFacilitysId + ", newFacilitysLongName=" + newFacilitysLongName
+				+ ", newFacilitysShortName=" + newFacilitysShortName + ", statutId=" + statutId + ", facilitysCode="
+				+ facilitysCode + ", district=" + district + ", patients=" + patients + "]";
+	} 
+	
+	
 }

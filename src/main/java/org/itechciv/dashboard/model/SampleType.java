@@ -32,13 +32,6 @@ public class SampleType  {
 		super();
 	}
 
-	public SampleType(String label, String description, List<Sample> samples) {
-		super();
-		this.label = label;
-		this.description = description;
-		this.samples = samples;
-	}
-
 	public Long getId() {
 		return id;
 	}
@@ -70,5 +63,10 @@ public class SampleType  {
 	public void setSamples(List<Sample> samples) {
 		this.samples = samples;
 	}
-	
+
+	@Override
+	public String toString() {
+		return "SampleType [id=" + id + ", label=" + label + ", description=" + description + ", samples=" + samples
+				+ "]";
+	}
 }

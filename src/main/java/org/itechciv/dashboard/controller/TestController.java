@@ -118,9 +118,9 @@ public class TestController {
 	}
 	
 
-	@RequestMapping(method = RequestMethod.GET, value="test/getByName")
+	@RequestMapping(method = RequestMethod.GET, value="test/getByStudy")
 	@ResponseBody
-	public ResponseEntity<Response> getSampleTypeByName(String name) { 
+	public ResponseEntity<Response> getTestByStudy(String study) { 
 		
 		Response res = new Response(); 
 		
@@ -129,7 +129,7 @@ public class TestController {
 		
 		try {
 		
-			test= testService.getByName(name); 
+			test= testService.getByName(study); 
 		
 		 if(test != null) {
 			

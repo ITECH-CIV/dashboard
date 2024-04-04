@@ -16,7 +16,7 @@ public interface FacilitysRepository extends JpaRepository<Facilitys, Long> {
 	@Query(value = "select f.*" + 
 			" from dashboard.facilitys f" + 
 			" where f.old_code_facilitys_dhis2 =?1", nativeQuery = true)	
-	Facilitys findFacilitysByOldCode(int code); 
+	Facilitys findFacilitysByOldCode(String code); 
 	
 	@Query(value = "select f.*" + 
 			" from dashboard.facilitys f" + 

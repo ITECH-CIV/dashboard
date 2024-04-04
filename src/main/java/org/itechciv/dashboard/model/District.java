@@ -66,4 +66,9 @@ public class District {
 		public void setFacilitys(List<Facilitys> facilitys) {
 			this.facilitys = facilitys;
 		}
+
+		@Override
+		public String toString() {
+			return "District [id=" + id + ", name=" + name + ", region=" + region + ", facilitys=" + facilitys + "]";
+		}
 }

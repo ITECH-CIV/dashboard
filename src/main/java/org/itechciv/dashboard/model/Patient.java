@@ -36,33 +36,8 @@ public class Patient {
      @Column(name = "age_weeks")
      private int ageWeeks;
      
-     @Column(name = "current1")
-     private String current1;
-     
-     @Column(name = "current2")
-     private String current2;
-     
-     @Column(name = "current3")
-     private String current3;
-     
-     @Column(name = "current4" , nullable = true)
-     private String current4;
-     
-     @Column(name = "vl_pregnancy")
-     private int vlPregnancy;
-     
-     @Column(name = "vl_suckle", nullable = true)
-     private int vlSuckle;
-     
-     @Column(name = "stat_vih")
-     private String statVih;
-     
-     @Column(name = "arv_reg")
-     private int arvReg;
-     
      @Column(name = "arv_init_date")
      private Date arvInitDate;
-     
      
      @Column(name = "identity_data")
      private String identityData;
@@ -88,34 +63,6 @@ public class Patient {
 
 	public Patient() {
 		super();
-	}
-
-	public Patient(String gender, Date birthDate, int ageYears, int ageMonths, int ageWeeks, String current1,
-			String current2, String current3, String current4, int vlPregnancy, int vlSuckle, String statVih,
-			int arvReg, Date arvInitDate, String identityData, String upidCode, String nationalCode, String subjectno,
-			String subjectid, Facilitys facilitys, List<Analysis> analysis) {
-		super();
-		this.gender = gender;
-		this.birthDate = birthDate;
-		this.ageYears = ageYears;
-		this.ageMonths = ageMonths;
-		this.ageWeeks = ageWeeks;
-		this.current1 = current1;
-		this.current2 = current2;
-		this.current3 = current3;
-		this.current4 = current4;
-		this.vlPregnancy = vlPregnancy;
-		this.vlSuckle = vlSuckle;
-		this.statVih = statVih;
-		this.arvReg = arvReg;
-		this.arvInitDate = arvInitDate;
-		this.identityData = identityData;
-		this.upidCode = upidCode;
-		this.nationalCode = nationalCode;
-		this.subjectno = subjectno;
-		this.subjectid = subjectid;
-		this.facilitys = facilitys;
-		this.analysis = analysis;
 	}
 
 	public Long getId() {
@@ -164,70 +111,6 @@ public class Patient {
 
 	public void setAgeWeeks(int ageWeeks) {
 		this.ageWeeks = ageWeeks;
-	}
-
-	public String getCurrent1() {
-		return current1;
-	}
-
-	public void setCurrent1(String current1) {
-		this.current1 = current1;
-	}
-
-	public String getCurrent2() {
-		return current2;
-	}
-
-	public void setCurrent2(String current2) {
-		this.current2 = current2;
-	}
-
-	public String getCurrent3() {
-		return current3;
-	}
-
-	public void setCurrent3(String current3) {
-		this.current3 = current3;
-	}
-
-	public String getCurrent4() {
-		return current4;
-	}
-
-	public void setCurrent4(String current4) {
-		this.current4 = current4;
-	}
-
-	public int getVlPregnancy() {
-		return vlPregnancy;
-	}
-
-	public void setVlPregnancy(int vlPregnancy) {
-		this.vlPregnancy = vlPregnancy;
-	}
-
-	public int getVlSuckle() {
-		return vlSuckle;
-	}
-
-	public void setVlSuckle(int vlSuckle) {
-		this.vlSuckle = vlSuckle;
-	}
-
-	public String getStatVih() {
-		return statVih;
-	}
-
-	public void setStatVih(String statVih) {
-		this.statVih = statVih;
-	}
-
-	public int getArvReg() {
-		return arvReg;
-	}
-
-	public void setArvReg(int arvReg) {
-		this.arvReg = arvReg;
 	}
 
 	public Date getArvInitDate() {
@@ -294,4 +177,12 @@ public class Patient {
 		this.analysis = analysis;
 	}
 
+	@Override
+	public String toString() {
+		return "Patient [id=" + id + ", gender=" + gender + ", birthDate=" + birthDate + ", ageYears=" + ageYears
+				+ ", ageMonths=" + ageMonths + ", ageWeeks=" + ageWeeks + ", arvInitDate=" + arvInitDate
+				+ ", identityData=" + identityData + ", upidCode=" + upidCode + ", nationalCode=" + nationalCode
+				+ ", subjectno=" + subjectno + ", subjectid=" + subjectid + ", facilitys=" + facilitys + ", analysis="
+				+ analysis + "]";
+	} 
 }
