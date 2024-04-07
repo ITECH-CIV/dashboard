@@ -1,5 +1,13 @@
 package org.itechciv.dashboard.impservice;
+import java.text.SimpleDateFormat;
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
+import java.util.Date;
+import java.util.Locale;
+
+import org.apache.poi.ss.usermodel.CellType;
 import org.apache.poi.ss.usermodel.DataFormatter;
+import org.apache.poi.ss.usermodel.DateUtil;
 import org.apache.poi.xssf.usermodel.XSSFRow;
 import org.apache.poi.xssf.usermodel.XSSFSheet;
 import org.apache.poi.xssf.usermodel.XSSFWorkbook;
@@ -63,6 +71,8 @@ public class UploadServiceImpl implements UploadService {
 	private VlReasonRepository vlReasonRepository;
 	
 	private final DataFormatter dataFormatter = new DataFormatter();
+	
+	private final DateTimeFormatter ft = DateTimeFormatter.ofPattern("dd-MMM-yyyy HH:mm:ss");
 	
 	//IMPORT LOCALITE: Region, District, Facilitys
 	@Override
@@ -197,11 +207,7 @@ public class UploadServiceImpl implements UploadService {
 					    	 f.setNameSiteDatim(row.getCell(10).getStringCellValue());
 					    	
 					    	f = facilitysRepository.saveAndFlush(f); 
-					     }
-					     
-					     
-					     
-					     
+					     }  
 	            	}catch(Exception ex) {
 	            		ex.printStackTrace();
 	            	}
@@ -216,5 +222,55 @@ public class UploadServiceImpl implements UploadService {
 			System.out.println("Exception => " + ex.getMessage());
 			return false;
 		}		
+	}
+/*******************************************FIN**********************************************/
+
+	@Override
+	public boolean uploadTestImport(MultipartFile file) {
+		
+		try {
+			
+			XSSFWorkbook workbook = new XSSFWorkbook(file.getInputStream());
+			XSSFSheet spreadsheet  = workbook.getSheetAt(0);
+			
+			 for(int i=7; i<spreadsheet.getPhysicalNumberOfRows();i++) {
+	              XSSFRow row = spreadsheet.getRow(i);
+	              
+	             if(row.getCell(12) != null) {
+	            	  
+            	    if(row.getCell(12).getCellType() == CellType.STRING){
+            	    	
+            	    	SimpleDateFormat formatter = new SimpleDateFormat("dd/MM/yyyy");
+            	    	String dateInString = row.getCell(12).getStringCellValue();
+            	    	
+            	    	try {
+            	    		Date date = formatter.parse(dateInString);
+            	    		System.out.println("simple-date: " + date + "\n");
+            	    		System.out.println("formated-date: " +formatter.format(date));	
+            	    	}catch(Exception ex) {
+            	    		ex.printStackTrace();
+            	    	}
+            	    }
+            	} 
+	             
+	             if(row.getCell(5).getCellType() == CellType.STRING) {
+	            	 String dateInString = row.getCell(5).getStringCellValue();
+         	         DateTimeFormatter df = DateTimeFormatter.ofPattern("dd-MM-yyyy HH:mm:ss", Locale.FRENCH); 
+         	    	
+	            	 
+	            	 
+	            	 
+	            	 
+         		    System.out.println ("Value-localdatetime: " +row.getCell(5).getStringCellValue() + "\n");
+
+	             }
+	             /*************************************FIN****************************************************/	              
+	              workbook.close();
+	              }
+				return true;	
+			 }catch(Exception ex) {
+			ex.printStackTrace();
+			return false;
+		}
 	}
 }
