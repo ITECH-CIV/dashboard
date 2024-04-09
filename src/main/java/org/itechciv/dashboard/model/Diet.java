@@ -49,6 +49,14 @@ public class Diet {
 		this.id = id;
 	}
 
+	public String getName() {
+		return name;
+	}
+
+	public void setName(String name) {
+		this.name = name;
+	}
+
 	public String getCurrent1() {
 		return current1;
 	}
@@ -87,11 +95,5 @@ public class Diet {
 
 	public void setAnalysis(List<Analysis> analysis) {
 		this.analysis = analysis;
-	}
-
-	@Override
-	public String toString() {
-		return "Diet [id=" + id + ", current1=" + current1 + ", current2=" + current2 + ", current3=" + current3
-				+ ", current4=" + current4 + ", analysis=" + analysis + "]";
 	}
 }
