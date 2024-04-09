@@ -177,7 +177,7 @@ public class UploadServiceImpl implements UploadService {
 				XSSFRow row = spreadsheet.getRow(i);
 				// Test
 				if (row.getCell(3) != null) {
-					try {
+					
 						t = testRepository.findTestByName(row.getCell(3).getStringCellValue());
 						System.out.println("Test:" + t + "\n");
 
@@ -189,9 +189,6 @@ public class UploadServiceImpl implements UploadService {
 							t = testRepository.save(inTest);
 							System.out.println("Test:" +t.toString());
 						}						
-					} catch (Exception ex) {
-						ex.printStackTrace();
-					}
 				}
 				// Facilitys
 				if (row.getCell(7) != null) {
@@ -222,11 +219,30 @@ public class UploadServiceImpl implements UploadService {
 						f = facilitysRepository.saveAndFlush(f);
 						
 						//System.out.println("updated-facilitys:" +f.getId()+"\n");
-					} 
-						
+					} 	
 				}      
-				
 				//Patient
+				  if(row.getCell(4) != null) {
+					 p = patientRepository.findPatientByCode(row.getCell(4).getRawValue());
+					 
+					 if(p==null) {
+						 Patient inPatient = new Patient();
+						        
+								/*String str = String.valueOf(row.getCell(2).getRawValue());
+								inPatient.setSubjectno(str);*/
+								inPatient.setSubjectno(ProcessString.getCellStringValue(row.getCell(2)));
+								inPatient.setSubjectid(ProcessString.getCellStringValue(row.getCell(4)));
+								inPatient.setGender(row.getCell(11).getStringCellValue());
+								inPatient.setBirthDate(ProcessDate.getCellDateValue(evaluator,row.getCell(12)));
+								inPatient.setAgeYears((int) row.getCell(13).getNumericCellValue());
+								inPatient.setAgeMonths((int) row.getCell(14).getNumericCellValue());
+								inPatient.setAgeWeeks((int) row.getCell(15).getNumericCellValue());
+								inPatient.setArvInitDate(ProcessDate.getCellDateValue(evaluator,row.getCell(26)));
+								inPatient.setFacilitys(f);
+			            			
+		                		 p = patientRepository.save(inPatient);
+							}
+					 }
 				workbook.close();
 			}
 			return true;
