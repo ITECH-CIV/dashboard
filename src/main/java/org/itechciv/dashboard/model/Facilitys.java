@@ -30,13 +30,13 @@ public class Facilitys {
 	  @Column(name = "code_site")
 	  private int codeSite;
 	  
-	  @Column(name = "name_site")
+	  @Column(name = "name_site", nullable= true)
 	  private String nameSite;
 	  
-	  @Column(name = "code_site_datim")
+	  @Column(name = "code_site_datim", nullable= true)
 	  private String codeSiteDatim;
 	  
-	  @Column(name = "name_site_datim")
+	  @Column(name = "name_site_datim", nullable= true)
 	  private String nameSiteDatim;
 	  
 	  @Column(name = "old_code_facilitys_dhis2")

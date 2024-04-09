@@ -19,13 +19,16 @@ public class Diet {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 	
-	@Column(name = "current1")
+	@Column(name = "name")
+    private String name;
+	
+	@Column(name = "current1", nullable = true)
     private String current1;
     
-    @Column(name = "current2")
+    @Column(name = "current2", nullable = true)
     private String current2;
     
-    @Column(name = "current3")
+    @Column(name = "current3", nullable = true)
     private String current3;
     
     @Column(name = "current4" , nullable = true)

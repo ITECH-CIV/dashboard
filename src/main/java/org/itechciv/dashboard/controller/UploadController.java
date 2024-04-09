@@ -84,7 +84,7 @@ public class UploadController {
 		     return ResponseEntity.status(HttpStatus.NOT_FOUND).body(new ResponseMessage(message, null));
 		  } 
 		 } catch (Exception ex) {
-			  //ex.printStackTrace();
+			  ex.printStackTrace();
 			  message = ConstantMessage.ERROR;
 		      return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(new ResponseMessage(message, ex.getMessage()));
 		  } 	 
