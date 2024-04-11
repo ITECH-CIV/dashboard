@@ -22,6 +22,7 @@ import org.apache.poi.xssf.usermodel.XSSFWorkbook;
 import org.itechciv.dashboard.helper.Constants;
 import org.itechciv.dashboard.helper.ProcessDate;
 import org.itechciv.dashboard.helper.ProcessString;
+import org.itechciv.dashboard.helper.ProcessType;
 import org.itechciv.dashboard.helper.ProcessCell;
 import org.itechciv.dashboard.iservice.UploadService;
 import org.itechciv.dashboard.model.Analysis;
@@ -51,6 +52,8 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.multipart.MultipartFile;
 import org.apache.poi.ss.usermodel.FormulaEvaluator;
+import java.util.Calendar;  
+import java.util.GregorianCalendar;  
 
 @Service
 @Transactional
@@ -220,8 +223,8 @@ public class UploadServiceImpl implements UploadService {
 						ex.printStackTrace();
 					}
                		inFacilitys.setNameSite(row.getCell(8).getStringCellValue());
-					inFacilitys.setCodeSiteDatim(ProcessCell.getCellStringValue(row.getCell(9)));
-					inFacilitys.setNameSiteDatim(ProcessCell.getCellStringValue(row.getCell(10)));
+					inFacilitys.setCodeSiteDatim(ProcessType.getCellStringValue(row.getCell(9)));
+					inFacilitys.setNameSiteDatim(ProcessType.getCellStringValue(row.getCell(10)));
 					 
 					f = facilitysRepository.save(inFacilitys);
 					 
@@ -229,8 +232,8 @@ public class UploadServiceImpl implements UploadService {
 
 					}else {
 						f.setNameSite(row.getCell(8).getStringCellValue());
-						f.setCodeSiteDatim(ProcessCell.getCellStringValue(row.getCell(9)));
-						f.setNameSiteDatim(ProcessCell.getCellStringValue(row.getCell(10)));
+						f.setCodeSiteDatim(ProcessType.getCellStringValue(row.getCell(9)));
+						f.setNameSiteDatim(ProcessType.getCellStringValue(row.getCell(10)));
 						
 						f = facilitysRepository.saveAndFlush(f);
 						
@@ -246,14 +249,14 @@ public class UploadServiceImpl implements UploadService {
 						        
 								/*String str = String.valueOf(row.getCell(2).getRawValue());
 								inPatient.setSubjectno(str);*/
-								inPatient.setSubjectno(ProcessCell.getCellStringValue(row.getCell(2)));
-								inPatient.setSubjectid(ProcessCell.getCellStringValue(row.getCell(4)));
+								inPatient.setSubjectno(ProcessType.getCellStringValue(row.getCell(2)));
+								inPatient.setSubjectid(ProcessType.getCellStringValue(row.getCell(4)));
 								inPatient.setGender(row.getCell(11).getStringCellValue());
-								inPatient.setBirthDate(ProcessDate.getCellDateValue(evaluator,row.getCell(12)));
+								inPatient.setBirthDate(ProcessType.getCellDateValue(evaluator,row.getCell(12)));
 								inPatient.setAgeYears((int) row.getCell(13).getNumericCellValue());
 								inPatient.setAgeMonths((int) row.getCell(14).getNumericCellValue());
 								inPatient.setAgeWeeks((int) row.getCell(15).getNumericCellValue());
-								inPatient.setArvInitDate(ProcessDate.getCellDateValue(evaluator,row.getCell(26)));
+								inPatient.setArvInitDate(ProcessType.getCellDateValue(evaluator,row.getCell(26)));
 								inPatient.setFacilitys(f);
 			            			
 		                		 p = patientRepository.save(inPatient);
@@ -262,11 +265,11 @@ public class UploadServiceImpl implements UploadService {
 				  //VihType
 				  if (row.getCell(23) != null) {
 						
-					vt = vihTypeRepository.findVihTypeByName(ProcessCell.getCellStringValue(row.getCell(23)));
+					vt = vihTypeRepository.findVihTypeByName(ProcessType.getCellStringValue(row.getCell(23)));
 						
 						if (vt == null) {
 							VihType inVihType = new VihType();
-							inVihType.setName(ProcessCell.getCellStringValue(row.getCell(23)));
+							inVihType.setName(ProcessType.getCellStringValue(row.getCell(23)));
         
 							vt = vihTypeRepository.save(inVihType);
 						}							
@@ -274,11 +277,11 @@ public class UploadServiceImpl implements UploadService {
 				//VlReason  
 				  if (row.getCell(33) != null) {
 						
-						vr = vlReasonRepository.findVlReasonByName(ProcessCell.getCellStringValue(row.getCell(33)));
+						vr = vlReasonRepository.findVlReasonByName(ProcessType.getCellStringValue(row.getCell(33)));
 							
 							if (vr == null) {
 								VlReason inVlReason = new VlReason();
-								inVlReason.setName(ProcessCell.getCellStringValue(row.getCell(33)));
+								inVlReason.setName(ProcessType.getCellStringValue(row.getCell(33)));
 	        
 								vr = vlReasonRepository.save(inVlReason);
 							}							
@@ -292,12 +295,12 @@ public class UploadServiceImpl implements UploadService {
 	                	
              		 a = new Analysis();
              		 a.setAnalysisStatus((int)row.getCell(19).getNumericCellValue());
-         			 a.setStartedDate(ProcessDate.toLocalDateTime(evaluator, row.getCell(20)));
-         			 a.setCompletedDate(ProcessDate.toLocalDateTime(evaluator, row.getCell(21)));
-         			 a.setReleasedDate(ProcessDate.toLocalDateTime(evaluator, row.getCell(22)));
+         			 a.setStartedDate(ProcessType.toLocalDateTime(evaluator, row.getCell(20)));
+         			 a.setCompletedDate(ProcessType.toLocalDateTime(evaluator, row.getCell(21)));
+         			 a.setReleasedDate(ProcessType.toLocalDateTime(evaluator, row.getCell(22)));
          			 a.setViralLoad(str);
-         			 a.setViralLoadLog(ProcessCell.getCellDoubleValue(row.getCell(17)));
-             		 a.setReasonother(ProcessCell.getCellStringValue(row.getCell(34)));
+         			 a.setViralLoadLog(ProcessType.getCellDoubleValue(row.getCell(17)));
+             		 a.setReasonother(ProcessType.getCellStringValue(row.getCell(34)));
          			 a.setPatient(p);
          			 a.setTest(t);
          			 a.setVlReason(vr);
@@ -324,8 +327,8 @@ public class UploadServiceImpl implements UploadService {
 	                		 Sample inSample = new Sample();
 	                		 inSample.setLabno(row.getCell(0).getStringCellValue());
 	                		 inSample.setSampleStatus(row.getCell(1).getStringCellValue());
-	                		 inSample.setDrcpt(ProcessDate.toLocalDateTime(evaluator, row.getCell(5)));
-	                		 inSample.setDintv(ProcessDate.toLocalDateTime(evaluator, row.getCell(6)));
+	                		 inSample.setDrcpt(ProcessType.toLocalDateTime(evaluator, row.getCell(5)));
+	                		 inSample.setDintv(ProcessType.toLocalDateTime(evaluator, row.getCell(6)));
 	                		 inSample.setSampleType(st);
 	                		 inSample.setAnalysis(a);
 	            			 
@@ -369,14 +372,14 @@ public class UploadServiceImpl implements UploadService {
 						 
 							  p = new Patient();
 							        
-									p.setSubjectno(ProcessCell.getCellStringValue(row.getCell(2)));
-									p.setSubjectid(ProcessCell.getCellStringValue(row.getCell(4)));
+									p.setSubjectno(ProcessType.getCellStringValue(row.getCell(2)));
+									p.setSubjectid(ProcessType.getCellStringValue(row.getCell(4)));
 									p.setGender(row.getCell(11).getStringCellValue());
-									p.setBirthDate(ProcessDate.getCellDateValue(evaluator,row.getCell(12)));
+									p.setBirthDate(ProcessType.getCellDateValue(evaluator,row.getCell(12)));
 									p.setAgeYears((int) row.getCell(13).getNumericCellValue());
 									p.setAgeMonths((int) row.getCell(14).getNumericCellValue());
 									p.setAgeWeeks((int) row.getCell(15).getNumericCellValue());
-									p.setArvInitDate(ProcessDate.getCellDateValue(evaluator,row.getCell(26)));
+									p.setArvInitDate(ProcessType.getCellDateValue(evaluator,row.getCell(26)));
 				            			
                            System.out.println("Patient-object:" + p.getBirthDate()+ "\n");								
 						 } 
@@ -387,12 +390,12 @@ public class UploadServiceImpl implements UploadService {
 	                	
              		 a = new Analysis();
              		 a.setAnalysisStatus((int)row.getCell(19).getNumericCellValue());
-         			 a.setStartedDate(ProcessDate.toLocalDateTime(evaluator, row.getCell(20)));
-         			 a.setCompletedDate(ProcessDate.toLocalDateTime(evaluator, row.getCell(21)));
-         			 a.setReleasedDate(ProcessDate.toLocalDateTime(evaluator, row.getCell(22)));
+         			 a.setStartedDate(ProcessType.toLocalDateTime(evaluator, row.getCell(20)));
+         			 a.setCompletedDate(ProcessType.toLocalDateTime(evaluator, row.getCell(21)));
+         			 a.setReleasedDate(ProcessType.toLocalDateTime(evaluator, row.getCell(22)));
          			 a.setViralLoad(str);
-         			 a.setViralLoadLog(ProcessCell.getCellDoubleValue(row.getCell(17)));
-             		 a.setReasonother(ProcessCell.getCellStringValue(row.getCell(34)));
+         			 a.setViralLoadLog(ProcessType.getCellDoubleValue(row.getCell(17)));
+             		 a.setReasonother(ProcessType.getCellStringValue(row.getCell(34)));
          			 //a.setPatient(p);
          			 //a.setTest(t);
          			 //a.setVlReason(vr);
@@ -424,6 +427,36 @@ public class UploadServiceImpl implements UploadService {
                      }
                      //return listCategory;                     
                      //System.out.println("liste-categorie:" +tab);
+                     
+                     Date d = new Date();
+                     System.out.println("current-date:" +d);
+                     
+                     int year = d.getYear();  
+                     System.out.println("year:" +year);
+                     
+                     int currentYear=year+1900;  
+                     System.out.println("current-year:" +currentYear);
+                     
+                     
+
+
+						/*
+						 * Calendar calendar = new GregorianCalendar(); int year =
+						 * calendar.get(Calendar.YEAR); //Add one to month {0 - 11} int month =
+						 * calendar.get(Calendar.MONTH) + 1; int day =
+						 * calendar.get(Calendar.DAY_OF_MONTH);
+						 * 
+						 * Calendar.get(Calendar.YEAR) - 1900
+						 * 
+						 * System.out.println("current-date-get-year:" +d.getYear());
+						 * 
+						 * 
+						 * Calendar calendar = Calendar.getInstance(); calendar.setTime(new Date());
+						 * Here is the sample code to get the year, month, etc.
+						 * 
+						 * System.out.println(calendar.get(Calendar.YEAR));
+						 * System.out.println(calendar.get(Calendar.MONTH));
+						 */
 
 
              	}

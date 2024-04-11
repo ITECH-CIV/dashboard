@@ -23,5 +23,10 @@ public class ProcessString {
        return listCategory;
 		
 	}  
+	
+public static String concatenateCurrentValue(String current1, String current2, String current3, String current4) {
+		
+		return "";	
+	}
 
 }
