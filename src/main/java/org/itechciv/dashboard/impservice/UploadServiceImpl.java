@@ -6,6 +6,7 @@ import java.time.LocalDateTime;
 import java.time.ZoneId;
 import java.time.format.DateTimeFormatter;
 import java.util.Date;
+import java.util.List;
 import java.util.Locale;
 import java.util.Objects;
 
@@ -20,6 +21,7 @@ import org.apache.poi.xssf.usermodel.XSSFSheet;
 import org.apache.poi.xssf.usermodel.XSSFWorkbook;
 import org.itechciv.dashboard.helper.Constants;
 import org.itechciv.dashboard.helper.ProcessDate;
+import org.itechciv.dashboard.helper.ProcessString;
 import org.itechciv.dashboard.helper.ProcessCell;
 import org.itechciv.dashboard.iservice.UploadService;
 import org.itechciv.dashboard.model.Analysis;
@@ -401,7 +403,27 @@ public class UploadServiceImpl implements UploadService {
                      System.out.println("analysis-status:" + a.getAnalysisStatus()+ "\n");		
                      System.out.println("analysis-started-date:" + a.getStartedDate()+ "\n");								
                      System.out.println("analysis-completed-date:" + a.getCompletedDate()+ "\n");								
-                     System.out.println("analysis-released-date:" + a.getReleasedDate()+ "\n");								
+                     System.out.println("analysis-released-date:" + a.getReleasedDate()+ "\n");		
+                     
+                     String[] listAges = {"1","3","5-9","10-14","15-19","20-24","25-29","30-34","35-39","40-44","45-49","50","60","70"};
+                     
+                     for(int k=0; k<listAges.length; k++) {
+                  	   
+                  	   String[] items = listAges[k].split("-");
+                  	   
+                  	 for (String item : items) {
+                         System.out.println("items:" +item);
+                     }
+                  	   
+                  	   //System.out.println("items:" +items);
+
+                  	   
+                  	   //System.out.println(items[0] +" " + items[1]);
+                  	   
+                  	   //listCategory.add(items[i]);
+                     }
+                     //return listCategory;                     
+                     //System.out.println("liste-categorie:" +tab);
 
 
              	}
