@@ -39,6 +39,9 @@ public class Analysis {
 	  @Column(name = "result_other")
 	  private int resultOther;
 	  
+	  @Column(name="viral_load", nullable = true)
+	  private String viralLoad;
+	  
 	  @Column(name = "viral_load_log")
 	  private double viralLoadLog;
 	     
@@ -60,7 +63,7 @@ public class Analysis {
 	  private List<Sample> samples = new ArrayList<>();
 		
 	  @ManyToOne
-	  @JoinColumn(name ="dietId", nullable = false)
+	  @JoinColumn(name ="dietId", nullable = true)
 	  private Diet diet; 
 	  
 	  @ManyToOne
@@ -129,6 +132,14 @@ public class Analysis {
 
 	public void setResultOther(int resultOther) {
 		this.resultOther = resultOther;
+	}
+
+	public String getViralLoad() {
+		return viralLoad;
+	}
+
+	public void setViralLoad(String viralLoad) {
+		this.viralLoad = viralLoad;
 	}
 
 	public double getViralLoadLog() {
@@ -207,8 +218,10 @@ public class Analysis {
 	public String toString() {
 		return "Analysis [id=" + id + ", startedDate=" + startedDate + ", completedDate=" + completedDate
 				+ ", releasedDate=" + releasedDate + ", arvReg=" + arvReg + ", result=" + result + ", resultOther="
-				+ resultOther + ", viralLoadLog=" + viralLoadLog + ", reasonother=" + reasonother + ", analysisStatus="
-				+ analysisStatus + ", test=" + test + ", patient=" + patient + ", samples=" + samples + ", diet=" + diet
-				+ ", vihType=" + vihType + ", vlReason=" + vlReason + "]";
+				+ resultOther + ", viralLoad=" + viralLoad + ", viralLoadLog=" + viralLoadLog + ", reasonother="
+				+ reasonother + ", analysisStatus=" + analysisStatus + ", test=" + test + ", patient=" + patient
+				+ ", samples=" + samples + ", diet=" + diet + ", vihType=" + vihType + ", vlReason=" + vlReason + "]";
 	}
+   
+	
 }

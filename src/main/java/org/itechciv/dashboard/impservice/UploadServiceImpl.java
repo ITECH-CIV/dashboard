@@ -1,7 +1,9 @@
 package org.itechciv.dashboard.impservice;
 
 import java.text.SimpleDateFormat;
+import java.time.Instant;
 import java.time.LocalDateTime;
+import java.time.ZoneId;
 import java.time.format.DateTimeFormatter;
 import java.util.Date;
 import java.util.Locale;
@@ -18,13 +20,19 @@ import org.apache.poi.xssf.usermodel.XSSFSheet;
 import org.apache.poi.xssf.usermodel.XSSFWorkbook;
 import org.itechciv.dashboard.helper.Constants;
 import org.itechciv.dashboard.helper.ProcessDate;
-import org.itechciv.dashboard.helper.ProcessString;
+import org.itechciv.dashboard.helper.ProcessCell;
 import org.itechciv.dashboard.iservice.UploadService;
+import org.itechciv.dashboard.model.Analysis;
+import org.itechciv.dashboard.model.Diet;
 import org.itechciv.dashboard.model.District;
 import org.itechciv.dashboard.model.Facilitys;
 import org.itechciv.dashboard.model.Patient;
 import org.itechciv.dashboard.model.Region;
+import org.itechciv.dashboard.model.Sample;
+import org.itechciv.dashboard.model.SampleType;
 import org.itechciv.dashboard.model.Test;
+import org.itechciv.dashboard.model.VihType;
+import org.itechciv.dashboard.model.VlReason;
 import org.itechciv.dashboard.repository.AnalysisRepository;
 import org.itechciv.dashboard.repository.DietRepository;
 import org.itechciv.dashboard.repository.DistrictRepository;
@@ -92,6 +100,7 @@ public class UploadServiceImpl implements UploadService {
 		Region r = null;
 		District d = null;
 		Facilitys f = null;
+		
 
 		try {
 
@@ -164,6 +173,11 @@ public class UploadServiceImpl implements UploadService {
 		Test t = null;
 		Facilitys f = null;
 		Patient p = null;
+		VihType vt = null;
+		VlReason vr = null;
+		Analysis a = null;
+		SampleType st = null;
+		Sample s = null;
 
 		try {
 			System.out.println("Hello world");
@@ -204,8 +218,8 @@ public class UploadServiceImpl implements UploadService {
 						ex.printStackTrace();
 					}
                		inFacilitys.setNameSite(row.getCell(8).getStringCellValue());
-					inFacilitys.setCodeSiteDatim(ProcessString.getCellStringValue(row.getCell(9)));
-					inFacilitys.setNameSiteDatim(ProcessString.getCellStringValue(row.getCell(10)));
+					inFacilitys.setCodeSiteDatim(ProcessCell.getCellStringValue(row.getCell(9)));
+					inFacilitys.setNameSiteDatim(ProcessCell.getCellStringValue(row.getCell(10)));
 					 
 					f = facilitysRepository.save(inFacilitys);
 					 
@@ -213,8 +227,8 @@ public class UploadServiceImpl implements UploadService {
 
 					}else {
 						f.setNameSite(row.getCell(8).getStringCellValue());
-						f.setCodeSiteDatim(ProcessString.getCellStringValue(row.getCell(9)));
-						f.setNameSiteDatim(ProcessString.getCellStringValue(row.getCell(10)));
+						f.setCodeSiteDatim(ProcessCell.getCellStringValue(row.getCell(9)));
+						f.setNameSiteDatim(ProcessCell.getCellStringValue(row.getCell(10)));
 						
 						f = facilitysRepository.saveAndFlush(f);
 						
@@ -230,8 +244,8 @@ public class UploadServiceImpl implements UploadService {
 						        
 								/*String str = String.valueOf(row.getCell(2).getRawValue());
 								inPatient.setSubjectno(str);*/
-								inPatient.setSubjectno(ProcessString.getCellStringValue(row.getCell(2)));
-								inPatient.setSubjectid(ProcessString.getCellStringValue(row.getCell(4)));
+								inPatient.setSubjectno(ProcessCell.getCellStringValue(row.getCell(2)));
+								inPatient.setSubjectid(ProcessCell.getCellStringValue(row.getCell(4)));
 								inPatient.setGender(row.getCell(11).getStringCellValue());
 								inPatient.setBirthDate(ProcessDate.getCellDateValue(evaluator,row.getCell(12)));
 								inPatient.setAgeYears((int) row.getCell(13).getNumericCellValue());
@@ -243,6 +257,79 @@ public class UploadServiceImpl implements UploadService {
 		                		 p = patientRepository.save(inPatient);
 							}
 					 }
+				  //VihType
+				  if (row.getCell(23) != null) {
+						
+					vt = vihTypeRepository.findVihTypeByName(ProcessCell.getCellStringValue(row.getCell(23)));
+						
+						if (vt == null) {
+							VihType inVihType = new VihType();
+							inVihType.setName(ProcessCell.getCellStringValue(row.getCell(23)));
+        
+							vt = vihTypeRepository.save(inVihType);
+						}							
+				}
+				//VlReason  
+				  if (row.getCell(33) != null) {
+						
+						vr = vlReasonRepository.findVlReasonByName(ProcessCell.getCellStringValue(row.getCell(33)));
+							
+							if (vr == null) {
+								VlReason inVlReason = new VlReason();
+								inVlReason.setName(ProcessCell.getCellStringValue(row.getCell(33)));
+	        
+								vr = vlReasonRepository.save(inVlReason);
+							}							
+					}
+				  //Diet
+				  
+				  //Analysis
+                    if(row.getCell(19)!=null){
+					  
+					  String str = String.valueOf(row.getCell(16).getRawValue());
+	                	
+             		 a = new Analysis();
+             		 a.setAnalysisStatus((int)row.getCell(19).getNumericCellValue());
+         			 a.setStartedDate(ProcessDate.toLocalDateTime(evaluator, row.getCell(20)));
+         			 a.setCompletedDate(ProcessDate.toLocalDateTime(evaluator, row.getCell(21)));
+         			 a.setReleasedDate(ProcessDate.toLocalDateTime(evaluator, row.getCell(22)));
+         			 a.setViralLoad(str);
+         			 a.setViralLoadLog(ProcessCell.getCellDoubleValue(row.getCell(17)));
+             		 a.setReasonother(ProcessCell.getCellStringValue(row.getCell(34)));
+         			 a.setPatient(p);
+         			 a.setTest(t);
+         			 a.setVlReason(vr);
+         			 a.setVihType(vt);
+         			 //a.setDiet(new Diet());       			 
+             		a = analysisRepository.save(a);	 
+             	}
+                //Sample type
+                    if(row.getCell(18)!=null) {
+                    	st = sampleTypeRepository.findSampleTypeByName(row.getCell(18).getStringCellValue());
+	                	
+	                	if(st==null) {
+	                		SampleType inSampleType = new SampleType();
+	                		inSampleType.setLabel(row.getCell(18).getStringCellValue());
+	                		
+	                		st = sampleTypeRepository.save(inSampleType);
+	                	}
+	                }
+               //Sample
+                    if(row.getCell(0)!=null){
+	                	s = sampleRepository.findSampleByCode(row.getCell(0).getStringCellValue());
+
+	                	if(s==null) {
+	                		 Sample inSample = new Sample();
+	                		 inSample.setLabno(row.getCell(0).getStringCellValue());
+	                		 inSample.setSampleStatus(row.getCell(1).getStringCellValue());
+	                		 inSample.setDrcpt(ProcessDate.toLocalDateTime(evaluator, row.getCell(5)));
+	                		 inSample.setDintv(ProcessDate.toLocalDateTime(evaluator, row.getCell(6)));
+	                		 inSample.setSampleType(st);
+	                		 inSample.setAnalysis(a);
+	            			 
+	                		s =sampleRepository.save(inSample);
+	                	} 			 
+	               }   
 				workbook.close();
 			}
 			return true;
@@ -259,6 +346,11 @@ public class UploadServiceImpl implements UploadService {
 	public boolean uploadTestImport(MultipartFile file) {
 		
 		Patient p = null;
+		VihType vt = null;
+		VlReason vr = null;
+		Analysis a = null;
+		SampleType st = null;
+		Sample s = null;
 
 		try {
 
@@ -270,150 +362,49 @@ public class UploadServiceImpl implements UploadService {
 			//int cpt = 0;
 			for (int i = 7; i < spreadsheet.getPhysicalNumberOfRows(); i++) {
 				XSSFRow row = spreadsheet.getRow(i);
-
-				if (row.getCell(12) != null) {
-
-					if (row.getCell(12).getCellType() == CellType.STRING) {
-
-						SimpleDateFormat formatter = new SimpleDateFormat("dd/MM/yyyy");
-						String dateInString = row.getCell(12).getStringCellValue();
-
-						try {
-							Date date = formatter.parse(dateInString);
-							System.out.println("simple-date: " + date + "\n");
-							System.out.println("formated-date: " + formatter.format(date));
-						} catch (Exception ex) {
-							ex.printStackTrace();
-						}
-					}
-				}
-
-				if (row.getCell(5).getCellType() == CellType.STRING) {
-					String dateInString = row.getCell(5).getStringCellValue();
-					DateTimeFormatter df = DateTimeFormatter.ofPattern("dd-MM-yyyy HH:mm:ss", Locale.FRENCH);
-
-					System.out.println("Value-localdatetime: " + row.getCell(5).getStringCellValue() + "\n");
-
-				}
-
-				if (row.getCell(4) != null) {
-
-					if (row.getCell(4).getCellType() == CellType.STRING) {
-						System.out.println("subject-id-string: " + row.getCell(4).getStringCellValue() + "\n");
-					} else if (row.getCell(4).getCellType() == CellType.NUMERIC) {
-						System.out.println("subject-id-numeric: " + row.getCell(4).getNumericCellValue() + "\n");
-					}
-				}
-
-				if (row.getCell(9) != null) {
-
-					if (row.getCell(9).getCellType() == CellType.STRING) {
-						System.out.println("code-site-datim-string: " + row.getCell(9).getStringCellValue() + "\n");
-					} else if (row.getCell(9).getCellType() == CellType.NUMERIC) {
-						System.out.println("code-site-datim-numeric: " + row.getCell(9).getNumericCellValue() + "\n");
-					}
-				}
-
-				if (row.getCell(10) != null) {
-
-					if (row.getCell(10).getCellType() == CellType.STRING) {
-						System.out.println("name-site-datim-string: " + row.getCell(10).getStringCellValue() + "\n");
-					} else if (row.getCell(10).getCellType() == CellType.NUMERIC) {
-						System.out.println("name-site-datim-numeric: " + row.getCell(9).getNumericCellValue() + "\n");
-					}
-				}
-
-				if (row.getCell(2) != null) {
-
-					if (row.getCell(2).getCellType() == CellType.STRING) {
-						System.out.println("subjectno-string: " + row.getCell(2).getStringCellValue() + "\n");
-					} else if (row.getCell(2).getCellType() == CellType.NUMERIC) {
-						System.out.println("subjectno-numeric: " + row.getCell(2).getNumericCellValue() + "\n");
-					}
-				} else {
-					System.out.println("Colonne inexistante");
-				}
 				
-				if (row.getCell(9) != null) {
+				  if(row.getCell(4) != null) {
+						 
+							  p = new Patient();
+							        
+									p.setSubjectno(ProcessCell.getCellStringValue(row.getCell(2)));
+									p.setSubjectid(ProcessCell.getCellStringValue(row.getCell(4)));
+									p.setGender(row.getCell(11).getStringCellValue());
+									p.setBirthDate(ProcessDate.getCellDateValue(evaluator,row.getCell(12)));
+									p.setAgeYears((int) row.getCell(13).getNumericCellValue());
+									p.setAgeMonths((int) row.getCell(14).getNumericCellValue());
+									p.setAgeWeeks((int) row.getCell(15).getNumericCellValue());
+									p.setArvInitDate(ProcessDate.getCellDateValue(evaluator,row.getCell(26)));
+				            			
+                           System.out.println("Patient-object:" + p.getBirthDate()+ "\n");								
+						 } 
+				  
+				  if(row.getCell(19)!=null){
+					  
+					  String str = String.valueOf(row.getCell(16).getRawValue());
+	                	
+             		 a = new Analysis();
+             		 a.setAnalysisStatus((int)row.getCell(19).getNumericCellValue());
+         			 a.setStartedDate(ProcessDate.toLocalDateTime(evaluator, row.getCell(20)));
+         			 a.setCompletedDate(ProcessDate.toLocalDateTime(evaluator, row.getCell(21)));
+         			 a.setReleasedDate(ProcessDate.toLocalDateTime(evaluator, row.getCell(22)));
+         			 a.setViralLoad(str);
+         			 a.setViralLoadLog(ProcessCell.getCellDoubleValue(row.getCell(17)));
+             		 a.setReasonother(ProcessCell.getCellStringValue(row.getCell(34)));
+         			 //a.setPatient(p);
+         			 //a.setTest(t);
+         			 //a.setVlReason(vr);
+         			 //a.setVihType(vt);
+         			 
+             		///a = analysisRepository.save(a);
+             		 
+                     System.out.println("analysis-status:" + a.getAnalysisStatus()+ "\n");		
+                     System.out.println("analysis-started-date:" + a.getStartedDate()+ "\n");								
+                     System.out.println("analysis-completed-date:" + a.getCompletedDate()+ "\n");								
+                     System.out.println("analysis-released-date:" + a.getReleasedDate()+ "\n");								
 
-					if (row.getCell(9).getCellType() == CellType.STRING) {
-						System.out.println("subjectno-string: " + row.getCell(9).getStringCellValue() + "\n");
-					} else if (row.getCell(9).getCellType() == CellType.NUMERIC) {
-						System.out.println("subjectno-numeric: " + row.getCell(9).getNumericCellValue() + "\n");
-					}
-				} 
-				
-				
-				
-				if (row.getCell(26) != null) {
 
-					if (row.getCell(26).getCellType() == CellType.STRING) {
-						System.out.println("arv-init-date-string: " + row.getCell(26).getStringCellValue() + "\n");
-					} else if (row.getCell(26).getCellType() == CellType.NUMERIC) {
-						System.out.println("arv-init-date-int: " + row.getCell(26).getNumericCellValue() + "\n");
-					}
-				} 
-				
-				if(ObjectUtils.isEmpty(row.getRowNum()== 2)){
-					continue;
-				}
-				
-				if (row.getCell(4) != null) {
-					try {
-						p = patientRepository.findPatientByCode(row.getCell(4).getStringCellValue());
-
-						if (p == null) {
-							Patient inPatient = new Patient();
-							try {
-								if(ObjectUtils.isEmpty(row.getRowNum()== 2)){
-									continue;
-								}else {
-									String str = String.valueOf(row.getCell(2).getRawValue());
-									inPatient.setSubjectno(str);
-								}
-							} catch (Exception ex) {
-								ex.printStackTrace();
-							}
-							try {
-								if (row.getCell(4).getStringCellValue() == null) {
-									inPatient.setSubjectid("");
-								} else {
-									inPatient.setSubjectid(row.getCell(4).getStringCellValue());
-								}
-							} catch (Exception ex) {
-								ex.printStackTrace();
-							}
-							inPatient.setGender(row.getCell(11).getStringCellValue());
-
-							try {
-								inPatient.setBirthDate(ProcessDate.getCellDateValue(evaluator, row.getCell(12)));
-							} catch (Exception ex) {
-								ex.printStackTrace();
-							}
-							inPatient.setAgeYears((int) row.getCell(13).getNumericCellValue());
-							inPatient.setAgeMonths((int) row.getCell(14).getNumericCellValue());
-							inPatient.setAgeWeeks((int) row.getCell(15).getNumericCellValue());
-							
-							 try { 
-								 inPatient.setArvInitDate(ProcessDate.getCellDateValue(evaluator, row.getCell(26)));
-							 }catch(Exception ex) { 
-								 ex.printStackTrace(); 
-							    }
-							System.out.println("Patient: " + inPatient.toString() + "\n");
-
-							
-							//p = patientRepository.save(inPatient);
-							/*
-							 * if (p != null) { System.out.println("Patient-saved:" + p.toString() + "\n");
-							 * } else { System.out.println("Patient inexistant"); } break;
-							 */
-						}
-
-					} catch (Exception ex) {
-						ex.printStackTrace();
-						break;
-					}
-				}
+             	}
 				workbook.close();
 			}
 			return true;

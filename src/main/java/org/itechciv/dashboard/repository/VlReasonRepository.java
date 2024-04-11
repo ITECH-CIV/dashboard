@@ -9,6 +9,6 @@ public interface VlReasonRepository extends JpaRepository<VlReason, Long> {
 	
 	@Query(value = "select vr.*" + 
 			" from dashboard.vl_reason vr" + 
-			" where vl.name =?1", nativeQuery = true)	
+			" where vr.name =?1", nativeQuery = true)	
 	VlReason findVlReasonByName(String name); 
 }
