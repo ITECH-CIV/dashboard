@@ -115,6 +115,4 @@ public class ProcessType {
 			double valDouble = evaluator.evaluate(cell).getNumberValue();
 			return ((int) (valDouble) == 0) ? null : DateUtil.getLocalDateTime(valDouble);	
 	  }
-
-
 }

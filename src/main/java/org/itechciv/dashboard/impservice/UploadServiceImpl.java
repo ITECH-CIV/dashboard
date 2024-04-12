@@ -52,8 +52,8 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.multipart.MultipartFile;
 import org.apache.poi.ss.usermodel.FormulaEvaluator;
-import java.util.Calendar;  
-import java.util.GregorianCalendar;  
+import java.util.Calendar;
+import java.util.GregorianCalendar;
 
 @Service
 @Transactional
@@ -95,7 +95,7 @@ public class UploadServiceImpl implements UploadService {
 	private final DataFormatter dataFormatter = new DataFormatter();
 
 	private final DateTimeFormatter ft = DateTimeFormatter.ofPattern("dd-MMM-yyyy HH:mm:ss");
-	
+
 	static XSSFCell cell;
 
 	// IMPORT LOCALITE: Region, District, Facilitys
@@ -105,7 +105,6 @@ public class UploadServiceImpl implements UploadService {
 		Region r = null;
 		District d = null;
 		Facilitys f = null;
-		
 
 		try {
 
@@ -183,158 +182,175 @@ public class UploadServiceImpl implements UploadService {
 		Analysis a = null;
 		SampleType st = null;
 		Sample s = null;
+		Diet d = null;
+		Diet inDiet = null;
 
 		try {
 			System.out.println("Hello world");
 
 			XSSFWorkbook workbook = new XSSFWorkbook(file.getInputStream());
 			XSSFSheet spreadsheet = workbook.getSheetAt(0);
-			FormulaEvaluator evaluator = workbook.getCreationHelper().createFormulaEvaluator(); 
+			FormulaEvaluator evaluator = workbook.getCreationHelper().createFormulaEvaluator();
 
 			for (int i = 1; i < spreadsheet.getPhysicalNumberOfRows(); i++) {
 
 				XSSFRow row = spreadsheet.getRow(i);
 				// Test
 				if (row.getCell(3) != null) {
-					
-						t = testRepository.findTestByName(row.getCell(3).getStringCellValue());
-						System.out.println("Test:" + t + "\n");
 
-						if (t == null) {
-							Test inTest = new Test();
-							inTest.setName(Constants.TEST_NAME);
-							inTest.setStudy(row.getCell(3).getStringCellValue());
+					t = testRepository.findTestByName(row.getCell(3).getStringCellValue());
+					System.out.println("Test:" + t + "\n");
 
-							t = testRepository.save(inTest);
-							System.out.println("Test:" +t.toString());
-						}						
+					if (t == null) {
+						Test inTest = new Test();
+						inTest.setName(Constants.TEST_NAME);
+						inTest.setStudy(row.getCell(3).getStringCellValue());
+
+						t = testRepository.save(inTest);
+						System.out.println("Test:" + t.toString());
+					}
 				}
 				// Facilitys
 				if (row.getCell(7) != null) {
 					String str = String.valueOf(row.getCell(7).getRawValue());
 
 					f = facilitysRepository.findFacilitysByOldCode(str);
-					
-					if(f==null) {
-						Facilitys inFacilitys = new Facilitys();
-               		try {
-						inFacilitys.setOldCodeFacilitysDHIS2(str);
-					} catch (Exception ex) {
-						ex.printStackTrace();
-					}
-               		inFacilitys.setNameSite(row.getCell(8).getStringCellValue());
-					inFacilitys.setCodeSiteDatim(ProcessType.getCellStringValue(row.getCell(9)));
-					inFacilitys.setNameSiteDatim(ProcessType.getCellStringValue(row.getCell(10)));
-					 
-					f = facilitysRepository.save(inFacilitys);
-					 
-					//System.out.println("inserted-facilitys:" +f.getId()+"\n");
 
-					}else {
+					if (f == null) {
+						Facilitys inFacilitys = new Facilitys();
+						try {
+							inFacilitys.setOldCodeFacilitysDHIS2(str);
+						} catch (Exception ex) {
+							ex.printStackTrace();
+						}
+						inFacilitys.setNameSite(row.getCell(8).getStringCellValue());
+						inFacilitys.setCodeSiteDatim(ProcessType.getCellStringValue(row.getCell(9)));
+						inFacilitys.setNameSiteDatim(ProcessType.getCellStringValue(row.getCell(10)));
+
+						f = facilitysRepository.save(inFacilitys);
+
+						// System.out.println("inserted-facilitys:" +f.getId()+"\n");
+
+					} else {
 						f.setNameSite(row.getCell(8).getStringCellValue());
 						f.setCodeSiteDatim(ProcessType.getCellStringValue(row.getCell(9)));
 						f.setNameSiteDatim(ProcessType.getCellStringValue(row.getCell(10)));
-						
-						f = facilitysRepository.saveAndFlush(f);
-						
-						//System.out.println("updated-facilitys:" +f.getId()+"\n");
-					} 	
-				}      
-				//Patient
-				  if(row.getCell(4) != null) {
-					 p = patientRepository.findPatientByCode(row.getCell(4).getRawValue());
-					 
-					 if(p==null) {
-						 Patient inPatient = new Patient();
-						        
-								/*String str = String.valueOf(row.getCell(2).getRawValue());
-								inPatient.setSubjectno(str);*/
-								inPatient.setSubjectno(ProcessType.getCellStringValue(row.getCell(2)));
-								inPatient.setSubjectid(ProcessType.getCellStringValue(row.getCell(4)));
-								inPatient.setGender(row.getCell(11).getStringCellValue());
-								inPatient.setBirthDate(ProcessType.getCellDateValue(evaluator,row.getCell(12)));
-								inPatient.setAgeYears((int) row.getCell(13).getNumericCellValue());
-								inPatient.setAgeMonths((int) row.getCell(14).getNumericCellValue());
-								inPatient.setAgeWeeks((int) row.getCell(15).getNumericCellValue());
-								inPatient.setArvInitDate(ProcessType.getCellDateValue(evaluator,row.getCell(26)));
-								inPatient.setFacilitys(f);
-			            			
-		                		 p = patientRepository.save(inPatient);
-							}
-					 }
-				  //VihType
-				  if (row.getCell(23) != null) {
-						
-					vt = vihTypeRepository.findVihTypeByName(ProcessType.getCellStringValue(row.getCell(23)));
-						
-						if (vt == null) {
-							VihType inVihType = new VihType();
-							inVihType.setName(ProcessType.getCellStringValue(row.getCell(23)));
-        
-							vt = vihTypeRepository.save(inVihType);
-						}							
-				}
-				//VlReason  
-				  if (row.getCell(33) != null) {
-						
-						vr = vlReasonRepository.findVlReasonByName(ProcessType.getCellStringValue(row.getCell(33)));
-							
-							if (vr == null) {
-								VlReason inVlReason = new VlReason();
-								inVlReason.setName(ProcessType.getCellStringValue(row.getCell(33)));
-	        
-								vr = vlReasonRepository.save(inVlReason);
-							}							
-					}
-				  //Diet
-				  
-				  //Analysis
-                    if(row.getCell(19)!=null){
-					  
-					  String str = String.valueOf(row.getCell(16).getRawValue());
-	                	
-             		 a = new Analysis();
-             		 a.setAnalysisStatus((int)row.getCell(19).getNumericCellValue());
-         			 a.setStartedDate(ProcessType.toLocalDateTime(evaluator, row.getCell(20)));
-         			 a.setCompletedDate(ProcessType.toLocalDateTime(evaluator, row.getCell(21)));
-         			 a.setReleasedDate(ProcessType.toLocalDateTime(evaluator, row.getCell(22)));
-         			 a.setViralLoad(str);
-         			 a.setViralLoadLog(ProcessType.getCellDoubleValue(row.getCell(17)));
-             		 a.setReasonother(ProcessType.getCellStringValue(row.getCell(34)));
-         			 a.setPatient(p);
-         			 a.setTest(t);
-         			 a.setVlReason(vr);
-         			 a.setVihType(vt);
-         			 //a.setDiet(new Diet());       			 
-             		a = analysisRepository.save(a);	 
-             	}
-                //Sample type
-                    if(row.getCell(18)!=null) {
-                    	st = sampleTypeRepository.findSampleTypeByName(row.getCell(18).getStringCellValue());
-	                	
-	                	if(st==null) {
-	                		SampleType inSampleType = new SampleType();
-	                		inSampleType.setLabel(row.getCell(18).getStringCellValue());
-	                		
-	                		st = sampleTypeRepository.save(inSampleType);
-	                	}
-	                }
-               //Sample
-                    if(row.getCell(0)!=null){
-	                	s = sampleRepository.findSampleByCode(row.getCell(0).getStringCellValue());
 
-	                	if(s==null) {
-	                		 Sample inSample = new Sample();
-	                		 inSample.setLabno(row.getCell(0).getStringCellValue());
-	                		 inSample.setSampleStatus(row.getCell(1).getStringCellValue());
-	                		 inSample.setDrcpt(ProcessType.toLocalDateTime(evaluator, row.getCell(5)));
-	                		 inSample.setDintv(ProcessType.toLocalDateTime(evaluator, row.getCell(6)));
-	                		 inSample.setSampleType(st);
-	                		 inSample.setAnalysis(a);
-	            			 
-	                		s =sampleRepository.save(inSample);
-	                	} 			 
-	               }   
+						f = facilitysRepository.saveAndFlush(f);
+
+						// System.out.println("updated-facilitys:" +f.getId()+"\n");
+					}
+				}
+				// Patient
+				if (row.getCell(4) != null) {
+					p = patientRepository.findPatientByCode(row.getCell(4).getRawValue());
+
+					if (p == null) {
+						Patient inPatient = new Patient();
+
+						/*
+						 * String str = String.valueOf(row.getCell(2).getRawValue());
+						 * inPatient.setSubjectno(str);
+						 */
+						inPatient.setSubjectno(ProcessType.getCellStringValue(row.getCell(2)));
+						inPatient.setSubjectid(ProcessType.getCellStringValue(row.getCell(4)));
+						inPatient.setGender(row.getCell(11).getStringCellValue());
+						inPatient.setBirthDate(ProcessType.getCellDateValue(evaluator, row.getCell(12)));
+						inPatient.setAgeYears((int) row.getCell(13).getNumericCellValue());
+						inPatient.setAgeMonths((int) row.getCell(14).getNumericCellValue());
+						inPatient.setAgeWeeks((int) row.getCell(15).getNumericCellValue());
+						inPatient.setArvInitDate(ProcessType.getCellDateValue(evaluator, row.getCell(26)));
+						inPatient.setFacilitys(f);
+
+						p = patientRepository.save(inPatient);
+					}
+				}
+				// VihType
+				if (row.getCell(23) != null) {
+
+					vt = vihTypeRepository.findVihTypeByName(ProcessType.getCellStringValue(row.getCell(23)));
+
+					if (vt == null) {
+						VihType inVihType = new VihType();
+						inVihType.setName(ProcessType.getCellStringValue(row.getCell(23)));
+
+						vt = vihTypeRepository.save(inVihType);
+					}
+				}
+				// VlReason
+				if (row.getCell(33) != null) {
+
+					vr = vlReasonRepository.findVlReasonByName(ProcessType.getCellStringValue(row.getCell(33)));
+
+					if (vr == null) {
+						VlReason inVlReason = new VlReason();
+						inVlReason.setName(ProcessType.getCellStringValue(row.getCell(33)));
+
+						vr = vlReasonRepository.save(inVlReason);
+					}
+				}
+				// Diet
+				XSSFCell current3 = null;
+				XSSFCell current2 = null;
+				XSSFCell current1 = null;
+
+				String molecule = ProcessString.concatenateCurrentValue(current3, current2, current1);
+
+				d = dietRepository.findDietByName(molecule);
+
+				if (d == null) {
+
+					inDiet = dietRepository.findDietByName(Constants.DIET_NAME_OTHER);
+					d = inDiet;
+				}
+
+				// Analysis
+				if (row.getCell(19) != null) {
+
+					String str = String.valueOf(row.getCell(16).getRawValue());
+
+					a = new Analysis();
+					a.setAnalysisStatus((int) row.getCell(19).getNumericCellValue());
+					a.setStartedDate(ProcessType.toLocalDateTime(evaluator, row.getCell(20)));
+					a.setCompletedDate(ProcessType.toLocalDateTime(evaluator, row.getCell(21)));
+					a.setReleasedDate(ProcessType.toLocalDateTime(evaluator, row.getCell(22)));
+					a.setViralLoad(str);
+					a.setViralLoadLog(ProcessType.getCellDoubleValue(row.getCell(17)));
+					a.setReasonother(ProcessType.getCellStringValue(row.getCell(34)));
+					a.setPatient(p);
+					a.setTest(t);
+					a.setVlReason(vr);
+					a.setVihType(vt);
+					// a.setDiet(new Diet());
+					a = analysisRepository.save(a);
+				}
+				// Sample type
+				if (row.getCell(18) != null) {
+					st = sampleTypeRepository.findSampleTypeByName(row.getCell(18).getStringCellValue());
+
+					if (st == null) {
+						SampleType inSampleType = new SampleType();
+						inSampleType.setLabel(row.getCell(18).getStringCellValue());
+
+						st = sampleTypeRepository.save(inSampleType);
+					}
+				}
+				// Sample
+				if (row.getCell(0) != null) {
+					s = sampleRepository.findSampleByCode(row.getCell(0).getStringCellValue());
+
+					if (s == null) {
+						Sample inSample = new Sample();
+						inSample.setLabno(row.getCell(0).getStringCellValue());
+						inSample.setSampleStatus(row.getCell(1).getStringCellValue());
+						inSample.setDrcpt(ProcessType.toLocalDateTime(evaluator, row.getCell(5)));
+						inSample.setDintv(ProcessType.toLocalDateTime(evaluator, row.getCell(6)));
+						inSample.setSampleType(st);
+						inSample.setAnalysis(a);
+
+						s = sampleRepository.save(inSample);
+					}
+				}
 				workbook.close();
 			}
 			return true;
@@ -343,123 +359,88 @@ public class UploadServiceImpl implements UploadService {
 			return false;
 		}
 	}
+
 	/*******************************************
 	 * FIN
 	 **********************************************/
 
 	@Override
 	public boolean uploadTestImport(MultipartFile file) {
-		
+
 		Patient p = null;
 		VihType vt = null;
 		VlReason vr = null;
 		Analysis a = null;
 		SampleType st = null;
 		Sample s = null;
+		Diet d = null;
+		Diet inDiet = null;
 
 		try {
 
 			XSSFWorkbook workbook = new XSSFWorkbook(file.getInputStream());
 			XSSFSheet spreadsheet = workbook.getSheetAt(0);
-			FormulaEvaluator evaluator = workbook.getCreationHelper().createFormulaEvaluator(); 
+			FormulaEvaluator evaluator = workbook.getCreationHelper().createFormulaEvaluator();
 
-
-			//int cpt = 0;
+			// int cpt = 0;
 			for (int i = 7; i < spreadsheet.getPhysicalNumberOfRows(); i++) {
 				XSSFRow row = spreadsheet.getRow(i);
-				
-				  if(row.getCell(4) != null) {
-						 
-							  p = new Patient();
-							        
-									p.setSubjectno(ProcessType.getCellStringValue(row.getCell(2)));
-									p.setSubjectid(ProcessType.getCellStringValue(row.getCell(4)));
-									p.setGender(row.getCell(11).getStringCellValue());
-									p.setBirthDate(ProcessType.getCellDateValue(evaluator,row.getCell(12)));
-									p.setAgeYears((int) row.getCell(13).getNumericCellValue());
-									p.setAgeMonths((int) row.getCell(14).getNumericCellValue());
-									p.setAgeWeeks((int) row.getCell(15).getNumericCellValue());
-									p.setArvInitDate(ProcessType.getCellDateValue(evaluator,row.getCell(26)));
-				            			
-                           System.out.println("Patient-object:" + p.getBirthDate()+ "\n");								
-						 } 
-				  
-				  if(row.getCell(19)!=null){
-					  
-					  String str = String.valueOf(row.getCell(16).getRawValue());
-	                	
-             		 a = new Analysis();
-             		 a.setAnalysisStatus((int)row.getCell(19).getNumericCellValue());
-         			 a.setStartedDate(ProcessType.toLocalDateTime(evaluator, row.getCell(20)));
-         			 a.setCompletedDate(ProcessType.toLocalDateTime(evaluator, row.getCell(21)));
-         			 a.setReleasedDate(ProcessType.toLocalDateTime(evaluator, row.getCell(22)));
-         			 a.setViralLoad(str);
-         			 a.setViralLoadLog(ProcessType.getCellDoubleValue(row.getCell(17)));
-             		 a.setReasonother(ProcessType.getCellStringValue(row.getCell(34)));
-         			 //a.setPatient(p);
-         			 //a.setTest(t);
-         			 //a.setVlReason(vr);
-         			 //a.setVihType(vt);
-         			 
-             		///a = analysisRepository.save(a);
-             		 
-                     System.out.println("analysis-status:" + a.getAnalysisStatus()+ "\n");		
-                     System.out.println("analysis-started-date:" + a.getStartedDate()+ "\n");								
-                     System.out.println("analysis-completed-date:" + a.getCompletedDate()+ "\n");								
-                     System.out.println("analysis-released-date:" + a.getReleasedDate()+ "\n");		
-                     
-                     String[] listAges = {"1","3","5-9","10-14","15-19","20-24","25-29","30-34","35-39","40-44","45-49","50","60","70"};
-                     
-                     for(int k=0; k<listAges.length; k++) {
-                  	   
-                  	   String[] items = listAges[k].split("-");
-                  	   
-                  	 for (String item : items) {
-                         System.out.println("items:" +item);
-                     }
-                  	   
-                  	   //System.out.println("items:" +items);
 
-                  	   
-                  	   //System.out.println(items[0] +" " + items[1]);
-                  	   
-                  	   //listCategory.add(items[i]);
-                     }
-                     //return listCategory;                     
-                     //System.out.println("liste-categorie:" +tab);
-                     
-                     Date d = new Date();
-                     System.out.println("current-date:" +d);
-                     
-                     int year = d.getYear();  
-                     System.out.println("year:" +year);
-                     
-                     int currentYear=year+1900;  
-                     System.out.println("current-year:" +currentYear);
-                     
-                     
+				if (row.getCell(4) != null) {
 
+					p = new Patient();
 
-						/*
-						 * Calendar calendar = new GregorianCalendar(); int year =
-						 * calendar.get(Calendar.YEAR); //Add one to month {0 - 11} int month =
-						 * calendar.get(Calendar.MONTH) + 1; int day =
-						 * calendar.get(Calendar.DAY_OF_MONTH);
-						 * 
-						 * Calendar.get(Calendar.YEAR) - 1900
-						 * 
-						 * System.out.println("current-date-get-year:" +d.getYear());
-						 * 
-						 * 
-						 * Calendar calendar = Calendar.getInstance(); calendar.setTime(new Date());
-						 * Here is the sample code to get the year, month, etc.
-						 * 
-						 * System.out.println(calendar.get(Calendar.YEAR));
-						 * System.out.println(calendar.get(Calendar.MONTH));
-						 */
+					p.setSubjectno(ProcessType.getCellStringValue(row.getCell(2)));
+					p.setSubjectid(ProcessType.getCellStringValue(row.getCell(4)));
+					p.setGender(row.getCell(11).getStringCellValue());
+					p.setBirthDate(ProcessType.getCellDateValue(evaluator, row.getCell(12)));
+					p.setAgeYears((int) row.getCell(13).getNumericCellValue());
+					p.setAgeMonths((int) row.getCell(14).getNumericCellValue());
+					p.setAgeWeeks((int) row.getCell(15).getNumericCellValue());
+					p.setArvInitDate(ProcessType.getCellDateValue(evaluator, row.getCell(26)));
 
+					System.out.println("Patient-object:" + p.getBirthDate() + "\n");
+				}
 
-             	}
+				// Diet
+				String molecule = ProcessString.concatenateCurrentValue(row.getCell(28), row.getCell(29),
+						row.getCell(30));
+				System.out.println("concatenateCurrentValue ::: " + molecule + "\n");
+				d = dietRepository.findDietByName(molecule);
+				// System.out.println("diet-values:" + d.getName() + "\n" );
+				boolean check = (d == null);
+				if (check) {
+					inDiet = dietRepository.findDietByName(Constants.DIET_NAME_OTHER);
+					d = inDiet;
+					System.out.println("diet-other:" + d.getName() + "\n");
+				}
+
+				if (row.getCell(19) != null) {
+
+					String str = String.valueOf(row.getCell(16).getRawValue());
+
+					a = new Analysis();
+					a.setAnalysisStatus((int) row.getCell(19).getNumericCellValue());
+					a.setStartedDate(ProcessType.toLocalDateTime(evaluator, row.getCell(20)));
+					a.setCompletedDate(ProcessType.toLocalDateTime(evaluator, row.getCell(21)));
+					a.setReleasedDate(ProcessType.toLocalDateTime(evaluator, row.getCell(22)));
+					a.setViralLoad(str);
+					a.setViralLoadLog(ProcessType.getCellDoubleValue(row.getCell(17)));
+					a.setReasonother(ProcessType.getCellStringValue(row.getCell(34)));
+					// a.setPatient(p);
+					// a.setTest(t);
+					// a.setVlReason(vr);
+					// a.setVihType(vt);
+
+					/// a = analysisRepository.save(a);
+
+					System.out.println("analysis-status:" + a.getAnalysisStatus() + "\n");
+					System.out.println("analysis-started-date:" + a.getStartedDate() + "\n");
+					System.out.println("analysis-completed-date:" + a.getCompletedDate() + "\n");
+					System.out.println("analysis-released-date:" + a.getReleasedDate() + "\n");
+
+				}
+
 				workbook.close();
 			}
 			return true;
