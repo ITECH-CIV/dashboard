@@ -74,7 +74,7 @@ public class UploadController {
 	     System.out.println("MESSAGE-4::::::::::::  " +file.getOriginalFilename());
 	     System.out.println("MESSAGE-5::::::::::::  " +file.getSize());
 
-		 req = uploadService.storeExcelImport(file);
+		 req = uploadService.storeExcelImport2(file);
 	 
 		 if(req) {
 			 message = ConstantMessage.INSERTED;

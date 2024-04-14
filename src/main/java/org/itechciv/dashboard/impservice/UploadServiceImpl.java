@@ -30,6 +30,7 @@ import org.itechciv.dashboard.model.Diet;
 import org.itechciv.dashboard.model.District;
 import org.itechciv.dashboard.model.Facilitys;
 import org.itechciv.dashboard.model.Patient;
+import org.itechciv.dashboard.model.PatientAnalyseExcelItem;
 import org.itechciv.dashboard.model.Region;
 import org.itechciv.dashboard.model.Sample;
 import org.itechciv.dashboard.model.SampleType;
@@ -52,6 +53,8 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.multipart.MultipartFile;
 import org.apache.poi.ss.usermodel.FormulaEvaluator;
+
+import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.GregorianCalendar;
 
@@ -170,6 +173,47 @@ public class UploadServiceImpl implements UploadService {
 			return false;
 		}
 	}
+	
+	@Override
+	public boolean storeExcelImport2(MultipartFile file)
+	{
+		try
+		{
+			XSSFWorkbook workbook = new XSSFWorkbook(file.getInputStream());
+			XSSFSheet spreadsheet = workbook.getSheetAt(0);
+			List<PatientAnalyseExcelItem> excelItems = new ArrayList<PatientAnalyseExcelItem>();
+			for (int i = 1; i < spreadsheet.getPhysicalNumberOfRows(); i++) 
+			{
+				PatientAnalyseExcelItem excelItem = new PatientAnalyseExcelItem(spreadsheet.getRow(i));
+				excelItems.add(excelItem);
+			}
+			workbook.close();
+			
+			List<Test> processedTests = new ArrayList<Test>();
+			for(var excelItem: excelItems)
+			{
+				var codeTest = excelItem.getSTUDY();
+				
+				Test test = null;
+				if (codeTest != null && !codeTest.isEmpty()) {
+					test = testRepository.findTestByName(codeTest);
+					if (test == null) {
+						test = new Test();
+						test.setName(codeTest == "VLS" ? Constants.TEST_NAME : codeTest);
+						test.setStudy(codeTest);
+						test = testRepository.save(test);
+					}
+				}
+			}
+			
+			return true;
+		}
+		catch(Exception ex)
+		{
+			ex.printStackTrace();
+			return false;
+		}
+	}
 
 	@Override
 	public boolean storeExcelImport(MultipartFile file) {
@@ -203,7 +247,7 @@ public class UploadServiceImpl implements UploadService {
 
 					if (t == null) {
 						Test inTest = new Test();
-						inTest.setName(Constants.TEST_NAME);
+//						inTest.setName(Constants.TEST_NAME);
 						inTest.setStudy(row.getCell(3).getStringCellValue());
 
 						t = testRepository.save(inTest);
