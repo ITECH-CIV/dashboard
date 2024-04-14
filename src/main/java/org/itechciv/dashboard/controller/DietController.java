@@ -135,11 +135,6 @@ public class DietController {
 				 Diet d = diet.get();
 					
 				 d.setName(dt.getName()); 
-				 d.setCurrent1(dt.getCurrent1()); 
-				 d.setCurrent2(dt.getCurrent2()); 
-				 d.setCurrent3(dt.getCurrent3()); 
-				 d.setCurrent4(dt.getCurrent4()); 
-
 					 
 				 res = dietService.update(d); 
 				 
@@ -155,7 +150,7 @@ public class DietController {
 				 
 			 } else {
 			 
-				 res=  new  Response(ResponseStatusEnum.ERROR,null,"Vih type introuvable", false); 
+				 res=  new  Response(ResponseStatusEnum.ERROR,null,"Diet introuvable", false); 
 			     result= new ResponseEntity<>(res,HttpStatus.NOT_FOUND);
 			 }
 		
@@ -219,7 +214,7 @@ public class DietController {
 			 result =new ResponseEntity<>(res, HttpStatus.OK);
 			
 		} else { 
-			res =  new  Response(ResponseStatusEnum.ERROR,null,"Vih type introuvable", false); 
+			res =  new  Response(ResponseStatusEnum.ERROR,null,"Diet introuvable", false); 
 	        result =new ResponseEntity<>(res,HttpStatus.NOT_FOUND);
 		}
 		

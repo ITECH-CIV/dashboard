@@ -63,7 +63,7 @@ public class Analysis {
 	  private List<Sample> samples = new ArrayList<>();
 		
 	  @ManyToOne
-	  @JoinColumn(name ="dietId", nullable = true)
+	  @JoinColumn(name ="dietId", nullable = false)
 	  private Diet diet; 
 	  
 	  @ManyToOne

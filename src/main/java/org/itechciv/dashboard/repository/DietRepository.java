@@ -8,7 +8,7 @@ import org.springframework.stereotype.Repository;
 @Repository
 public interface DietRepository extends JpaRepository<Diet, Long>{
 	
-	@Query(value = "select dt.*" + 
+	@Query(value = "select DISTINCT name, id" + 
 			" from dashboard.diet dt" + 
 			" where dt.name =?1", nativeQuery = true)	
 	Diet findDietByName(String name); 

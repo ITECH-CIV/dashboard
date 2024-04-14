@@ -21,19 +21,7 @@ public class Diet {
 	
 	@Column(name = "name")
     private String name;
-	
-	@Column(name = "current1", nullable = true)
-    private String current1;
-    
-    @Column(name = "current2", nullable = true)
-    private String current2;
-    
-    @Column(name = "current3", nullable = true)
-    private String current3;
-    
-    @Column(name = "current4" , nullable = true)
-    private String current4; 
-    
+	    
     @OneToMany(mappedBy = "diet")
 	private List<Analysis> analysis = new ArrayList<>();
 
@@ -55,38 +43,6 @@ public class Diet {
 
 	public void setName(String name) {
 		this.name = name;
-	}
-
-	public String getCurrent1() {
-		return current1;
-	}
-
-	public void setCurrent1(String current1) {
-		this.current1 = current1;
-	}
-
-	public String getCurrent2() {
-		return current2;
-	}
-
-	public void setCurrent2(String current2) {
-		this.current2 = current2;
-	}
-
-	public String getCurrent3() {
-		return current3;
-	}
-
-	public void setCurrent3(String current3) {
-		this.current3 = current3;
-	}
-
-	public String getCurrent4() {
-		return current4;
-	}
-
-	public void setCurrent4(String current4) {
-		this.current4 = current4;
 	}
 
 	public List<Analysis> getAnalysis() {

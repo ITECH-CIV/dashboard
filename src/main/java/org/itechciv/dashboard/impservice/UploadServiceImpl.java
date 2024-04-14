@@ -247,11 +247,6 @@ public class UploadServiceImpl implements UploadService {
 
 					if (p == null) {
 						Patient inPatient = new Patient();
-
-						/*
-						 * String str = String.valueOf(row.getCell(2).getRawValue());
-						 * inPatient.setSubjectno(str);
-						 */
 						inPatient.setSubjectno(ProcessType.getCellStringValue(row.getCell(2)));
 						inPatient.setSubjectid(ProcessType.getCellStringValue(row.getCell(4)));
 						inPatient.setGender(row.getCell(11).getStringCellValue());
@@ -288,21 +283,34 @@ public class UploadServiceImpl implements UploadService {
 
 						vr = vlReasonRepository.save(inVlReason);
 					}
-				}
+				} 
 				// Diet
-				XSSFCell current3 = null;
-				XSSFCell current2 = null;
-				XSSFCell current1 = null;
-
-				String molecule = ProcessString.concatenateCurrentValue(current3, current2, current1);
-
+				/*
+				 * XSSFCell current3 = null; XSSFCell current2 = null; XSSFCell current1 = null;
+				 * 
+				 * String molecule = ProcessString.concatenateCurrentValue(current3, current2,
+				 * current1);
+				 * 
+				 * d = dietRepository.findDietByName(molecule);
+				 * 
+				 * if (d == null) {
+				 * 
+				 * inDiet = dietRepository.findDietByName(Constants.DIET_NAME_OTHER); d =
+				 * inDiet; }
+				 */
+				
+				// Diet
+				String molecule = ProcessString.concatenateCurrentValue(row.getCell(28), row.getCell(29), row.getCell(30));
+				System.out.println("concatenateCurrentValue ::: " + molecule + "\n");
 				d = dietRepository.findDietByName(molecule);
-
-				if (d == null) {
-
+				
+				boolean check = (d == null);
+				if (check) {
 					inDiet = dietRepository.findDietByName(Constants.DIET_NAME_OTHER);
 					d = inDiet;
+					System.out.println("diet-other:" + d.getName() + "\n");
 				}
+				System.out.println("diet-exists:" + d.getName() + "\n");
 
 				// Analysis
 				if (row.getCell(19) != null) {
@@ -321,7 +329,8 @@ public class UploadServiceImpl implements UploadService {
 					a.setTest(t);
 					a.setVlReason(vr);
 					a.setVihType(vt);
-					// a.setDiet(new Diet());
+					a.setDiet(d);
+					
 					a = analysisRepository.save(a);
 				}
 				// Sample type
@@ -403,17 +412,17 @@ public class UploadServiceImpl implements UploadService {
 				}
 
 				// Diet
-				String molecule = ProcessString.concatenateCurrentValue(row.getCell(28), row.getCell(29),
-						row.getCell(30));
+				String molecule = ProcessString.concatenateCurrentValue(row.getCell(28), row.getCell(29), row.getCell(30));
 				System.out.println("concatenateCurrentValue ::: " + molecule + "\n");
 				d = dietRepository.findDietByName(molecule);
-				// System.out.println("diet-values:" + d.getName() + "\n" );
+				//System.out.println("diet-values:" + d.getName() + "\n" );
 				boolean check = (d == null);
 				if (check) {
 					inDiet = dietRepository.findDietByName(Constants.DIET_NAME_OTHER);
 					d = inDiet;
 					System.out.println("diet-other:" + d.getName() + "\n");
 				}
+				System.out.println("diet-exists:" + d.getName() + "\n");
 
 				if (row.getCell(19) != null) {
 
