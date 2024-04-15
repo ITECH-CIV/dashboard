@@ -33,14 +33,11 @@ public class Analysis {
 	  @Column(name = "arv_reg")
 	  private int arvReg;
 	  
-	  @Column(name = "result")
-	  private int result;
+	  @Column(name = "gross_result")
+	  private String grossResult;
 	  
-	  @Column(name = "result_other")
-	  private int resultOther;
-	  
-	  @Column(name="viral_load", nullable = true)
-	  private String viralLoad;
+	  @Column(name = "converted_result")
+	  private String convertedResult;
 	  
 	  @Column(name = "viral_load_log")
 	  private double viralLoadLog;
@@ -63,8 +60,8 @@ public class Analysis {
 	  private List<Sample> samples = new ArrayList<>();
 		
 	  @ManyToOne
-	  @JoinColumn(name ="dietId", nullable = false)
-	  private Diet diet; 
+	  @JoinColumn(name ="regimenId", nullable = false)
+	  private Regimen regimen; 
 	  
 	  @ManyToOne
 	  @JoinColumn(name ="vihTypeId", nullable = false)
@@ -118,28 +115,20 @@ public class Analysis {
 		this.arvReg = arvReg;
 	}
 
-	public int getResult() {
-		return result;
+	public String getGrossResult() {
+		return grossResult;
 	}
 
-	public void setResult(int result) {
-		this.result = result;
+	public void setGrossResult(String grossResult) {
+		this.grossResult = grossResult;
 	}
 
-	public int getResultOther() {
-		return resultOther;
+	public String getConvertedResult() {
+		return convertedResult;
 	}
 
-	public void setResultOther(int resultOther) {
-		this.resultOther = resultOther;
-	}
-
-	public String getViralLoad() {
-		return viralLoad;
-	}
-
-	public void setViralLoad(String viralLoad) {
-		this.viralLoad = viralLoad;
+	public void setConvertedResult(String convertedResult) {
+		this.convertedResult = convertedResult;
 	}
 
 	public double getViralLoadLog() {
@@ -190,12 +179,12 @@ public class Analysis {
 		this.samples = samples;
 	}
 
-	public Diet getDiet() {
-		return diet;
+	public Regimen getRegimen() {
+		return regimen;
 	}
 
-	public void setDiet(Diet diet) {
-		this.diet = diet;
+	public void setRegimen(Regimen regimen) {
+		this.regimen = regimen;
 	}
 
 	public VihType getVihType() {
@@ -217,11 +206,10 @@ public class Analysis {
 	@Override
 	public String toString() {
 		return "Analysis [id=" + id + ", startedDate=" + startedDate + ", completedDate=" + completedDate
-				+ ", releasedDate=" + releasedDate + ", arvReg=" + arvReg + ", result=" + result + ", resultOther="
-				+ resultOther + ", viralLoad=" + viralLoad + ", viralLoadLog=" + viralLoadLog + ", reasonother="
+				+ ", releasedDate=" + releasedDate + ", arvReg=" + arvReg + ", grossResult=" + grossResult
+				+ ", convertedResult=" + convertedResult + ", viralLoadLog=" + viralLoadLog + ", reasonother="
 				+ reasonother + ", analysisStatus=" + analysisStatus + ", test=" + test + ", patient=" + patient
-				+ ", samples=" + samples + ", diet=" + diet + ", vihType=" + vihType + ", vlReason=" + vlReason + "]";
-	}
-   
-	
+				+ ", samples=" + samples + ", regimen=" + regimen + ", vihType=" + vihType + ", vlReason=" + vlReason
+				+ "]";
+	} 
 }

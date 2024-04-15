@@ -55,8 +55,8 @@ public class Patient {
      private String subjectid;
      
      @ManyToOne
-	 @JoinColumn(name ="facilitysId", nullable = false)
-	 private Facilitys facilitys; 
+	 @JoinColumn(name ="siteId", nullable = false)
+	 private Site site; 
      
      @OneToMany(mappedBy = "patient")
 	 private List<Analysis> analysis = new ArrayList<>();
@@ -161,12 +161,12 @@ public class Patient {
 		this.subjectid = subjectid;
 	}
 
-	public Facilitys getFacilitys() {
-		return facilitys;
+	public Site getSite() {
+		return site;
 	}
 
-	public void setFacilitys(Facilitys facilitys) {
-		this.facilitys = facilitys;
+	public void setSite(Site site) {
+		this.site = site;
 	}
 
 	public List<Analysis> getAnalysis() {
@@ -182,7 +182,7 @@ public class Patient {
 		return "Patient [id=" + id + ", gender=" + gender + ", birthDate=" + birthDate + ", ageYears=" + ageYears
 				+ ", ageMonths=" + ageMonths + ", ageWeeks=" + ageWeeks + ", arvInitDate=" + arvInitDate
 				+ ", identityData=" + identityData + ", upidCode=" + upidCode + ", nationalCode=" + nationalCode
-				+ ", subjectno=" + subjectno + ", subjectid=" + subjectid + ", facilitys=" + facilitys + ", analysis="
-				+ analysis + "]";
-	} 
+				+ ", subjectno=" + subjectno + ", subjectid=" + subjectid + ", site=" + site + ", analysis=" + analysis
+				+ "]";
+	}
 }

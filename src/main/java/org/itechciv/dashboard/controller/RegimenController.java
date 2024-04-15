@@ -1,9 +1,9 @@
 package org.itechciv.dashboard.controller;
 import java.util.Optional;
 
-import org.itechciv.dashboard.iservice.DietService;
+import org.itechciv.dashboard.iservice.RegimenService;
 import org.itechciv.dashboard.iservice.VihTypeService;
-import org.itechciv.dashboard.model.Diet;
+import org.itechciv.dashboard.model.Regimen;
 import org.itechciv.dashboard.model.Test;
 import org.itechciv.dashboard.model.VihType;
 import org.itechciv.dashboard.response.Response;
@@ -21,21 +21,21 @@ import org.springframework.web.bind.annotation.RestController;
 @RestController
 @RequestMapping("/api")
 @CrossOrigin
-public class DietController {
+public class RegimenController {
 	
 	@Autowired
-	private DietService dietService;
+	private RegimenService regimenService;
 	
-	@RequestMapping(method = RequestMethod.POST, value="diet/save")
+	@RequestMapping(method = RequestMethod.POST, value="regimen/save")
 	@ResponseBody
-	public ResponseEntity<Response> saveDiet(@RequestBody Diet diet) {  
+	public ResponseEntity<Response> saveRegimen(@RequestBody Regimen regimen) {  
 		
 		Response res = new Response() ; 
 		ResponseEntity<Response> result;
 				
 		try {
 			
-			res =  dietService.create(diet) ; 
+			res =  regimenService.create(regimen) ; 
 			
 			   if(res!=null) { 
 					
@@ -55,9 +55,9 @@ public class DietController {
 		return result;
 	}  
 	
-	@RequestMapping(method = RequestMethod.GET, value="diet/getAll")
+	@RequestMapping(method = RequestMethod.GET, value="regimen/getAll")
 	@ResponseBody
-	public ResponseEntity<Response> getDiet() { 
+	public ResponseEntity<Response> getRegimen() { 
 		
 		Response res = new Response(); 
 		ResponseEntity<Response> result;
@@ -65,7 +65,7 @@ public class DietController {
 		try  
 		 
 		{ 
-			res = dietService.getAll(); 
+			res = regimenService.getAll(); 
 			
              if(res!=null) { 
 				
@@ -87,26 +87,26 @@ public class DietController {
 		return result;
 	}
 	
-	@RequestMapping(method = RequestMethod.GET, value="diet/getById")
+	@RequestMapping(method = RequestMethod.GET, value="regimen/getById")
 	@ResponseBody
-	public ResponseEntity<Response> getDiet(String id) { 
+	public ResponseEntity<Response> getRegimen(String id) { 
 		
 		Response res = new Response(); 
 		
-		Optional<Diet> dt;
+		Optional<Regimen> reg;
 		ResponseEntity<Response> result;
 		
 		try {
 		
-			dt= dietService.getOne(Long.parseLong(id)); 
+			reg= regimenService.getOne(Long.parseLong(id)); 
 		
-		 if(dt!=null) {
+		 if(reg!=null) {
 			
-			 res =  new  Response(ResponseStatusEnum.SUCCESS,dt,"Enregistrement trouvé", true);
+			 res =  new  Response(ResponseStatusEnum.SUCCESS,reg,"Enregistrement trouvé", true);
 			 result =new ResponseEntity<>(res, HttpStatus.OK);
 			
 		} else { 
-			res =  new  Response(ResponseStatusEnum.ERROR,null,"Diet introuvable", false); 
+			res =  new  Response(ResponseStatusEnum.ERROR,null,"Regimen introuvable", false); 
 	        result =new ResponseEntity<>(res,HttpStatus.NOT_FOUND);
 		}
 		
@@ -118,25 +118,25 @@ public class DietController {
 		return result;
 	}
 	
-	@RequestMapping(value ="diet/update", method = RequestMethod.PUT)
-	public ResponseEntity<Response> updateDiet(@RequestBody Diet dt, String id) {
+	@RequestMapping(value ="regimen/update", method = RequestMethod.PUT)
+	public ResponseEntity<Response> updateRegimen(@RequestBody Regimen rg, String id) {
 		
 		Response res = new Response();
-		Optional<Diet> diet; 
+		Optional<Regimen> regimen; 
 		ResponseEntity<Response> result;
 		
 		try  {
 			
-			diet = dietService.getOne(Long.parseLong(id)); 
+			regimen = regimenService.getOne(Long.parseLong(id)); 
 			 
-			 if(diet!=null) 
+			 if(regimen!=null) 
 				 
 			 { 
-				 Diet d = diet.get();
+				 Regimen reg = regimen.get();
 					
-				 d.setName(dt.getName()); 
+				 reg.setName(rg.getName()); 
 					 
-				 res = dietService.update(d); 
+				 res = regimenService.update(reg); 
 				 
 				 if(res!=null) 
 				 {
@@ -150,7 +150,7 @@ public class DietController {
 				 
 			 } else {
 			 
-				 res=  new  Response(ResponseStatusEnum.ERROR,null,"Diet introuvable", false); 
+				 res=  new  Response(ResponseStatusEnum.ERROR,null,"Regimen introuvable", false); 
 			     result= new ResponseEntity<>(res,HttpStatus.NOT_FOUND);
 			 }
 		
@@ -161,24 +161,24 @@ public class DietController {
 		return result;
 	}
 	
-	@RequestMapping(method = RequestMethod.DELETE, value="diet/deletedById")
+	@RequestMapping(method = RequestMethod.DELETE, value="regimen/deletedById")
 	@ResponseBody
-	public ResponseEntity<Response> deleteDiet(String id) { 
+	public ResponseEntity<Response> deleteRegimen(String id) { 
 		
 		Response res = new Response(); 
 		
-		Optional<Diet> diet;
+		Optional<Regimen> regimen;
 		ResponseEntity<Response> result;
 		
 		try {
 		
-			diet= dietService.getOne(Long.parseLong(id)); 
+			regimen= regimenService.getOne(Long.parseLong(id)); 
 		
-		 if(diet!=null) {
+		 if(regimen!=null) {
 			 
-			 dietService.delete(Long.parseLong(id));
+			 regimenService.delete(Long.parseLong(id));
 			
-			 res =  new  Response(ResponseStatusEnum.SUCCESS,diet,"Suppression effectuée", true);
+			 res =  new  Response(ResponseStatusEnum.SUCCESS,regimen,"Suppression effectuée", true);
 			 result =new ResponseEntity<>(res, HttpStatus.OK);
 			
 		} else { 
@@ -195,26 +195,26 @@ public class DietController {
 	}
 	
 
-	@RequestMapping(method = RequestMethod.GET, value="diet/getByName")
+	@RequestMapping(method = RequestMethod.GET, value="regimen/getByName")
 	@ResponseBody
-	public ResponseEntity<Response> getDietName(String name) { 
+	public ResponseEntity<Response> getRegimenName(String name) { 
 		
 		Response res = new Response(); 
 		
-		Diet diet;
+		Regimen regimen;
 		ResponseEntity<Response> result;
 		
 		try {
 		
-			diet= dietService.getByName(name); 
+			regimen= regimenService.getByName(name); 
 		
-		 if(diet != null) {
+		 if(regimen != null) {
 			
-			 res =  new  Response(ResponseStatusEnum.SUCCESS,diet,"Enregistrement trouvé", true);
+			 res =  new  Response(ResponseStatusEnum.SUCCESS,regimen,"Enregistrement trouvé", true);
 			 result =new ResponseEntity<>(res, HttpStatus.OK);
 			
 		} else { 
-			res =  new  Response(ResponseStatusEnum.ERROR,null,"Diet introuvable", false); 
+			res =  new  Response(ResponseStatusEnum.ERROR,null,"Regimen introuvable", false); 
 	        result =new ResponseEntity<>(res,HttpStatus.NOT_FOUND);
 		}
 		

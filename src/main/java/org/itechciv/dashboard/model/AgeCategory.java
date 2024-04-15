@@ -54,4 +54,11 @@ public class AgeCategory  {
 	public void setDescription(String description) {
 		this.description = description;
 	}
+
+	@Override
+	public String toString() {
+		return "AgeCategory [id=" + id + ", label=" + label + ", description=" + description + "]";
+	} 
+	
+	
 }

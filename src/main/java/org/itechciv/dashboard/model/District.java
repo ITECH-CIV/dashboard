@@ -29,7 +29,7 @@ public class District {
 		private Region region; 
 	    
 	    @OneToMany(mappedBy = "district")
-		private List<Facilitys> facilitys = new ArrayList<>();
+		private List<Site> sites = new ArrayList<>();
 
 		public District() {
 			super();
@@ -59,16 +59,16 @@ public class District {
 			this.region = region;
 		}
 
-		public List<Facilitys> getFacilitys() {
-			return facilitys;
+		public List<Site> getSites() {
+			return sites;
 		}
 
-		public void setFacilitys(List<Facilitys> facilitys) {
-			this.facilitys = facilitys;
+		public void setSites(List<Site> sites) {
+			this.sites = sites;
 		}
 
 		@Override
 		public String toString() {
-			return "District [id=" + id + ", name=" + name + ", region=" + region + ", facilitys=" + facilitys + "]";
+			return "District [id=" + id + ", name=" + name + ", region=" + region + ", sites=" + sites + "]";
 		}
 }

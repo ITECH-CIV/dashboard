@@ -12,8 +12,8 @@ import jakarta.persistence.OneToMany;
 import jakarta.persistence.Table;
 
 @Entity
-@Table(name = "diet", schema = "dashboard")
-public class Diet {
+@Table(name = "regimen", schema = "dashboard")
+public class Regimen {
 	
 	@Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -22,10 +22,10 @@ public class Diet {
 	@Column(name = "name")
     private String name;
 	    
-    @OneToMany(mappedBy = "diet")
+    @OneToMany(mappedBy = "regimen")
 	private List<Analysis> analysis = new ArrayList<>();
 
-	public Diet() {
+	public Regimen() {
 		super();
 	}
 
@@ -52,4 +52,9 @@ public class Diet {
 	public void setAnalysis(List<Analysis> analysis) {
 		this.analysis = analysis;
 	}
+
+	@Override
+	public String toString() {
+		return "Regimen [id=" + id + ", name=" + name + ", analysis=" + analysis + "]";
+	} 
 }

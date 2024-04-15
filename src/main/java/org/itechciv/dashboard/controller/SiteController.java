@@ -2,8 +2,8 @@ package org.itechciv.dashboard.controller;
 
 import java.util.Optional;
 
-import org.itechciv.dashboard.iservice.FacilitysService;
-import org.itechciv.dashboard.model.Facilitys;
+import org.itechciv.dashboard.iservice.SiteService;
+import org.itechciv.dashboard.model.Site;
 import org.itechciv.dashboard.response.Response;
 import org.itechciv.dashboard.response.Response.ResponseStatusEnum;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -19,14 +19,14 @@ import org.springframework.web.bind.annotation.RestController;
 @RequestMapping("/api")
 @ResponseBody
 @CrossOrigin
-public class FacilitysController {
+public class SiteController {
 	
 	@Autowired
-	private FacilitysService facilitysService;
+	private SiteService siteService;
 	
-	@RequestMapping(method = RequestMethod.GET, value="/facilitys/getAll")
+	@RequestMapping(method = RequestMethod.GET, value="/site/getAll")
 	@ResponseBody
-	public ResponseEntity<Response> getFacilitysAll() { 
+	public ResponseEntity<Response> getSiteAll() { 
 		
 		Response res = new Response(); 
 		ResponseEntity<Response> result;
@@ -34,7 +34,7 @@ public class FacilitysController {
 		try  
 		 
 		{ 
-			res = facilitysService.getAll(); 
+			res = siteService.getAll(); 
 			
              if(res!=null) { 
 				
@@ -55,28 +55,28 @@ public class FacilitysController {
 		return result;
 	}
 	
-	@RequestMapping(method = RequestMethod.GET, value="/facilitys/getById")
+	@RequestMapping(method = RequestMethod.GET, value="/site/getById")
 	@ResponseBody
-	public ResponseEntity<Response> getFacilitysOne(String id) { 
+	public ResponseEntity<Response> getSiteOne(String id) { 
 		
 		Response res = new Response(); 
 		
-		Optional<Facilitys> facilitys;
+		Optional<Site> site;
 		ResponseEntity<Response> result;
 		
 		try {
 		
-			facilitys= facilitysService.getOne(Long.parseLong(id)); 
+			site= siteService.getOne(Long.parseLong(id)); 
 			
 			//System.out.printf("Region:", region.toString());
 	
-		 if(facilitys.isPresent()) {
+		 if(site.isPresent()) {
 			
-			 res =  new  Response(ResponseStatusEnum.SUCCESS,facilitys,"Enregistrement trouvé", true);
+			 res =  new  Response(ResponseStatusEnum.SUCCESS,site,"Enregistrement trouvé", true);
 			 result =new ResponseEntity<>(res, HttpStatus.OK);
 			
 		} else { 
-			res =  new  Response(ResponseStatusEnum.ERROR,null,"Facilitys introuvable", false); 
+			res =  new  Response(ResponseStatusEnum.ERROR,null,"Site introuvable", false); 
 	        result =new ResponseEntity<>(res,HttpStatus.NOT_FOUND);
 		}
 		
@@ -88,26 +88,26 @@ public class FacilitysController {
 		return result;
 	}
 	
-	@RequestMapping(method = RequestMethod.GET, value="facilitys/getByCode")
+	@RequestMapping(method = RequestMethod.GET, value="site/getByCode")
 	@ResponseBody
-	public ResponseEntity<Response> getFacilitysByCode(int code) { 
+	public ResponseEntity<Response> getSiteByCode(int code) { 
 		
 		Response res = new Response(); 
 		
-		Facilitys f;
+		Site s;
 		ResponseEntity<Response> result;
 		
 		try {
 		
-			f= facilitysService.getByCode(code); 
+			s= siteService.getByCode(code); 
 		
-		 if(f != null) {
+		 if(s != null) {
 			
-			 res =  new  Response(ResponseStatusEnum.SUCCESS,f,"Facilitys trouvé", true);
+			 res =  new  Response(ResponseStatusEnum.SUCCESS,s,"Site trouvé", true);
 			 result =new ResponseEntity<>(res, HttpStatus.OK);
 			
 		} else { 
-			res =  new  Response(ResponseStatusEnum.ERROR,null,"Facilitys introuvable", false); 
+			res =  new  Response(ResponseStatusEnum.ERROR,null,"Site introuvable", false); 
 	        result =new ResponseEntity<>(res,HttpStatus.NOT_FOUND);
 		}
 		
@@ -119,26 +119,26 @@ public class FacilitysController {
 		return result;
 	}
 	
-	@RequestMapping(method = RequestMethod.GET, value="facilitys/getByOldCode")
+	@RequestMapping(method = RequestMethod.GET, value="site/getByOldCode")
 	@ResponseBody
-	public ResponseEntity<Response> getFacilitysByOldCode(String code) { 
+	public ResponseEntity<Response> getSiteByOldCode(String code) { 
 		
 		Response res = new Response(); 
 		
-		Facilitys f;
+		Site s;
 		ResponseEntity<Response> result;
 		
 		try {
 		
-			f= facilitysService.findFacilitysByOldCode(code); 
+			s= siteService.findSiteByOldCode(code); 
 		
-		 if(f != null) {
+		 if(s != null) {
 			
-			 res =  new  Response(ResponseStatusEnum.SUCCESS,f,"Facilitys trouvé", true);
+			 res =  new  Response(ResponseStatusEnum.SUCCESS,s,"Site trouvé", true);
 			 result =new ResponseEntity<>(res, HttpStatus.OK);
 			
 		} else { 
-			res =  new  Response(ResponseStatusEnum.ERROR,null,"Facilitys introuvable", false); 
+			res =  new  Response(ResponseStatusEnum.ERROR,null,"Site introuvable", false); 
 	        result =new ResponseEntity<>(res,HttpStatus.NOT_FOUND);
 		}
 		
@@ -150,26 +150,26 @@ public class FacilitysController {
 		return result;
 	}
 	
-	@RequestMapping(method = RequestMethod.GET, value="facilitys/getByOldName")
+	@RequestMapping(method = RequestMethod.GET, value="site/getByOldName")
 	@ResponseBody
-	public ResponseEntity<Response> getFacilitysByOldName(String name) { 
+	public ResponseEntity<Response> getSiteByOldName(String name) { 
 		
 		Response res = new Response(); 
 		
-		Facilitys f;
+		Site s;
 		ResponseEntity<Response> result;
 		
 		try {
 		
-			f= facilitysService.findFacilitysByOldName(name); 
+			s= siteService.findSiteByOldName(name); 
 		
-		 if(f != null) {
+		 if(s != null) {
 			
-			 res =  new  Response(ResponseStatusEnum.SUCCESS,f,"Facilitys trouvé", true);
+			 res =  new  Response(ResponseStatusEnum.SUCCESS,s,"Site trouvé", true);
 			 result =new ResponseEntity<>(res, HttpStatus.OK);
 			
 		} else { 
-			res =  new  Response(ResponseStatusEnum.ERROR,null,"Facilitys introuvable", false); 
+			res =  new  Response(ResponseStatusEnum.ERROR,null,"Site introuvable", false); 
 	        result =new ResponseEntity<>(res,HttpStatus.NOT_FOUND);
 		}
 		

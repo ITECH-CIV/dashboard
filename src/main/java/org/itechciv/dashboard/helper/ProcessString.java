@@ -5,6 +5,7 @@ import java.time.Period;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.apache.commons.lang3.StringUtils;
 import org.apache.poi.ss.usermodel.Cell;
 import org.apache.poi.ss.usermodel.CellType;
 import org.apache.poi.xssf.usermodel.XSSFCell;
@@ -55,4 +56,38 @@ public static String concatenateCurrentValue(XSSFCell current1, XSSFCell current
     
 	}
 
+
+ public static String spaceWordDelete(String chaine) {
+	 
+	 String mot = "";
+
+	 if(StringUtils.isNotEmpty(chaine)) {
+		 
+		 boolean espace = containsSpace(chaine);
+		 
+		 if(espace == true) {
+			 
+			 mot = chaine.trim();
+		 }
+		 System.out.println("mot:" +mot+ "\n");
+		 
+		 return mot;	 
+	 }
+	 System.out.println("Valeur inexistante");
+	 return null; 
+ }
+
+
+ private static boolean containsSpace(String line) {
+	 
+	 boolean space = false;
+	 		 
+		 for(int i = 0; i<line.length(); i++) {
+			 
+			 if(line.charAt(i) == ' ') {
+				 space = true;
+			 }
+		 }
+	 return space;
+  }
 }

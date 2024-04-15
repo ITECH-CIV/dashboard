@@ -1,9 +1,9 @@
 package org.itechciv.dashboard.impservice;
 
-import org.itechciv.dashboard.iservice.DietService;
-import org.itechciv.dashboard.model.Diet;
+import org.itechciv.dashboard.iservice.RegimenService;
+import org.itechciv.dashboard.model.Regimen;
 import org.itechciv.dashboard.model.VihType;
-import org.itechciv.dashboard.repository.DietRepository;
+import org.itechciv.dashboard.repository.RegimenRepository;
 import org.itechciv.dashboard.repository.VihTypeRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -11,20 +11,20 @@ import org.springframework.transaction.annotation.Transactional;
 
 @Service
 @Transactional
-public class DietServiceImpl extends GenericServiceImpl<Diet, Long> implements DietService {
+public class RegimenServiceImpl extends GenericServiceImpl<Regimen, Long> implements RegimenService {
 
 	@Autowired
-	private DietRepository dietRepository;
+	private RegimenRepository regimenRepository;
 	
 	@Override
-	public Diet getByName(String name) {
+	public Regimen getByName(String name) {
 		
-	Diet d = new Diet();  
+	Regimen d = new Regimen();  
 		
 		try 
 		
 		{ 
-			d = dietRepository.findDietByName(name);
+			d = regimenRepository.findRegimenByName(name);
 			
 			if( d!=null)
 			{ 
