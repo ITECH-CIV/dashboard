@@ -176,5 +176,155 @@ public class UploadServiceImpl implements UploadService {
 		}
 	}
 	
+
+	@Override
+	public boolean storeExcelImport(MultipartFile file) {
+
+		Test t = null;
+		Site s = null;
+		Patient p = null;
+		VihType vt = null;
+		VlReason vr = null;
+		Analysis a = null;
+		SampleType st = null;
+		Sample sp = null;
+		Regimen reg = null;
+		Regimen inReg = null;
+
+		try {
+			System.out.println("Hello world");
+
+			XSSFWorkbook workbook = new XSSFWorkbook(file.getInputStream());
+			XSSFSheet spreadsheet = workbook.getSheetAt(0);
+			FormulaEvaluator evaluator = workbook.getCreationHelper().createFormulaEvaluator();
+
+			for (int i = 1; i < spreadsheet.getPhysicalNumberOfRows(); i++) {
+
+				XSSFRow row = spreadsheet.getRow(i);
+				// Test
+				if (row.getCell(3) != null) {
+
+					t = testRepository.findTestByName(row.getCell(3).getStringCellValue());
+					System.out.println("Test:" + t + "\n");
+
+					if (t == null) {
+						Test inTest = new Test();
+						inTest.setName(Constants.TEST_NAME);
+						inTest.setStudy(row.getCell(3).getStringCellValue());
+
+						t = testRepository.save(inTest);
+						System.out.println("Test:" + t.toString());
+					}
+				}
+				// Site
+				if (row.getCell(7) != null) {
+					String str = String.valueOf(row.getCell(7).getRawValue());
+
+					s = siteRepository.findSiteByOldCode(str);
+
+					if (s == null) {
+						Site inSite = new Site();
+						try {
+							inSite.setOldCodeSiteDHIS2(str);
+						} catch (Exception ex) {
+							ex.printStackTrace();
+						}
+						inSite.setNameSite(row.getCell(8).getStringCellValue());
+						inSite.setCodeSiteDatim(ProcessType.getCellStringValue(row.getCell(9)));
+						inSite.setNameSiteDatim(ProcessType.getCellStringValue(row.getCell(10)));
+
+						s = siteRepository.save(inSite);
+
+						// System.out.println("inserted-facilitys:" +f.getId()+"\n");
+
+					} else {
+						s.setNameSite(row.getCell(8).getStringCellValue());
+						s.setCodeSiteDatim(ProcessType.getCellStringValue(row.getCell(9)));
+						s.setNameSiteDatim(ProcessType.getCellStringValue(row.getCell(10)));
+
+						s = siteRepository.saveAndFlush(s);
+
+						// System.out.println("updated-facilitys:" +f.getId()+"\n");
+					}
+				}
+				// Patient
+				if (row.getCell(4) != null) {
+					p = patientRepository.findPatientByCode(row.getCell(4).getRawValue());
+
+					if (p == null) {
+						Patient inPatient = new Patient();
+						inPatient.setSubjectno(ProcessType.getCellStringValue(row.getCell(2)));
+						inPatient.setSubjectid(ProcessType.getCellStringValue(row.getCell(4)));
+						inPatient.setGender(row.getCell(11).getStringCellValue());
+						inPatient.setBirthDate(ProcessType.getCellDateValue(evaluator, row.getCell(12)));
+						inPatient.setAgeYears((int) row.getCell(13).getNumericCellValue());
+						inPatient.setAgeMonths((int) row.getCell(14).getNumericCellValue());
+						inPatient.setAgeWeeks((int) row.getCell(15).getNumericCellValue());
+						inPatient.setArvInitDate(ProcessType.getCellDateValue(evaluator, row.getCell(26)));
+						inPatient.setSite(s);
+
+						p = patientRepository.save(inPatient);
+					}
+				}
+				// VihType
+				if (row.getCell(23) != null) {
+
+					vt = vihTypeRepository.findVihTypeByName(ProcessType.getCellStringValue(row.getCell(23)));
+
+					if (vt == null) {
+						VihType inVihType = new VihType();
+						inVihType.setName(ProcessType.getCellStringValue(row.getCell(23)));
+
+						vt = vihTypeRepository.save(inVihType);
+					}
+				}
+				// VlReason
+				if (row.getCell(33) != null) {
+
+					vr = vlReasonRepository.findVlReasonByName(ProcessType.getCellStringValue(row.getCell(33)));
+
+					if (vr == null) {
+						VlReason inVlReason = new VlReason();
+						inVlReason.setName(ProcessType.getCellStringValue(row.getCell(33)));
+
+						vr = vlReasonRepository.save(inVlReason);
+					}
+				} 
+				// Regimen
+				String molecule = ProcessString.concatenateCurrentValue(row.getCell(28), row.getCell(29), row.getCell(30));
+				System.out.println("concatenateCurrentValue ::: " + molecule + "\n");
+				reg = regimenRepository.findRegimenByName(molecule);
+				
+				boolean check = (reg == null);
+				if (check) {
+					inReg = regimenRepository.findRegimenByName(Constants.DIET_NAME_OTHER);
+					reg = inReg;
+					System.out.println("regimen-other:" + inReg.getName() + "\n");
+				}
+				System.out.println("regimen-exists:" + reg.getName() + "\n");
+
+				
+				// Sample type
+				if (row.getCell(18) != null) {
+					st = sampleTypeRepository.findSampleTypeByName(row.getCell(18).getStringCellValue());
+
+					if (st == null) {
+						SampleType inSampleType = new SampleType();
+						inSampleType.setLabel(row.getCell(18).getStringCellValue());
+
+						st = sampleTypeRepository.save(inSampleType);
+					}
+				}
+				
+				workbook.close();
+			}
+			return true;
+		} catch (Exception ex) {
+			ex.printStackTrace();
+			return false;
+		}
+	}
+
+	
 	
 }
