@@ -18,17 +18,11 @@ public class AgeCategory  {
 	  @Column(name="label")
 	  private String label;
 
-      @Column(name="description")
-      private String description;
+      @Column(name="type")
+      private String type;
 
 	public AgeCategory() {
 		super();
-	}
-
-	public AgeCategory(String label, String description) {
-		super();
-		this.label = label;
-		this.description = description;
 	}
 
 	public Long getId() {
@@ -47,18 +41,16 @@ public class AgeCategory  {
 		this.label = label;
 	}
 
-	public String getDescription() {
-		return description;
+	public String getType() {
+		return type;
 	}
 
-	public void setDescription(String description) {
-		this.description = description;
+	public void setType(String type) {
+		this.type = type;
 	}
 
 	@Override
 	public String toString() {
-		return "AgeCategory [id=" + id + ", label=" + label + ", description=" + description + "]";
+		return "AgeCategory [id=" + id + ", label=" + label + ", type=" + type + "]";
 	} 
-	
-	
 }

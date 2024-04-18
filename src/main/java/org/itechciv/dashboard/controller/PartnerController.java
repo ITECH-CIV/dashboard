@@ -1,8 +1,10 @@
 package org.itechciv.dashboard.controller;
 import java.util.Optional;
 
+import org.itechciv.dashboard.iservice.PartnerService;
 import org.itechciv.dashboard.iservice.RegimenService;
 import org.itechciv.dashboard.iservice.VihTypeService;
+import org.itechciv.dashboard.model.Partner;
 import org.itechciv.dashboard.model.Regimen;
 import org.itechciv.dashboard.model.Test;
 import org.itechciv.dashboard.model.VihType;
@@ -21,21 +23,22 @@ import org.springframework.web.bind.annotation.RestController;
 @RestController
 @RequestMapping("/api")
 @CrossOrigin
-public class RegimenController {
+public class PartnerController {
 	
 	@Autowired
-	private RegimenService regimenService;
+	private PartnerService partnerService;
 	
-	@RequestMapping(method = RequestMethod.POST, value="regimen/save")
+	
+	@RequestMapping(method = RequestMethod.POST, value="partner/save")
 	@ResponseBody
-	public ResponseEntity<Response> saveRegimen(@RequestBody Regimen regimen) {  
+	public ResponseEntity<Response> savePartner(@RequestBody Partner partner) {  
 		
 		Response res = new Response() ; 
 		ResponseEntity<Response> result;
 				
 		try {
 			
-			res =  regimenService.create(regimen) ; 
+			res =  partnerService.create(partner) ; 
 			
 			   if(res!=null) { 
 					
@@ -55,9 +58,9 @@ public class RegimenController {
 		return result;
 	}  
 	
-	@RequestMapping(method = RequestMethod.GET, value="regimen/getAll")
+	@RequestMapping(method = RequestMethod.GET, value="partner/getAll")
 	@ResponseBody
-	public ResponseEntity<Response> getRegimen() { 
+	public ResponseEntity<Response> getPartner() { 
 		
 		Response res = new Response(); 
 		ResponseEntity<Response> result;
@@ -65,7 +68,7 @@ public class RegimenController {
 		try  
 		 
 		{ 
-			res = regimenService.getAll(); 
+			res = partnerService.getAll(); 
 			
              if(res!=null) { 
 				
@@ -87,26 +90,26 @@ public class RegimenController {
 		return result;
 	}
 	
-	@RequestMapping(method = RequestMethod.GET, value="regimen/getById")
+	@RequestMapping(method = RequestMethod.GET, value="partner/getById")
 	@ResponseBody
-	public ResponseEntity<Response> getRegimenById(String id) { 
+	public ResponseEntity<Response> getPartner(String id) { 
 		
 		Response res = new Response(); 
 		
-		Optional<Regimen> reg;
+		Optional<Partner> partner;
 		ResponseEntity<Response> result;
 		
 		try {
 		
-			reg= regimenService.getOne(Long.parseLong(id)); 
+			partner= partnerService.getOne(Long.parseLong(id)); 
 		
-		 if(reg!=null) {
+		 if(partner!=null) {
 			
-			 res =  new  Response(ResponseStatusEnum.SUCCESS,reg,"Enregistrement trouvé", true);
+			 res =  new  Response(ResponseStatusEnum.SUCCESS,partner,"Enregistrement trouvé", true);
 			 result =new ResponseEntity<>(res, HttpStatus.OK);
 			
 		} else { 
-			res =  new  Response(ResponseStatusEnum.ERROR,null,"Regimen introuvable", false); 
+			res =  new  Response(ResponseStatusEnum.ERROR,null,"Partner introuvable", false); 
 	        result =new ResponseEntity<>(res,HttpStatus.NOT_FOUND);
 		}
 		
@@ -118,25 +121,26 @@ public class RegimenController {
 		return result;
 	}
 	
-	@RequestMapping(value ="regimen/update", method = RequestMethod.PUT)
-	public ResponseEntity<Response> updateRegimen(@RequestBody Regimen rg, String id) {
+	@RequestMapping(value ="partner/update", method = RequestMethod.PUT)
+	public ResponseEntity<Response> updatePartner(@RequestBody Partner pt, String id) {
 		
 		Response res = new Response();
-		Optional<Regimen> regimen; 
+		Optional<Partner> partner; 
 		ResponseEntity<Response> result;
 		
 		try  {
 			
-			regimen = regimenService.getOne(Long.parseLong(id)); 
+			partner = partnerService.getOne(Long.parseLong(id)); 
 			 
-			 if(regimen!=null) 
+			 if(partner!=null) 
 				 
 			 { 
-				 Regimen reg = regimen.get();
+				 Partner ptn = partner.get();
 					
-				 reg.setName(rg.getName()); 
+				 ptn.setName(pt.getName()); 
+				 ptn.setCode(pt.getCode());
 					 
-				 res = regimenService.update(reg); 
+				 res = partnerService.update(ptn); 
 				 
 				 if(res!=null) 
 				 {
@@ -150,7 +154,7 @@ public class RegimenController {
 				 
 			 } else {
 			 
-				 res=  new  Response(ResponseStatusEnum.ERROR,null,"Regimen introuvable", false); 
+				 res=  new  Response(ResponseStatusEnum.ERROR,null,"Partner introuvable", false); 
 			     result= new ResponseEntity<>(res,HttpStatus.NOT_FOUND);
 			 }
 		
@@ -161,24 +165,24 @@ public class RegimenController {
 		return result;
 	}
 	
-	@RequestMapping(method = RequestMethod.DELETE, value="regimen/deletedById")
+	@RequestMapping(method = RequestMethod.DELETE, value="partner/deletedById")
 	@ResponseBody
-	public ResponseEntity<Response> deleteRegimen(String id) { 
+	public ResponseEntity<Response> deletePartner(String id) { 
 		
 		Response res = new Response(); 
 		
-		Optional<Regimen> regimen;
+		Optional<Partner> partner;
 		ResponseEntity<Response> result;
 		
 		try {
 		
-			regimen= regimenService.getOne(Long.parseLong(id)); 
+			partner= partnerService.getOne(Long.parseLong(id)); 
 		
-		 if(regimen!=null) {
+		 if(partner!=null) {
 			 
-			 regimenService.delete(Long.parseLong(id));
+			 partnerService.delete(Long.parseLong(id));
 			
-			 res =  new  Response(ResponseStatusEnum.SUCCESS,regimen,"Suppression effectuée", true);
+			 res =  new  Response(ResponseStatusEnum.SUCCESS,partner,"Suppression effectuée", true);
 			 result =new ResponseEntity<>(res, HttpStatus.OK);
 			
 		} else { 
@@ -193,37 +197,4 @@ public class RegimenController {
 		}
 		return result;
 	}
-	
-
-	@RequestMapping(method = RequestMethod.GET, value="regimen/getByName")
-	@ResponseBody
-	public ResponseEntity<Response> getRegimenName(String name) { 
-		
-		Response res = new Response(); 
-		
-		Regimen regimen;
-		ResponseEntity<Response> result;
-		
-		try {
-		
-			regimen= regimenService.getByName(name); 
-		
-		 if(regimen != null) {
-			
-			 res =  new  Response(ResponseStatusEnum.SUCCESS,regimen,"Enregistrement trouvé", true);
-			 result =new ResponseEntity<>(res, HttpStatus.OK);
-			
-		} else { 
-			res =  new  Response(ResponseStatusEnum.ERROR,null,"Regimen introuvable", false); 
-	        result =new ResponseEntity<>(res,HttpStatus.NOT_FOUND);
-		}
-		
-		} catch(Exception ex) {
-			
-			res =  new  Response(ResponseStatusEnum.ERROR,null,ex.getMessage(), false);
-			result = new ResponseEntity<>(res,HttpStatus.NOT_FOUND);
-		}
-		return result;
-	} 
-	
 }

@@ -1,6 +1,5 @@
 package org.itechciv.dashboard.model;
 
-import java.util.ArrayList;
 import java.util.List;
 
 import jakarta.persistence.Column;
@@ -12,8 +11,8 @@ import jakarta.persistence.OneToMany;
 import jakarta.persistence.Table;
 
 @Entity
-@Table(name = "vih_type", schema = "dashboard")
-public class VihType {
+@Table(name = "partner", schema = "dashboard")
+public class Partner {
 	
 	@Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -21,11 +20,14 @@ public class VihType {
 
     @Column(name = "name")
     private String name;
+    
+    @Column(name = "code")
+    private String code;
+    
+    @OneToMany(mappedBy = "partner")
+	private List<SitePartner> sitepartners;
 
-    @OneToMany(mappedBy = "vihType")
-  	private List<Patient> patients = new ArrayList<>();
-
-	public VihType() {
+	public Partner() {
 		super();
 	}
 
@@ -45,16 +47,24 @@ public class VihType {
 		this.name = name;
 	}
 
-	public List<Patient> getPatients() {
-		return patients;
+	public String getCode() {
+		return code;
 	}
 
-	public void setPatients(List<Patient> patients) {
-		this.patients = patients;
+	public void setCode(String code) {
+		this.code = code;
+	}
+
+	public List<SitePartner> getSitepartners() {
+		return sitepartners;
+	}
+
+	public void setSitepartners(List<SitePartner> sitepartners) {
+		this.sitepartners = sitepartners;
 	}
 
 	@Override
 	public String toString() {
-		return "VihType [id=" + id + ", name=" + name + ", patients=" + patients + "]";
+		return "Partner [id=" + id + ", name=" + name + ", code=" + code + ", sitepartners=" + sitepartners + "]";
 	}
 }

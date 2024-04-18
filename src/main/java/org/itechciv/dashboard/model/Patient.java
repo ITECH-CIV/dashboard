@@ -39,15 +39,6 @@ public class Patient {
      @Column(name = "arv_init_date")
      private Date arvInitDate;
      
-     @Column(name = "identity_data")
-     private String identityData;
-
-     @Column(name = "upid_code")
-     private String upidCode;
-
-     @Column(name = "national_code")
-     private String nationalCode;
-     
      @Column(name = "subjectno" , nullable = true)
      private String subjectno;
      
@@ -57,6 +48,10 @@ public class Patient {
      @ManyToOne
 	 @JoinColumn(name ="siteId", nullable = false)
 	 private Site site; 
+     
+	 @ManyToOne
+	 @JoinColumn(name ="vihTypeId", nullable = false)
+	 private VihType vihType; 
      
      @OneToMany(mappedBy = "patient")
 	 private List<Analysis> analysis = new ArrayList<>();
@@ -121,30 +116,6 @@ public class Patient {
 		this.arvInitDate = arvInitDate;
 	}
 
-	public String getIdentityData() {
-		return identityData;
-	}
-
-	public void setIdentityData(String identityData) {
-		this.identityData = identityData;
-	}
-
-	public String getUpidCode() {
-		return upidCode;
-	}
-
-	public void setUpidCode(String upidCode) {
-		this.upidCode = upidCode;
-	}
-
-	public String getNationalCode() {
-		return nationalCode;
-	}
-
-	public void setNationalCode(String nationalCode) {
-		this.nationalCode = nationalCode;
-	}
-
 	public String getSubjectno() {
 		return subjectno;
 	}
@@ -169,6 +140,14 @@ public class Patient {
 		this.site = site;
 	}
 
+	public VihType getVihType() {
+		return vihType;
+	}
+
+	public void setVihType(VihType vihType) {
+		this.vihType = vihType;
+	}
+
 	public List<Analysis> getAnalysis() {
 		return analysis;
 	}
@@ -181,8 +160,7 @@ public class Patient {
 	public String toString() {
 		return "Patient [id=" + id + ", gender=" + gender + ", birthDate=" + birthDate + ", ageYears=" + ageYears
 				+ ", ageMonths=" + ageMonths + ", ageWeeks=" + ageWeeks + ", arvInitDate=" + arvInitDate
-				+ ", identityData=" + identityData + ", upidCode=" + upidCode + ", nationalCode=" + nationalCode
-				+ ", subjectno=" + subjectno + ", subjectid=" + subjectid + ", site=" + site + ", analysis=" + analysis
-				+ "]";
+				+ ", subjectno=" + subjectno + ", subjectid=" + subjectid + ", site=" + site + ", vihType=" + vihType
+				+ ", analysis=" + analysis + "]";
 	}
 }

@@ -21,33 +21,34 @@ public class Analysis {
       @GeneratedValue(strategy = GenerationType.IDENTITY)
       private Long id;
 	  
-	  @Column(name = "started_date")
-	  private LocalDateTime startedDate;
-
 	  @Column(name = "completed_date")
 	  private LocalDateTime completedDate;
 	  
 	  @Column(name = "released_date")
 	  private LocalDateTime releasedDate;
 	  
-	  @Column(name = "arv_reg")
-	  private int arvReg;
-	  
 	  @Column(name = "gross_result")
 	  private String grossResult;
 	  
 	  @Column(name = "converted_result")
-	  private String convertedResult;
-	  
-	  @Column(name = "viral_load_log")
-	  private double viralLoadLog;
-	     
-	  @Column(name="reason_other", nullable = true)
-	  private String reasonother;
+	  private int convertedResult;
 	  
 	  @Column(name="analysis_status")
 	  private int analysisStatus;
 	  
+	  @Column(name="lab_no")
+	  private String labno;
+	  
+	  @Column(name = "drcpt")
+	  private LocalDateTime drcpt;
+	    
+	  @Column(name = "dintv")
+	  private LocalDateTime dintv;
+	  
+	  @ManyToOne
+	  @JoinColumn(name ="sampleTypeId", nullable = false)
+	  private SampleType sampleType; 
+	     
 	  @ManyToOne
 	  @JoinColumn(name ="testId", nullable = false)
 	  private Test test; 
@@ -55,161 +56,149 @@ public class Analysis {
 	  @ManyToOne
 	  @JoinColumn(name ="patientId", nullable = false)
 	  private Patient patient;  
-	  
-	  @OneToMany(mappedBy = "analysis")
-	  private List<Sample> samples = new ArrayList<>();
-		
+	 	
 	  @ManyToOne
 	  @JoinColumn(name ="regimenId", nullable = false)
 	  private Regimen regimen; 
-	  
-	  @ManyToOne
-	  @JoinColumn(name ="vihTypeId", nullable = false)
-	  private VihType vihType; 
-	  
+	
 	  @ManyToOne
 	  @JoinColumn(name ="vlReasonId", nullable = false)
 	  private VlReason vlReason;
+	  
+	  @ManyToOne
+	  @JoinColumn(name ="labId", nullable = false)
+	  private Lab lab;
 
-	public Analysis() {
-		super();
-	}
+		public Analysis() {
+			super();
+		}
 
-	public Long getId() {
-		return id;
-	}
+		public Long getId() {
+			return id;
+		}
 
-	public void setId(Long id) {
-		this.id = id;
-	}
+		public void setId(Long id) {
+			this.id = id;
+		}
 
-	public LocalDateTime getStartedDate() {
-		return startedDate;
-	}
+		public LocalDateTime getCompletedDate() {
+			return completedDate;
+		}
 
-	public void setStartedDate(LocalDateTime startedDate) {
-		this.startedDate = startedDate;
-	}
+		public void setCompletedDate(LocalDateTime completedDate) {
+			this.completedDate = completedDate;
+		}
 
-	public LocalDateTime getCompletedDate() {
-		return completedDate;
-	}
+		public LocalDateTime getReleasedDate() {
+			return releasedDate;
+		}
 
-	public void setCompletedDate(LocalDateTime completedDate) {
-		this.completedDate = completedDate;
-	}
+		public void setReleasedDate(LocalDateTime releasedDate) {
+			this.releasedDate = releasedDate;
+		}
 
-	public LocalDateTime getReleasedDate() {
-		return releasedDate;
-	}
+		public String getGrossResult() {
+			return grossResult;
+		}
 
-	public void setReleasedDate(LocalDateTime releasedDate) {
-		this.releasedDate = releasedDate;
-	}
+		public void setGrossResult(String grossResult) {
+			this.grossResult = grossResult;
+		}
 
-	public int getArvReg() {
-		return arvReg;
-	}
+		public int getConvertedResult() {
+			return convertedResult;
+		}
 
-	public void setArvReg(int arvReg) {
-		this.arvReg = arvReg;
-	}
+		public void setConvertedResult(int convertedResult) {
+			this.convertedResult = convertedResult;
+		}
 
-	public String getGrossResult() {
-		return grossResult;
-	}
+		public int getAnalysisStatus() {
+			return analysisStatus;
+		}
 
-	public void setGrossResult(String grossResult) {
-		this.grossResult = grossResult;
-	}
+		public void setAnalysisStatus(int analysisStatus) {
+			this.analysisStatus = analysisStatus;
+		}
 
-	public String getConvertedResult() {
-		return convertedResult;
-	}
+		public String getLabno() {
+			return labno;
+		}
 
-	public void setConvertedResult(String convertedResult) {
-		this.convertedResult = convertedResult;
-	}
+		public void setLabno(String labno) {
+			this.labno = labno;
+		}
 
-	public double getViralLoadLog() {
-		return viralLoadLog;
-	}
+		public LocalDateTime getDrcpt() {
+			return drcpt;
+		}
 
-	public void setViralLoadLog(double viralLoadLog) {
-		this.viralLoadLog = viralLoadLog;
-	}
+		public void setDrcpt(LocalDateTime drcpt) {
+			this.drcpt = drcpt;
+		}
 
-	public String getReasonother() {
-		return reasonother;
-	}
+		public LocalDateTime getDintv() {
+			return dintv;
+		}
 
-	public void setReasonother(String reasonother) {
-		this.reasonother = reasonother;
-	}
+		public void setDintv(LocalDateTime dintv) {
+			this.dintv = dintv;
+		}
 
-	public int getAnalysisStatus() {
-		return analysisStatus;
-	}
+		public SampleType getSampleType() {
+			return sampleType;
+		}
 
-	public void setAnalysisStatus(int analysisStatus) {
-		this.analysisStatus = analysisStatus;
-	}
+		public void setSampleType(SampleType sampleType) {
+			this.sampleType = sampleType;
+		}
 
-	public Test getTest() {
-		return test;
-	}
+		public Test getTest() {
+			return test;
+		}
 
-	public void setTest(Test test) {
-		this.test = test;
-	}
+		public void setTest(Test test) {
+			this.test = test;
+		}
 
-	public Patient getPatient() {
-		return patient;
-	}
+		public Patient getPatient() {
+			return patient;
+		}
 
-	public void setPatient(Patient patient) {
-		this.patient = patient;
-	}
+		public void setPatient(Patient patient) {
+			this.patient = patient;
+		}
 
-	public List<Sample> getSamples() {
-		return samples;
-	}
+		public Regimen getRegimen() {
+			return regimen;
+		}
 
-	public void setSamples(List<Sample> samples) {
-		this.samples = samples;
-	}
+		public void setRegimen(Regimen regimen) {
+			this.regimen = regimen;
+		}
 
-	public Regimen getRegimen() {
-		return regimen;
-	}
+		public VlReason getVlReason() {
+			return vlReason;
+		}
 
-	public void setRegimen(Regimen regimen) {
-		this.regimen = regimen;
-	}
+		public void setVlReason(VlReason vlReason) {
+			this.vlReason = vlReason;
+		}
 
-	public VihType getVihType() {
-		return vihType;
-	}
+		public Lab getLab() {
+			return lab;
+		}
 
-	public void setVihType(VihType vihType) {
-		this.vihType = vihType;
-	}
+		public void setLab(Lab lab) {
+			this.lab = lab;
+		}
 
-	public VlReason getVlReason() {
-		return vlReason;
-	}
-
-	public void setVlReason(VlReason vlReason) {
-		this.vlReason = vlReason;
-	}
-
-	@Override
-	public String toString() {
-		return "Analysis [id=" + id + ", startedDate=" + startedDate + ", completedDate=" + completedDate
-				+ ", releasedDate=" + releasedDate + ", arvReg=" + arvReg + ", grossResult=" + grossResult
-				+ ", convertedResult=" + convertedResult + ", viralLoadLog=" + viralLoadLog + ", reasonother="
-				+ reasonother + ", analysisStatus=" + analysisStatus + ", test=" + test + ", patient=" + patient
-				+ ", samples=" + samples + ", regimen=" + regimen + ", vihType=" + vihType + ", vlReason=" + vlReason
-				+ "]";
-	} 
+		@Override
+		public String toString() {
+			return "Analysis [id=" + id + ", completedDate=" + completedDate + ", releasedDate=" + releasedDate
+					+ ", grossResult=" + grossResult + ", convertedResult=" + convertedResult + ", analysisStatus="
+					+ analysisStatus + ", labno=" + labno + ", drcpt=" + drcpt + ", dintv=" + dintv + ", sampleType="
+					+ sampleType + ", test=" + test + ", patient=" + patient + ", regimen=" + regimen + ", vlReason="
+					+ vlReason + ", lab=" + lab + "]";
+		}		
 }

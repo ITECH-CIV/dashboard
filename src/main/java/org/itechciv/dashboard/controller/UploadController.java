@@ -24,10 +24,44 @@ public class UploadController {
 	@Autowired
 	private UploadService uploadService;
 	
-	 //Controller relatif à l'import de localité - Region, District et Facilitys
+	 //Controller relatif à l'import de lab
+	  @RequestMapping(method = RequestMethod.POST, value="upload/lab")
+	  @ResponseBody
+	  public ResponseEntity<ResponseMessage> uploadLab(@RequestParam("file") MultipartFile file) {		
+	 
+	  boolean req;
+	  String message = null;
+	  
+	  try
+	  
+	  { 
+	   System.out.println("MESSAGE-1::::::::::::  " + file.getOriginalFilename());
+	   System.out.println("MESSAGE-2::::::::::::  " + file.getName());
+	   System.out.println("MESSAGE-3::::::::::::  " + file.getContentType());
+	   System.out.println("MESSAGE-4::::::::::::  " +file.getOriginalFilename());
+	   System.out.println("MESSAGE-5::::::::::::  " +file.getSize());
+	  
+	   req = uploadService.storeLabImport(file);
+	  
+	   if(req) {
+		   message = ConstantMessage.INSERTED;
+	       return ResponseEntity.status(HttpStatus.OK).body(new ResponseMessage(message, null));
+
+	
+	 } else { 
+		   message = ConstantMessage.FAILED;
+	       return ResponseEntity.status(HttpStatus.NOT_FOUND).body(new ResponseMessage(message, null));
+	  } 
+	 } catch (Exception ex) {
+		  message = ConstantMessage.ERROR;
+	      return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(new ResponseMessage(message, ex.getMessage()));
+	 } 
+	}
+	  
+	  //Controller relatif à l'import de localité - Region, District et Facilitys
 	  @RequestMapping(method = RequestMethod.POST, value="upload/localite")
 	  @ResponseBody
-	  public ResponseEntity<ResponseMessage> uploadLocalites(@RequestParam("file") MultipartFile file) {		
+	  public ResponseEntity<ResponseMessage> uploadLocalite(@RequestParam("file") MultipartFile file) {		
 	 
 	  boolean req;
 	  String message = null;
@@ -76,6 +110,39 @@ public class UploadController {
 		     System.out.println("MESSAGE-5::::::::::::  " +file.getSize());
 
 			 req = uploadService.storeExcelImport(file);
+		 
+			 if(req) {
+				 message = ConstantMessage.INSERTED;
+			     return ResponseEntity.status(HttpStatus.OK).body(new ResponseMessage(message, null));
+			 } else { 
+				 message = ConstantMessage.FAILED;
+			     return ResponseEntity.status(HttpStatus.NOT_FOUND).body(new ResponseMessage(message, null));
+			  } 
+			 } catch (Exception ex) {
+				  ex.printStackTrace();
+				  message = ConstantMessage.ERROR;
+			      return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(new ResponseMessage(message, ex.getMessage()));
+			  } 	 
+		} 
+		  
+		//Controller relatif à l'import de fichier - OpenElis
+		  @RequestMapping(method = RequestMethod.POST, value="upload/test")
+		  @ResponseBody 
+		  public ResponseEntity<ResponseMessage> uploadTest(@RequestParam("file") MultipartFile file) {
+		 
+			  boolean req;
+			  String message = null;
+			  
+		      try
+		  
+		    {
+			 System.out.println("MESSAGE-1::::::::::::  " + file.getOriginalFilename());
+			 System.out.println("MESSAGE-2::::::::::::  " + file.getName());
+		     System.out.println("MESSAGE-3::::::::::::  " + file.getContentType());
+		     System.out.println("MESSAGE-4::::::::::::  " +file.getOriginalFilename());
+		     System.out.println("MESSAGE-5::::::::::::  " +file.getSize());
+
+			 req = uploadService.uploadTestImport(file);
 		 
 			 if(req) {
 				 message = ConstantMessage.INSERTED;

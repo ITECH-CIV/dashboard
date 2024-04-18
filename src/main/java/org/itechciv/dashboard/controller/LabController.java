@@ -1,8 +1,10 @@
 package org.itechciv.dashboard.controller;
 import java.util.Optional;
 
+import org.itechciv.dashboard.iservice.LabService;
 import org.itechciv.dashboard.iservice.RegimenService;
 import org.itechciv.dashboard.iservice.VihTypeService;
+import org.itechciv.dashboard.model.Lab;
 import org.itechciv.dashboard.model.Regimen;
 import org.itechciv.dashboard.model.Test;
 import org.itechciv.dashboard.model.VihType;
@@ -21,21 +23,21 @@ import org.springframework.web.bind.annotation.RestController;
 @RestController
 @RequestMapping("/api")
 @CrossOrigin
-public class RegimenController {
+public class LabController {
 	
 	@Autowired
-	private RegimenService regimenService;
+	private LabService labService;
 	
-	@RequestMapping(method = RequestMethod.POST, value="regimen/save")
+	@RequestMapping(method = RequestMethod.POST, value="lab/save")
 	@ResponseBody
-	public ResponseEntity<Response> saveRegimen(@RequestBody Regimen regimen) {  
+	public ResponseEntity<Response> saveLab(@RequestBody Lab lab) {  
 		
 		Response res = new Response() ; 
 		ResponseEntity<Response> result;
 				
 		try {
 			
-			res =  regimenService.create(regimen) ; 
+			res =  labService.create(lab) ; 
 			
 			   if(res!=null) { 
 					
@@ -55,9 +57,9 @@ public class RegimenController {
 		return result;
 	}  
 	
-	@RequestMapping(method = RequestMethod.GET, value="regimen/getAll")
+	@RequestMapping(method = RequestMethod.GET, value="lab/getAll")
 	@ResponseBody
-	public ResponseEntity<Response> getRegimen() { 
+	public ResponseEntity<Response> getLab() { 
 		
 		Response res = new Response(); 
 		ResponseEntity<Response> result;
@@ -65,7 +67,7 @@ public class RegimenController {
 		try  
 		 
 		{ 
-			res = regimenService.getAll(); 
+			res = labService.getAll(); 
 			
              if(res!=null) { 
 				
@@ -87,18 +89,18 @@ public class RegimenController {
 		return result;
 	}
 	
-	@RequestMapping(method = RequestMethod.GET, value="regimen/getById")
+	@RequestMapping(method = RequestMethod.GET, value="lab/getById")
 	@ResponseBody
-	public ResponseEntity<Response> getRegimenById(String id) { 
+	public ResponseEntity<Response> getLabById(String id) { 
 		
 		Response res = new Response(); 
 		
-		Optional<Regimen> reg;
+		Optional<Lab> reg;
 		ResponseEntity<Response> result;
 		
 		try {
 		
-			reg= regimenService.getOne(Long.parseLong(id)); 
+			reg= labService.getOne(Long.parseLong(id)); 
 		
 		 if(reg!=null) {
 			
@@ -106,7 +108,7 @@ public class RegimenController {
 			 result =new ResponseEntity<>(res, HttpStatus.OK);
 			
 		} else { 
-			res =  new  Response(ResponseStatusEnum.ERROR,null,"Regimen introuvable", false); 
+			res =  new  Response(ResponseStatusEnum.ERROR,null,"Lab introuvable", false); 
 	        result =new ResponseEntity<>(res,HttpStatus.NOT_FOUND);
 		}
 		
@@ -118,25 +120,25 @@ public class RegimenController {
 		return result;
 	}
 	
-	@RequestMapping(value ="regimen/update", method = RequestMethod.PUT)
-	public ResponseEntity<Response> updateRegimen(@RequestBody Regimen rg, String id) {
+	@RequestMapping(value ="lab/update", method = RequestMethod.PUT)
+	public ResponseEntity<Response> updateLab(@RequestBody Lab lb, String id) {
 		
 		Response res = new Response();
-		Optional<Regimen> regimen; 
+		Optional<Lab> lab; 
 		ResponseEntity<Response> result;
 		
 		try  {
 			
-			regimen = regimenService.getOne(Long.parseLong(id)); 
+			lab = labService.getOne(Long.parseLong(id)); 
 			 
-			 if(regimen!=null) 
+			 if(lab!=null) 
 				 
 			 { 
-				 Regimen reg = regimen.get();
+				 Lab l = lab.get();
 					
-				 reg.setName(rg.getName()); 
+				 l.setName(lb.getName()); 
 					 
-				 res = regimenService.update(reg); 
+				 res = labService.update(l); 
 				 
 				 if(res!=null) 
 				 {
@@ -150,7 +152,7 @@ public class RegimenController {
 				 
 			 } else {
 			 
-				 res=  new  Response(ResponseStatusEnum.ERROR,null,"Regimen introuvable", false); 
+				 res=  new  Response(ResponseStatusEnum.ERROR,null,"Lab introuvable", false); 
 			     result= new ResponseEntity<>(res,HttpStatus.NOT_FOUND);
 			 }
 		
@@ -161,24 +163,24 @@ public class RegimenController {
 		return result;
 	}
 	
-	@RequestMapping(method = RequestMethod.DELETE, value="regimen/deletedById")
+	@RequestMapping(method = RequestMethod.DELETE, value="lab/deletedById")
 	@ResponseBody
-	public ResponseEntity<Response> deleteRegimen(String id) { 
+	public ResponseEntity<Response> deleteLab(String id) { 
 		
 		Response res = new Response(); 
 		
-		Optional<Regimen> regimen;
+		Optional<Lab> lab;
 		ResponseEntity<Response> result;
 		
 		try {
 		
-			regimen= regimenService.getOne(Long.parseLong(id)); 
+			lab= labService.getOne(Long.parseLong(id)); 
 		
-		 if(regimen!=null) {
+		 if(lab!=null) {
 			 
-			 regimenService.delete(Long.parseLong(id));
+			 labService.delete(Long.parseLong(id));
 			
-			 res =  new  Response(ResponseStatusEnum.SUCCESS,regimen,"Suppression effectuée", true);
+			 res =  new  Response(ResponseStatusEnum.SUCCESS,lab,"Suppression effectuée", true);
 			 result =new ResponseEntity<>(res, HttpStatus.OK);
 			
 		} else { 
@@ -193,37 +195,4 @@ public class RegimenController {
 		}
 		return result;
 	}
-	
-
-	@RequestMapping(method = RequestMethod.GET, value="regimen/getByName")
-	@ResponseBody
-	public ResponseEntity<Response> getRegimenName(String name) { 
-		
-		Response res = new Response(); 
-		
-		Regimen regimen;
-		ResponseEntity<Response> result;
-		
-		try {
-		
-			regimen= regimenService.getByName(name); 
-		
-		 if(regimen != null) {
-			
-			 res =  new  Response(ResponseStatusEnum.SUCCESS,regimen,"Enregistrement trouvé", true);
-			 result =new ResponseEntity<>(res, HttpStatus.OK);
-			
-		} else { 
-			res =  new  Response(ResponseStatusEnum.ERROR,null,"Regimen introuvable", false); 
-	        result =new ResponseEntity<>(res,HttpStatus.NOT_FOUND);
-		}
-		
-		} catch(Exception ex) {
-			
-			res =  new  Response(ResponseStatusEnum.ERROR,null,ex.getMessage(), false);
-			result = new ResponseEntity<>(res,HttpStatus.NOT_FOUND);
-		}
-		return result;
-	} 
-	
 }

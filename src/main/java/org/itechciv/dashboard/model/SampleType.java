@@ -26,7 +26,7 @@ public class SampleType  {
     private String description;
     
     @OneToMany(mappedBy = "sampleType")
-	private List<Sample> samples = new ArrayList<>();
+	private List<Analysis> analysises = new ArrayList<>();
 
 	public SampleType() {
 		super();
@@ -56,17 +56,17 @@ public class SampleType  {
 		this.description = description;
 	}
 
-	public List<Sample> getSamples() {
-		return samples;
+	public List<Analysis> getAnalysises() {
+		return analysises;
 	}
 
-	public void setSamples(List<Sample> samples) {
-		this.samples = samples;
+	public void setAnalysises(List<Analysis> analysises) {
+		this.analysises = analysises;
 	}
 
 	@Override
 	public String toString() {
-		return "SampleType [id=" + id + ", label=" + label + ", description=" + description + ", samples=" + samples
-				+ "]";
+		return "SampleType [id=" + id + ", label=" + label + ", description=" + description + ", analysises="
+				+ analysises + "]";
 	}
 }

@@ -13,6 +13,7 @@ import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 import org.apache.commons.lang3.ObjectUtils;
+import org.apache.commons.lang3.StringUtils;
 import org.apache.poi.ss.usermodel.Cell;
 import org.apache.poi.ss.usermodel.CellType;
 import org.apache.poi.ss.usermodel.DataFormatter;
@@ -30,11 +31,11 @@ import org.itechciv.dashboard.iservice.UploadService;
 import org.itechciv.dashboard.model.Analysis;
 import org.itechciv.dashboard.model.Regimen;
 import org.itechciv.dashboard.model.District;
+import org.itechciv.dashboard.model.Lab;
 import org.itechciv.dashboard.model.Site;
 import org.itechciv.dashboard.model.Patient;
 import org.itechciv.dashboard.model.PatientAnalyseExcelItem;
 import org.itechciv.dashboard.model.Region;
-import org.itechciv.dashboard.model.Sample;
 import org.itechciv.dashboard.model.SampleType;
 import org.itechciv.dashboard.model.Test;
 import org.itechciv.dashboard.model.VihType;
@@ -42,10 +43,10 @@ import org.itechciv.dashboard.model.VlReason;
 import org.itechciv.dashboard.repository.AnalysisRepository;
 import org.itechciv.dashboard.repository.RegimenRepository;
 import org.itechciv.dashboard.repository.DistrictRepository;
+import org.itechciv.dashboard.repository.LabRepository;
 import org.itechciv.dashboard.repository.SiteRepository;
 import org.itechciv.dashboard.repository.PatientRepository;
 import org.itechciv.dashboard.repository.RegionRepository;
-import org.itechciv.dashboard.repository.SampleRepository;
 import org.itechciv.dashboard.repository.SampleTypeRepository;
 import org.itechciv.dashboard.repository.TestRepository;
 import org.itechciv.dashboard.repository.VihTypeRepository;
@@ -65,58 +66,70 @@ import java.util.GregorianCalendar;
 public class UploadServiceImpl implements UploadService {
 
 	@Autowired
-	private TestRepository testRepository;
-
+	private LabRepository labRepository;
+	
+	@Autowired
+	private RegionRepository regionRepository;
+	
+	@Autowired
+	private DistrictRepository districtRepository;
+	
 	@Autowired
 	private SiteRepository siteRepository;
 
-	@Autowired
-	private PatientRepository patientRepository;
-
-	@Autowired
-	private AnalysisRepository analysisRepository;
-
-	@Autowired
-	private SampleTypeRepository sampleTypeRepository;
-
-	@Autowired
-	private SampleRepository sampleRepository;
-
-	@Autowired
-	private RegionRepository regionRepository;
-
-	@Autowired
-	private DistrictRepository districtRepository;
-
-	@Autowired
-	private RegimenRepository regimenRepository;
-
-	@Autowired
-	private VihTypeRepository vihTypeRepository;
-
-	@Autowired
-	private VlReasonRepository vlReasonRepository;
-
-	private final DataFormatter dataFormatter = new DataFormatter();
-
-	private final DateTimeFormatter ft = DateTimeFormatter.ofPattern("dd-MMM-yyyy HH:mm:ss");
-
-	static XSSFCell cell;
-
-	// IMPORT LOCALITE: Region, District, Site
+	// Import Lab Data
 	@Override
-	public boolean storeLocaliteImport(MultipartFile file) {
+	public boolean storeLabImport(MultipartFile file) {
 
-		Region r = null;
-		District d = null;
-		Site s = null;
-
+		Lab l = null;
+		
 		try {
 
 			XSSFWorkbook workbook = new XSSFWorkbook(file.getInputStream());
 
 			XSSFSheet spreadsheet = workbook.getSheetAt(0);
+		
+			System.out.println("LENGTH ::::: " + 	spreadsheet.getPhysicalNumberOfRows() + "\n");
 
+			for (int i = 2; i < spreadsheet.getPhysicalNumberOfRows() +1; i++) {
+
+				XSSFRow row = spreadsheet.getRow(i);
+
+				if (row.getCell(1) != null) {
+
+					l = labRepository.findLabByPrefix(row.getCell(1).getStringCellValue());
+
+					if (l == null) {
+						 l = new Lab();
+						 l.setName(ProcessType.getCellStringValue(row.getCell(0)));
+						 l.setPrefix(ProcessType.getCellStringValue(row.getCell(1)));
+						 
+				  l = labRepository.save(l);
+					
+					}
+				}
+				workbook.close();
+			}
+			return true;
+		} catch (Exception ex) {
+			ex.printStackTrace();
+			return false;
+		}
+	}
+	
+	// IMPORT LOCALITE: Region, District, Site
+	@Override
+	public boolean storeLocaliteImport(MultipartFile file) {
+		
+		Region r = null;
+		District d = null;
+		Site s = null;
+		
+		try {
+			
+			XSSFWorkbook workbook = new XSSFWorkbook(file.getInputStream());
+			XSSFSheet spreadsheet = workbook.getSheetAt(0);
+			
 			for (int i = 7; i < spreadsheet.getPhysicalNumberOfRows(); i++) {
 
 				XSSFRow row = spreadsheet.getRow(i);
@@ -152,6 +165,7 @@ public class UploadServiceImpl implements UploadService {
 					String str = String.valueOf((int) row.getCell(6).getNumericCellValue());
 
 					s = siteRepository.findSiteByOldCode(str);
+					
 					if (s == null) {
 						Site inSite = new Site();
 						inSite.setOldCodeSiteDHIS2(str);
@@ -168,154 +182,40 @@ public class UploadServiceImpl implements UploadService {
 				}
 				workbook.close();
 			}
+			
 			return true;
-		} catch (Exception ex) {
+			
+		}catch(Exception ex) {
 			ex.printStackTrace();
-			System.out.println("Exception => " + ex.getMessage());
 			return false;
 		}
+		
+		
 	}
-	
 
 	@Override
 	public boolean storeExcelImport(MultipartFile file) {
+		// TODO Auto-generated method stub
+		return false;
+	}
 
-		Test t = null;
-		Site s = null;
-		Patient p = null;
-		VihType vt = null;
-		VlReason vr = null;
-		Analysis a = null;
-		SampleType st = null;
-		Sample sp = null;
-		Regimen reg = null;
-		Regimen inReg = null;
+	
+	@Override
+	public boolean uploadTestImport(MultipartFile file) {
+
+		Lab l = null;
 
 		try {
-			System.out.println("Hello world");
 
 			XSSFWorkbook workbook = new XSSFWorkbook(file.getInputStream());
 			XSSFSheet spreadsheet = workbook.getSheetAt(0);
-			FormulaEvaluator evaluator = workbook.getCreationHelper().createFormulaEvaluator();
 
 			for (int i = 1; i < spreadsheet.getPhysicalNumberOfRows(); i++) {
-
 				XSSFRow row = spreadsheet.getRow(i);
-				// Test
-				if (row.getCell(3) != null) {
 
-					t = testRepository.findTestByName(row.getCell(3).getStringCellValue());
-					System.out.println("Test:" + t + "\n");
+				System.out.println("Nom-lab: " + row.getCell(0).getStringCellValue() + "\n");
+				System.out.println("Prefix: " + row.getCell(1).getStringCellValue() + "\n");
 
-					if (t == null) {
-						Test inTest = new Test();
-						inTest.setName(Constants.TEST_NAME);
-						inTest.setStudy(row.getCell(3).getStringCellValue());
-
-						t = testRepository.save(inTest);
-						System.out.println("Test:" + t.toString());
-					}
-				}
-				// Site
-				if (row.getCell(7) != null) {
-					String str = String.valueOf(row.getCell(7).getRawValue());
-
-					s = siteRepository.findSiteByOldCode(str);
-
-					if (s == null) {
-						Site inSite = new Site();
-						try {
-							inSite.setOldCodeSiteDHIS2(str);
-						} catch (Exception ex) {
-							ex.printStackTrace();
-						}
-						inSite.setNameSite(row.getCell(8).getStringCellValue());
-						inSite.setCodeSiteDatim(ProcessType.getCellStringValue(row.getCell(9)));
-						inSite.setNameSiteDatim(ProcessType.getCellStringValue(row.getCell(10)));
-
-						s = siteRepository.save(inSite);
-
-						// System.out.println("inserted-facilitys:" +f.getId()+"\n");
-
-					} else {
-						s.setNameSite(row.getCell(8).getStringCellValue());
-						s.setCodeSiteDatim(ProcessType.getCellStringValue(row.getCell(9)));
-						s.setNameSiteDatim(ProcessType.getCellStringValue(row.getCell(10)));
-
-						s = siteRepository.saveAndFlush(s);
-
-						// System.out.println("updated-facilitys:" +f.getId()+"\n");
-					}
-				}
-				// Patient
-				if (row.getCell(4) != null) {
-					p = patientRepository.findPatientByCode(row.getCell(4).getRawValue());
-
-					if (p == null) {
-						Patient inPatient = new Patient();
-						inPatient.setSubjectno(ProcessType.getCellStringValue(row.getCell(2)));
-						inPatient.setSubjectid(ProcessType.getCellStringValue(row.getCell(4)));
-						inPatient.setGender(row.getCell(11).getStringCellValue());
-						inPatient.setBirthDate(ProcessType.getCellDateValue(evaluator, row.getCell(12)));
-						inPatient.setAgeYears((int) row.getCell(13).getNumericCellValue());
-						inPatient.setAgeMonths((int) row.getCell(14).getNumericCellValue());
-						inPatient.setAgeWeeks((int) row.getCell(15).getNumericCellValue());
-						inPatient.setArvInitDate(ProcessType.getCellDateValue(evaluator, row.getCell(26)));
-						inPatient.setSite(s);
-
-						p = patientRepository.save(inPatient);
-					}
-				}
-				// VihType
-				if (row.getCell(23) != null) {
-
-					vt = vihTypeRepository.findVihTypeByName(ProcessType.getCellStringValue(row.getCell(23)));
-
-					if (vt == null) {
-						VihType inVihType = new VihType();
-						inVihType.setName(ProcessType.getCellStringValue(row.getCell(23)));
-
-						vt = vihTypeRepository.save(inVihType);
-					}
-				}
-				// VlReason
-				if (row.getCell(33) != null) {
-
-					vr = vlReasonRepository.findVlReasonByName(ProcessType.getCellStringValue(row.getCell(33)));
-
-					if (vr == null) {
-						VlReason inVlReason = new VlReason();
-						inVlReason.setName(ProcessType.getCellStringValue(row.getCell(33)));
-
-						vr = vlReasonRepository.save(inVlReason);
-					}
-				} 
-				// Regimen
-				String molecule = ProcessString.concatenateCurrentValue(row.getCell(28), row.getCell(29), row.getCell(30));
-				System.out.println("concatenateCurrentValue ::: " + molecule + "\n");
-				reg = regimenRepository.findRegimenByName(molecule);
-				
-				boolean check = (reg == null);
-				if (check) {
-					inReg = regimenRepository.findRegimenByName(Constants.DIET_NAME_OTHER);
-					reg = inReg;
-					System.out.println("regimen-other:" + inReg.getName() + "\n");
-				}
-				System.out.println("regimen-exists:" + reg.getName() + "\n");
-
-				
-				// Sample type
-				if (row.getCell(18) != null) {
-					st = sampleTypeRepository.findSampleTypeByName(row.getCell(18).getStringCellValue());
-
-					if (st == null) {
-						SampleType inSampleType = new SampleType();
-						inSampleType.setLabel(row.getCell(18).getStringCellValue());
-
-						st = sampleTypeRepository.save(inSampleType);
-					}
-				}
-				
 				workbook.close();
 			}
 			return true;
@@ -324,7 +224,4 @@ public class UploadServiceImpl implements UploadService {
 			return false;
 		}
 	}
-
-	
-	
 }

@@ -20,16 +20,7 @@ public class Site {
 	  @Id
       @GeneratedValue(strategy = GenerationType.IDENTITY)
       private Long id;
-
-	  @Column(name = "code")
-	  private String code;
-	  
-	  @Column(name = "name")
-	  private String name;
-	  
-	  @Column(name = "code_site")
-	  private int codeSite;
-	  
+ 
 	  @Column(name = "name_site", nullable= true)
 	  private String nameSite;
 	  
@@ -57,7 +48,7 @@ public class Site {
 	  @Column(name = "statut_id")
 	  private String statutId;
 	  
-	  @Column(name = "siteCode")
+	  @Column(name = "site_code")
 	  private String siteCode;
 	    
 	  @ManyToOne
@@ -66,6 +57,9 @@ public class Site {
 	  
 	  @OneToMany(mappedBy = "site")
 	  private List<Patient> patients = new ArrayList<>();
+	  
+	  @OneToMany(mappedBy = "site")
+	  private List<SitePartner> sitepartners;
 
 	public Site() {
 		super();
@@ -77,30 +71,6 @@ public class Site {
 
 	public void setId(Long id) {
 		this.id = id;
-	}
-
-	public String getCode() {
-		return code;
-	}
-
-	public void setCode(String code) {
-		this.code = code;
-	}
-
-	public String getName() {
-		return name;
-	}
-
-	public void setName(String name) {
-		this.name = name;
-	}
-
-	public int getCodeSite() {
-		return codeSite;
-	}
-
-	public void setCodeSite(int codeSite) {
-		this.codeSite = codeSite;
 	}
 
 	public String getNameSite() {
@@ -199,13 +169,20 @@ public class Site {
 		this.patients = patients;
 	}
 
+	public List<SitePartner> getSitepartners() {
+		return sitepartners;
+	}
+
+	public void setSitepartners(List<SitePartner> sitepartners) {
+		this.sitepartners = sitepartners;
+	}
+
 	@Override
 	public String toString() {
-		return "Site [id=" + id + ", code=" + code + ", name=" + name + ", codeSite=" + codeSite + ", nameSite="
-				+ nameSite + ", codeSiteDatim=" + codeSiteDatim + ", nameSiteDatim=" + nameSiteDatim
-				+ ", oldCodeSiteDHIS2=" + oldCodeSiteDHIS2 + ", oldSiteName=" + oldSiteName + ", uniqueSiteId="
-				+ uniqueSiteId + ", newSiteLongName=" + newSiteLongName + ", newSiteShortName=" + newSiteShortName
-				+ ", statutId=" + statutId + ", siteCode=" + siteCode + ", district=" + district + ", patients="
-				+ patients + "]";
-	}	
+		return "Site [id=" + id + ", nameSite=" + nameSite + ", codeSiteDatim=" + codeSiteDatim + ", nameSiteDatim="
+				+ nameSiteDatim + ", oldCodeSiteDHIS2=" + oldCodeSiteDHIS2 + ", oldSiteName=" + oldSiteName
+				+ ", uniqueSiteId=" + uniqueSiteId + ", newSiteLongName=" + newSiteLongName + ", newSiteShortName="
+				+ newSiteShortName + ", statutId=" + statutId + ", siteCode=" + siteCode + ", district=" + district
+				+ ", patients=" + patients + ", sitepartners=" + sitepartners + "]";
+	}
 }

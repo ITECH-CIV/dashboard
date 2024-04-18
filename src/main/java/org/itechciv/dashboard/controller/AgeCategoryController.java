@@ -133,7 +133,7 @@ public class AgeCategoryController {
 				 AgeCategory ac = ageCategory.get();
 					
 				ac.setLabel(ageCat.getLabel()); 
-				ac.setDescription(ageCat.getDescription());
+				ac.setType(ageCat.getType());
 					 
 				 res = ageCategoryService.update(ac); 
 				 

@@ -6,8 +6,10 @@ public interface UploadService {
 
 	boolean storeLocaliteImport(MultipartFile file); 
 	boolean storeExcelImport(MultipartFile file);
-	//boolean uploadTestImport(MultipartFile file);
+	boolean uploadTestImport(MultipartFile file);
 	
 	//boolean storeExcelImport2(MultipartFile file);
+	
+	boolean storeLabImport(MultipartFile file);
 
 }
