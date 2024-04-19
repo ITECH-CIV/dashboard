@@ -62,6 +62,7 @@ import org.springframework.web.multipart.MultipartFile;
 import org.apache.poi.ss.usermodel.FormulaEvaluator;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Calendar;
 import java.util.GregorianCalendar;
 
@@ -89,6 +90,9 @@ public class UploadServiceImpl implements UploadService {
 	
 	@Autowired
 	private SitePartnerRepository sitePartnerRepository;
+	
+	@Autowired
+	private AnalysisRepository analysisRepository;
 
 	// Import Lab Data
 	@Override
@@ -359,64 +363,67 @@ public class UploadServiceImpl implements UploadService {
 		Site s = null;
 		Partner p = null;
 		SitePartner sp = null;
+		Analysis a = null;
 
 		try {
 
 			XSSFWorkbook workbook = new XSSFWorkbook(file.getInputStream());
-			XSSFSheet spreadsheet = workbook.getSheetAt(1);
+			XSSFSheet spreadsheet = workbook.getSheetAt(0);
 			System.out.println("SHEET-NAME: " + spreadsheet.getSheetName().toString() + "\n");
 
 
-			for (int i = 6; i < spreadsheet.getPhysicalNumberOfRows(); i++) {
+			for (int i = 1; i < spreadsheet.getPhysicalNumberOfRows(); i++) {
 				
 				XSSFRow row = spreadsheet.getRow(i);
 
-				System.out.println("column-name: " + row.getCell(0).getStringCellValue() + "\n");
-				System.out.println("column-name---1: " + row.getCell(1).getStringCellValue() + "\n");
-				System.out.println("column-name---6: " + row.getCell(6).getStringCellValue() + "\n"); 
-				
-				if (row.getCell(1) != null) {
-					
-					s = siteRepository.findSiteByCodeSiteDatim(ProcessType.getCellStringValue(row.getCell(1)));
-					//List<Site> sites = siteRepository.findByCodeSiteDatim(ProcessType.getCellStringValue(row.getCell(1)));
-					//s= sites.get(0);)
+				if (row.getCell(19) != null) {
+										
+	            	 if (row.getCell(16).getCellType() == CellType.STRING ) {
+	            		 
+	            		 String str = row.getCell(16).getStringCellValue();
+	            		 
+	 					 System.out.println("viral-load-string: " + row.getCell(16).getStringCellValue() + "\n");
+	 					 
+	 					 List<String> tabConstants = Arrays.asList("<LL", "< LL", "LL");
+	 					 
+	 			
+	 					 if(tabConstants.contains(str) ) {
+	 						
+	 						a = new Analysis();
+	 						a.setGrossResult(str);
+	 						a.setConvertedResult(0);
+		 					 
+	 System.out.println("valeur-49: " + a.getGrossResult() + " " + a.getConvertedResult() + "\n");
+		
+	 					}else {
+	 						a = new Analysis();
+	 						a.setGrossResult("");
+	 						a.setConvertedResult(-1);
+	 						
+    System.out.println("valeur-XXXX: " + a.getGrossResult() + " " + a.getConvertedResult() + "\n");
+	 						
+	 						}
+	 					}
+	            	 
+	            	 if (row.getCell(16).getCellType() == CellType.NUMERIC ) {
+	            		 
+		 					System.out.println("viral-load-numeric: " + row.getCell(16).getNumericCellValue() + "\n");
+		 					
+		 					a = new Analysis();
+	 						a.setGrossResult("");
+	 						a.setConvertedResult((int) row.getCell(16).getNumericCellValue());
+	 						
+	 	System.out.println("valeur-numeric: " + a.getGrossResult() + " " + a.getConvertedResult() + "\n");
 
-					if(s == null) {
-						Site inSite = new Site();
-						inSite.setNameSite(ProcessType.getCellStringValue(row.getCell(0)));
-						inSite.setCodeSiteDatim(ProcessType.getCellStringValue(row.getCell(1)));
-						
-						System.out.println("site-name:" +inSite.getNameSite() + "\n");
-						System.out.println("site-code-datim:" +inSite.getCodeSiteDatim() + "\n");
+		            	 }
+	 				//a = analysisRepository.save(a);
 
-						//s = siteRepository.save(inSite);
-					}
-					//System.out.println("site-existing:" +s.getCodeSiteDatim() + "\n");
+	            	 }
+	            	 
+				workbook.close();
+
 				} 
 				
-				if (row.getCell(6) != null) {
-					
-					p = partnerRepository.findPartnerByName(ProcessType.getCellStringValue(row.getCell(1)));
-					
-					if(p == null) {
-						Partner inPartner = new Partner();
-						inPartner.setName(ProcessType.getCellStringValue(row.getCell(6)));
-						
-						System.out.println("partner-name:" +inPartner.getName()+ "\n");
-
-						//p = partnerRepository.save(inPartner);
-					}
-					//System.out.println("partner-existing:" +p.getName() + "\n");
-			}
-				
-			  sp = new SitePartner();
-			  sp.setSite(s);
-			  sp.setPartner(p);
-			  
-			 sp = sitePartnerRepository.save(sp);
-			 
-				workbook.close();
-			}
 			return true;
 		} catch (Exception ex) {
 			ex.printStackTrace();
