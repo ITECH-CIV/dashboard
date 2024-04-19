@@ -1,5 +1,7 @@
 package org.itechciv.dashboard.repository;
 
+import java.util.List;
+
 import org.itechciv.dashboard.model.Site;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
@@ -42,5 +44,13 @@ public interface SiteRepository extends JpaRepository<Site, Long> {
 			" from dashboard.site s" + 
 			" where s.statutId =?1", nativeQuery = true)	
 	Site findSiteByStatutId(String name); 
+	
+	@Query(value = "select s.*" + 
+			" from dashboard.site s" + 
+			" where s.code_site_datim =?1 and code_site_datim <> '' limit 1 ", nativeQuery = true)	
+	Site findSiteByCodeSiteDatim(String code); 
+	
+	List<Site> findByCodeSiteDatim(String codeSiteDatim);
+
 
 }

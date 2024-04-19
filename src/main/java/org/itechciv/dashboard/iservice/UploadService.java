@@ -11,5 +11,7 @@ public interface UploadService {
 	//boolean storeExcelImport2(MultipartFile file);
 	
 	boolean storeLabImport(MultipartFile file);
+	
+	boolean storePartnerImport(MultipartFile file);
 
 }
