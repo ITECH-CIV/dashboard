@@ -9,7 +9,7 @@ public interface VihTypeRepository extends JpaRepository<VihType, Long> {
 	
 	@Query(value = "select vt.*" + 
 			" from dashboard.vih_type vt" + 
-			" where vt.name =?1", nativeQuery = true)	
+			" where vt.name =?1 and vt.name <> '' limit 1", nativeQuery = true)	
 	VihType findVihTypeByName(String name); 
 
 }

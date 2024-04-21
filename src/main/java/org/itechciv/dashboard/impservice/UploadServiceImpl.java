@@ -83,6 +83,9 @@ public class UploadServiceImpl implements UploadService {
 	private SiteRepository siteRepository;
 	
 	@Autowired
+	private VihTypeRepository vihTypeRepository;
+	
+	@Autowired
 	private PartnerRepository partnerRepository;
 	
 	@Autowired
@@ -90,6 +93,9 @@ public class UploadServiceImpl implements UploadService {
 	
 	@Autowired
 	private SitePartnerRepository sitePartnerRepository;
+	
+	@Autowired
+	private PatientRepository patientRepository;
 	
 	@Autowired
 	private AnalysisRepository analysisRepository;
@@ -213,16 +219,18 @@ public class UploadServiceImpl implements UploadService {
 
 	@Override
 	public boolean storeExcelImport(MultipartFile file) {
-		
-		Region r = null;
-		District d = null;
-		Site s = null;
 		Test t = null;
+		Site s = null;
+		VihType vt = null;
+		VihType inVht = null;
+		Patient p = null;
 
        try {
     	   
     		XSSFWorkbook workbook = new XSSFWorkbook(file.getInputStream());
 			XSSFSheet spreadsheet = workbook.getSheetAt(0);
+			FormulaEvaluator evaluator = workbook.getCreationHelper().createFormulaEvaluator();
+
 			
 			for(int i= 1; i <  spreadsheet.getPhysicalNumberOfRows(); i++) {
 				
@@ -273,6 +281,112 @@ public class UploadServiceImpl implements UploadService {
 						// System.out.println("updated-facilitys:" +f.getId()+"\n");
 					}
 				}
+				//Patient
+				if (row.getCell(4) != null) {
+					
+					// VihType
+					if (row.getCell(23) != null) {
+
+						vt = vihTypeRepository.findVihTypeByName(ProcessType.getCellStringValue(row.getCell(23)));
+
+						boolean checkVihType = (vt == null);
+						
+						if(checkVihType) {
+							
+							inVht = vihTypeRepository.findVihTypeByName(Constants.VIH_TYPE__NAME_OTHER);
+
+						  vt = inVht;	
+						}
+					}
+					
+					p = new Patient();
+
+					p.setSubjectno(ProcessType.getCellStringValue(row.getCell(2)));
+					p.setSubjectid(ProcessType.getCellStringValue(row.getCell(4)));
+					p.setGender(row.getCell(11).getStringCellValue());
+					p.setBirthDate(ProcessType.getCellDateValue(evaluator, row.getCell(12)));
+					p.setAgeYears((int) row.getCell(13).getNumericCellValue());
+					p.setAgeMonths((int) row.getCell(14).getNumericCellValue());
+					p.setAgeWeeks((int) row.getCell(15).getNumericCellValue());
+					p.setArvInitDate(ProcessType.getCellDateValue(evaluator, row.getCell(26)));	
+					p.setSite(s);
+					p.setVihType(vt);
+					
+					p = patientRepository.save(p);	
+				}
+				
+			    workbook.close();			
+			}
+    	   return true;   
+       }catch(Exception ex) {
+    	   ex.printStackTrace();
+   		   return false;
+
+       }
+	}
+	
+	//Mise à jour des sites  avec nameSite, codeSiteDatim, nameSiteDatim
+	@Override
+	public boolean updateSite(MultipartFile file) {
+		
+		Site s = null;
+		Test t = null;
+
+       try {
+    	   
+    		XSSFWorkbook workbook = new XSSFWorkbook(file.getInputStream());
+			XSSFSheet spreadsheet = workbook.getSheetAt(0);
+			
+			for(int i= 1; i <  spreadsheet.getPhysicalNumberOfRows(); i++) {
+				
+				XSSFRow row = spreadsheet.getRow(i);
+				// Test
+				if (row.getCell(3) != null) {
+
+					t = testRepository.findTestByName(row.getCell(3).getStringCellValue());
+					//System.out.println("Test:" + t + "\n");
+
+					if (t == null) {
+						Test inTest = new Test();
+						inTest.setName(Constants.TEST_NAME);
+						inTest.setStudy(row.getCell(3).getStringCellValue());
+
+						t = testRepository.save(inTest);
+						//System.out.println("Test:" + t.toString());
+					}
+				}
+				// Site
+				if (row.getCell(7) != null) {
+					String str = String.valueOf(row.getCell(7).getRawValue());
+
+					s = siteRepository.findSiteByOldCode(str);
+
+					if (s == null) {
+						Site inSite = new Site();
+						try {
+							inSite.setOldCodeSiteDHIS2(str);
+						} catch (Exception ex) {
+							ex.printStackTrace();
+						}
+						inSite.setNameSite(row.getCell(8).getStringCellValue());
+						inSite.setCodeSiteDatim(ProcessType.getCellStringValue(row.getCell(9)));
+						inSite.setNameSiteDatim(ProcessType.getCellStringValue(row.getCell(10)));
+
+						s = siteRepository.save(inSite);
+
+						// System.out.println("inserted-facilitys:" +f.getId()+"\n");
+
+					} else {
+						s.setNameSite(row.getCell(8).getStringCellValue());
+						s.setCodeSiteDatim(ProcessType.getCellStringValue(row.getCell(9)));
+						s.setNameSiteDatim(ProcessType.getCellStringValue(row.getCell(10)));
+
+						s = siteRepository.saveAndFlush(s);
+
+						// System.out.println("updated-facilitys:" +f.getId()+"\n");
+					}
+				}
+			    workbook.close();			
 			}
     	   return true;   
        }catch(Exception ex) {

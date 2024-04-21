@@ -13,5 +13,7 @@ public interface UploadService {
 	boolean storeLabImport(MultipartFile file);
 	
 	boolean storePartnerImport(MultipartFile file);
+	
+	public boolean updateSite(MultipartFile file);
 
 }
