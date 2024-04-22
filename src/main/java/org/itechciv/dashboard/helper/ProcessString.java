@@ -90,4 +90,22 @@ public static String concatenateCurrentValue(XSSFCell current1, XSSFCell current
 		 }
 	 return space;
   }
+ 
+
+public static String labNoSubValue(XSSFCell currentCell) {
+	
+	Cell current = currentCell;
+	
+	if (current == null || current.getCellType() == CellType.BLANK) {
+		return "";
+	}
+	
+    String value = current.getStringCellValue().substring(0, 1);
+    
+    
+    return value;
+    
+	}
+
+ 
 }

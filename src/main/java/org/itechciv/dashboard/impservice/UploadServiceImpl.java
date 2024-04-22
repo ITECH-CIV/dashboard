@@ -92,11 +92,20 @@ public class UploadServiceImpl implements UploadService {
 	private TestRepository testRepository;
 	
 	@Autowired
+	private SampleTypeRepository sampleTypeRepository;
+	
+	@Autowired
 	private SitePartnerRepository sitePartnerRepository;
 	
 	@Autowired
 	private PatientRepository patientRepository;
 	
+	@Autowired
+	private RegimenRepository regimenRepository;
+	
+	@Autowired
+	private VlReasonRepository vlReasonRepository;
+
 	@Autowired
 	private AnalysisRepository analysisRepository;
 
@@ -223,7 +232,14 @@ public class UploadServiceImpl implements UploadService {
 		Site s = null;
 		VihType vt = null;
 		VihType inVht = null;
+		Lab lab = null;
+		Lab inLab = null;
 		Patient p = null;
+		Regimen reg = null;
+		Regimen inReg = null;
+		SampleType st = null;
+		VlReason vr = null;
+		Analysis a = null;
 
        try {
     	   
@@ -293,9 +309,9 @@ public class UploadServiceImpl implements UploadService {
 						
 						if(checkVihType) {
 							
-							inVht = vihTypeRepository.findVihTypeByName(Constants.VIH_TYPE__NAME_OTHER);
+							inVht = vihTypeRepository.findVihTypeByName(Constants.VIH_TYPE_NAME_OTHER);
 
-						  vt = inVht;	
+						    vt = inVht;	
 						}
 					}
 					
@@ -314,7 +330,125 @@ public class UploadServiceImpl implements UploadService {
 					
 					p = patientRepository.save(p);	
 				}
+				//Analyse
 				
+				if (row.getCell(19) != null) {
+					
+					// Regimen
+					String molecule = ProcessString.concatenateCurrentValue(row.getCell(28), row.getCell(29), row.getCell(30));
+					//System.out.println("concatenateCurrentValue ::: " + molecule + "\n");
+					reg = regimenRepository.findRegimenByName(molecule);
+					//System.out.println("diet-values:" + d.getName() + "\n" );
+					boolean checkRegimen = (reg == null);
+					
+					if (checkRegimen) {
+						inReg = regimenRepository.findRegimenByName(Constants.REGIMEN_NAME_OTHER);
+						reg = inReg;
+						//System.out.println("regimen-other:" + reg.getName() + "\n");
+					}
+					
+					// Sample type
+					if (row.getCell(18) != null) {
+						
+						st = sampleTypeRepository.findSampleTypeByName(ProcessType.getCellStringValue(row.getCell(18)));
+
+						if (st == null) {
+							SampleType inSampleType = new SampleType();
+							inSampleType.setLabel(ProcessType.getCellStringValue(row.getCell(18)));
+
+							st = sampleTypeRepository.save(inSampleType);
+						}
+					}
+					
+					// VlReason
+					
+						vr = vlReasonRepository.findVlReasonByName(ProcessType.getCellStringValue(row.getCell(33)));
+
+						if (vr == null) {
+							VlReason inVlReason = new VlReason();
+							inVlReason.setName(ProcessType.getCellStringValue(row.getCell(33)));
+
+							vr = vlReasonRepository.save(inVlReason);
+						}
+						
+				  //Lab
+						
+					if (row.getCell(0) != null) {
+						
+						String labValue = ProcessString.labNoSubValue(row.getCell(0));
+						
+						//System.out.println("lab-value:" + labValue + "\n");
+						
+						lab = labRepository.findLabByPrefix(labValue);
+						
+						//System.out.println("Lab-existing:" + lab + "\n");
+
+						boolean checkLabValue = (lab == null);
+						
+						if (checkLabValue) {
+							inLab = labRepository.findLabByPrefix(Constants.LAB_NAME_OTHER);
+							//System.out.println("Lab-constant:" + inLab.getPrefix() + "\n");
+
+							lab = inLab;
+						}
+					}
+					//Analysis
+					 
+					a = new Analysis();
+
+	            	 if (row.getCell(16).getCellType() == CellType.STRING ) {
+	            		 
+	            		 String str = row.getCell(16).getStringCellValue();
+	            		 
+	 					 //System.out.println("viral-load-string: " + row.getCell(16).getStringCellValue() + "\n");
+	 					 
+	 					 List<String> tabConstants = Arrays.asList("<LL", "< LL", "LL");
+	 					 
+	 					 //a = new Analysis();
+
+	 					 if(tabConstants.contains(str) ) {
+	 						a.setGrossResult(str);
+	 						a.setConvertedResult(0);
+		 					 
+	                        //System.out.println("valeur-49: " + a.getGrossResult() + " " + a.getConvertedResult() + "\n");
+		
+	 					}else {
+	 						a.setGrossResult("");
+	 						a.setConvertedResult(-1);
+	 						
+                            //System.out.println("valeur-XXXX: " + a.getGrossResult() + " " + a.getConvertedResult() + "\n");
+	 						
+	 						}
+	 				}
+	            	 
+	            	 if (row.getCell(16).getCellType() == CellType.NUMERIC ) {
+	            		 
+		 					//System.out.println("viral-load-numeric: " + row.getCell(16).getNumericCellValue() + "\n");
+		 					
+	 						a.setGrossResult("");
+	 						a.setConvertedResult((int) row.getCell(16).getNumericCellValue());
+	 						
+	 	                    //System.out.println("valeur-numeric: " + a.getGrossResult() + " " + a.getConvertedResult() + "\n");
+
+		            }
+	            	
+	            	 a.setAnalysisStatus((int) row.getCell(19).getNumericCellValue());
+					 a.setCompletedDate(ProcessType.toLocalDateTime(evaluator, row.getCell(21)));
+					 a.setReleasedDate(ProcessType.toLocalDateTime(evaluator, row.getCell(22))); 
+					 a.setLabno(ProcessType.getCellStringValue(row.getCell(0)));
+					 a.setDintv(ProcessType.toLocalDateTime(evaluator, row.getCell(6)));
+					 a.setDrcpt(ProcessType.toLocalDateTime(evaluator, row.getCell(5)));
+					 a.setSampleType(st);
+					 a.setTest(t);
+					 a.setPatient(p);
+					 a.setRegimen(reg);
+					 a.setVlReason(vr);
+					 a.setLab(lab);
+					 
+	            	 a = analysisRepository.save(a); 
+	            	 	
+				}
+	
 			    workbook.close();			
 			}
     	   return true;   
@@ -473,7 +607,9 @@ public class UploadServiceImpl implements UploadService {
 	@Override
 	public boolean uploadTestImport(MultipartFile file) {
 
-		Lab l = null;
+		Lab lab = null;
+		Lab inLab = null;
+
 		Site s = null;
 		Partner p = null;
 		SitePartner sp = null;
@@ -533,6 +669,28 @@ public class UploadServiceImpl implements UploadService {
 	 				//a = analysisRepository.save(a);
 
 	            	 }
+				
+				
+				  //Lab
+						if (row.getCell(0) != null) {
+							
+					String labValue = ProcessString.labNoSubValue(row.getCell(0));
+					
+					System.out.println("lab-value:" + labValue + "\n");
+					
+					lab = labRepository.findLabByPrefix(labValue);
+					
+					System.out.println("Lab-existing:" + lab + "\n");
+
+					boolean checkLabValue = (lab == null);
+					
+					if (checkLabValue) {
+						inLab = labRepository.findLabByPrefix(Constants.LAB_NAME_OTHER);
+						//System.out.println("Lab-constant:" + inLab.getPrefix() + "\n");
+
+						lab = inLab;
+					}
+				}
 	            	 
 				workbook.close();
 
