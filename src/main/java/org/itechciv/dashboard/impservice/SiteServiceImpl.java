@@ -1,6 +1,9 @@
 package org.itechciv.dashboard.impservice;
 
 
+import java.util.Collections;
+import java.util.List;
+
 import org.itechciv.dashboard.iservice.SiteService;
 import org.itechciv.dashboard.model.Site;
 import org.itechciv.dashboard.repository.SiteRepository;
@@ -193,4 +196,27 @@ public class SiteServiceImpl extends GenericServiceImpl<Site, Long> implements S
 			return null;
 		}	
 	}
+
+	@Override
+	public List<Site> findAllSite(){
+		try{
+			return siteRepo.findAll();
+		}catch(Exception ex){
+			ex.printStackTrace();		  
+			return Collections.emptyList();
+		}
+
+    }
+
+	@Override
+	public List<Site> findSiteByDistrictId(Long districtId) {
+		try{
+			return siteRepo.findSiteByDistrictId(districtId);
+		}catch(Exception ex){
+          ex.printStackTrace();
+		  return Collections.emptyList();
+
+		}
+    }
+
 }

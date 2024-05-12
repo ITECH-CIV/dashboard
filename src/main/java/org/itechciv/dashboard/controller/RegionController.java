@@ -1,5 +1,6 @@
 package org.itechciv.dashboard.controller;
 
+import java.util.List;
 import java.util.Optional;
 
 import org.itechciv.dashboard.iservice.RegionService;
@@ -10,6 +11,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.CrossOrigin;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -17,7 +19,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 
 @RestController
-@RequestMapping("/api")
+@RequestMapping("/region")
 @ResponseBody
 @CrossOrigin
 public class RegionController {
@@ -25,7 +27,7 @@ public class RegionController {
 	@Autowired
 	private RegionService regionService;
 	
-	@RequestMapping(method = RequestMethod.POST, value="/region/save")
+	@RequestMapping(method = RequestMethod.POST, value="/save")
 	public ResponseEntity<Response> saveRegion(@RequestBody Region region) {  
 		
 		Response res = new Response() ; 
@@ -54,7 +56,7 @@ public class RegionController {
 		return result;
 	}  
 	
-	@RequestMapping(method = RequestMethod.GET, value="/region/getAll")
+	@RequestMapping(method = RequestMethod.GET, value="/getAll")
 	@ResponseBody
 	public ResponseEntity<Response> getRegionAll() { 
 		
@@ -85,7 +87,7 @@ public class RegionController {
 		return result;
 	}
 	
-	@RequestMapping(method = RequestMethod.GET, value="/region/getById")
+	@RequestMapping(method = RequestMethod.GET, value="/getById")
 	@ResponseBody
 	public ResponseEntity<Response> getRegionOne(String id) { 
 		
@@ -118,7 +120,7 @@ public class RegionController {
 		return result;
 	}
 	
-	@RequestMapping(method = RequestMethod.PUT, value ="region/update")
+	@RequestMapping(method = RequestMethod.PUT, value ="/update")
 	public ResponseEntity<Response> updateRegion(@RequestBody Region rgn, String id) {
 		
 		Response res = new Response();
@@ -161,7 +163,7 @@ public class RegionController {
 		return result;
 	}
 	
-	@RequestMapping(method = RequestMethod.DELETE, value="region/deletedById")
+	@RequestMapping(method = RequestMethod.DELETE, value="/deletedById")
 	@ResponseBody
 	public ResponseEntity<Response> deleteRegion(String id) { 
 		
@@ -195,7 +197,7 @@ public class RegionController {
 	}
 	
 
-	@RequestMapping(method = RequestMethod.GET, value="region/getByCode")
+	@RequestMapping(method = RequestMethod.GET, value="/getByCode")
 	@ResponseBody
 	public ResponseEntity<Response> findRegionByCode(int code) { 
 		
@@ -226,7 +228,7 @@ public class RegionController {
 		return result;
 	} 
 	
-	@RequestMapping(method = RequestMethod.GET, value="region/getByName")
+	@RequestMapping(method = RequestMethod.GET, value="/getByName")
 	@ResponseBody
 	public ResponseEntity<Response> findRegionByName(String name) { 
 		
@@ -256,5 +258,21 @@ public class RegionController {
 		}
 		return result;
 	}
+
+
+	//Retourner uniquement le nom de la region
+    @GetMapping("/names")
+    public ResponseEntity<List<String>> getRegionNames() {
+        List<String> districtNames = regionService.getAllRegionNames();
+        return new ResponseEntity<>(districtNames, HttpStatus.OK);
+    } 
+
+	@GetMapping("/all")
+    public ResponseEntity<List<Region>> getAllRegion(){
+        List<Region>region=regionService.findAllRegion();
+        return new ResponseEntity<>(region, HttpStatus.OK);
+    }
+
+
 
 }

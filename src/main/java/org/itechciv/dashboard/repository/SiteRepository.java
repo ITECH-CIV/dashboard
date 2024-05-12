@@ -5,6 +5,7 @@ import java.util.List;
 import org.itechciv.dashboard.model.Site;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
+import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
 
 @Repository
@@ -51,6 +52,10 @@ public interface SiteRepository extends JpaRepository<Site, Long> {
 	Site findSiteByCodeSiteDatim(String code); 
 	
 	List<Site> findByCodeSiteDatim(String codeSiteDatim);
+
+
+    @Query(value = "SELECT * FROM dashboard.site WHERE dashboard.site.district_id = :districtId", nativeQuery = true)
+    List<Site> findSiteByDistrictId(@Param("districtId") Long districtId);
 
 
 }

@@ -1,6 +1,10 @@
 package org.itechciv.dashboard.impservice;
 
 
+import java.util.Collections;
+import java.util.List;
+import java.util.stream.Collectors;
+
 import org.itechciv.dashboard.iservice.RegionService;
 import org.itechciv.dashboard.model.Region;
 import org.itechciv.dashboard.repository.RegionRepository;
@@ -64,5 +68,32 @@ public class RegionServiceImpl extends GenericServiceImpl<Region, Long> implemen
 			return null;
 		}	
 	}
+	@Override
+	public List<Region> findAllRegion(){
+        
+		try{
+			return regionRepo.findAll();
+		}catch(Exception ex){
+			ex.printStackTrace();
+			return Collections.emptyList();
+		}
+    }
+
+
+	@Override
+	public List<String> getAllRegionNames() {
+      try{
+		List<Region> region = regionRepo.findAll();
+        return region.stream()
+                .map(Region::getName)
+                .collect(Collectors.toList());
+	  }catch(Exception ex){
+       ex.printStackTrace();
+	   return Collections.emptyList();
+
+	  }
+
+      
+    }
 
 }

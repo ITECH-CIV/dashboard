@@ -1,5 +1,6 @@
 package org.itechciv.dashboard.controller;
 
+import java.util.List;
 import java.util.Optional;
 
 import org.itechciv.dashboard.iservice.SiteService;
@@ -10,13 +11,15 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.CrossOrigin;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 
 @RestController
-@RequestMapping("/api")
+@RequestMapping("/site")
 @ResponseBody
 @CrossOrigin
 public class SiteController {
@@ -24,7 +27,7 @@ public class SiteController {
 	@Autowired
 	private SiteService siteService;
 	
-	@RequestMapping(method = RequestMethod.GET, value="/site/getAll")
+	@RequestMapping(method = RequestMethod.GET, value="/getAll")
 	@ResponseBody
 	public ResponseEntity<Response> getSiteAll() { 
 		
@@ -55,7 +58,7 @@ public class SiteController {
 		return result;
 	}
 	
-	@RequestMapping(method = RequestMethod.GET, value="/site/getById")
+	@RequestMapping(method = RequestMethod.GET, value="/getById")
 	@ResponseBody
 	public ResponseEntity<Response> getSiteOne(String id) { 
 		
@@ -88,7 +91,7 @@ public class SiteController {
 		return result;
 	}
 	
-	@RequestMapping(method = RequestMethod.GET, value="site/getByCode")
+	@RequestMapping(method = RequestMethod.GET, value="/getByCode")
 	@ResponseBody
 	public ResponseEntity<Response> getSiteByCode(int code) { 
 		
@@ -119,7 +122,7 @@ public class SiteController {
 		return result;
 	}
 	
-	@RequestMapping(method = RequestMethod.GET, value="site/getByOldCode")
+	@RequestMapping(method = RequestMethod.GET, value="/getByOldCode")
 	@ResponseBody
 	public ResponseEntity<Response> getSiteByOldCode(String code) { 
 		
@@ -150,7 +153,7 @@ public class SiteController {
 		return result;
 	}
 	
-	@RequestMapping(method = RequestMethod.GET, value="site/getByOldName")
+	@RequestMapping(method = RequestMethod.GET, value="/getByOldName")
 	@ResponseBody
 	public ResponseEntity<Response> getSiteByOldName(String name) { 
 		
@@ -180,6 +183,17 @@ public class SiteController {
 		}
 		return result;
 	}
-	
-	
+
+	@GetMapping("/all")
+    public ResponseEntity<List<Site>> getAllSite(){
+        List<Site>site=siteService.findAllSite();
+        return new ResponseEntity<>(site, HttpStatus.OK);
+    }
+
+
+    @GetMapping("/SiteByDistrict")
+    public List<Site> findSiteByDistrictId(@RequestParam Long districtId) {
+        return siteService.findSiteByDistrictId(districtId);
+    }
+		
 }

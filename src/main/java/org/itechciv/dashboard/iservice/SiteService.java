@@ -1,5 +1,7 @@
 package org.itechciv.dashboard.iservice;
 
+import java.util.List;
+
 import org.itechciv.dashboard.model.Site;
 
 public interface SiteService extends GenericService<Site, Long> {
@@ -11,6 +13,8 @@ public interface SiteService extends GenericService<Site, Long> {
 	Site findSiteByNewLongName(String name); 
 	Site findSiteByShortName(String name); 
 	Site findSiteByStatutId(String name); 
+	List<Site> findAllSite();
+	List<Site> findSiteByDistrictId(Long districtId);
 
 
 

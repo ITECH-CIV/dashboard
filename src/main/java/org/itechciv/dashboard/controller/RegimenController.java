@@ -2,10 +2,7 @@ package org.itechciv.dashboard.controller;
 import java.util.Optional;
 
 import org.itechciv.dashboard.iservice.RegimenService;
-import org.itechciv.dashboard.iservice.VihTypeService;
 import org.itechciv.dashboard.model.Regimen;
-import org.itechciv.dashboard.model.Test;
-import org.itechciv.dashboard.model.VihType;
 import org.itechciv.dashboard.response.Response;
 import org.itechciv.dashboard.response.Response.ResponseStatusEnum;
 import org.springframework.beans.factory.annotation.Autowired;
