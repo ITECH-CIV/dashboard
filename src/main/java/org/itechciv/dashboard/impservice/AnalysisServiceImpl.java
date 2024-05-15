@@ -538,6 +538,16 @@ public class AnalysisServiceImpl extends GenericServiceImpl<Analysis, Long> impl
     }
 
     @Override
+    public List<Object[]> getTestedPatientByAgeBetweenTwoAndNineForOneDistrict(Long districtId, int year) {
+        try{
+            return analisysRepo.getTestedPatientByAgeBetweenTwoAndNineForOneDistrict(districtId, year);
+           }catch(Exception ex){
+            ex.printStackTrace();
+            return Collections.emptyList();
+           }
+    }
+
+    @Override
     public List<Object[]> getTestedPatientByAgeBetweenTenAndFourteenForAllRegion(int year) {
         try{
             return analisysRepo.getTestedPatientByAgeBetweenTenAndFourteenForAllRegion(year);
@@ -1179,5 +1189,809 @@ public class AnalysisServiceImpl extends GenericServiceImpl<Analysis, Long> impl
     }
 
  /*********************************************************************************************************************************/
+ @Override
+ public List<Object[]> tendancetest2021() {
+
+    try{
+        return analisysRepo.tendancetest2021();
+       }catch(Exception ex){
+        ex.printStackTrace();
+        return Collections.emptyList();
+       }
+
+
+}
+
+
+@Override
+public List<Object[]> tendancetest2022() {
+
+    try{
+        return analisysRepo.tendancetest2022();
+    }catch(Exception ex){
+        ex.printStackTrace();
+        return Collections.emptyList();
+       }
+}
+
+
+@Override
+public List<Object[]> tendancetest2023() {
+
+    try{
+        return analisysRepo.tendancetest2023();
+
+    }catch(Exception ex){
+        ex.printStackTrace();
+        return Collections.emptyList();
+       }
+}
+
+
+
+
+
+// test par tranche d age region
+@Override
+public List<Object[]> yourMethodName(Long regionId, int year) {
+
+    try{
+        return analisysRepo.yourMethodName(regionId, year);
+
+    }catch(Exception ex){
+        ex.printStackTrace();
+        return Collections.emptyList();
+       }
+}
+
+@Override
+public List<Object[]> yourMethodNameOne(Long regionId, int year) {
+
+    try{
+        return analisysRepo.yourMethodNameOne(regionId, year);
+
+    }catch(Exception ex){
+        ex.printStackTrace();
+        return Collections.emptyList();
+       }
+}
+
+@Override
+public List<Object[]> yourMethodNametwo(Long regionId, int year) {
+
+    try{
+        return analisysRepo.yourMethodNametwo(regionId, year);
+
+    }catch(Exception ex){
+        ex.printStackTrace();
+        return Collections.emptyList();
+       }
+}
+
+@Override
+public List<Object[]> yourMethodNamethree(Long regionId, int year) {
+
+    try{
+        return analisysRepo.yourMethodNamethree(regionId, year);
+
+    }catch(Exception ex){
+        ex.printStackTrace();
+        return Collections.emptyList();
+       }
+}
+
+
+
+@Override
+public List<Object[]> yourMethodNamefour(Long regionId, int year) {
+
+    try{
+        return analisysRepo.yourMethodNamefour(regionId, year);
+
+    }catch(Exception ex){
+        ex.printStackTrace();
+        return Collections.emptyList();
+       }
+}
+
+
+
+
+@Override
+public List<Object[]> yourMethodNameFive(Long regionId, int year) {
+
+    try{
+        return analisysRepo.yourMethodNameFive(regionId, year);
+
+    }catch(Exception ex){
+        ex.printStackTrace();
+        return Collections.emptyList();
+       }
+}
+
+
+
+@Override
+public List<Object[]> yourMethodNameSix(Long regionId, int year) {
+
+    try{
+        return analisysRepo.yourMethodNameSix(regionId, year);
+
+    }catch(Exception ex){
+        ex.printStackTrace();
+        return Collections.emptyList();
+       }
+}
+
+@Override
+public List<Object[]> yourMethodNameseven(Long regionId, int year) {
+
+    try{
+        return analisysRepo.yourMethodNameseven(regionId, year);
+
+    }catch(Exception ex){
+        ex.printStackTrace();
+        return Collections.emptyList();
+       }
+}
+
+@Override
+public List<Object[]> yourMethodNameheight(Long regionId, int year) {
+
+    try{
+        return analisysRepo.yourMethodNameheight(regionId, year);
+
+    }catch(Exception ex){
+        ex.printStackTrace();
+        return Collections.emptyList();
+       }
+}
+
+@Override
+public List<Object[]> yourMethodNamenine(Long regionId, int year) {
+
+    try{
+        return analisysRepo.yourMethodNamenine(regionId, year);
+
+    }catch(Exception ex){
+        ex.printStackTrace();
+        return Collections.emptyList();
+       }
+}
+
+@Override
+public List<Object[]> yourMethodNameten(Long regionId, int year) {
+
+    try{
+        return analisysRepo.yourMethodNameten(regionId, year);
+
+    }catch(Exception ex){
+        ex.printStackTrace();
+        return Collections.emptyList();
+       }
+}
+
+@Override
+public List<Object[]> yourMethodNameeleven(Long regionId, int year) {
+
+    try{
+        return analisysRepo.yourMethodNameeleven(regionId, year);
+
+    }catch(Exception ex){
+        ex.printStackTrace();
+        return Collections.emptyList();
+       }
+}
+
+
+
+
+
+
+// test par tranche d age district
+@Override
+public List<Object[]> yourMethodDistrictName(Long districtId, int year) {
+
+    try{
+        return analisysRepo.yourMethodDistrictName(districtId, year);
+
+    }catch(Exception ex){
+        ex.printStackTrace();
+        return Collections.emptyList();
+       }
+}
+
+@Override
+public List<Object[]> yourMethodDistrictNameOne(Long districtId, int year) {
+
+    try{
+        return analisysRepo.yourMethodDistrictNameOne(districtId, year);
+
+    }catch(Exception ex){
+        ex.printStackTrace();
+        return Collections.emptyList();
+       }
+}
+
+
+@Override
+public List<Object[]> yourMethodDistrictNametwo(Long districtId, int year) {
+
+    try{
+        return analisysRepo.yourMethodDistrictNametwo(districtId, year);
+
+    }catch(Exception ex){
+        ex.printStackTrace();
+        return Collections.emptyList();
+       }
+}
+
+@Override
+public List<Object[]> yourMethodDistrictNamethree(Long districtId, int year) {
+
+    try{
+        return analisysRepo.yourMethodDistrictNamethree(districtId, year);
+
+    }catch(Exception ex){
+        ex.printStackTrace();
+        return Collections.emptyList();
+       }
+}
+
+@Override
+public List<Object[]> yourMethodDistrictNamefour(Long districtId, int year) {
+
+    try{
+        return analisysRepo.yourMethodDistrictNamefour(districtId, year);
+
+    }catch(Exception ex){
+        ex.printStackTrace();
+        return Collections.emptyList();
+       }
+}
+
+@Override
+public List<Object[]> yourMethodDistrictNameFive(Long districtId, int year) {
+
+    try{
+        return analisysRepo.yourMethodDistrictNameFive(districtId, year);
+
+    }catch(Exception ex){
+        ex.printStackTrace();
+        return Collections.emptyList();
+       }
+}
+@Override
+public List<Object[]> yourMethodDistrictNameSix(Long districtId, int year) {
+
+    try{
+        return analisysRepo.yourMethodDistrictNameSix(districtId, year);
+
+    }catch(Exception ex){
+        ex.printStackTrace();
+        return Collections.emptyList();
+       }
+}
+
+@Override
+public List<Object[]> yourMethodDistrictNameseven(Long districtId, int year) {
+
+    try{
+        return analisysRepo.yourMethodDistrictNameseven(districtId, year);
+
+    }catch(Exception ex){
+        ex.printStackTrace();
+        return Collections.emptyList();
+       }
+
+}
+
+
+@Override
+public List<Object[]> yourMethodDistrictNameheight(Long districtId, int year) {
+
+    try{
+        return analisysRepo.yourMethodDistrictNameheight(districtId, year);
+
+    }catch(Exception ex){
+        ex.printStackTrace();
+        return Collections.emptyList();
+       }
+}
+
+
+@Override
+public List<Object[]> yourMethodDistrictNamenine(Long districtId, int year) {
+
+    try{
+        return analisysRepo.yourMethodDistrictNamenine(districtId, year);
+
+    }catch(Exception ex){
+        ex.printStackTrace();
+        return Collections.emptyList();
+       }
+}
+
+@Override
+public List<Object[]> yourMethodDistrictNameten(Long districtId, int year) {
+
+    try{
+
+        return analisysRepo.yourMethodDistrictNameten(districtId, year);
+
+    }catch(Exception ex){
+        ex.printStackTrace();
+        return Collections.emptyList();
+       }
+}
+
+@Override
+public List<Object[]> yourMethodDistrictNameeleven(Long districtId, int year) {
+
+    try{
+        return analisysRepo.yourMethodDistrictNameeleven(districtId, year);
+
+    }catch(Exception ex){
+        ex.printStackTrace();
+        return Collections.emptyList();
+       }
+}
+
+
+
+
+
+// test par tranche d age site
+@Override
+public List<Object[]> yourMethodSiteName(Long siteId, int year) {
+
+    try{
+        return analisysRepo.yourMethodSiteName(siteId, year);
+
+    }catch(Exception ex){
+        ex.printStackTrace();
+        return Collections.emptyList();
+       }
+}
+
+@Override
+public List<Object[]> yourMethodSiteNameOne(Long siteId, int year) {
+
+    try{
+        return analisysRepo.yourMethodSiteNameOne(siteId, year);
+
+    }catch(Exception ex){
+        ex.printStackTrace();
+        return Collections.emptyList();
+       }
+}
+
+@Override
+public List<Object[]> yourMethodSiteNametwo(Long siteId, int year) {
+
+    try{
+        return analisysRepo.yourMethodSiteNametwo(siteId, year);
+
+    }catch(Exception ex){
+        ex.printStackTrace();
+        return Collections.emptyList();
+       }
+}
+
+@Override
+public List<Object[]> yourMethodSiteNamethree(Long siteId, int year) {
+
+    try{
+        return analisysRepo.yourMethodSiteNamethree(siteId, year);
+
+    }catch(Exception ex){
+        ex.printStackTrace();
+        return Collections.emptyList();
+       }
+}
+
+
+
+@Override
+public List<Object[]> yourMethodSiteNamefour(Long siteId, int year) {
+
+    try{
+        return analisysRepo.yourMethodSiteNamefour(siteId, year);
+
+    }catch(Exception ex){
+        ex.printStackTrace();
+        return Collections.emptyList();
+       }
+}
+
+@Override
+public List<Object[]> yourMethodSiteNameFive(Long siteId, int year) {
+
+    try{
+        return analisysRepo.yourMethodSiteNameFive(siteId, year);
+
+    }catch(Exception ex){
+        ex.printStackTrace();
+        return Collections.emptyList();
+       }
+}
+
+
+
+@Override
+public List<Object[]> yourMethodSiteNameSix(Long siteId, int year) {
+
+    try{
+        return analisysRepo.yourMethodSiteNameSix(siteId, year);
+
+    }catch(Exception ex){
+        ex.printStackTrace();
+        return Collections.emptyList();
+       }
+}
+
+@Override
+public List<Object[]> yourMethodSiteNameseven(Long siteId, int year) {
+
+    try{
+        return analisysRepo.yourMethodSiteNameseven(siteId, year);
+
+    }catch(Exception ex){
+        ex.printStackTrace();
+        return Collections.emptyList();
+       }
+}
+
+
+@Override
+public List<Object[]> yourMethodSiteNameheight(Long districtId, int year) {
+
+    try{
+        return analisysRepo.yourMethodSiteNameheight(districtId, year);
+
+    }catch(Exception ex){
+        ex.printStackTrace();
+        return Collections.emptyList();
+       }
+}
+
+
+@Override
+public List<Object[]> yourMethodSiteNamenine(Long siteId, int year) {
+
+    try{
+        return analisysRepo.yourMethodSiteNamenine(siteId, year);
+
+    }catch(Exception ex){
+        ex.printStackTrace();
+        return Collections.emptyList();
+       }
+}
+
+@Override
+public List<Object[]> yourMethodSiteNameten(Long siteId, int year) {
+
+    try{
+        return analisysRepo.yourMethodSiteNameten(siteId, year);
+
+    }catch(Exception ex){
+        ex.printStackTrace();
+        return Collections.emptyList();
+       }
+}
+
+@Override
+public List<Object[]> yourMethodSiteNameeleven(Long siteId, int year) {
+
+    try{
+        return analisysRepo.yourMethodSiteNameeleven(siteId, year);
+
+    }catch(Exception ex){
+        ex.printStackTrace();
+        return Collections.emptyList();
+       }
+}
+
+
+
+
+//pour toute les regions
+@Override
+public List<Object[]>MethodRegion(int year) {
+
+    try{
+        return analisysRepo.MethodRegion(year);
+
+    }catch(Exception ex){
+        ex.printStackTrace();
+        return Collections.emptyList();
+       }
+}
+
+
+@Override
+public List<Object[]>MethodRegionOne(int year) {
+
+    try{
+        return analisysRepo.MethodRegionOne(year);
+
+    }catch(Exception ex){
+        ex.printStackTrace();
+        return Collections.emptyList();
+       }
+}
+
+@Override
+public List<Object[]>MethodRegionThree(int year) {
+
+    try{
+        return analisysRepo.MethodRegionThree(year);
+
+    }catch(Exception ex){
+        ex.printStackTrace();
+        return Collections.emptyList();
+       }
+}
+
+@Override
+public List<Object[]>MethodRegionfour(int year) {
+
+    try{
+        return analisysRepo.MethodRegionfour(year);
+
+    }catch(Exception ex){
+        ex.printStackTrace();
+        return Collections.emptyList();
+       }
+}
+
+@Override
+public List<Object[]>MethodRegionfive(int year) {
+
+    try{
+        return analisysRepo.MethodRegionfive(year);
+
+    }catch(Exception ex){
+        ex.printStackTrace();
+        return Collections.emptyList();
+       }
+}
+
+
+@Override
+public List<Object[]>MethodRegionsix(int year) {
+
+    try{
+        return analisysRepo.MethodRegionsix(year);
+
+    }catch(Exception ex){
+        ex.printStackTrace();
+        return Collections.emptyList();
+       }
+}
+
+@Override
+public List<Object[]>MethodRegionseven(int year) {
+
+    try{
+        return analisysRepo.MethodRegionseven(year);
+
+    }catch(Exception ex){
+        ex.printStackTrace();
+        return Collections.emptyList();
+       }
+}
+
+@Override
+public List<Object[]>MethodRegionheight(int year) {
+
+    try{
+        return analisysRepo.MethodRegionheight(year);
+
+    }catch(Exception ex){
+        ex.printStackTrace();
+        return Collections.emptyList();
+       }
+}
+
+@Override
+public List<Object[]>MethodRegionnine(int year) {
+
+    try{
+        return analisysRepo.MethodRegionnine(year);
+
+    }catch(Exception ex){
+        ex.printStackTrace();
+        return Collections.emptyList();
+       }
+}
+
+@Override
+public List<Object[]>MethodRegionten(int year) {
+
+    try{
+        return analisysRepo.MethodRegionten(year);
+
+    }catch(Exception ex){
+        ex.printStackTrace();
+        return Collections.emptyList();
+       }
+}
+
+
+
+@Override
+public List<Object[]>MethodRegioneleven(int year) {
+
+    try{
+        return analisysRepo.MethodRegioneleven(year);
+
+    }catch(Exception ex){
+        ex.printStackTrace();
+        return Collections.emptyList();
+       }
+}
+
+
+@Override
+public List<Object[]>MethodRegiontwelve(int year) {
+
+    try{
+        return analisysRepo.MethodRegiontwelve(year);
+
+    }catch(Exception ex){
+        ex.printStackTrace();
+        return Collections.emptyList();
+       }
+}
+
+//par test exemple
+@Override
+public List<Object[]> findByYearByRegiontest(int year, Long regionId) {
+
+    try{
+        return analisysRepo.findByYearByRegiontest(year, regionId);
+
+    }catch(Exception ex){
+        ex.printStackTrace();
+        return Collections.emptyList();
+       }
+}
+
+@Override
+public List<Object[]> getAnalysisPatientMaleForDistrictWithYear(Long districtId, int year) {
+    try{
+        String sex = "M"; // Sexe Feminin
+        return analisysRepo.getAnalysisPatientMaleForDistrictWithYear(districtId, year, sex);
+    }catch(Exception ex){
+        ex.printStackTrace();
+        return Collections.emptyList();
+       }
+
+}
+
+@Override
+public List<Object[]> getAnalysisPatientFemaleForDistrictWithYear(Long districtId, int year) {
+    try{
+        String sex = "F"; // Sexe Feminin
+        return analisysRepo.getAnalysisPatientFemaleForDistrictWithYear(districtId, year, sex);
+    }catch(Exception ex){
+        ex.printStackTrace();
+        return Collections.emptyList();
+       }
+}
+
+@Override
+public List<Object[]> getAnalysisPatientMaleForRegionWithYearM(Long regionId, int year) {
+    try{
+        String sex = "M"; // Sexe Feminin
+    return analisysRepo.getAnalysisPatientMaleForRegionWithYearM(regionId, year, sex);
+    }catch(Exception ex){
+        ex.printStackTrace();
+        return Collections.emptyList();
+       }
+}
+
+@Override
+public List<Object[]> getAnalysisPatientFemaleForRegionWithYearF(Long regionId, int year) {
+    try{
+        String sex = "F"; // Sexe Feminin
+    return analisysRepo.getAnalysisPatientFemaleForRegionWithYearF(regionId, year, sex);
+    }catch(Exception ex){
+        ex.printStackTrace();
+        return Collections.emptyList();
+       }
+}
+
+
+@Override
+public List<Object[]> getAnalysisPatientMaleForSiteWithYearSiteM(Long siteId, int year) {
+    try{
+        String sex = "M"; // Sexe Feminin
+        return analisysRepo.getAnalysisPatientMaleForSiteWithYearSiteM(siteId, year, sex);
+    }catch(Exception ex){
+        ex.printStackTrace();
+        return Collections.emptyList();
+       }
+}
+
+@Override
+public List<Object[]> getAnalysisPatientFemaleForSiteWithYearsiteF(Long siteId, int year) {
+    try{
+        String sex = "F"; // Sexe Feminin
+        return analisysRepo.getAnalysisPatientFemaleForSiteWithYearsiteF(siteId, year, sex);
+    }catch(Exception ex){
+        ex.printStackTrace();
+        return Collections.emptyList();
+       }
+}
+
+@Override
+public List<Object[]> getPatientForAllRegion(int year) {
+    try{
+        return analisysRepo.getPatientForAllRegion(year);
+
+    }catch(Exception ex){
+        ex.printStackTrace();
+        return Collections.emptyList();
+       }
+}
+
+@Override
+public List<Object[]> getPatientForDistrict(Long districtId, int year) {
+    try{
+        return analisysRepo.getPatientForDistrict(districtId, year);
+
+    }catch(Exception ex){
+        ex.printStackTrace();
+        return Collections.emptyList();
+       }
+}
+
+@Override
+public List<Object[]> getPatientForDistrictWithSite(Long districtId, int year) {
+
+    try{
+        return analisysRepo.getPatientForDistrictWithSite(districtId, year);
+
+    }catch(Exception ex){
+        ex.printStackTrace();
+        return Collections.emptyList();
+       }
+}
+
+@Override
+public List<Object[]> getTestedPatientByAgeBetweenTwoAndNineForOneSite(Long siteId, int year) {
+    try{
+        return analisysRepo.getTestedPatientByAgeBetweenTwoAndNineForOneSite(siteId, year);
+
+    }catch(Exception ex){
+        ex.printStackTrace();
+        return Collections.emptyList();
+       }
+}
+
+@Override
+public List<Object[]> getTestBySiteForOneRegion(Long regionId, int year) {
+
+    try{
+        return analisysRepo.getTestBySiteForOneRegion(regionId, year);
+
+    }catch(Exception ex){
+        ex.printStackTrace();
+        return Collections.emptyList();
+       }
+}
+
+@Override
+public List<Object[]> getPatientBySiteForOneRegion(Long regionId, int year) {
+    try{
+        return analisysRepo.getPatientBySiteForOneRegion(regionId, year);
+
+    }catch(Exception ex){
+        ex.printStackTrace();
+        return Collections.emptyList();
+       }
+}
 
 }

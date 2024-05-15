@@ -460,6 +460,7 @@ public class AnalysisController {
         }
 
 
+        //Nombre de tests réalisés par tranche d'âge
         @GetMapping("/x")
         public List<Object[]> getTestByAgeMinusTwoForOneRegion(@RequestParam Long regionId, @RequestParam int year) {
         return analysisServices.getTestByAgeMinusTwoForOneRegion(regionId, year );
@@ -670,6 +671,567 @@ public class AnalysisController {
         return analysisServices.getTestByAgeCategoryGreaterThanFiftyForAllRegion(year );
         }
 
+/************************************************************************************************************************************ */
+
+    //indicateur patient testé par genre dans district
+
+    @GetMapping("/patientbygenderbydistrictMasculin")
+    public List<Object[]> getAnalysisPatientMaleForDistrictWithYear(@RequestParam Long districtId, @RequestParam int year) {
+        return analysisServices.getAnalysisPatientMaleForDistrictWithYear(districtId, year);
+    }
+
+    @GetMapping("/patientbygenderfemininbydistrict")
+    public List<Object[]> getAnalysisPatientFemaleForDistrictWithYear(@RequestParam Long districtId, @RequestParam int year) {
+        return analysisServices.getAnalysisPatientFemaleForDistrictWithYear(districtId, year);
+    }
+
+    // pour chaque region
+
+    @GetMapping("/patientbygenderbyoneregionMasculin")
+    public List<Object[]> getAnalysisPatientMaleForRegionWithYearM(@RequestParam Long regionId, @RequestParam int year) {
+        return analysisServices.getAnalysisPatientMaleForRegionWithYearM(regionId, year);
+    }
+
+    @GetMapping("/patientbygenderfemininbychaqueregion")
+    public List<Object[]> getAnalysisPatientFemaleForRegionWithYearF(@RequestParam Long regionId, @RequestParam int year) {
+        return analysisServices.getAnalysisPatientFemaleForRegionWithYearF(regionId, year);
+    }
+
+    // par site
+
+    @GetMapping("/patientbygenderbysitemasculin")
+    public List<Object[]> getAnalysisPatientMaleForSiteWithYearSiteM(@RequestParam Long siteId, @RequestParam int year) {
+        return analysisServices.getAnalysisPatientMaleForSiteWithYearSiteM(siteId, year);
+    }
+
+    @GetMapping("/patientbygenderfemininbysite")
+    public List<Object[]> getAnalysisPatientFemaleForSiteWithYearsiteF(@RequestParam Long siteId, @RequestParam int year) {
+        return analysisServices.getAnalysisPatientFemaleForSiteWithYearsiteF(siteId, year);
+    }
+
+/********************************************************************************************************************************** */
+    //NOMBRE DE TESTS REALISES PAR TRANCHE D'AGE
+        
+    // Tendances de Tests REalises par charge virale
+    @GetMapping("/tendancetest2021")
+    public List<Object[]> tendancetest2021() {
+        return analysisServices.tendancetest2021();
+    }
+
+    @GetMapping("/tendancetest2022")
+    public List<Object[]> tendancetest2022() {
+        return analysisServices.tendancetest2022();
+    }
+
+    @GetMapping("/tendancetest2023")
+    public List<Object[]> tendancetest2023() {
+        return analysisServices.tendancetest2023();
+    }
+
+
+//test par tranche d age pour chaque region
+    @GetMapping("/trancheageoneregion")
+    public List<Object[]> yourMethodName(@RequestParam Long regionId, @RequestParam int year) {
+        return analysisServices.yourMethodName(regionId,year);
+    }
+
+
+    @GetMapping("/trancheageoneregionone")
+    public List<Object[]> yourMethodNameOne(@RequestParam Long regionId, @RequestParam int year) {
+        return analysisServices.yourMethodNameOne(regionId,year);
+    }
+
+    @GetMapping("/trancheageoneregiontwo")
+    public List<Object[]> yourMethodNametwo(@RequestParam Long regionId, @RequestParam int year) {
+        return analysisServices.yourMethodNametwo(regionId,year);
+    }
+
+
+    @GetMapping("/trancheageoneregionthree")
+    public List<Object[]> yourMethodNamethree(@RequestParam Long regionId, @RequestParam int year) {
+        return analysisServices.yourMethodNamethree(regionId,year);
+    }
+
+
+    @GetMapping("/trancheageoneregionfour")
+    public List<Object[]> yourMethodNamefour(@RequestParam Long regionId, @RequestParam int year) {
+        return analysisServices.yourMethodNamefour(regionId,year);
+    }
+
+    @GetMapping("/trancheageoneregionfive")
+    public List<Object[]> yourMethodNameSix(@RequestParam Long regionId, @RequestParam int year) {
+        return analysisServices.yourMethodNameSix(regionId,year);
+    }
+
+    @GetMapping("/trancheageoneregionsix")
+    public List<Object[]> yourMethodNameseven(@RequestParam Long regionId, @RequestParam int year) {
+        return analysisServices.yourMethodNameseven(regionId,year);
+    }
+
+
+    @GetMapping("/trancheageoneregionseven")
+    public List<Object[]> yourMethodNameheight(@RequestParam Long regionId, @RequestParam int year) {
+        return analysisServices.yourMethodNameheight(regionId,year);
+    }
+
+
+    @GetMapping("/trancheageoneregionheight")
+    public List<Object[]> yourMethodNamenine(@RequestParam Long regionId, @RequestParam int year) {
+        return analysisServices.yourMethodNamenine(regionId,year);
+    }
+
+
+    @GetMapping("/trancheageoneregionnine")
+    public List<Object[]> yourMethodNameten(@RequestParam Long regionId, @RequestParam int year) {
+        return analysisServices.yourMethodNameten(regionId,year);
+    }
+
+
+    @GetMapping("/trancheageoneregionten")
+    public List<Object[]> yourMethodNameeleven(@RequestParam Long regionId, @RequestParam int year) {
+        return analysisServices.yourMethodNameeleven(regionId,year);
+    }
+
+   //controller pour test realisés par tranche d age pour chaque district
+    @GetMapping("/trancheagedistrict")
+    public List<Object[]> yourMethodDistrictName(@RequestParam Long districtId, @RequestParam int year) {
+        return analysisServices.yourMethodDistrictName(districtId,year);
+    }
+
+    @GetMapping("/trancheagedistrictone")
+    public List<Object[]> yourMethodDistrictNameOne(@RequestParam Long districtId, @RequestParam int year) {
+        return analysisServices.yourMethodDistrictNameOne(districtId,year);
+    }
+
+    @GetMapping("/trancheagedistricttwo")
+    public List<Object[]> yourMethodDistrictNametwo(@RequestParam Long districtId, @RequestParam int year) {
+        return analysisServices.yourMethodDistrictNametwo(districtId,year);
+    }
+
+
+    @GetMapping("/trancheagedistrictthree")
+    public List<Object[]> yourMethodDistrictNamethree(@RequestParam Long districtId, @RequestParam int year) {
+        return analysisServices.yourMethodDistrictNamethree(districtId,year);
+    }
+
+
+    @GetMapping("/trancheagedistrictfour")
+    public List<Object[]> yourMethodDistrictNamefour(@RequestParam Long districtId, @RequestParam int year) {
+        return analysisServices.yourMethodDistrictNamefour(districtId,year);
+    }
+
+    @GetMapping("/trancheagedistrictfive")
+    public List<Object[]> yourMethodDistrictNameSix(@RequestParam Long districtId, @RequestParam int year) {
+        return analysisServices.yourMethodDistrictNameSix(districtId,year);
+    }
+
+    @GetMapping("/trancheagedistrictsix")
+    public List<Object[]> yourMethodDistrictNameseven(@RequestParam Long districtId, @RequestParam int year) {
+        return analysisServices.yourMethodDistrictNameseven(districtId,year);
+    }
+
+    @GetMapping("/trancheagedistrictseven")
+    public List<Object[]> yourMethodDistrictNameheight(@RequestParam Long districtId, @RequestParam int year) {
+        return analysisServices.yourMethodDistrictNameheight(districtId,year);
+    }
+
+    @GetMapping("/trancheagedistrictheight")
+    public List<Object[]> yourMethodDistrictNamenine(@RequestParam Long districtId, @RequestParam int year) {
+        return analysisServices.yourMethodDistrictNamenine(districtId,year);
+    }
+
+
+    @GetMapping("/trancheagedistrictnine")
+    public List<Object[]> yourMethodDistrictNameten(@RequestParam Long districtId, @RequestParam int year) {
+        return analysisServices.yourMethodDistrictNameten(districtId,year);
+    }
+
+
+    @GetMapping("/trancheagedistrictten")
+    public List<Object[]> yourMethodDistrictNameeleven(@RequestParam Long districtId, @RequestParam int year) {
+        return analysisServices.yourMethodDistrictNameeleven(districtId,year);
+    }
+
+    //controller pour test realisés par tranche d age pour chaque site
+
+    @GetMapping("/trancheagesite")
+    public List<Object[]> yourMethodSiteName(@RequestParam Long siteId, @RequestParam int year) {
+        return analysisServices.yourMethodSiteName(siteId,year);
+    }
+
+
+    @GetMapping("/trancheagesiteone")
+    public List<Object[]> yourMethodSiteNameOne(@RequestParam Long siteId, @RequestParam int year) {
+        return analysisServices.yourMethodSiteNameOne(siteId,year);
+    }
+
+    @GetMapping("/trancheagesitetwo")
+    public List<Object[]> yourMethodSiteNametwo(@RequestParam Long siteId, @RequestParam int year) {
+        return analysisServices.yourMethodSiteNametwo(siteId,year);
+    }
+
+
+    @GetMapping("/trancheagesitethree")
+    public List<Object[]> yourMethodSiteNamethree(@RequestParam Long siteId, @RequestParam int year) {
+        return analysisServices.yourMethodSiteNamethree(siteId,year);
+    }
+
+
+    @GetMapping("/trancheagesitefour")
+    public List<Object[]> yourMethodSiteNamefour(@RequestParam Long siteId, @RequestParam int year) {
+        return analysisServices.yourMethodSiteNamefour(siteId,year);
+    }
+
+    @GetMapping("/trancheagesitefive")
+    public List<Object[]> yourMethodSiteNameSix(@RequestParam Long siteId, @RequestParam int year) {
+        return analysisServices.yourMethodSiteNameSix(siteId,year);
+    }
+
+    @GetMapping("/trancheagesitesix")
+    public List<Object[]> yourMethodSiteNameseven(@RequestParam Long siteId, @RequestParam int year) {
+        return analysisServices.yourMethodSiteNameseven(siteId,year);
+    }
+
+    @GetMapping("/trancheagesiteseven")
+    public List<Object[]> yourMethodSiteNameheight(@RequestParam Long siteId, @RequestParam int year) {
+        return analysisServices.yourMethodSiteNameheight(siteId,year);
+    }
+
+
+    @GetMapping("/trancheagesiteheight")
+    public List<Object[]> yourMethodSiteNamenine(@RequestParam Long siteId, @RequestParam int year) {
+        return analysisServices.yourMethodSiteNamenine(siteId,year);
+    }
+
+
+    @GetMapping("/trancheagesitenine")
+    public List<Object[]> yourMethodSiteNameten(@RequestParam Long siteId, @RequestParam int year) {
+        return analysisServices.yourMethodSiteNameten(siteId,year);
+    }
+
+    @GetMapping("/trancheagesiteten")
+    public List<Object[]> yourMethodSiteNameeleven(@RequestParam Long siteId, @RequestParam int year) {
+        return analysisServices.yourMethodSiteNameeleven(siteId,year);
+    }
+
+ //pour toute les regions
+    @GetMapping("/trancheagereg")
+    public List<Object[]> MethodRegion(@RequestParam int year) {
+        return analysisServices.MethodRegion(year);
+    }
+
+
+    @GetMapping("/trancheageregone")
+    public List<Object[]> MethodRegionOne( @RequestParam int year) {
+        return analysisServices.MethodRegionOne(year);
+    }
+
+    @GetMapping("/trancheageregtwo")
+    public List<Object[]> MethodRegionThree( @RequestParam int year) {
+        return analysisServices.MethodRegionThree(year);
+    }
+
+
+    @GetMapping("/trancheageregthree")
+    public List<Object[]> MethodRegionfour( @RequestParam int year) {
+        return analysisServices.MethodRegionfour(year);
+    }
+
+
+    @GetMapping("/trancheageregfour")
+    public List<Object[]> MethodRegionfive(@RequestParam int year) {
+        return analysisServices.MethodRegionfive(year);
+    }
+
+
+    @GetMapping("/trancheageregfive")
+    public List<Object[]> MethodRegionsix(@RequestParam int year) {
+        return analysisServices.MethodRegionsix(year);
+    }
+
+    @GetMapping("/trancheageregsix")
+    public List<Object[]> MethodRegionseven( @RequestParam int year) {
+        return analysisServices.MethodRegionseven(year);
+    }
+
+
+    @GetMapping("/trancheageregseven")
+    public List<Object[]> MethodRegionheight( @RequestParam int year) {
+        return analysisServices.MethodRegionheight(year);
+    }
+
+    @GetMapping("/trancheageregheight")
+    public List<Object[]> MethodRegionnine( @RequestParam int year) {
+        return analysisServices.MethodRegionnine(year);
+    }
+
+    @GetMapping("/trancheageregnine")
+    public List<Object[]> MethodRegionten( @RequestParam int year) {
+        return analysisServices.MethodRegionten(year);
+    }
+
+
+    @GetMapping("/trancheageregten")
+    public List<Object[]> MethodRegioneleven( @RequestParam int year) {
+        return analysisServices.MethodRegioneleven(year);
+    }
+
+    @GetMapping("/trancheageregeleven")
+    public List<Object[]> MethodRegiontwelve( @RequestParam int year) {
+        return analysisServices.MethodRegiontwelve(year);
+    }
+    /************************************************************************************************************************* */
+    @GetMapping("/patientforregion")
+    public List<Object[]> getPatientForAllRegion( @RequestParam int year) {
+        return analysisServices.getPatientForAllRegion(year);
+    }
+
+    @GetMapping("/patientbydistrict")
+    public List<Object[]> getPatientForDistrict (@RequestParam Long districtId, @RequestParam int year) {
+        return analysisServices.getPatientForDistrict(districtId, year);
+    }
+
+    @GetMapping("/patientbydistrictwithsite")
+    public List<Object[]> getPatientForDistrictWithSite (@RequestParam Long districtId, @RequestParam int year) {
+        return analysisServices.getPatientForDistrictWithSite(districtId, year);
+    }
+
+    @GetMapping("/patientbyagetwoandnineforonedistrict")
+    public List<Object[]> getTestedPatientByAgeBetweenTwoAndNineForOneDistrict(@RequestParam Long districtId, @RequestParam int year) {
+    return analysisServices.getTestedPatientByAgeBetweenTwoAndNineForOneDistrict(districtId, year);
+    }
+
+    @GetMapping("/patientbyagetwoandnineforonesite")
+    public List<Object[]> getTestedPatientByAgeBetweenTwoAndNineForOneSite(@RequestParam Long siteId, @RequestParam int year) {
+    return analysisServices.getTestedPatientByAgeBetweenTwoAndNineForOneSite(siteId, year);
+    }
+
+    @GetMapping("/testbysiteforregion")
+    public List<Object[]> getTestBySiteForOneRegion(@RequestParam Long regionId, @RequestParam int year) {
+    return analysisServices.getTestBySiteForOneRegion(regionId, year);
+    }
+
+    @GetMapping("/patientbysiteforregion")
+    public List<Object[]> getPatientBySiteForOneRegion(@RequestParam Long regionId, @RequestParam int year) {
+    return analysisServices.getPatientBySiteForOneRegion(regionId, year);
+    }
+
+
+/*
+    @GetMapping("/count/inferieurmil")
+    public long countTestsWithViralLoadLessThan1000() {
+        return analysisServices.countTestsWithViralLoadLessThan1000();
+    }
+
+
+    @GetMapping("/count/inferieurll")
+    public long countTestWithViralLoadLL() {
+        return analysisServices.countTestWithViralLoadLL();
+    }
+
+
+    @GetMapping("/count/supegal")
+    public long countTestWithViralLoadSupegal() {
+        return analysisServices.countTestWithViralLoadSupegal();
+    }
+
+
+    //varialLoad Invalide
+
+
+    @GetMapping("/count/viraleLoadInvalide")
+    public long countTestInvalideviralLoad() {
+        return analysisServices.countTestInvalideviralLoad();
+    }
+
+
+    @GetMapping("/count/{regionName}")
+    public int countTestsByRegionAndViralLoad(@PathVariable String regionName) {
+        return analysisServices.countTestsByRegionAndViralLoad(regionName);
+    }
+
+    @GetMapping("/countAnalysis")
+    public int countTestsByRegionDateAndSampleType(
+            @PathVariable String regionName,
+            Date testDate) {
+        return analysisServices.countTestsByRegionDateAndSampleType(regionName, testDate);
+    }
+
+    @GetMapping("/dashboard/data")
+    public List<Object[]> getDashboardData(
+            //public List<Object[]> getDashboardData(
+            @RequestParam String regionName,
+            @RequestParam @DateTimeFormat(pattern = "yyyy-MM-dd") Date testDate
+    ) {
+        return analysisServices.getDashboardData(regionName, testDate);
+    }
+
+
+    //controller
+
+    @GetMapping("/testCount")
+
+
+    public ResponseEntity<List<Object[]>> getTestCountsByMonth(
+            @RequestParam("regionName") String regionName,
+            @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) @RequestParam("startDate") Date startDate,
+            @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) @RequestParam("endDate") Date endDate) {
+
+        List<Object[]> result = analysisServices.getTestCountsByMonth(regionName, startDate, endDate);
+        return new ResponseEntity<>(result, HttpStatus.OK);
+    }
+
+
+    //pieChart
+
+    //inferieur LL par region
+
+    @GetMapping("/testsWithLL/{regionName}")
+    public List<Object[]> TestsWithViralLoadLessThanLL(@PathVariable String regionName) {
+        return analysisServices.TestsWithViralLoadLessThanLL(regionName);
+    }
+
+
+
+   //>=1000
+
+    @GetMapping("/supMill/{regionName}")
+    public List<Object[]> TestsWithViralLoadLessThansup1000(@PathVariable String regionName) {
+        return analysisServices.TestsWithViralLoadLessThansup1000(regionName);
+    }
+
+
+
+    //<1000 par region
+
+    @GetMapping("/infMill/{regionName}")
+    public List<Object[]> TestsWithViralLoadLessThanInf1000(@PathVariable String regionName) {
+        return analysisServices.TestsWithViralLoadLessThanInf1000(regionName);
+    }
+
+
+
+
+    @GetMapping("/difMill/{regionName}")
+    public List<Object[]> TestsWithViralLoadLessThanDif1000(@PathVariable String regionName) {
+        return analysisServices.TestsWithViralLoadLessThanDif1000(regionName);
+    }
+
+
+    //controlleur pour le gender
+
+    @GetMapping("/gender/count")
+    public List<Object[]> countTestsByYearAndGender(
+            @RequestParam String regionName,
+            @RequestParam int year
+    ) {
+        return analysisServices.countTestsByYearAndGender(regionName, year);
+    }
+
+
+
+    //controller pour le supprimé
+
+    @GetMapping("/supprime/totalTests")
+    public List<Object[]> getTotalTestsByYearAndSupprime(@RequestParam("regionName") String regionName) {
+        return analysisServices.getTotalTestsByYearAndSupprime(regionName);
+    }
+
+
+
+    //non supprime
+
+    @GetMapping("/nonsupprime/totalTests")
+
+    public List<Object[]> getTotalTestsByYearAndGenderNonSupprime(@RequestParam("regionName") String regionName) {
+        return analysisServices.getTotalTestsByYearAndGenderNonSupprime(regionName);
+    }
+
+
+
+    //nouveau qui renvoie toute les donnees
+
+
+
+    @GetMapping("/totalgenderSup/test")
+    public List<Object[]> getTotalTestsByYearAndSupp(@RequestParam("regionName") String regionName) {
+        return analysisServices.getTotalTestsByYearAndSupp(regionName);
+    }
+
+
+    @GetMapping("/genre/total")
+    public List<Object[]> getTotalTestsByTesterByGenreFM(@RequestParam("regionName") String regionName) {
+        return analysisServices.getTotalTestsByTesterByGenreFM(regionName);
+    }
+
+
+
+    @GetMapping("/dashboard/reponsebymonth")
+    public ResponseEntity<?> getAnalysisData(@RequestParam("regionName") String regionName) {
+        try {
+            List<Object[]> analysisData = analysisServices.getAnalysisData(regionName);
+            return ResponseEntity.ok().body(analysisData);
+        } catch (Exception e) {
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("Error occurred: " + e.getMessage());
+        }
+    }
+
+    @GetMapping("/test/dataG")
+    public List<Object[]> getAnalysisTestData() {
+        return analysisServices.getAnalysisTestDatar();
+    }
+
+    //controller  pour le nombre de tests realisés par site de la region
+
+    @GetMapping("/sitedelaregion")
+    public List<Object[]> getAnalysisDataByRegion(@RequestParam("regionName") String regionName) {
+        return analysisServices.getAnalysisDataByRegion(regionName);
+    }
+
+
+    @GetMapping("/patientByregion")
+    public List<Object[]> getAnalysisDataByPatientRegion(@RequestParam("regionName") String regionName) {
+        return analysisServices.getAnalysisDataByPatientRegion(regionName);
+    }
+
+
+  //controlleur pour raisoon ou motif
+    @GetMapping("/reasons")
+    public List<Object[]> countReasonsByRegionmotif(@RequestParam String regionName) {
+        return analysisServices.countReasonsByRegionmotif(regionName);
+    }
+
+
+    @GetMapping("/tendancetest")
+    public ResponseEntity<List<Object[]>> getTendanceByDateAndRegion(@RequestParam String regionName) {
+        List<Object[]> data = analysisServices.getTendanceByDateAndRegion(regionName);
+        return ResponseEntity.ok(data);
+    }
+
+//controller pour district
+
+    //dbs et edta pour district
+
+    @GetMapping("/districtbydbs")
+    public List<Object[]> getDBSData(@RequestParam String districtName) {
+        return analysisServices.getDISTRICTDBSData(districtName);
+    }
+
+    @GetMapping("/districtbyedta")
+    public List<Object[]> getDISTRICTEDTAData(@RequestParam String districtName) {
+        return analysisServices.getDISTRICTEDTAData(districtName);
+    }
+
+
+
+
+    @GetMapping("/districtpieresults")
+    public List<Object[]> getAnalysisPieDistrictResults(@RequestParam String districtName) {
+        return analysisServices.getAnalysisPieDistrictResults(districtName);
+    }
+
+
+ */
 
 
 

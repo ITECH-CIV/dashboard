@@ -1057,9 +1057,6 @@ List<Object[]> getTestedPatientByAgeGreaterThanTwentyFiveForOneRegion(@Param("re
  
  //Age compris entre 2 et 9
  @Query(value = "SELECT " +
- " SUM(CASE WHEN a.convertedResult = 0 THEN 1 ELSE 0 END) AS LL_count, " +
- " SUM(CASE WHEN a.convertedResult < 1000 AND a.convertedResult > 0 THEN 1 ELSE 0 END) AS less_than_1000_count, " +
- " SUM(CASE WHEN a.convertedResult >= 1000 THEN 1 ELSE 0 END) AS greater_than_or_equal_1000_count, " +
  " SUM(1) AS TOTAL_ANALYSE, " +
  " SUM(CASE WHEN a.convertedResult = 0 THEN 1 WHEN a.convertedResult < 1000 AND a.convertedResult > 0 THEN 1 ELSE 0 END )AS TOTAL_SUPPRIME, " +
  " SUM(CASE WHEN a.convertedResult >= 1000 THEN 1 ELSE 0 END) AS TOTAL_NON_SUPPRIME, " +
@@ -1071,8 +1068,43 @@ List<Object[]> getTestedPatientByAgeGreaterThanTwentyFiveForOneRegion(@Param("re
  " JOIN Analysis a ON p.id = a.patient.id " +
  " WHERE FLOOR(EXTRACT(YEAR FROM CURRENT_DATE()) - EXTRACT(YEAR FROM p.birthDate)) BETWEEN 2 AND 9 AND " + 
  " EXTRACT(YEAR FROM a.drcpt) = :year " +
- " GROUP BY r.id, EXTRACT(YEAR FROM a.drcpt)")
+ " GROUP BY EXTRACT(YEAR FROM a.drcpt)")
 List<Object[]> getTestedPatientByAgeBetweenTwoAndNineForAllRegion(@Param("year") int year);
+
+//Age compris entre 2 et 9
+@Query(value = "SELECT " +
+" SUM(1) AS TOTAL_ANALYSE, " +
+" SUM(CASE WHEN a.convertedResult = 0 THEN 1 WHEN a.convertedResult < 1000 AND a.convertedResult > 0 THEN 1 ELSE 0 END )AS TOTAL_SUPPRIME, " +
+" SUM(CASE WHEN a.convertedResult >= 1000 THEN 1 ELSE 0 END) AS TOTAL_NON_SUPPRIME, " +
+" ROUND(SUM(CASE WHEN a.convertedResult = 0 THEN 1 WHEN a.convertedResult < 1000 AND a.convertedResult > 0 THEN 1 ELSE 0 END) * 100.0 / SUM(1), 2) AS POURCENTAGE_SUPPRIME " +
+" FROM Region r " +
+" JOIN District d ON r.id = d.region.id " +
+" JOIN Site s ON d.id = s.district.id " +
+" JOIN Patient p ON s.id = p.site.id " +
+" JOIN Analysis a ON p.id = a.patient.id " +
+" WHERE d.id = :districtId AND " +
+" FLOOR(EXTRACT(YEAR FROM CURRENT_DATE()) - EXTRACT(YEAR FROM p.birthDate)) BETWEEN 2 AND 9 AND " + 
+" EXTRACT(YEAR FROM a.drcpt) = :year " +
+" GROUP BY EXTRACT(YEAR FROM a.drcpt)")
+List<Object[]> getTestedPatientByAgeBetweenTwoAndNineForOneDistrict(@Param("districtId") Long districtId, @Param("year") int year);
+
+
+//Age compris entre 2 et 9
+@Query(value = "SELECT " +
+" SUM(1) AS TOTAL_ANALYSE, " +
+" SUM(CASE WHEN a.convertedResult = 0 THEN 1 WHEN a.convertedResult < 1000 AND a.convertedResult > 0 THEN 1 ELSE 0 END )AS TOTAL_SUPPRIME, " +
+" SUM(CASE WHEN a.convertedResult >= 1000 THEN 1 ELSE 0 END) AS TOTAL_NON_SUPPRIME, " +
+" ROUND(SUM(CASE WHEN a.convertedResult = 0 THEN 1 WHEN a.convertedResult < 1000 AND a.convertedResult > 0 THEN 1 ELSE 0 END) * 100.0 / SUM(1), 2) AS POURCENTAGE_SUPPRIME " +
+" FROM Region r " +
+" JOIN District d ON r.id = d.region.id " +
+" JOIN Site s ON d.id = s.district.id " +
+" JOIN Patient p ON s.id = p.site.id " +
+" JOIN Analysis a ON p.id = a.patient.id " +
+" WHERE s.id = :siteId AND " +
+" FLOOR(EXTRACT(YEAR FROM CURRENT_DATE()) - EXTRACT(YEAR FROM p.birthDate)) BETWEEN 2 AND 9 AND " + 
+" EXTRACT(YEAR FROM a.drcpt) = :year " +
+" GROUP BY EXTRACT(YEAR FROM a.drcpt)")
+List<Object[]> getTestedPatientByAgeBetweenTwoAndNineForOneSite(@Param("siteId") Long siteId, @Param("year") int year);
 
 
  //Age compris entre 10 et 14
@@ -1094,6 +1126,49 @@ List<Object[]> getTestedPatientByAgeBetweenTwoAndNineForAllRegion(@Param("year")
  " GROUP BY r.id, EXTRACT(YEAR FROM a.drcpt)")
 List<Object[]> getTestedPatientByAgeBetweenTenAndFourteenForAllRegion(@Param("year") int year);
 
+ //Age compris entre 10 et 14
+ @Query(value = "SELECT " +
+ " SUM(CASE WHEN a.convertedResult = 0 THEN 1 ELSE 0 END) AS LL_count, " +
+ " SUM(CASE WHEN a.convertedResult < 1000 AND a.convertedResult > 0 THEN 1 ELSE 0 END) AS less_than_1000_count, " +
+ " SUM(CASE WHEN a.convertedResult >= 1000 THEN 1 ELSE 0 END) AS greater_than_or_equal_1000_count, " +
+ " SUM(1) AS TOTAL_ANALYSE, " +
+ " SUM(CASE WHEN a.convertedResult = 0 THEN 1 WHEN a.convertedResult < 1000 AND a.convertedResult > 0 THEN 1 ELSE 0 END )AS TOTAL_SUPPRIME, " +
+ " SUM(CASE WHEN a.convertedResult >= 1000 THEN 1 ELSE 0 END) AS TOTAL_NON_SUPPRIME, " +
+ " ROUND(SUM(CASE WHEN a.convertedResult = 0 THEN 1 WHEN a.convertedResult < 1000 AND a.convertedResult > 0 THEN 1 ELSE 0 END) * 100.0 / SUM(1), 2) AS POURCENTAGE_SUPPRIME " +
+ " FROM Region r " +
+ " JOIN District d ON r.id = d.region.id " +
+ " JOIN Site s ON d.id = s.district.id " +
+ " JOIN Patient p ON s.id = p.site.id " +
+ " JOIN Analysis a ON p.id = a.patient.id " +
+ " WHERE d.id = :districtId AND " +
+ " FLOOR(EXTRACT(YEAR FROM CURRENT_DATE()) - EXTRACT(YEAR FROM p.birthDate)) BETWEEN 10 AND 14 AND " + 
+ " EXTRACT(YEAR FROM a.drcpt) = :year " +
+ " GROUP BY EXTRACT(YEAR FROM a.drcpt)")
+List<Object[]> getTestedPatientByAgeBetweenTenAndFourteenForOneDistrict(@Param("districtId") Long districtId, @Param("year") int year);
+
+
+
+ //Age compris entre 10 et 14
+ @Query(value = "SELECT " +
+ " SUM(CASE WHEN a.convertedResult = 0 THEN 1 ELSE 0 END) AS LL_count, " +
+ " SUM(CASE WHEN a.convertedResult < 1000 AND a.convertedResult > 0 THEN 1 ELSE 0 END) AS less_than_1000_count, " +
+ " SUM(CASE WHEN a.convertedResult >= 1000 THEN 1 ELSE 0 END) AS greater_than_or_equal_1000_count, " +
+ " SUM(1) AS TOTAL_ANALYSE, " +
+ " SUM(CASE WHEN a.convertedResult = 0 THEN 1 WHEN a.convertedResult < 1000 AND a.convertedResult > 0 THEN 1 ELSE 0 END )AS TOTAL_SUPPRIME, " +
+ " SUM(CASE WHEN a.convertedResult >= 1000 THEN 1 ELSE 0 END) AS TOTAL_NON_SUPPRIME, " +
+ " ROUND(SUM(CASE WHEN a.convertedResult = 0 THEN 1 WHEN a.convertedResult < 1000 AND a.convertedResult > 0 THEN 1 ELSE 0 END) * 100.0 / SUM(1), 2) AS POURCENTAGE_SUPPRIME " +
+ " FROM Region r " +
+ " JOIN District d ON r.id = d.region.id " +
+ " JOIN Site s ON d.id = s.district.id " +
+ " JOIN Patient p ON s.id = p.site.id " +
+ " JOIN Analysis a ON p.id = a.patient.id " +
+ " WHERE s.id = :siteId AND " +
+ " FLOOR(EXTRACT(YEAR FROM CURRENT_DATE()) - EXTRACT(YEAR FROM p.birthDate)) BETWEEN 10 AND 14 AND " + 
+ " EXTRACT(YEAR FROM a.drcpt) = :year " +
+ " GROUP BY EXTRACT(YEAR FROM a.drcpt)")
+List<Object[]> getTestedPatientByAgeBetweenTenAndFourteenForOneSite(@Param("siteId") Long siteId, @Param("year") int year);
+
+
 
  //Age compris entre 15 et 19
  @Query(value = "SELECT " +
@@ -1114,6 +1189,48 @@ List<Object[]> getTestedPatientByAgeBetweenTenAndFourteenForAllRegion(@Param("ye
  " GROUP BY r.id, EXTRACT(YEAR FROM a.drcpt)")
 List<Object[]> getTestedPatientByAgeBetweenFifteenAndNineteenForAllRegion(@Param("year") int year);
 
+//Age compris entre 15 et 19
+@Query(value = "SELECT " +
+" SUM(CASE WHEN a.convertedResult = 0 THEN 1 ELSE 0 END) AS LL_count, " +
+" SUM(CASE WHEN a.convertedResult < 1000 AND a.convertedResult > 0 THEN 1 ELSE 0 END) AS less_than_1000_count, " +
+" SUM(CASE WHEN a.convertedResult >= 1000 THEN 1 ELSE 0 END) AS greater_than_or_equal_1000_count, " +
+" SUM(1) AS TOTAL_ANALYSE, " +
+" SUM(CASE WHEN a.convertedResult = 0 THEN 1 WHEN a.convertedResult < 1000 AND a.convertedResult > 0 THEN 1 ELSE 0 END )AS TOTAL_SUPPRIME, " +
+" SUM(CASE WHEN a.convertedResult >= 1000 THEN 1 ELSE 0 END) AS TOTAL_NON_SUPPRIME, " +
+" ROUND(SUM(CASE WHEN a.convertedResult = 0 THEN 1 WHEN a.convertedResult < 1000 AND a.convertedResult > 0 THEN 1 ELSE 0 END) * 100.0 / SUM(1), 2) AS POURCENTAGE_SUPPRIME " +
+" FROM Region r " +
+" JOIN District d ON r.id = d.region.id " +
+" JOIN Site s ON d.id = s.district.id " +
+" JOIN Patient p ON s.id = p.site.id " +
+" JOIN Analysis a ON p.id = a.patient.id " +
+" WHERE d.id = :districtId AND " +
+" FLOOR(EXTRACT(YEAR FROM CURRENT_DATE()) - EXTRACT(YEAR FROM p.birthDate)) BETWEEN 15 AND 19 AND " + 
+" EXTRACT(YEAR FROM a.drcpt) = :year  " +
+" GROUP BY EXTRACT(YEAR FROM a.drcpt)")
+List<Object[]> getTestedPatientByAgeBetweenFifteenAndNineteenForOneDistrict(@Param("districtId") Long districtId, @Param("year") int year);
+
+
+//Age compris entre 15 et 19
+@Query(value = "SELECT " +
+" SUM(CASE WHEN a.convertedResult = 0 THEN 1 ELSE 0 END) AS LL_count, " +
+" SUM(CASE WHEN a.convertedResult < 1000 AND a.convertedResult > 0 THEN 1 ELSE 0 END) AS less_than_1000_count, " +
+" SUM(CASE WHEN a.convertedResult >= 1000 THEN 1 ELSE 0 END) AS greater_than_or_equal_1000_count, " +
+" SUM(1) AS TOTAL_ANALYSE, " +
+" SUM(CASE WHEN a.convertedResult = 0 THEN 1 WHEN a.convertedResult < 1000 AND a.convertedResult > 0 THEN 1 ELSE 0 END )AS TOTAL_SUPPRIME, " +
+" SUM(CASE WHEN a.convertedResult >= 1000 THEN 1 ELSE 0 END) AS TOTAL_NON_SUPPRIME, " +
+" ROUND(SUM(CASE WHEN a.convertedResult = 0 THEN 1 WHEN a.convertedResult < 1000 AND a.convertedResult > 0 THEN 1 ELSE 0 END) * 100.0 / SUM(1), 2) AS POURCENTAGE_SUPPRIME " +
+" FROM Region r " +
+" JOIN District d ON r.id = d.region.id " +
+" JOIN Site s ON d.id = s.district.id " +
+" JOIN Patient p ON s.id = p.site.id " +
+" JOIN Analysis a ON p.id = a.patient.id " +
+" WHERE s.id = :siteId AND " +
+" FLOOR(EXTRACT(YEAR FROM CURRENT_DATE()) - EXTRACT(YEAR FROM p.birthDate)) BETWEEN 15 AND 19 AND " + 
+" EXTRACT(YEAR FROM a.drcpt) = :year  " +
+" GROUP BY EXTRACT(YEAR FROM a.drcpt)")
+List<Object[]> getTestedPatientByAgeBetweenFifteenAndNineteenForOneSite(@Param("siteId") Long siteId, @Param("year") int year);
+
+
  //Age compris entre 20 et 24
  @Query(value = "SELECT " +
  " SUM(CASE WHEN a.convertedResult = 0 THEN 1 ELSE 0 END) AS LL_count, " +
@@ -1133,6 +1250,48 @@ List<Object[]> getTestedPatientByAgeBetweenFifteenAndNineteenForAllRegion(@Param
  " GROUP BY r.id, EXTRACT(YEAR FROM a.drcpt)")
 List<Object[]> getTestedPatientByAgeBetweenTwentyAndTwentyFourForAllRegion(@Param("year") int year);
 
+
+ //Age compris entre 20 et 24
+ @Query(value = "SELECT " +
+ " SUM(CASE WHEN a.convertedResult = 0 THEN 1 ELSE 0 END) AS LL_count, " +
+ " SUM(CASE WHEN a.convertedResult < 1000 AND a.convertedResult > 0 THEN 1 ELSE 0 END) AS less_than_1000_count, " +
+ " SUM(CASE WHEN a.convertedResult >= 1000 THEN 1 ELSE 0 END) AS greater_than_or_equal_1000_count, " +
+ " SUM(1) AS TOTAL_ANALYSE, " +
+ " SUM(CASE WHEN a.convertedResult = 0 THEN 1 WHEN a.convertedResult < 1000 AND a.convertedResult > 0 THEN 1 ELSE 0 END )AS TOTAL_SUPPRIME, " +
+ " SUM(CASE WHEN a.convertedResult >= 1000 THEN 1 ELSE 0 END) AS TOTAL_NON_SUPPRIME, " +
+ " ROUND(SUM(CASE WHEN a.convertedResult = 0 THEN 1 WHEN a.convertedResult < 1000 AND a.convertedResult > 0 THEN 1 ELSE 0 END) * 100.0 / SUM(1), 2) AS POURCENTAGE_SUPPRIME " +
+ " FROM Region r " +
+ " JOIN District d ON r.id = d.region.id " +
+ " JOIN Site s ON d.id = s.district.id " +
+ " JOIN Patient p ON s.id = p.site.id " +
+ " JOIN Analysis a ON p.id = a.patient.id " +
+ " WHERE d.id = :districtId AND " +
+ " FLOOR(EXTRACT(YEAR FROM CURRENT_DATE()) - EXTRACT(YEAR FROM p.birthDate)) BETWEEN 20 AND 24 AND " + 
+ " EXTRACT(YEAR FROM a.drcpt) = :year  " +
+ " GROUP BY EXTRACT(YEAR FROM a.drcpt)")
+List<Object[]> getTestedPatientByAgeBetweenTwentyAndTwentyFourFoOneDistrict(@Param("districtId") Long districtId, @Param("year") int year);
+
+
+ //Age compris entre 20 et 24
+ @Query(value = "SELECT " +
+ " SUM(CASE WHEN a.convertedResult = 0 THEN 1 ELSE 0 END) AS LL_count, " +
+ " SUM(CASE WHEN a.convertedResult < 1000 AND a.convertedResult > 0 THEN 1 ELSE 0 END) AS less_than_1000_count, " +
+ " SUM(CASE WHEN a.convertedResult >= 1000 THEN 1 ELSE 0 END) AS greater_than_or_equal_1000_count, " +
+ " SUM(1) AS TOTAL_ANALYSE, " +
+ " SUM(CASE WHEN a.convertedResult = 0 THEN 1 WHEN a.convertedResult < 1000 AND a.convertedResult > 0 THEN 1 ELSE 0 END )AS TOTAL_SUPPRIME, " +
+ " SUM(CASE WHEN a.convertedResult >= 1000 THEN 1 ELSE 0 END) AS TOTAL_NON_SUPPRIME, " +
+ " ROUND(SUM(CASE WHEN a.convertedResult = 0 THEN 1 WHEN a.convertedResult < 1000 AND a.convertedResult > 0 THEN 1 ELSE 0 END) * 100.0 / SUM(1), 2) AS POURCENTAGE_SUPPRIME " +
+ " FROM Region r " +
+ " JOIN District d ON r.id = d.region.id " +
+ " JOIN Site s ON d.id = s.district.id " +
+ " JOIN Patient p ON s.id = p.site.id " +
+ " JOIN Analysis a ON p.id = a.patient.id " +
+ " WHERE s.id = :siteId AND " +
+ " FLOOR(EXTRACT(YEAR FROM CURRENT_DATE()) - EXTRACT(YEAR FROM p.birthDate)) BETWEEN 20 AND 24 AND " + 
+ " EXTRACT(YEAR FROM a.drcpt) = :year  " +
+ " GROUP BY EXTRACT(YEAR FROM a.drcpt)")
+List<Object[]> getTestedPatientByAgeBetweenTwentyAndTwentyFourForOneSite(@Param("siteId") Long siteId, @Param("year") int year);
+
  //Age >25
  @Query(value = "SELECT " +
  " SUM(CASE WHEN a.convertedResult = 0 THEN 1 ELSE 0 END) AS LL_count, " +
@@ -1151,6 +1310,48 @@ List<Object[]> getTestedPatientByAgeBetweenTwentyAndTwentyFourForAllRegion(@Para
  " EXTRACT(YEAR FROM a.drcpt) = :year  " +
  " GROUP BY r.id, EXTRACT(YEAR FROM a.drcpt)")
 List<Object[]> getTestedPatientByAgeGreaterThanTwentyFiveForAllRegion(@Param("year") int year);
+
+//Age >25
+@Query(value = "SELECT " +
+" SUM(CASE WHEN a.convertedResult = 0 THEN 1 ELSE 0 END) AS LL_count, " +
+" SUM(CASE WHEN a.convertedResult < 1000 AND a.convertedResult > 0 THEN 1 ELSE 0 END) AS less_than_1000_count, " +
+" SUM(CASE WHEN a.convertedResult >= 1000 THEN 1 ELSE 0 END) AS greater_than_or_equal_1000_count, " +
+" SUM(1) AS TOTAL_ANALYSE, " +
+" SUM(CASE WHEN a.convertedResult = 0 THEN 1 WHEN a.convertedResult < 1000 AND a.convertedResult > 0 THEN 1 ELSE 0 END )AS TOTAL_SUPPRIME, " +
+" SUM(CASE WHEN a.convertedResult >= 1000 THEN 1 ELSE 0 END) AS TOTAL_NON_SUPPRIME, " +
+" ROUND(SUM(CASE WHEN a.convertedResult = 0 THEN 1 WHEN a.convertedResult < 1000 AND a.convertedResult > 0 THEN 1 ELSE 0 END) * 100.0 / SUM(1), 2) AS POURCENTAGE_SUPPRIME " +
+" FROM Region r " +
+" JOIN District d ON r.id = d.region.id " +
+" JOIN Site s ON d.id = s.district.id " +
+" JOIN Patient p ON s.id = p.site.id " +
+" JOIN Analysis a ON p.id = a.patient.id " +
+" WHERE d.id = :districtId AND " +
+" FLOOR(EXTRACT(YEAR FROM CURRENT_DATE()) - EXTRACT(YEAR FROM p.birthDate)) > 25 AND " + 
+" EXTRACT(YEAR FROM a.drcpt) = :year  " +
+" GROUP BY EXTRACT(YEAR FROM a.drcpt)")
+List<Object[]> getTestedPatientByAgeGreaterThanTwentyFiveForOneDistric(@Param("districtId") Long districtId, @Param("year") int year);
+
+
+//Age >25
+@Query(value = "SELECT " +
+" SUM(CASE WHEN a.convertedResult = 0 THEN 1 ELSE 0 END) AS LL_count, " +
+" SUM(CASE WHEN a.convertedResult < 1000 AND a.convertedResult > 0 THEN 1 ELSE 0 END) AS less_than_1000_count, " +
+" SUM(CASE WHEN a.convertedResult >= 1000 THEN 1 ELSE 0 END) AS greater_than_or_equal_1000_count, " +
+" SUM(1) AS TOTAL_ANALYSE, " +
+" SUM(CASE WHEN a.convertedResult = 0 THEN 1 WHEN a.convertedResult < 1000 AND a.convertedResult > 0 THEN 1 ELSE 0 END )AS TOTAL_SUPPRIME, " +
+" SUM(CASE WHEN a.convertedResult >= 1000 THEN 1 ELSE 0 END) AS TOTAL_NON_SUPPRIME, " +
+" ROUND(SUM(CASE WHEN a.convertedResult = 0 THEN 1 WHEN a.convertedResult < 1000 AND a.convertedResult > 0 THEN 1 ELSE 0 END) * 100.0 / SUM(1), 2) AS POURCENTAGE_SUPPRIME " +
+" FROM Region r " +
+" JOIN District d ON r.id = d.region.id " +
+" JOIN Site s ON d.id = s.district.id " +
+" JOIN Patient p ON s.id = p.site.id " +
+" JOIN Analysis a ON p.id = a.patient.id " +
+" WHERE s.id = :siteId AND " +
+" FLOOR(EXTRACT(YEAR FROM CURRENT_DATE()) - EXTRACT(YEAR FROM p.birthDate)) > 25 AND " + 
+" EXTRACT(YEAR FROM a.drcpt) = :year  " +
+" GROUP BY EXTRACT(YEAR FROM a.drcpt)")
+List<Object[]> getTestedPatientByAgeGreaterThanTwentyFiveForOneSite(@Param("siteId") Long siteId, @Param("year") int year);
+
 
 
   //Nombre de patients testés par tranche d'âge selon une region spécifique  - CDC CI
@@ -3110,11 +3311,1277 @@ List<Object[]> test(@Param("regionId") Long regionId, @Param("year") int year);
         " GROUP BY r.id, EXTRACT(YEAR FROM a.drcpt)")
 List<Object[]> test(@Param("regionId") Long regionId, @Param("year") int year);
 
+/************************************************************************************************************************************ */
+
+    //INDICATEUR : tendance de tests realisés en fonction de la charge virale
+
+    @Query("SELECT YEAR(a.drcpt) AS year, " +
+            "CASE " +
+            "WHEN MONTH(a.drcpt) = 1 THEN 'JAN' " +
+            "WHEN MONTH(a.drcpt) = 2 THEN 'FEB' " +
+            "WHEN MONTH(a.drcpt) = 3 THEN 'MAR' " +
+            "WHEN MONTH(a.drcpt) = 4 THEN 'APR' " +
+            "WHEN MONTH(a.drcpt) = 5 THEN 'MAY' " +
+            "WHEN MONTH(a.drcpt) = 6 THEN 'JUN' " +
+            "WHEN MONTH(a.drcpt) = 7 THEN 'JUL' " +
+            "WHEN MONTH(a.drcpt) = 8 THEN 'AUG' " +
+            "WHEN MONTH(a.drcpt) = 9 THEN 'SEP' " +
+            "WHEN MONTH(a.drcpt) = 10 THEN 'OCT' " +
+            "WHEN MONTH(a.drcpt) = 11 THEN 'NOV' " +
+            "ELSE 'DEC' END AS month, " +
+            "SUM(a.convertedResult) AS total_converted_result, " +
+            "COUNT(*) AS total_tests " +
+            "FROM Region r " +
+            "JOIN District d ON r.id = d.region.id " +
+            "JOIN Site s ON d.id = s.district.id " +
+            "JOIN Patient p ON s.id = p.site.id " +
+            "JOIN Analysis a ON p.id = a.patient.id " +
+            "JOIN Test t ON a.test.id = t.id " +
+            "JOIN Regimen reg ON a.regimen.id = reg.id " +
+            "JOIN VlReason vl ON a.vlReason.id = vl.id " +
+            "WHERE YEAR(a.drcpt) = 2021 " +
+            "GROUP BY YEAR(a.drcpt), MONTH(a.drcpt) " +
+            "ORDER BY YEAR(a.drcpt), MONTH(a.drcpt)")
+    List<Object[]> tendancetest2021();
+
+
+
+
+    @Query("SELECT YEAR(a.drcpt) AS year, " +
+            "CASE " +
+            "WHEN MONTH(a.drcpt) = 1 THEN 'JAN' " +
+            "WHEN MONTH(a.drcpt) = 2 THEN 'FEB' " +
+            "WHEN MONTH(a.drcpt) = 3 THEN 'MAR' " +
+            "WHEN MONTH(a.drcpt) = 4 THEN 'APR' " +
+            "WHEN MONTH(a.drcpt) = 5 THEN 'MAY' " +
+            "WHEN MONTH(a.drcpt) = 6 THEN 'JUN' " +
+            "WHEN MONTH(a.drcpt) = 7 THEN 'JUL' " +
+            "WHEN MONTH(a.drcpt) = 8 THEN 'AUG' " +
+            "WHEN MONTH(a.drcpt) = 9 THEN 'SEP' " +
+            "WHEN MONTH(a.drcpt) = 10 THEN 'OCT' " +
+            "WHEN MONTH(a.drcpt) = 11 THEN 'NOV' " +
+            "ELSE 'DEC' END AS month, " +
+            "SUM(a.convertedResult) AS total_converted_result, " +
+            "COUNT(*) AS total_tests " +
+            "FROM Region r " +
+            "JOIN District d ON r.id = d.region.id " +
+            "JOIN Site s ON d.id = s.district.id " +
+            "JOIN Patient p ON s.id = p.site.id " +
+            "JOIN Analysis a ON p.id = a.patient.id " +
+            "JOIN Test t ON a.test.id = t.id " +
+            "JOIN Regimen reg ON a.regimen.id = reg.id " +
+            "JOIN VlReason vl ON a.vlReason.id = vl.id " +
+            "WHERE YEAR(a.drcpt) = 2022 " +
+            "GROUP BY YEAR(a.drcpt), MONTH(a.drcpt) " +
+            "ORDER BY YEAR(a.drcpt), MONTH(a.drcpt)")
+    List<Object[]> tendancetest2022();
+
+
+
+    @Query("SELECT YEAR(a.drcpt) AS year, " +
+            "CASE " +
+            "WHEN MONTH(a.drcpt) = 1 THEN 'JAN' " +
+            "WHEN MONTH(a.drcpt) = 2 THEN 'FEB' " +
+            "WHEN MONTH(a.drcpt) = 3 THEN 'MAR' " +
+            "WHEN MONTH(a.drcpt) = 4 THEN 'APR' " +
+            "WHEN MONTH(a.drcpt) = 5 THEN 'MAY' " +
+            "WHEN MONTH(a.drcpt) = 6 THEN 'JUN' " +
+            "WHEN MONTH(a.drcpt) = 7 THEN 'JUL' " +
+            "WHEN MONTH(a.drcpt) = 8 THEN 'AUG' " +
+            "WHEN MONTH(a.drcpt) = 9 THEN 'SEP' " +
+            "WHEN MONTH(a.drcpt) = 10 THEN 'OCT' " +
+            "WHEN MONTH(a.drcpt) = 11 THEN 'NOV' " +
+            "ELSE 'DEC' END AS month, " +
+            "SUM(a.convertedResult) AS total_converted_result, " +
+            "COUNT(*) AS total_tests " +
+            "FROM Region r " +
+            "JOIN District d ON r.id = d.region.id " +
+            "JOIN Site s ON d.id = s.district.id " +
+            "JOIN Patient p ON s.id = p.site.id " +
+            "JOIN Analysis a ON p.id = a.patient.id " +
+            "JOIN Test t ON a.test.id = t.id " +
+            "JOIN Regimen reg ON a.regimen.id = reg.id " +
+            "JOIN VlReason vl ON a.vlReason.id = vl.id " +
+            "WHERE YEAR(a.drcpt) = 2023 " +
+            "GROUP BY YEAR(a.drcpt), MONTH(a.drcpt) " +
+            "ORDER BY YEAR(a.drcpt), MONTH(a.drcpt)")
+    List<Object[]> tendancetest2023();
+
+
+
+    //tests realisés par tranche dage <2
+    @Query(value = "SELECT " +
+            " SUM(CASE WHEN a.convertedResult = 0 THEN 1 ELSE 0 END) AS LL_count, " +
+            " SUM(CASE WHEN a.convertedResult < 1000 AND a.convertedResult > 0 THEN 1 ELSE 0 END) AS less_than_1000_count, " +
+            " SUM(CASE WHEN a.convertedResult >= 1000 THEN 1 ELSE 0 END) AS greater_than_or_equal_1000_count, " +
+            " SUM(CASE WHEN a.convertedResult = -1 THEN 1 ELSE 0 END) AS minus_1_count " +
+            " FROM Region r " +
+            " JOIN District d ON r.id = d.region.id " +
+            " JOIN Site s ON d.id = s.district.id " +
+            " JOIN Patient p ON s.id = p.site.id " +
+            " JOIN Analysis a ON p.id = a.patient.id " +
+            " WHERE r.id = :regionId AND " +
+            " EXTRACT(YEAR FROM a.drcpt) = :year AND " +
+            " FLOOR(EXTRACT(YEAR FROM CURRENT_DATE()) - EXTRACT(YEAR FROM p.birthDate)) < 1 " +
+            " GROUP BY r.id, EXTRACT(YEAR FROM a.drcpt)")
+    List<Object[]> yourMethodName(@Param("regionId") Long regionId, @Param("year") int year);
+
+
+    //tests realisés par tranche dage 1-4
+    @Query(value = "SELECT " +
+            " SUM(CASE WHEN a.convertedResult = 0 THEN 1 ELSE 0 END) AS LL_count, " +
+            " SUM(CASE WHEN a.convertedResult < 1000 AND a.convertedResult > 0 THEN 1 ELSE 0 END) AS less_than_1000_count, " +
+            " SUM(CASE WHEN a.convertedResult >= 1000 THEN 1 ELSE 0 END) AS greater_than_or_equal_1000_count, " +
+            " SUM(CASE WHEN a.convertedResult = -1 THEN 1 ELSE 0 END) AS minus_1_count " +
+            " FROM Region r " +
+            " JOIN District d ON r.id = d.region.id " +
+            " JOIN Site s ON d.id = s.district.id " +
+            " JOIN Patient p ON s.id = p.site.id " +
+            " JOIN Analysis a ON p.id = a.patient.id " +
+            " WHERE r.id = :regionId AND " +
+            " EXTRACT(YEAR FROM a.drcpt) = :year AND " +
+            " FLOOR(EXTRACT(YEAR FROM CURRENT_DATE()) - EXTRACT(YEAR FROM p.birthDate)) BETWEEN 1 AND 4 " +
+            " GROUP BY r.id, EXTRACT(YEAR FROM a.drcpt)")
+    List<Object[]> yourMethodNameOne(@Param("regionId") Long regionId, @Param("year") int year);
+
+
+
+    //tests realisés par tranche dage 5-9
+    @Query(value = "SELECT " +
+            " SUM(CASE WHEN a.convertedResult = 0 THEN 1 ELSE 0 END) AS LL_count, " +
+            " SUM(CASE WHEN a.convertedResult < 1000 AND a.convertedResult > 0 THEN 1 ELSE 0 END) AS less_than_1000_count, " +
+            " SUM(CASE WHEN a.convertedResult >= 1000 THEN 1 ELSE 0 END) AS greater_than_or_equal_1000_count, " +
+            " SUM(CASE WHEN a.convertedResult = -1 THEN 1 ELSE 0 END) AS minus_1_count " +
+            " FROM Region r " +
+            " JOIN District d ON r.id = d.region.id " +
+            " JOIN Site s ON d.id = s.district.id " +
+            " JOIN Patient p ON s.id = p.site.id " +
+            " JOIN Analysis a ON p.id = a.patient.id " +
+            " WHERE r.id = :regionId AND " +
+            " EXTRACT(YEAR FROM a.drcpt) = :year AND " +
+            " FLOOR(EXTRACT(YEAR FROM CURRENT_DATE()) - EXTRACT(YEAR FROM p.birthDate)) BETWEEN 5 AND 9 " + // Condition pour la tranche d'âge de 4 à 9 ans
+            " GROUP BY r.id, EXTRACT(YEAR FROM a.drcpt)")
+    List<Object[]> yourMethodNametwo(@Param("regionId") Long regionId, @Param("year") int year);
+
+
+
+
+    //tests realisés par tranche dage 10-14
+    @Query(value = "SELECT " +
+            " SUM(CASE WHEN a.convertedResult = 0 THEN 1 ELSE 0 END) AS LL_count, " +
+            " SUM(CASE WHEN a.convertedResult < 1000 AND a.convertedResult > 0 THEN 1 ELSE 0 END) AS less_than_1000_count, " +
+            " SUM(CASE WHEN a.convertedResult >= 1000 THEN 1 ELSE 0 END) AS greater_than_or_equal_1000_count, " +
+            " SUM(CASE WHEN a.convertedResult = -1 THEN 1 ELSE 0 END) AS minus_1_count " +
+            " FROM Region r " +
+            " JOIN District d ON r.id = d.region.id " +
+            " JOIN Site s ON d.id = s.district.id " +
+            " JOIN Patient p ON s.id = p.site.id " +
+            " JOIN Analysis a ON p.id = a.patient.id " +
+            " WHERE r.id = :regionId AND " +
+            " EXTRACT(YEAR FROM a.drcpt) = :year AND " +
+            " FLOOR(EXTRACT(YEAR FROM CURRENT_DATE()) - EXTRACT(YEAR FROM p.birthDate)) BETWEEN 10 AND 14 " + // Condition pour la tranche d'âge de 4 à 9 ans
+            " GROUP BY r.id, EXTRACT(YEAR FROM a.drcpt)")
+    List<Object[]> yourMethodNamethree(@Param("regionId") Long regionId, @Param("year") int year);
+
+
+    //tests realisés par tranche dage 15-19
+    @Query(value = "SELECT " +
+            " SUM(CASE WHEN a.convertedResult = 0 THEN 1 ELSE 0 END) AS LL_count, " +
+            " SUM(CASE WHEN a.convertedResult < 1000 AND a.convertedResult > 0 THEN 1 ELSE 0 END) AS less_than_1000_count, " +
+            " SUM(CASE WHEN a.convertedResult >= 1000 THEN 1 ELSE 0 END) AS greater_than_or_equal_1000_count, " +
+            " SUM(CASE WHEN a.convertedResult = -1 THEN 1 ELSE 0 END) AS minus_1_count " +
+            " FROM Region r " +
+            " JOIN District d ON r.id = d.region.id " +
+            " JOIN Site s ON d.id = s.district.id " +
+            " JOIN Patient p ON s.id = p.site.id " +
+            " JOIN Analysis a ON p.id = a.patient.id " +
+            " WHERE r.id = :regionId AND " +
+            " EXTRACT(YEAR FROM a.drcpt) = :year AND " +
+            " FLOOR(EXTRACT(YEAR FROM CURRENT_DATE()) - EXTRACT(YEAR FROM p.birthDate)) BETWEEN 15 AND 19 " + // Condition pour la tranche d'âge de 4 à 9 ans
+            " GROUP BY r.id, EXTRACT(YEAR FROM a.drcpt)")
+    List<Object[]> yourMethodNamefour(@Param("regionId") Long regionId, @Param("year") int year);
+
+
+
+
+    //tests realisés par tranche dage 20-24
+    @Query(value = "SELECT " +
+            " SUM(CASE WHEN a.convertedResult = 0 THEN 1 ELSE 0 END) AS LL_count, " +
+            " SUM(CASE WHEN a.convertedResult < 1000 AND a.convertedResult > 0 THEN 1 ELSE 0 END) AS less_than_1000_count, " +
+            " SUM(CASE WHEN a.convertedResult >= 1000 THEN 1 ELSE 0 END) AS greater_than_or_equal_1000_count, " +
+            " SUM(CASE WHEN a.convertedResult = -1 THEN 1 ELSE 0 END) AS minus_1_count " +
+            " FROM Region r " +
+            " JOIN District d ON r.id = d.region.id " +
+            " JOIN Site s ON d.id = s.district.id " +
+            " JOIN Patient p ON s.id = p.site.id " +
+            " JOIN Analysis a ON p.id = a.patient.id " +
+            " WHERE r.id = :regionId AND " +
+            " EXTRACT(YEAR FROM a.drcpt) = :year AND " +
+            " FLOOR(EXTRACT(YEAR FROM CURRENT_DATE()) - EXTRACT(YEAR FROM p.birthDate)) BETWEEN 20 AND 24 " + // Condition pour la tranche d'âge de 4 à 9 ans
+            " GROUP BY r.id, EXTRACT(YEAR FROM a.drcpt)")
+    List<Object[]> yourMethodNameFive(@Param("regionId") Long regionId, @Param("year") int year);
+
+
+
+
+    //tests realisés par tranche dage 25-29
+    @Query(value = "SELECT " +
+            " SUM(CASE WHEN a.convertedResult = 0 THEN 1 ELSE 0 END) AS LL_count, " +
+            " SUM(CASE WHEN a.convertedResult < 1000 AND a.convertedResult > 0 THEN 1 ELSE 0 END) AS less_than_1000_count, " +
+            " SUM(CASE WHEN a.convertedResult >= 1000 THEN 1 ELSE 0 END) AS greater_than_or_equal_1000_count, " +
+            " SUM(CASE WHEN a.convertedResult = -1 THEN 1 ELSE 0 END) AS minus_1_count " +
+            " FROM Region r " +
+            " JOIN District d ON r.id = d.region.id " +
+            " JOIN Site s ON d.id = s.district.id " +
+            " JOIN Patient p ON s.id = p.site.id " +
+            " JOIN Analysis a ON p.id = a.patient.id " +
+            " WHERE r.id = :regionId AND " +
+            " EXTRACT(YEAR FROM a.drcpt) = :year AND " +
+            " FLOOR(EXTRACT(YEAR FROM CURRENT_DATE()) - EXTRACT(YEAR FROM p.birthDate)) BETWEEN 25 AND 29 " + // Condition pour la tranche d'âge de 4 à 9 ans
+            " GROUP BY r.id, EXTRACT(YEAR FROM a.drcpt)")
+    List<Object[]> yourMethodNameSix(@Param("regionId") Long regionId, @Param("year") int year);
+
+
+
+    //tests realisés par tranche dage 30-34
+    @Query(value = "SELECT " +
+            " SUM(CASE WHEN a.convertedResult = 0 THEN 1 ELSE 0 END) AS LL_count, " +
+            " SUM(CASE WHEN a.convertedResult < 1000 AND a.convertedResult > 0 THEN 1 ELSE 0 END) AS less_than_1000_count, " +
+            " SUM(CASE WHEN a.convertedResult >= 1000 THEN 1 ELSE 0 END) AS greater_than_or_equal_1000_count, " +
+            " SUM(CASE WHEN a.convertedResult = -1 THEN 1 ELSE 0 END) AS minus_1_count " +
+            " FROM Region r " +
+            " JOIN District d ON r.id = d.region.id " +
+            " JOIN Site s ON d.id = s.district.id " +
+            " JOIN Patient p ON s.id = p.site.id " +
+            " JOIN Analysis a ON p.id = a.patient.id " +
+            " WHERE r.id = :regionId AND " +
+            " EXTRACT(YEAR FROM a.drcpt) = :year AND " +
+            " FLOOR(EXTRACT(YEAR FROM CURRENT_DATE()) - EXTRACT(YEAR FROM p.birthDate)) BETWEEN 30 AND 34 " + // Condition pour la tranche d'âge de 4 à 9 ans
+            " GROUP BY r.id, EXTRACT(YEAR FROM a.drcpt)")
+    List<Object[]> yourMethodNameseven(@Param("regionId") Long regionId, @Param("year") int year);
+
+
+
+    //tests realisés par tranche dage 25-39
+    @Query(value = "SELECT " +
+            " SUM(CASE WHEN a.convertedResult = 0 THEN 1 ELSE 0 END) AS LL_count, " +
+            " SUM(CASE WHEN a.convertedResult < 1000 AND a.convertedResult > 0 THEN 1 ELSE 0 END) AS less_than_1000_count, " +
+            " SUM(CASE WHEN a.convertedResult >= 1000 THEN 1 ELSE 0 END) AS greater_than_or_equal_1000_count, " +
+            " SUM(CASE WHEN a.convertedResult = -1 THEN 1 ELSE 0 END) AS minus_1_count " +
+            " FROM Region r " +
+            " JOIN District d ON r.id = d.region.id " +
+            " JOIN Site s ON d.id = s.district.id " +
+            " JOIN Patient p ON s.id = p.site.id " +
+            " JOIN Analysis a ON p.id = a.patient.id " +
+            " WHERE r.id = :regionId AND " +
+            " EXTRACT(YEAR FROM a.drcpt) = :year AND " +
+            " FLOOR(EXTRACT(YEAR FROM CURRENT_DATE()) - EXTRACT(YEAR FROM p.birthDate)) BETWEEN 35 AND 39" + // Condition pour la tranche d'âge de 4 à 9 ans
+            " GROUP BY r.id, EXTRACT(YEAR FROM a.drcpt)")
+    List<Object[]> yourMethodNameheight(@Param("regionId") Long regionId, @Param("year") int year);
+
+
+
+    //tests realisés par tranche dage 40-44
+    @Query(value = "SELECT " +
+            " SUM(CASE WHEN a.convertedResult = 0 THEN 1 ELSE 0 END) AS LL_count, " +
+            " SUM(CASE WHEN a.convertedResult < 1000 AND a.convertedResult > 0 THEN 1 ELSE 0 END) AS less_than_1000_count, " +
+            " SUM(CASE WHEN a.convertedResult >= 1000 THEN 1 ELSE 0 END) AS greater_than_or_equal_1000_count, " +
+            " SUM(CASE WHEN a.convertedResult = -1 THEN 1 ELSE 0 END) AS minus_1_count " +
+            " FROM Region r " +
+            " JOIN District d ON r.id = d.region.id " +
+            " JOIN Site s ON d.id = s.district.id " +
+            " JOIN Patient p ON s.id = p.site.id " +
+            " JOIN Analysis a ON p.id = a.patient.id " +
+            " WHERE r.id = :regionId AND " +
+            " EXTRACT(YEAR FROM a.drcpt) = :year AND " +
+            " FLOOR(EXTRACT(YEAR FROM CURRENT_DATE()) - EXTRACT(YEAR FROM p.birthDate)) BETWEEN 40 AND 44 " + // Condition pour la tranche d'âge de 4 à 9 ans
+            " GROUP BY r.id, EXTRACT(YEAR FROM a.drcpt)")
+    List<Object[]> yourMethodNamenine(@Param("regionId") Long regionId, @Param("year") int year);
+
+
+
+    //tests realisés par tranche dage 45-49
+    @Query(value = "SELECT " +
+            " SUM(CASE WHEN a.convertedResult = 0 THEN 1 ELSE 0 END) AS LL_count, " +
+            " SUM(CASE WHEN a.convertedResult < 1000 AND a.convertedResult > 0 THEN 1 ELSE 0 END) AS less_than_1000_count, " +
+            " SUM(CASE WHEN a.convertedResult >= 1000 THEN 1 ELSE 0 END) AS greater_than_or_equal_1000_count, " +
+            " SUM(CASE WHEN a.convertedResult = -1 THEN 1 ELSE 0 END) AS minus_1_count " +
+            " FROM Region r " +
+            " JOIN District d ON r.id = d.region.id " +
+            " JOIN Site s ON d.id = s.district.id " +
+            " JOIN Patient p ON s.id = p.site.id " +
+            " JOIN Analysis a ON p.id = a.patient.id " +
+            " WHERE r.id = :regionId AND " +
+            " EXTRACT(YEAR FROM a.drcpt) = :year AND " +
+            " FLOOR(EXTRACT(YEAR FROM CURRENT_DATE()) - EXTRACT(YEAR FROM p.birthDate)) BETWEEN 45 AND 49 " + // Condition pour la tranche d'âge de 4 à 9 ans
+            " GROUP BY r.id, EXTRACT(YEAR FROM a.drcpt)")
+    List<Object[]> yourMethodNameten(@Param("regionId") Long regionId, @Param("year") int year);
+
+
+
+
+
+    //tests realisés par tranche dage >50
+
+    @Query(value = "SELECT " +
+            " SUM(CASE WHEN a.convertedResult = 0 THEN 1 ELSE 0 END) AS LL_count, " +
+            " SUM(CASE WHEN a.convertedResult < 1000 AND a.convertedResult > 0 THEN 1 ELSE 0 END) AS less_than_1000_count, " +
+            " SUM(CASE WHEN a.convertedResult >= 1000 THEN 1 ELSE 0 END) AS greater_than_or_equal_1000_count, " +
+            " SUM(CASE WHEN a.convertedResult = -1 THEN 1 ELSE 0 END) AS minus_1_count " +
+            " FROM Region r " +
+            " JOIN District d ON r.id = d.region.id " +
+            " JOIN Site s ON d.id = s.district.id " +
+            " JOIN Patient p ON s.id = p.site.id " +
+            " JOIN Analysis a ON p.id = a.patient.id " +
+            " WHERE r.id = :regionId AND " +
+            " EXTRACT(YEAR FROM a.drcpt) = :year AND " +
+            " FLOOR(EXTRACT(YEAR FROM CURRENT_DATE()) - EXTRACT(YEAR FROM p.birthDate)) > 50 " + // Condition pour la tranche d'âge de plus de 50 ans
+            " GROUP BY r.id, EXTRACT(YEAR FROM a.drcpt)")
+    List<Object[]> yourMethodNameeleven(@Param("regionId") Long regionId, @Param("year") int year);
+
+
+
+
+    //Tests realisés par tranche par district
+
+
+
+    //tests realisés par tranche dage <2
+    @Query(value = "SELECT " +
+            " SUM(CASE WHEN a.convertedResult = 0 THEN 1 ELSE 0 END) AS LL_count, " +
+            " SUM(CASE WHEN a.convertedResult < 1000 AND a.convertedResult > 0 THEN 1 ELSE 0 END) AS less_than_1000_count, " +
+            " SUM(CASE WHEN a.convertedResult >= 1000 THEN 1 ELSE 0 END) AS greater_than_or_equal_1000_count, " +
+            " SUM(CASE WHEN a.convertedResult = -1 THEN 1 ELSE 0 END) AS minus_1_count " +
+            " FROM Region r " +
+            " JOIN District d ON r.id = d.region.id " +
+            " JOIN Site s ON d.id = s.district.id " +
+            " JOIN Patient p ON s.id = p.site.id " +
+            " JOIN Analysis a ON p.id = a.patient.id " +
+            " WHERE d.id = :districtId AND " +
+            " EXTRACT(YEAR FROM a.drcpt) = :year AND " +
+            " FLOOR(EXTRACT(YEAR FROM CURRENT_DATE()) - EXTRACT(YEAR FROM p.birthDate)) < 1 " + // Nouvelle condition pour la tranche d'âge < 2 ans
+            " GROUP BY r.id, EXTRACT(YEAR FROM a.drcpt)")
+    List<Object[]> yourMethodDistrictName(@Param("districtId") Long districtId, @Param("year") int year);
+
+
+    //tests realisés par tranche dage 1-4
+    @Query(value = "SELECT " +
+            " SUM(CASE WHEN a.convertedResult = 0 THEN 1 ELSE 0 END) AS LL_count, " +
+            " SUM(CASE WHEN a.convertedResult < 1000 AND a.convertedResult > 0 THEN 1 ELSE 0 END) AS less_than_1000_count, " +
+            " SUM(CASE WHEN a.convertedResult >= 1000 THEN 1 ELSE 0 END) AS greater_than_or_equal_1000_count, " +
+            " SUM(CASE WHEN a.convertedResult = -1 THEN 1 ELSE 0 END) AS minus_1_count " +
+            " FROM Region r " +
+            " JOIN District d ON r.id = d.region.id " +
+            " JOIN Site s ON d.id = s.district.id " +
+            " JOIN Patient p ON s.id = p.site.id " +
+            " JOIN Analysis a ON p.id = a.patient.id " +
+            " WHERE d.id = :districtId AND " +
+            " EXTRACT(YEAR FROM a.drcpt) = :year AND " +
+            " FLOOR(EXTRACT(YEAR FROM CURRENT_DATE()) - EXTRACT(YEAR FROM p.birthDate)) BETWEEN 1 AND 4 " + // Condition pour la tranche d'âge de 4 à 9 ans
+            " GROUP BY d.id, EXTRACT(YEAR FROM a.drcpt)")
+    List<Object[]> yourMethodDistrictNameOne(@Param("districtId") Long districtId, @Param("year") int year);
+
+
+
+    //tests realisés par tranche dage 5-9
+    @Query(value = "SELECT " +
+            " SUM(CASE WHEN a.convertedResult = 0 THEN 1 ELSE 0 END) AS LL_count, " +
+            " SUM(CASE WHEN a.convertedResult < 1000 AND a.convertedResult > 0 THEN 1 ELSE 0 END) AS less_than_1000_count, " +
+            " SUM(CASE WHEN a.convertedResult >= 1000 THEN 1 ELSE 0 END) AS greater_than_or_equal_1000_count, " +
+            " SUM(CASE WHEN a.convertedResult = -1 THEN 1 ELSE 0 END) AS minus_1_count " +
+            " FROM Region r " +
+            " JOIN District d ON r.id = d.region.id " +
+            " JOIN Site s ON d.id = s.district.id " +
+            " JOIN Patient p ON s.id = p.site.id " +
+            " JOIN Analysis a ON p.id = a.patient.id " +
+            " WHERE d.id = :districtId AND " +
+            " EXTRACT(YEAR FROM a.drcpt) = :year AND " +
+            " FLOOR(EXTRACT(YEAR FROM CURRENT_DATE()) - EXTRACT(YEAR FROM p.birthDate)) BETWEEN 5 AND 9 " + // Condition pour la tranche d'âge de 4 à 9 ans
+            " GROUP BY d.id, EXTRACT(YEAR FROM a.drcpt)")
+    List<Object[]> yourMethodDistrictNametwo(@Param("districtId") Long districtId, @Param("year") int year);
+
+
+
+
+    //tests realisés par tranche dage 10-14
+    @Query(value = "SELECT " +
+            " SUM(CASE WHEN a.convertedResult = 0 THEN 1 ELSE 0 END) AS LL_count, " +
+            " SUM(CASE WHEN a.convertedResult < 1000 AND a.convertedResult > 0 THEN 1 ELSE 0 END) AS less_than_1000_count, " +
+            " SUM(CASE WHEN a.convertedResult >= 1000 THEN 1 ELSE 0 END) AS greater_than_or_equal_1000_count, " +
+            " SUM(CASE WHEN a.convertedResult = -1 THEN 1 ELSE 0 END) AS minus_1_count " +
+            " FROM Region r " +
+            " JOIN District d ON r.id = d.region.id " +
+            " JOIN Site s ON d.id = s.district.id " +
+            " JOIN Patient p ON s.id = p.site.id " +
+            " JOIN Analysis a ON p.id = a.patient.id " +
+            " WHERE d.id = :districtId AND " +
+            " EXTRACT(YEAR FROM a.drcpt) = :year AND " +
+            " FLOOR(EXTRACT(YEAR FROM CURRENT_DATE()) - EXTRACT(YEAR FROM p.birthDate)) BETWEEN 10 AND 14 " + // Condition pour la tranche d'âge de 4 à 9 ans
+            " GROUP BY d.id, EXTRACT(YEAR FROM a.drcpt)")
+    List<Object[]> yourMethodDistrictNamethree(@Param("districtId") Long districtId, @Param("year") int year);
+
+
+    //tests realisés par tranche dage 15-19
+    @Query(value = "SELECT " +
+            " SUM(CASE WHEN a.convertedResult = 0 THEN 1 ELSE 0 END) AS LL_count, " +
+            " SUM(CASE WHEN a.convertedResult < 1000 AND a.convertedResult > 0 THEN 1 ELSE 0 END) AS less_than_1000_count, " +
+            " SUM(CASE WHEN a.convertedResult >= 1000 THEN 1 ELSE 0 END) AS greater_than_or_equal_1000_count, " +
+            " SUM(CASE WHEN a.convertedResult = -1 THEN 1 ELSE 0 END) AS minus_1_count " +
+            " FROM Region r " +
+            " JOIN District d ON r.id = d.region.id " +
+            " JOIN Site s ON d.id = s.district.id " +
+            " JOIN Patient p ON s.id = p.site.id " +
+            " JOIN Analysis a ON p.id = a.patient.id " +
+            " WHERE d.id = :districtId AND " +
+            " EXTRACT(YEAR FROM a.drcpt) = :year AND " +
+            " FLOOR(EXTRACT(YEAR FROM CURRENT_DATE()) - EXTRACT(YEAR FROM p.birthDate)) BETWEEN 15 AND 19 " + // Condition pour la tranche d'âge de 4 à 9 ans
+            " GROUP BY d.id, EXTRACT(YEAR FROM a.drcpt)")
+    List<Object[]> yourMethodDistrictNamefour(@Param("districtId") Long districtId, @Param("year") int year);
+
+
+
+
+    //tests realisés par tranche dage 20-24
+    @Query(value = "SELECT " +
+            " SUM(CASE WHEN a.convertedResult = 0 THEN 1 ELSE 0 END) AS LL_count, " +
+            " SUM(CASE WHEN a.convertedResult < 1000 AND a.convertedResult > 0 THEN 1 ELSE 0 END) AS less_than_1000_count, " +
+            " SUM(CASE WHEN a.convertedResult >= 1000 THEN 1 ELSE 0 END) AS greater_than_or_equal_1000_count, " +
+            " SUM(CASE WHEN a.convertedResult = -1 THEN 1 ELSE 0 END) AS minus_1_count " +
+            " FROM Region r " +
+            " JOIN District d ON r.id = d.region.id " +
+            " JOIN Site s ON d.id = s.district.id " +
+            " JOIN Patient p ON s.id = p.site.id " +
+            " JOIN Analysis a ON p.id = a.patient.id " +
+            " WHERE d.id = :districtId AND " +
+            " EXTRACT(YEAR FROM a.drcpt) = :year AND " +
+            " FLOOR(EXTRACT(YEAR FROM CURRENT_DATE()) - EXTRACT(YEAR FROM p.birthDate)) BETWEEN 20 AND 24 " + // Condition pour la tranche d'âge de 4 à 9 ans
+            " GROUP BY d.id, EXTRACT(YEAR FROM a.drcpt)")
+    List<Object[]> yourMethodDistrictNameFive(@Param("districtId") Long districtId, @Param("year") int year);
+
+
+
+
+    //tests realisés par tranche dage 25-29
+    @Query(value = "SELECT " +
+            " SUM(CASE WHEN a.convertedResult = 0 THEN 1 ELSE 0 END) AS LL_count, " +
+            " SUM(CASE WHEN a.convertedResult < 1000 AND a.convertedResult > 0 THEN 1 ELSE 0 END) AS less_than_1000_count, " +
+            " SUM(CASE WHEN a.convertedResult >= 1000 THEN 1 ELSE 0 END) AS greater_than_or_equal_1000_count, " +
+            " SUM(CASE WHEN a.convertedResult = -1 THEN 1 ELSE 0 END) AS minus_1_count " +
+            " FROM Region r " +
+            " JOIN District d ON r.id = d.region.id " +
+            " JOIN Site s ON d.id = s.district.id " +
+            " JOIN Patient p ON s.id = p.site.id " +
+            " JOIN Analysis a ON p.id = a.patient.id " +
+            " WHERE d.id = :districtId AND " +
+            " EXTRACT(YEAR FROM a.drcpt) = :year AND " +
+            " FLOOR(EXTRACT(YEAR FROM CURRENT_DATE()) - EXTRACT(YEAR FROM p.birthDate)) BETWEEN 25 AND 29 " + // Condition pour la tranche d'âge de 4 à 9 ans
+            " GROUP BY d.id, EXTRACT(YEAR FROM a.drcpt)")
+    List<Object[]> yourMethodDistrictNameSix(@Param("districtId") Long districtId, @Param("year") int year);
+
+
+
+    //tests realisés par tranche dage 30-34
+    @Query(value = "SELECT " +
+            " SUM(CASE WHEN a.convertedResult = 0 THEN 1 ELSE 0 END) AS LL_count, " +
+            " SUM(CASE WHEN a.convertedResult < 1000 AND a.convertedResult > 0 THEN 1 ELSE 0 END) AS less_than_1000_count, " +
+            " SUM(CASE WHEN a.convertedResult >= 1000 THEN 1 ELSE 0 END) AS greater_than_or_equal_1000_count, " +
+            " SUM(CASE WHEN a.convertedResult = -1 THEN 1 ELSE 0 END) AS minus_1_count " +
+            " FROM Region r " +
+            " JOIN District d ON r.id = d.region.id " +
+            " JOIN Site s ON d.id = s.district.id " +
+            " JOIN Patient p ON s.id = p.site.id " +
+            " JOIN Analysis a ON p.id = a.patient.id " +
+            " WHERE d.id = :districtId AND " +
+            " EXTRACT(YEAR FROM a.drcpt) = :year AND " +
+            " FLOOR(EXTRACT(YEAR FROM CURRENT_DATE()) - EXTRACT(YEAR FROM p.birthDate)) BETWEEN 30 AND 34 " + // Condition pour la tranche d'âge de 4 à 9 ans
+            " GROUP BY d.id, EXTRACT(YEAR FROM a.drcpt)")
+    List<Object[]> yourMethodDistrictNameseven(@Param("districtId") Long districtId, @Param("year") int year);
+
+
+
+    //tests realisés par tranche dage 25-39
+    @Query(value = "SELECT " +
+            " SUM(CASE WHEN a.convertedResult = 0 THEN 1 ELSE 0 END) AS LL_count, " +
+            " SUM(CASE WHEN a.convertedResult < 1000 AND a.convertedResult > 0 THEN 1 ELSE 0 END) AS less_than_1000_count, " +
+            " SUM(CASE WHEN a.convertedResult >= 1000 THEN 1 ELSE 0 END) AS greater_than_or_equal_1000_count, " +
+            " SUM(CASE WHEN a.convertedResult = -1 THEN 1 ELSE 0 END) AS minus_1_count " +
+            " FROM Region r " +
+            " JOIN District d ON r.id = d.region.id " +
+            " JOIN Site s ON d.id = s.district.id " +
+            " JOIN Patient p ON s.id = p.site.id " +
+            " JOIN Analysis a ON p.id = a.patient.id " +
+            " WHERE d.id = :districtId AND " +
+            " EXTRACT(YEAR FROM a.drcpt) = :year AND " +
+            " FLOOR(EXTRACT(YEAR FROM CURRENT_DATE()) - EXTRACT(YEAR FROM p.birthDate)) BETWEEN 35 AND 39" + // Condition pour la tranche d'âge de 4 à 9 ans
+            " GROUP BY d.id, EXTRACT(YEAR FROM a.drcpt)")
+    List<Object[]> yourMethodDistrictNameheight(@Param("districtId") Long districtId, @Param("year") int year);
+
+
+
+    //tests realisés par tranche dage 40-44
+    @Query(value = "SELECT " +
+            " SUM(CASE WHEN a.convertedResult = 0 THEN 1 ELSE 0 END) AS LL_count, " +
+            " SUM(CASE WHEN a.convertedResult < 1000 AND a.convertedResult > 0 THEN 1 ELSE 0 END) AS less_than_1000_count, " +
+            " SUM(CASE WHEN a.convertedResult >= 1000 THEN 1 ELSE 0 END) AS greater_than_or_equal_1000_count, " +
+            " SUM(CASE WHEN a.convertedResult = -1 THEN 1 ELSE 0 END) AS minus_1_count " +
+            " FROM Region r " +
+            " JOIN District d ON r.id = d.region.id " +
+            " JOIN Site s ON d.id = s.district.id " +
+            " JOIN Patient p ON s.id = p.site.id " +
+            " JOIN Analysis a ON p.id = a.patient.id " +
+            " WHERE d.id = :districtId AND " +
+            " EXTRACT(YEAR FROM a.drcpt) = :year AND " +
+            " FLOOR(EXTRACT(YEAR FROM CURRENT_DATE()) - EXTRACT(YEAR FROM p.birthDate)) BETWEEN 40 AND 44 " + // Condition pour la tranche d'âge de 4 à 9 ans
+            " GROUP BY d.id, EXTRACT(YEAR FROM a.drcpt)")
+    List<Object[]> yourMethodDistrictNamenine(@Param("districtId") Long districtId, @Param("year") int year);
+
+
+
+    //tests realisés par tranche dage 45-49
+    @Query(value = "SELECT " +
+            " SUM(CASE WHEN a.convertedResult = 0 THEN 1 ELSE 0 END) AS LL_count, " +
+            " SUM(CASE WHEN a.convertedResult < 1000 AND a.convertedResult > 0 THEN 1 ELSE 0 END) AS less_than_1000_count, " +
+            " SUM(CASE WHEN a.convertedResult >= 1000 THEN 1 ELSE 0 END) AS greater_than_or_equal_1000_count, " +
+            " SUM(CASE WHEN a.convertedResult = -1 THEN 1 ELSE 0 END) AS minus_1_count " +
+            " FROM Region r " +
+            " JOIN District d ON r.id = d.region.id " +
+            " JOIN Site s ON d.id = s.district.id " +
+            " JOIN Patient p ON s.id = p.site.id " +
+            " JOIN Analysis a ON p.id = a.patient.id " +
+            " WHERE d.id = :districtId AND " +
+            " EXTRACT(YEAR FROM a.drcpt) = :year AND " +
+            " FLOOR(EXTRACT(YEAR FROM CURRENT_DATE()) - EXTRACT(YEAR FROM p.birthDate)) BETWEEN 45 AND 49 " + // Condition pour la tranche d'âge de 4 à 9 ans
+            " GROUP BY d.id, EXTRACT(YEAR FROM a.drcpt)")
+    List<Object[]> yourMethodDistrictNameten(@Param("districtId") Long districtId, @Param("year") int year);
+
+
+    //tests realisés par tranche dage >50
+
+    @Query(value = "SELECT " +
+            " SUM(CASE WHEN a.convertedResult = 0 THEN 1 ELSE 0 END) AS LL_count, " +
+            " SUM(CASE WHEN a.convertedResult < 1000 AND a.convertedResult > 0 THEN 1 ELSE 0 END) AS less_than_1000_count, " +
+            " SUM(CASE WHEN a.convertedResult >= 1000 THEN 1 ELSE 0 END) AS greater_than_or_equal_1000_count, " +
+            " SUM(CASE WHEN a.convertedResult = -1 THEN 1 ELSE 0 END) AS minus_1_count " +
+            " FROM Region r " +
+            " JOIN District d ON r.id = d.region.id " +
+            " JOIN Site s ON d.id = s.district.id " +
+            " JOIN Patient p ON s.id = p.site.id " +
+            " JOIN Analysis a ON p.id = a.patient.id " +
+            " WHERE d.id = :districtId AND " +
+            " EXTRACT(YEAR FROM a.drcpt) = :year AND " +
+            " FLOOR(EXTRACT(YEAR FROM CURRENT_DATE()) - EXTRACT(YEAR FROM p.birthDate)) > 50 " + // Condition pour la tranche d'âge de plus de 50 ans
+            " GROUP BY d.id, EXTRACT(YEAR FROM a.drcpt)")
+    List<Object[]> yourMethodDistrictNameeleven(@Param("districtId") Long districtId, @Param("year") int year);
 
 
 
 
 
 
+
+
+
+
+
+
+
+
+
+    //Tests realisés par tranche par site
+
+
+
+    //tests realisés par tranche dage <2
+    @Query(value = "SELECT " +
+            " SUM(CASE WHEN a.convertedResult = 0 THEN 1 ELSE 0 END) AS LL_count, " +
+            " SUM(CASE WHEN a.convertedResult < 1000 AND a.convertedResult > 0 THEN 1 ELSE 0 END) AS less_than_1000_count, " +
+            " SUM(CASE WHEN a.convertedResult >= 1000 THEN 1 ELSE 0 END) AS greater_than_or_equal_1000_count, " +
+            " SUM(CASE WHEN a.convertedResult = -1 THEN 1 ELSE 0 END) AS minus_1_count " +
+            " FROM Region r " +
+            " JOIN District d ON r.id = d.region.id " +
+            " JOIN Site s ON d.id = s.district.id " +
+            " JOIN Patient p ON s.id = p.site.id " +
+            " JOIN Analysis a ON p.id = a.patient.id " +
+            " WHERE s.id = :siteId AND " +
+            " EXTRACT(YEAR FROM a.drcpt) = :year AND " +
+            " FLOOR(EXTRACT(YEAR FROM CURRENT_DATE()) - EXTRACT(YEAR FROM p.birthDate)) < 1 " + // Nouvelle condition pour la tranche d'âge < 2 ans
+            " GROUP BY s.id, EXTRACT(YEAR FROM a.drcpt)")
+    List<Object[]> yourMethodSiteName(@Param("siteId") Long siteId, @Param("year") int year);
+
+
+    //tests realisés par tranche dage 1-4
+    @Query(value = "SELECT " +
+            " SUM(CASE WHEN a.convertedResult = 0 THEN 1 ELSE 0 END) AS LL_count, " +
+            " SUM(CASE WHEN a.convertedResult < 1000 AND a.convertedResult > 0 THEN 1 ELSE 0 END) AS less_than_1000_count, " +
+            " SUM(CASE WHEN a.convertedResult >= 1000 THEN 1 ELSE 0 END) AS greater_than_or_equal_1000_count, " +
+            " SUM(CASE WHEN a.convertedResult = -1 THEN 1 ELSE 0 END) AS minus_1_count " +
+            " FROM Region r " +
+            " JOIN District d ON r.id = d.region.id " +
+            " JOIN Site s ON d.id = s.district.id " +
+            " JOIN Patient p ON s.id = p.site.id " +
+            " JOIN Analysis a ON p.id = a.patient.id " +
+            " WHERE s.id = :siteId AND " +
+            " EXTRACT(YEAR FROM a.drcpt) = :year AND " +
+            " FLOOR(EXTRACT(YEAR FROM CURRENT_DATE()) - EXTRACT(YEAR FROM p.birthDate)) BETWEEN 1 AND 4 " + // Condition pour la tranche d'âge de 4 à 9 ans
+            " GROUP BY s.id, EXTRACT(YEAR FROM a.drcpt)")
+    List<Object[]> yourMethodSiteNameOne(@Param("siteId") Long siteId, @Param("year") int year);
+
+
+
+    //tests realisés par tranche dage 5-9
+    @Query(value = "SELECT " +
+            " SUM(CASE WHEN a.convertedResult = 0 THEN 1 ELSE 0 END) AS LL_count, " +
+            " SUM(CASE WHEN a.convertedResult < 1000 AND a.convertedResult > 0 THEN 1 ELSE 0 END) AS less_than_1000_count, " +
+            " SUM(CASE WHEN a.convertedResult >= 1000 THEN 1 ELSE 0 END) AS greater_than_or_equal_1000_count, " +
+            " SUM(CASE WHEN a.convertedResult = -1 THEN 1 ELSE 0 END) AS minus_1_count " +
+            " FROM Region r " +
+            " JOIN District d ON r.id = d.region.id " +
+            " JOIN Site s ON d.id = s.district.id " +
+            " JOIN Patient p ON s.id = p.site.id " +
+            " JOIN Analysis a ON p.id = a.patient.id " +
+            " WHERE s.id = :siteId AND " +
+            " EXTRACT(YEAR FROM a.drcpt) = :year AND " +
+            " FLOOR(EXTRACT(YEAR FROM CURRENT_DATE()) - EXTRACT(YEAR FROM p.birthDate)) BETWEEN 5 AND 9 " + // Condition pour la tranche d'âge de 4 à 9 ans
+            " GROUP BY s.id, EXTRACT(YEAR FROM a.drcpt)")
+    List<Object[]> yourMethodSiteNametwo(@Param("siteId") Long siteId, @Param("year") int year);
+
+
+
+
+    //tests realisés par tranche dage 10-14
+    @Query(value = "SELECT " +
+            " SUM(CASE WHEN a.convertedResult = 0 THEN 1 ELSE 0 END) AS LL_count, " +
+            " SUM(CASE WHEN a.convertedResult < 1000 AND a.convertedResult > 0 THEN 1 ELSE 0 END) AS less_than_1000_count, " +
+            " SUM(CASE WHEN a.convertedResult >= 1000 THEN 1 ELSE 0 END) AS greater_than_or_equal_1000_count, " +
+            " SUM(CASE WHEN a.convertedResult = -1 THEN 1 ELSE 0 END) AS minus_1_count " +
+            " FROM Region r " +
+            " JOIN District d ON r.id = d.region.id " +
+            " JOIN Site s ON d.id = s.district.id " +
+            " JOIN Patient p ON s.id = p.site.id " +
+            " JOIN Analysis a ON p.id = a.patient.id " +
+            " WHERE s.id = :siteId AND " +
+            " EXTRACT(YEAR FROM a.drcpt) = :year AND " +
+            " FLOOR(EXTRACT(YEAR FROM CURRENT_DATE()) - EXTRACT(YEAR FROM p.birthDate)) BETWEEN 10 AND 14 " + // Condition pour la tranche d'âge de 4 à 9 ans
+            " GROUP BY s.id, EXTRACT(YEAR FROM a.drcpt)")
+    List<Object[]> yourMethodSiteNamethree(@Param("siteId") Long siteId, @Param("year") int year);
+
+
+    //tests realisés par tranche dage 15-19
+    @Query(value = "SELECT " +
+            " SUM(CASE WHEN a.convertedResult = 0 THEN 1 ELSE 0 END) AS LL_count, " +
+            " SUM(CASE WHEN a.convertedResult < 1000 AND a.convertedResult > 0 THEN 1 ELSE 0 END) AS less_than_1000_count, " +
+            " SUM(CASE WHEN a.convertedResult >= 1000 THEN 1 ELSE 0 END) AS greater_than_or_equal_1000_count, " +
+            " SUM(CASE WHEN a.convertedResult = -1 THEN 1 ELSE 0 END) AS minus_1_count " +
+            " FROM Region r " +
+            " JOIN District d ON r.id = d.region.id " +
+            " JOIN Site s ON d.id = s.district.id " +
+            " JOIN Patient p ON s.id = p.site.id " +
+            " JOIN Analysis a ON p.id = a.patient.id " +
+            " WHERE s.id = :siteId AND " +
+            " EXTRACT(YEAR FROM a.drcpt) = :year AND " +
+            " FLOOR(EXTRACT(YEAR FROM CURRENT_DATE()) - EXTRACT(YEAR FROM p.birthDate)) BETWEEN 15 AND 19 " + // Condition pour la tranche d'âge de 4 à 9 ans
+            " GROUP BY s.id, EXTRACT(YEAR FROM a.drcpt)")
+    List<Object[]> yourMethodSiteNamefour(@Param("siteId") Long siteId, @Param("year") int year);
+
+
+
+
+    //tests realisés par tranche dage 20-24
+    @Query(value = "SELECT " +
+            " SUM(CASE WHEN a.convertedResult = 0 THEN 1 ELSE 0 END) AS LL_count, " +
+            " SUM(CASE WHEN a.convertedResult < 1000 AND a.convertedResult > 0 THEN 1 ELSE 0 END) AS less_than_1000_count, " +
+            " SUM(CASE WHEN a.convertedResult >= 1000 THEN 1 ELSE 0 END) AS greater_than_or_equal_1000_count, " +
+            " SUM(CASE WHEN a.convertedResult = -1 THEN 1 ELSE 0 END) AS minus_1_count " +
+            " FROM Region r " +
+            " JOIN District d ON r.id = d.region.id " +
+            " JOIN Site s ON d.id = s.district.id " +
+            " JOIN Patient p ON s.id = p.site.id " +
+            " JOIN Analysis a ON p.id = a.patient.id " +
+            " WHERE s.id = :siteId AND " +
+            " EXTRACT(YEAR FROM a.drcpt) = :year AND " +
+            " FLOOR(EXTRACT(YEAR FROM CURRENT_DATE()) - EXTRACT(YEAR FROM p.birthDate)) BETWEEN 20 AND 24 " + // Condition pour la tranche d'âge de 4 à 9 ans
+            " GROUP BY s.id, EXTRACT(YEAR FROM a.drcpt)")
+    List<Object[]> yourMethodSiteNameFive(@Param("siteId") Long siteId, @Param("year") int year);
+
+
+
+
+    //tests realisés par tranche dage 25-29
+    @Query(value = "SELECT " +
+            " SUM(CASE WHEN a.convertedResult = 0 THEN 1 ELSE 0 END) AS LL_count, " +
+            " SUM(CASE WHEN a.convertedResult < 1000 AND a.convertedResult > 0 THEN 1 ELSE 0 END) AS less_than_1000_count, " +
+            " SUM(CASE WHEN a.convertedResult >= 1000 THEN 1 ELSE 0 END) AS greater_than_or_equal_1000_count, " +
+            " SUM(CASE WHEN a.convertedResult = -1 THEN 1 ELSE 0 END) AS minus_1_count " +
+            " FROM Region r " +
+            " JOIN District d ON r.id = d.region.id " +
+            " JOIN Site s ON d.id = s.district.id " +
+            " JOIN Patient p ON s.id = p.site.id " +
+            " JOIN Analysis a ON p.id = a.patient.id " +
+            " WHERE s.id = :siteId AND " +
+            " EXTRACT(YEAR FROM a.drcpt) = :year AND " +
+            " FLOOR(EXTRACT(YEAR FROM CURRENT_DATE()) - EXTRACT(YEAR FROM p.birthDate)) BETWEEN 25 AND 29 " + // Condition pour la tranche d'âge de 4 à 9 ans
+            " GROUP BY s.id, EXTRACT(YEAR FROM a.drcpt)")
+    List<Object[]> yourMethodSiteNameSix(@Param("siteId") Long siteId, @Param("year") int year);
+
+
+
+    //tests realisés par tranche dage 30-34
+    @Query(value = "SELECT " +
+            " SUM(CASE WHEN a.convertedResult = 0 THEN 1 ELSE 0 END) AS LL_count, " +
+            " SUM(CASE WHEN a.convertedResult < 1000 AND a.convertedResult > 0 THEN 1 ELSE 0 END) AS less_than_1000_count, " +
+            " SUM(CASE WHEN a.convertedResult >= 1000 THEN 1 ELSE 0 END) AS greater_than_or_equal_1000_count, " +
+            " SUM(CASE WHEN a.convertedResult = -1 THEN 1 ELSE 0 END) AS minus_1_count " +
+            " FROM Region r " +
+            " JOIN District d ON r.id = d.region.id " +
+            " JOIN Site s ON d.id = s.district.id " +
+            " JOIN Patient p ON s.id = p.site.id " +
+            " JOIN Analysis a ON p.id = a.patient.id " +
+            " WHERE s.id = :siteId AND " +
+            " EXTRACT(YEAR FROM a.drcpt) = :year AND " +
+            " FLOOR(EXTRACT(YEAR FROM CURRENT_DATE()) - EXTRACT(YEAR FROM p.birthDate)) BETWEEN 30 AND 34 " + // Condition pour la tranche d'âge de 4 à 9 ans
+            " GROUP BY s.id, EXTRACT(YEAR FROM a.drcpt)")
+    List<Object[]> yourMethodSiteNameseven(@Param("siteId") Long siteId, @Param("year") int year);
+
+
+
+    //tests realisés par tranche dage 25-39
+    @Query(value = "SELECT " +
+            " SUM(CASE WHEN a.convertedResult = 0 THEN 1 ELSE 0 END) AS LL_count, " +
+            " SUM(CASE WHEN a.convertedResult < 1000 AND a.convertedResult > 0 THEN 1 ELSE 0 END) AS less_than_1000_count, " +
+            " SUM(CASE WHEN a.convertedResult >= 1000 THEN 1 ELSE 0 END) AS greater_than_or_equal_1000_count, " +
+            " SUM(CASE WHEN a.convertedResult = -1 THEN 1 ELSE 0 END) AS minus_1_count " +
+            " FROM Region r " +
+            " JOIN District d ON r.id = d.region.id " +
+            " JOIN Site s ON d.id = s.district.id " +
+            " JOIN Patient p ON s.id = p.site.id " +
+            " JOIN Analysis a ON p.id = a.patient.id " +
+            " WHERE s.id = :siteId AND " +
+            " EXTRACT(YEAR FROM a.drcpt) = :year AND " +
+            " FLOOR(EXTRACT(YEAR FROM CURRENT_DATE()) - EXTRACT(YEAR FROM p.birthDate)) BETWEEN 35 AND 39" + // Condition pour la tranche d'âge de 4 à 9 ans
+            " GROUP BY s.id, EXTRACT(YEAR FROM a.drcpt)")
+    List<Object[]> yourMethodSiteNameheight(@Param("siteId") Long siteId, @Param("year") int year);
+
+
+
+    //tests realisés par tranche dage 40-44
+    @Query(value = "SELECT " +
+            " SUM(CASE WHEN a.convertedResult = 0 THEN 1 ELSE 0 END) AS LL_count, " +
+            " SUM(CASE WHEN a.convertedResult < 1000 AND a.convertedResult > 0 THEN 1 ELSE 0 END) AS less_than_1000_count, " +
+            " SUM(CASE WHEN a.convertedResult >= 1000 THEN 1 ELSE 0 END) AS greater_than_or_equal_1000_count, " +
+            " SUM(CASE WHEN a.convertedResult = -1 THEN 1 ELSE 0 END) AS minus_1_count " +
+            " FROM Region r " +
+            " JOIN District d ON r.id = d.region.id " +
+            " JOIN Site s ON d.id = s.district.id " +
+            " JOIN Patient p ON s.id = p.site.id " +
+            " JOIN Analysis a ON p.id = a.patient.id " +
+            " WHERE s.id = :siteId AND " +
+            " EXTRACT(YEAR FROM a.drcpt) = :year AND " +
+            " FLOOR(EXTRACT(YEAR FROM CURRENT_DATE()) - EXTRACT(YEAR FROM p.birthDate)) BETWEEN 40 AND 44 " + // Condition pour la tranche d'âge de 4 à 9 ans
+            " GROUP BY s.id, EXTRACT(YEAR FROM a.drcpt)")
+    List<Object[]> yourMethodSiteNamenine(@Param("siteId") Long siteId, @Param("year") int year);
+
+
+
+    //tests realisés par tranche dage 45-49
+    @Query(value = "SELECT " +
+            " SUM(CASE WHEN a.convertedResult = 0 THEN 1 ELSE 0 END) AS LL_count, " +
+            " SUM(CASE WHEN a.convertedResult < 1000 AND a.convertedResult > 0 THEN 1 ELSE 0 END) AS less_than_1000_count, " +
+            " SUM(CASE WHEN a.convertedResult >= 1000 THEN 1 ELSE 0 END) AS greater_than_or_equal_1000_count, " +
+            " SUM(CASE WHEN a.convertedResult = -1 THEN 1 ELSE 0 END) AS minus_1_count " +
+            " FROM Region r " +
+            " JOIN District d ON r.id = d.region.id " +
+            " JOIN Site s ON d.id = s.district.id " +
+            " JOIN Patient p ON s.id = p.site.id " +
+            " JOIN Analysis a ON p.id = a.patient.id " +
+            " WHERE s.id = :siteId AND " +
+            " EXTRACT(YEAR FROM a.drcpt) = :year AND " +
+            " FLOOR(EXTRACT(YEAR FROM CURRENT_DATE()) - EXTRACT(YEAR FROM p.birthDate)) BETWEEN 45 AND 49 " + // Condition pour la tranche d'âge de 4 à 9 ans
+            " GROUP BY s.id, EXTRACT(YEAR FROM a.drcpt)")
+    List<Object[]> yourMethodSiteNameten(@Param("siteId") Long siteId, @Param("year") int year);
+
+
+    //tests realisés par tranche dage >50
+
+    @Query(value = "SELECT " +
+            " SUM(CASE WHEN a.convertedResult = 0 THEN 1 ELSE 0 END) AS LL_count, " +
+            " SUM(CASE WHEN a.convertedResult < 1000 AND a.convertedResult > 0 THEN 1 ELSE 0 END) AS less_than_1000_count, " +
+            " SUM(CASE WHEN a.convertedResult >= 1000 THEN 1 ELSE 0 END) AS greater_than_or_equal_1000_count, " +
+            " SUM(CASE WHEN a.convertedResult = -1 THEN 1 ELSE 0 END) AS minus_1_count " +
+            " FROM Region r " +
+            " JOIN District d ON r.id = d.region.id " +
+            " JOIN Site s ON d.id = s.district.id " +
+            " JOIN Patient p ON s.id = p.site.id " +
+            " JOIN Analysis a ON p.id = a.patient.id " +
+            " WHERE s.id = :siteId AND " +
+            " EXTRACT(YEAR FROM a.drcpt) = :year AND " +
+            " FLOOR(EXTRACT(YEAR FROM CURRENT_DATE()) - EXTRACT(YEAR FROM p.birthDate)) > 50 " + // Condition pour la tranche d'âge de plus de 50 ans
+            " GROUP BY s.id, EXTRACT(YEAR FROM a.drcpt)")
+    List<Object[]> yourMethodSiteNameeleven(@Param("siteId") Long siteId, @Param("year") int year);
+
+
+
+
+
+    // tests realisés par tranche d age cette fois pour toute les regions
+
+
+       @Query(value = "SELECT " +
+               "'touteregion' AS regionName, " +
+            "SUM(CASE WHEN a.convertedResult = 0 THEN 1 ELSE 0 END) AS LL_count, " +
+            "SUM(CASE WHEN a.convertedResult < 1000 AND a.convertedResult > 0 THEN 1 ELSE 0 END) AS less_than_1000_count, " +
+            "SUM(CASE WHEN a.convertedResult >= 1000 THEN 1 ELSE 0 END) AS greater_than_or_equal_1000_count, " +
+            "SUM(CASE WHEN a.convertedResult = -1 THEN 1 ELSE 0 END) AS minus_1_count " +
+            "FROM Region r " +
+            "JOIN District d ON r.id = d.region.id " +
+            "JOIN Site s ON d.id = s.district.id " +
+            "JOIN Patient p ON s.id = p.site.id " +
+            "JOIN Analysis a ON p.id = a.patient.id " +
+            "WHERE r.id IN (SELECT r.id FROM Region r) AND " +
+            "EXTRACT(YEAR FROM a.drcpt) = :year AND " +
+            "FLOOR(EXTRACT(YEAR FROM CURRENT_DATE()) - EXTRACT(YEAR FROM p.birthDate)) < 1 "  // Nouvelle condition pour la tranche d'âge < 2 ans
+           )
+          List<Object[]> MethodRegion(@Param("year") int year);
+
+
+
+
+    //tests realisés par tranche dage 1-4
+
+    @Query(value = "SELECT " +
+            "'touteregion' AS regionName, " +
+            "SUM(CASE WHEN a.convertedResult = 0 THEN 1 ELSE 0 END) AS LL_count, " +
+            "SUM(CASE WHEN a.convertedResult < 1000 AND a.convertedResult > 0 THEN 1 ELSE 0 END) AS less_than_1000_count, " +
+            "SUM(CASE WHEN a.convertedResult >= 1000 THEN 1 ELSE 0 END) AS greater_than_or_equal_1000_count, " +
+            "SUM(CASE WHEN a.convertedResult = -1 THEN 1 ELSE 0 END) AS minus_1_count " +
+            "FROM Region r " +
+            "JOIN District d ON r.id = d.region.id " +
+            "JOIN Site s ON d.id = s.district.id " +
+            "JOIN Patient p ON s.id = p.site.id " +
+            "JOIN Analysis a ON p.id = a.patient.id " +
+            "WHERE r.id IN (SELECT r.id FROM Region r) AND " +
+            "EXTRACT(YEAR FROM a.drcpt) = :year AND " +
+            " FLOOR(EXTRACT(YEAR FROM CURRENT_DATE()) - EXTRACT(YEAR FROM p.birthDate)) BETWEEN 1 AND 4 " // Nouvelle condition pour la tranche d'âge < 2 ans
+           )
+    List<Object[]> MethodRegionOne(@Param("year") int year);
+
+
+
+    //tests realisés par tranche dage 5-9
+
+    @Query(value = "SELECT " +
+            "'touteregion' AS regionName, " +
+            "SUM(CASE WHEN a.convertedResult = 0 THEN 1 ELSE 0 END) AS LL_count, " +
+            "SUM(CASE WHEN a.convertedResult < 1000 AND a.convertedResult > 0 THEN 1 ELSE 0 END) AS less_than_1000_count, " +
+            "SUM(CASE WHEN a.convertedResult >= 1000 THEN 1 ELSE 0 END) AS greater_than_or_equal_1000_count, " +
+            "SUM(CASE WHEN a.convertedResult = -1 THEN 1 ELSE 0 END) AS minus_1_count " +
+            "FROM Region r " +
+            "JOIN District d ON r.id = d.region.id " +
+            "JOIN Site s ON d.id = s.district.id " +
+            "JOIN Patient p ON s.id = p.site.id " +
+            "JOIN Analysis a ON p.id = a.patient.id " +
+            "WHERE r.id IN (SELECT r.id FROM Region r) AND " +
+            "EXTRACT(YEAR FROM a.drcpt) = :year AND " +
+            " FLOOR(EXTRACT(YEAR FROM CURRENT_DATE()) - EXTRACT(YEAR FROM p.birthDate)) BETWEEN 5 AND 9 " // Nouvelle condition pour la tranche d'âge < 2 ans
+           )
+      List<Object[]> MethodRegionThree(@Param("year") int year);
+
+
+
+    //tests realisés par tranche dage 10-14
+
+    @Query(value = "SELECT " +
+            "'touteregion' AS regionName, " +
+            "SUM(CASE WHEN a.convertedResult = 0 THEN 1 ELSE 0 END) AS LL_count, " +
+            "SUM(CASE WHEN a.convertedResult < 1000 AND a.convertedResult > 0 THEN 1 ELSE 0 END) AS less_than_1000_count, " +
+            "SUM(CASE WHEN a.convertedResult >= 1000 THEN 1 ELSE 0 END) AS greater_than_or_equal_1000_count, " +
+            "SUM(CASE WHEN a.convertedResult = -1 THEN 1 ELSE 0 END) AS minus_1_count " +
+            "FROM Region r " +
+            "JOIN District d ON r.id = d.region.id " +
+            "JOIN Site s ON d.id = s.district.id " +
+            "JOIN Patient p ON s.id = p.site.id " +
+            "JOIN Analysis a ON p.id = a.patient.id " +
+            "WHERE r.id IN (SELECT r.id FROM Region r) AND " +
+            "EXTRACT(YEAR FROM a.drcpt) = :year AND " +
+            " FLOOR(EXTRACT(YEAR FROM CURRENT_DATE()) - EXTRACT(YEAR FROM p.birthDate)) BETWEEN 10 AND 14 " // Nouvelle condition pour la tranche d'âge < 2 ans
+         )
+    List<Object[]> MethodRegionfour(@Param("year") int year);
+
+
+
+
+    //tests realisés par tranche dage 10-14
+
+    @Query(value = "SELECT " +
+            "'touteregion' AS regionName, " +
+            "SUM(CASE WHEN a.convertedResult = 0 THEN 1 ELSE 0 END) AS LL_count, " +
+            "SUM(CASE WHEN a.convertedResult < 1000 AND a.convertedResult > 0 THEN 1 ELSE 0 END) AS less_than_1000_count, " +
+            "SUM(CASE WHEN a.convertedResult >= 1000 THEN 1 ELSE 0 END) AS greater_than_or_equal_1000_count, " +
+            "SUM(CASE WHEN a.convertedResult = -1 THEN 1 ELSE 0 END) AS minus_1_count " +
+            "FROM Region r " +
+            "JOIN District d ON r.id = d.region.id " +
+            "JOIN Site s ON d.id = s.district.id " +
+            "JOIN Patient p ON s.id = p.site.id " +
+            "JOIN Analysis a ON p.id = a.patient.id " +
+            "WHERE r.id IN (SELECT r.id FROM Region r) AND " +
+            "EXTRACT(YEAR FROM a.drcpt) = :year AND " +
+            " FLOOR(EXTRACT(YEAR FROM CURRENT_DATE()) - EXTRACT(YEAR FROM p.birthDate)) BETWEEN 15 AND 19 " // Nouvelle condition pour la tranche d'âge < 2 ans
+        )
+    List<Object[]> MethodRegionfive(@Param("year") int year);
+
+
+
+
+
+    //tests realisés par tranche dage 20-24
+
+    @Query(value = "SELECT " +
+            "'touteregion' AS regionName, " +
+            "SUM(CASE WHEN a.convertedResult = 0 THEN 1 ELSE 0 END) AS LL_count, " +
+            "SUM(CASE WHEN a.convertedResult < 1000 AND a.convertedResult > 0 THEN 1 ELSE 0 END) AS less_than_1000_count, " +
+            "SUM(CASE WHEN a.convertedResult >= 1000 THEN 1 ELSE 0 END) AS greater_than_or_equal_1000_count, " +
+            "SUM(CASE WHEN a.convertedResult = -1 THEN 1 ELSE 0 END) AS minus_1_count " +
+            "FROM Region r " +
+            "JOIN District d ON r.id = d.region.id " +
+            "JOIN Site s ON d.id = s.district.id " +
+            "JOIN Patient p ON s.id = p.site.id " +
+            "JOIN Analysis a ON p.id = a.patient.id " +
+            "WHERE r.id IN (SELECT r.id FROM Region r) AND " +
+            "EXTRACT(YEAR FROM a.drcpt) = :year AND " +
+            " FLOOR(EXTRACT(YEAR FROM CURRENT_DATE()) - EXTRACT(YEAR FROM p.birthDate)) BETWEEN 20 AND 24 " // Nouvelle condition pour la tranche d'âge < 2 ans
+       )
+    List<Object[]> MethodRegionsix(@Param("year") int year);
+
+
+
+
+    //tests realisés par tranche dage 25-29
+
+    @Query(value = "SELECT " +
+            "'touteregion' AS regionName, " +
+            "SUM(CASE WHEN a.convertedResult = 0 THEN 1 ELSE 0 END) AS LL_count, " +
+            "SUM(CASE WHEN a.convertedResult < 1000 AND a.convertedResult > 0 THEN 1 ELSE 0 END) AS less_than_1000_count, " +
+            "SUM(CASE WHEN a.convertedResult >= 1000 THEN 1 ELSE 0 END) AS greater_than_or_equal_1000_count, " +
+            "SUM(CASE WHEN a.convertedResult = -1 THEN 1 ELSE 0 END) AS minus_1_count " +
+            "FROM Region r " +
+            "JOIN District d ON r.id = d.region.id " +
+            "JOIN Site s ON d.id = s.district.id " +
+            "JOIN Patient p ON s.id = p.site.id " +
+            "JOIN Analysis a ON p.id = a.patient.id " +
+            "WHERE r.id IN (SELECT r.id FROM Region r) AND " +
+            "EXTRACT(YEAR FROM a.drcpt) = :year AND " +
+            " FLOOR(EXTRACT(YEAR FROM CURRENT_DATE()) - EXTRACT(YEAR FROM p.birthDate)) BETWEEN 25 AND 29 " // Nouvelle condition pour la tranche d'âge < 2 ans
+            )
+    List<Object[]> MethodRegionseven(@Param("year") int year);
+
+
+
+
+
+    @Query(value = "SELECT " +
+            "'touteregion' AS regionName, " +
+            "SUM(CASE WHEN a.convertedResult = 0 THEN 1 ELSE 0 END) AS LL_count, " +
+            "SUM(CASE WHEN a.convertedResult < 1000 AND a.convertedResult > 0 THEN 1 ELSE 0 END) AS less_than_1000_count, " +
+            "SUM(CASE WHEN a.convertedResult >= 1000 THEN 1 ELSE 0 END) AS greater_than_or_equal_1000_count, " +
+            "SUM(CASE WHEN a.convertedResult = -1 THEN 1 ELSE 0 END) AS minus_1_count " +
+            "FROM Region r " +
+            "JOIN District d ON r.id = d.region.id " +
+            "JOIN Site s ON d.id = s.district.id " +
+            "JOIN Patient p ON s.id = p.site.id " +
+            "JOIN Analysis a ON p.id = a.patient.id " +
+            "WHERE r.id IN (SELECT r.id FROM Region r) AND " +
+            "EXTRACT(YEAR FROM a.drcpt) = :year AND " +
+            " FLOOR(EXTRACT(YEAR FROM CURRENT_DATE()) - EXTRACT(YEAR FROM p.birthDate)) BETWEEN 30 AND 34 " // Nouvelle condition pour la tranche d'âge < 2 ans
+            )
+    List<Object[]> MethodRegionheight(@Param("year") int year);
+
+
+
+
+
+    @Query(value = "SELECT " +
+            "'touteregion' AS regionName, " +
+            "SUM(CASE WHEN a.convertedResult = 0 THEN 1 ELSE 0 END) AS LL_count, " +
+            "SUM(CASE WHEN a.convertedResult < 1000 AND a.convertedResult > 0 THEN 1 ELSE 0 END) AS less_than_1000_count, " +
+            "SUM(CASE WHEN a.convertedResult >= 1000 THEN 1 ELSE 0 END) AS greater_than_or_equal_1000_count, " +
+            "SUM(CASE WHEN a.convertedResult = -1 THEN 1 ELSE 0 END) AS minus_1_count " +
+            "FROM Region r " +
+            "JOIN District d ON r.id = d.region.id " +
+            "JOIN Site s ON d.id = s.district.id " +
+            "JOIN Patient p ON s.id = p.site.id " +
+            "JOIN Analysis a ON p.id = a.patient.id " +
+            "WHERE r.id IN (SELECT r.id FROM Region r) AND " +
+            "EXTRACT(YEAR FROM a.drcpt) = :year AND " +
+            " FLOOR(EXTRACT(YEAR FROM CURRENT_DATE()) - EXTRACT(YEAR FROM p.birthDate)) BETWEEN 35 AND 39 " // Nouvelle condition pour la tranche d'âge < 2 ans
+          )
+    List<Object[]> MethodRegionnine(@Param("year") int year);
+
+
+    @Query(value = "SELECT " +
+            "'touteregion' AS regionName, " +
+            "SUM(CASE WHEN a.convertedResult = 0 THEN 1 ELSE 0 END) AS LL_count, " +
+            "SUM(CASE WHEN a.convertedResult < 1000 AND a.convertedResult > 0 THEN 1 ELSE 0 END) AS less_than_1000_count, " +
+            "SUM(CASE WHEN a.convertedResult >= 1000 THEN 1 ELSE 0 END) AS greater_than_or_equal_1000_count, " +
+            "SUM(CASE WHEN a.convertedResult = -1 THEN 1 ELSE 0 END) AS minus_1_count " +
+            "FROM Region r " +
+            "JOIN District d ON r.id = d.region.id " +
+            "JOIN Site s ON d.id = s.district.id " +
+            "JOIN Patient p ON s.id = p.site.id " +
+            "JOIN Analysis a ON p.id = a.patient.id " +
+            "WHERE r.id IN (SELECT r.id FROM Region r) AND " +
+            "EXTRACT(YEAR FROM a.drcpt) = :year AND " +
+            " FLOOR(EXTRACT(YEAR FROM CURRENT_DATE()) - EXTRACT(YEAR FROM p.birthDate)) BETWEEN 40 AND 44 " // Nouvelle condition pour la tranche d'âge < 2 ans
+            )
+    List<Object[]> MethodRegionten(@Param("year") int year);
+
+
+
+
+    @Query(value = "SELECT " +
+            "'touteregion' AS regionName, " +
+            "SUM(CASE WHEN a.convertedResult = 0 THEN 1 ELSE 0 END) AS LL_count, " +
+            "SUM(CASE WHEN a.convertedResult < 1000 AND a.convertedResult > 0 THEN 1 ELSE 0 END) AS less_than_1000_count, " +
+            "SUM(CASE WHEN a.convertedResult >= 1000 THEN 1 ELSE 0 END) AS greater_than_or_equal_1000_count, " +
+            "SUM(CASE WHEN a.convertedResult = -1 THEN 1 ELSE 0 END) AS minus_1_count " +
+            "FROM Region r " +
+            "JOIN District d ON r.id = d.region.id " +
+            "JOIN Site s ON d.id = s.district.id " +
+            "JOIN Patient p ON s.id = p.site.id " +
+            "JOIN Analysis a ON p.id = a.patient.id " +
+            "WHERE r.id IN (SELECT r.id FROM Region r) AND " +
+            "EXTRACT(YEAR FROM a.drcpt) = :year AND " +
+            " FLOOR(EXTRACT(YEAR FROM CURRENT_DATE()) - EXTRACT(YEAR FROM p.birthDate)) BETWEEN 45 AND 49 ")
+    List<Object[]> MethodRegioneleven(@Param("year") int year);
+
+
+
+
+    @Query(value = "SELECT " +
+            "'touteregion' AS regionName, " +
+            "SUM(CASE WHEN a.convertedResult = 0 THEN 1 ELSE 0 END) AS LL_count, " +
+            "SUM(CASE WHEN a.convertedResult < 1000 AND a.convertedResult > 0 THEN 1 ELSE 0 END) AS less_than_1000_count, " +
+            "SUM(CASE WHEN a.convertedResult >= 1000 THEN 1 ELSE 0 END) AS greater_than_or_equal_1000_count, " +
+            "SUM(CASE WHEN a.convertedResult = -1 THEN 1 ELSE 0 END) AS minus_1_count " +
+            "FROM Region r " +
+            "JOIN District d ON r.id = d.region.id " +
+            "JOIN Site s ON d.id = s.district.id " +
+            "JOIN Patient p ON s.id = p.site.id " +
+            "JOIN Analysis a ON p.id = a.patient.id " +
+            "WHERE r.id IN (SELECT r.id FROM Region r) AND " +
+            "EXTRACT(YEAR FROM a.drcpt) = :year AND " +
+            "FLOOR(EXTRACT(YEAR FROM CURRENT_DATE()) - EXTRACT(YEAR FROM p.birthDate)) > 50 ") // Nouvelle condition pour la tranche d'âge < 2 ans
+    List<Object[]> MethodRegiontwelve(@Param("year") int year);
+
+/********************************************************************************************************************************** */
+    //par district
+
+    @Query(value = "SELECT d.id, d.name AS nom_district, p.gender AS genre, " +
+            " SUM(CASE WHEN a.converted_result >= 1000 THEN 1 ELSE 0 END) AS NOMBRE_NON_SUPPRIME, " +
+            " SUM(1) AS TOTAL_ANALYSE, " +
+            " SUM(CASE WHEN a.converted_result = 0 THEN 1 WHEN a.converted_result < 1000 AND a.converted_result > 0 THEN 1 ELSE 0 END )AS TOTAL_SUPPRIME, " +
+            " ROUND(SUM(CASE WHEN a.converted_result >= 1000 THEN 1 ELSE 0 END) * 100.0 / SUM(1), 2) AS POURCENTAGE_NON_SUPPRIME, " +
+            " ROUND(SUM(CASE WHEN a.converted_result = 0 THEN 1 WHEN a.converted_result < 1000 AND a.converted_result > 0 THEN 1 ELSE 0 END) * 100.0 / SUM(1), 2) AS POURCENTAGE_SUPPRIME, " +
+            " ROUND(SUM(CASE WHEN a.converted_result = -1 THEN 1 ELSE 0 END) * 100.0 / SUM(1), 2) AS POURCENTAGE_INVALIDE " +
+            " FROM dashboard.region r " +
+            " INNER JOIN dashboard.district d ON r.id = d.region_id" +
+            " INNER JOIN dashboard.site s ON d.id = s.district_id " +
+            " INNER JOIN dashboard.patient p ON s.id = p.site_id" +
+            " INNER JOIN dashboard.analysis a ON p.id = a.patient_id " +
+            " INNER join dashboard.test t on t.id = a.test_id " +
+            " WHERE d.id = :districtId AND p.gender = :sex AND " +
+            " EXTRACT(YEAR FROM a.drcpt) = :year  " +
+            " GROUP BY d.id, d.name, p.gender " +
+            " order by d.name;", nativeQuery = true)
+    List<Object[]> getAnalysisPatientMaleForDistrictWithYear(@Param("districtId") Long districtId , @Param("year") int year, @Param("sex") String sex );
+
+
+    @Query(value = "SELECT d.id, d.name AS nom_district, p.gender AS genre, " +
+            " SUM(CASE WHEN a.converted_result >= 1000 THEN 1 ELSE 0 END) AS NOMBRE_NON_SUPPRIME, " +
+            " SUM(1) AS TOTAL_ANALYSE, " +
+            " SUM(CASE WHEN a.converted_result = 0 THEN 1 WHEN a.converted_result < 1000 AND a.converted_result > 0 THEN 1 ELSE 0 END )AS TOTAL_SUPPRIME, " +
+            " ROUND(SUM(CASE WHEN a.converted_result >= 1000 THEN 1 ELSE 0 END) * 100.0 / SUM(1), 2) AS POURCENTAGE_NON_SUPPRIME, " +
+            " ROUND(SUM(CASE WHEN a.converted_result = 0 THEN 1 WHEN a.converted_result < 1000 AND a.converted_result > 0 THEN 1 ELSE 0 END) * 100.0 / SUM(1), 2) AS POURCENTAGE_SUPPRIME, " +
+            " ROUND(SUM(CASE WHEN a.converted_result = -1 THEN 1 ELSE 0 END) * 100.0 / SUM(1), 2) AS POURCENTAGE_INVALIDE " +
+            " FROM dashboard.region r " +
+            " INNER JOIN dashboard.district d ON r.id = d.region_id" +
+            " INNER JOIN dashboard.site s ON d.id = s.district_id " +
+            " INNER JOIN dashboard.patient p ON s.id = p.site_id" +
+            " INNER JOIN dashboard.analysis a ON p.id = a.patient_id " +
+            " INNER join dashboard.test t on t.id = a.test_id " +
+            " WHERE d.id = :districtId AND p.gender = :sex AND " +
+            " EXTRACT(YEAR FROM a.drcpt) = :year  " +
+            " GROUP BY d.id, d.name, p.gender " +
+            " order by d.name;", nativeQuery = true)
+    List<Object[]> getAnalysisPatientFemaleForDistrictWithYear(@Param("districtId") Long districtId , @Param("year") int year, @Param("sex") String sex );
+
+    
+
+    // pour chaque region
+
+    @Query(value = "SELECT r.id, r.name AS nom_region, p.gender AS genre, " +
+
+            " SUM(CASE WHEN a.converted_result >= 1000 THEN 1 ELSE 0 END) AS NOMBRE_NON_SUPPRIME, " +
+            " SUM(1) AS TOTAL_ANALYSE, " +
+            " SUM(CASE WHEN a.converted_result = 0 THEN 1 WHEN a.converted_result < 1000 AND a.converted_result > 0 THEN 1 ELSE 0 END )AS TOTAL_SUPPRIME, " +
+            " ROUND(SUM(CASE WHEN a.converted_result >= 1000 THEN 1 ELSE 0 END) * 100.0 / SUM(1), 2) AS POURCENTAGE_NON_SUPPRIME, " +
+            " ROUND(SUM(CASE WHEN a.converted_result = 0 THEN 1 WHEN a.converted_result < 1000 AND a.converted_result > 0 THEN 1 ELSE 0 END) * 100.0 / SUM(1), 2) AS POURCENTAGE_SUPPRIME, " +
+            " ROUND(SUM(CASE WHEN a.converted_result = -1 THEN 1 ELSE 0 END) * 100.0 / SUM(1), 2) AS POURCENTAGE_INVALIDE " +
+            " FROM dashboard.region r " +
+            " INNER JOIN dashboard.district d ON r.id = d.region_id" +
+            " INNER JOIN dashboard.site s ON d.id = s.district_id " +
+            " INNER JOIN dashboard.patient p ON s.id = p.site_id" +
+            " INNER JOIN dashboard.analysis a ON p.id = a.patient_id " +
+            " INNER join dashboard.test t on t.id = a.test_id " +
+            " WHERE r.id = :regionId AND p.gender = :sex AND " +
+            " EXTRACT(YEAR FROM a.drcpt) = :year  " +
+            " GROUP BY r.id, r.name, p.gender " +
+            " order by r.name;", nativeQuery = true)
+    List<Object[]> getAnalysisPatientMaleForRegionWithYearM(@Param("regionId") Long regionId, @Param("year") int year, @Param("sex") String sex );
+
+
+    @Query(value = "SELECT r.id, r.name AS nom_region, p.gender AS genre, " +
+            " SUM(CASE WHEN a.converted_result >= 1000 THEN 1 ELSE 0 END) AS NOMBRE_NON_SUPPRIME, " +
+            " SUM(1) AS TOTAL_ANALYSE, " +
+            " SUM(CASE WHEN a.converted_result = 0 THEN 1 WHEN a.converted_result < 1000 AND a.converted_result > 0 THEN 1 ELSE 0 END )AS TOTAL_SUPPRIME, " +
+            " ROUND(SUM(CASE WHEN a.converted_result >= 1000 THEN 1 ELSE 0 END) * 100.0 / SUM(1), 2) AS POURCENTAGE_NON_SUPPRIME, " +
+            " ROUND(SUM(CASE WHEN a.converted_result = 0 THEN 1 WHEN a.converted_result < 1000 AND a.converted_result > 0 THEN 1 ELSE 0 END) * 100.0 / SUM(1), 2) AS POURCENTAGE_SUPPRIME, " +
+            " ROUND(SUM(CASE WHEN a.converted_result = -1 THEN 1 ELSE 0 END) * 100.0 / SUM(1), 2) AS POURCENTAGE_INVALIDE " +
+            " FROM dashboard.region r " +
+            " INNER JOIN dashboard.district d ON r.id = d.region_id" +
+            " INNER JOIN dashboard.site s ON d.id = s.district_id " +
+            " INNER JOIN dashboard.patient p ON s.id = p.site_id" +
+            " INNER JOIN dashboard.analysis a ON p.id = a.patient_id " +
+            " INNER join dashboard.test t on t.id = a.test_id " +
+            " WHERE r.id = :regionId AND p.gender = :sex AND " +
+            " EXTRACT(YEAR FROM a.drcpt) = :year  " +
+            " GROUP BY r.id, r.name, p.gender " +
+            " order by r.name;", nativeQuery = true)
+    List<Object[]> getAnalysisPatientFemaleForRegionWithYearF(@Param("regionId") Long regionId, @Param("year") int year, @Param("sex") String sex );
+
+
+    // par site
+
+
+    @Query(value = "SELECT s.id, s.new_site_long_name AS nom_site, p.gender AS genre, " +
+            " SUM(CASE WHEN a.converted_result >= 1000 THEN 1 ELSE 0 END) AS NOMBRE_NON_SUPPRIME, " +
+            " SUM(1) AS TOTAL_ANALYSE, " +
+            " SUM(CASE WHEN a.converted_result = 0 THEN 1 WHEN a.converted_result < 1000 AND a.converted_result > 0 THEN 1 ELSE 0 END )AS TOTAL_SUPPRIME, " +
+            " ROUND(SUM(CASE WHEN a.converted_result >= 1000 THEN 1 ELSE 0 END) * 100.0 / SUM(1), 2) AS POURCENTAGE_NON_SUPPRIME, " +
+            " ROUND(SUM(CASE WHEN a.converted_result = 0 THEN 1 WHEN a.converted_result < 1000 AND a.converted_result > 0 THEN 1 ELSE 0 END) * 100.0 / SUM(1), 2) AS POURCENTAGE_SUPPRIME, " +
+            " ROUND(SUM(CASE WHEN a.converted_result = -1 THEN 1 ELSE 0 END) * 100.0 / SUM(1), 2) AS POURCENTAGE_INVALIDE " +
+            " FROM dashboard.region r " +
+            " INNER JOIN dashboard.district d ON r.id = d.region_id" +
+            " INNER JOIN dashboard.site s ON d.id = s.district_id " +
+            " INNER JOIN dashboard.patient p ON s.id = p.site_id" +
+            " INNER JOIN dashboard.analysis a ON p.id = a.patient_id " +
+            " INNER join dashboard.test t on t.id = a.test_id " +
+            " WHERE s.id = :siteId AND p.gender = :sex AND " +
+            " EXTRACT(YEAR FROM a.drcpt) = :year  " +
+            " GROUP BY s.id, s.new_site_long_name, p.gender " +
+            " order by s.new_site_long_name;", nativeQuery = true)
+    List<Object[]> getAnalysisPatientMaleForSiteWithYearSiteM(@Param("siteId") Long siteId , @Param("year") int year, @Param("sex") String sex );
+
+    @Query(value = "SELECT s.id, s.new_site_long_name AS nom_site, p.gender AS genre, " +
+            " SUM(CASE WHEN a.convertedResult >= 1000 THEN 1 ELSE 0 END) AS NOMBRE_NON_SUPPRIME, " +
+            " SUM(1) AS TOTAL_ANALYSE, " +
+            " SUM(CASE WHEN a.convertedResult = 0 THEN 1 WHEN a.convertedResult < 1000 AND a.convertedResult > 0 THEN 1 ELSE 0 END )AS TOTAL_SUPPRIME, " +
+            " ROUND(SUM(CASE WHEN a.convertedResult >= 1000 THEN 1 ELSE 0 END) * 100.0 / SUM(1), 2) AS POURCENTAGE_NON_SUPPRIME, " +
+            " ROUND(SUM(CASE WHEN a.convertedResult = 0 THEN 1 WHEN a.convertedResult < 1000 AND a.converted_result > 0 THEN 1 ELSE 0 END) * 100.0 / SUM(1), 2) AS POURCENTAGE_SUPPRIME, " +
+            " ROUND(SUM(CASE WHEN a.convertedResult = -1 THEN 1 ELSE 0 END) * 100.0 / SUM(1), 2) AS POURCENTAGE_INVALIDE " +
+            " FROM dashboard.region r " +
+            " INNER JOIN dashboard.district d ON r.id = d.region_id" +
+            " INNER JOIN dashboard.site s ON d.id = s.district_id " +
+            " INNER JOIN dashboard.patient p ON s.id = p.site_id" +
+            " INNER JOIN dashboard.analysis a ON p.id = a.patient_id " +
+            " INNER join dashboard.test t on t.id = a.test_id " +
+            " WHERE s.id = :siteId AND p.gender = :sex AND " +
+            " EXTRACT(YEAR FROM a.drcpt) = :year  " +
+            " GROUP BY s.id, s.new_site_long_name, p.gender " +
+            " order by s.new_site_long_name;", nativeQuery = true)
+    List<Object[]> getAnalysisPatientFemaleForSiteWithYearsiteF(@Param("siteId") Long siteId , @Param("year") int year, @Param("sex") String sex);
+
+
+ //Nombre de patients testés par region
+ @Query(value = "SELECT r.id, r.name," +
+ " SUM(CASE WHEN a.convertedResult = 0 THEN 1 ELSE 0 END) AS TOTAL_INDETECTABLE_LL, " +
+" SUM(CASE WHEN a.convertedResult < 1000 AND a.convertedResult > 0 THEN 1 ELSE 0 END ) AS TOTAL_SUPPRIME, " +
+" SUM(CASE WHEN a.convertedResult >= 1000 THEN 1 ELSE 0 END) AS TOTAL_NON_SUPPRIME, " +
+" SUM(1) AS TOTAL_ANALYSE, " +
+" ROUND(SUM(CASE WHEN a.convertedResult = 0 THEN 1 WHEN a.convertedResult < 1000 AND a.convertedResult > 0 THEN 1 ELSE 0 END) * 100.0 / SUM(1), 2) AS POURCENTAGE_SUPPRIME " +
+ " FROM Region r " +
+ " JOIN District d ON r.id = d.region.id " +
+ " JOIN Site s ON d.id = s.district.id " +
+ " JOIN Patient p ON s.id = p.site.id " +
+ " JOIN Analysis a ON p.id = a.patient.id " +
+ " WHERE EXTRACT(YEAR FROM a.drcpt) = :year " +
+ " GROUP BY r.id, r.name, EXTRACT(YEAR FROM a.drcpt)" +
+ " ORDER BY TOTAL_INDETECTABLE_LL DESC, TOTAL_SUPPRIME DESC, TOTAL_NON_SUPPRIME DESC")
+ List<Object[]> getPatientForAllRegion(@Param("year") int year);
+
+
+ //Nombre de tests réalisés par district
+ @Query(value = "SELECT d.id, d.name," +
+ " SUM(CASE WHEN a.convertedResult = 0 THEN 1 ELSE 0 END) AS TOTAL_INDETECTABLE_LL, " +
+" SUM(CASE WHEN a.convertedResult < 1000 AND a.convertedResult > 0 THEN 1 ELSE 0 END ) AS TOTAL_SUPPRIME, " +
+" SUM(CASE WHEN a.convertedResult >= 1000 THEN 1 ELSE 0 END) AS TOTAL_NON_SUPPRIME, " +
+" SUM(1) AS TOTAL_ANALYSE, " +
+" ROUND(SUM(CASE WHEN a.convertedResult = 0 THEN 1 WHEN a.convertedResult < 1000 AND a.convertedResult > 0 THEN 1 ELSE 0 END) * 100.0 / SUM(1), 2) AS POURCENTAGE_SUPPRIME " +
+ " FROM Region r " +
+ " JOIN District d ON r.id = d.region.id " +
+ " JOIN Site s ON d.id = s.district.id " +
+ " JOIN Patient p ON s.id = p.site.id " +
+ " JOIN Analysis a ON p.id = a.patient.id " +
+ " WHERE d.id = :districtId AND EXTRACT(YEAR FROM a.drcpt) = :year " +
+ " GROUP BY d.id, d.name, EXTRACT(YEAR FROM a.drcpt)")
+ List<Object[]> getPatientForDistrict(@Param("districtId") Long districtId , @Param("year") int year);
+
+
+ //Nombre de tests réalisés par site pour un district
+ @Query(value = "SELECT s.id, SUBSTRING(s.newSiteShortName, 0, 13)," +
+ " SUM(CASE WHEN a.convertedResult = 0 THEN 1 ELSE 0 END) AS TOTAL_INDETECTABLE_LL, " +
+" SUM(CASE WHEN a.convertedResult < 1000 AND a.convertedResult > 0 THEN 1 ELSE 0 END ) AS TOTAL_SUPPRIME, " +
+" SUM(CASE WHEN a.convertedResult >= 1000 THEN 1 ELSE 0 END) AS TOTAL_NON_SUPPRIME, " +
+" SUM(1) AS TOTAL_ANALYSE, " +
+" ROUND(SUM(CASE WHEN a.convertedResult = 0 THEN 1 WHEN a.convertedResult < 1000 AND a.convertedResult > 0 THEN 1 ELSE 0 END) * 100.0 / SUM(1), 2) AS POURCENTAGE_SUPPRIME " +
+ " FROM Region r " +
+ " JOIN District d ON r.id = d.region.id " +
+ " JOIN Site s ON d.id = s.district.id " +
+ " JOIN Patient p ON s.id = p.site.id " +
+ " JOIN Analysis a ON p.id = a.patient.id " +
+ " WHERE d.id = :districtId AND EXTRACT(YEAR FROM a.drcpt) = :year " +
+ " GROUP BY s.id, s.newSiteShortName, EXTRACT(YEAR FROM a.drcpt)")
+ List<Object[]> getPatientForDistrictWithSite(@Param("districtId") Long districtId , @Param("year") int year);
+
+//Nombre de tests réalisés par site pour une region
+    @Query(value = "SELECT s.id, SUBSTRING(s.new_site_short_name, 0, 13), " +
+            " SUM(CASE WHEN a.converted_result >= 1000 THEN 1 ELSE 0 END) AS TOTAL_NON_SUPPRIME, " +
+            " SUM(CASE WHEN a.converted_result = 0 THEN 1 WHEN a.converted_result < 1000 AND a.converted_result > 0 THEN 1 ELSE 0 END )AS TOTAL_SUPPRIME, " +
+            " SUM(CASE WHEN a.converted_result = 0 THEN 1 ELSE 0 END) AS TOTAL_INDETECTABLE_LL, " +
+            " SUM(CASE WHEN a.converted_result = -1 THEN 1 ELSE 0 END) AS TOTAL_INVALIDE " +
+            " FROM dashboard.region r " +
+            " INNER JOIN dashboard.district d ON r.id = d.region_id" +
+            " INNER JOIN dashboard.site s ON d.id = s.district_id " +
+            " INNER JOIN dashboard.patient p ON s.id = p.site_id" +
+            " INNER JOIN dashboard.analysis a ON p.id = a.patient_id " +
+            " INNER join dashboard.test t on t.id = a.test_id " +
+            " WHERE r.id = :regionId AND  " +
+            " EXTRACT(YEAR FROM a.drcpt) = :year " +
+            " GROUP BY s.id, s.new_site_short_name, EXTRACT(YEAR FROM a.drcpt); ", nativeQuery = true)
+ List<Object[]> getTestBySiteForOneRegion(@Param("regionId") Long regionId , @Param("year") int year);
+
+ //Nombre de patients testés réalisés par site pour une region
+    @Query(value = "SELECT s.id, SUBSTRING(s.new_site_short_name, 0, 13), " +
+            " SUM(CASE WHEN a.converted_result >= 1000 THEN 1 ELSE 0 END) AS TOTAL_NON_SUPPRIME, " +
+            " SUM(CASE WHEN a.converted_result = 0 THEN 1 WHEN a.converted_result < 1000 AND a.converted_result > 0 THEN 1 ELSE 0 END )AS TOTAL_SUPPRIME, " +
+            " ROUND(SUM(CASE WHEN a.converted_result = 0 THEN 1 WHEN a.converted_result < 1000 AND a.converted_result > 0 THEN 1 ELSE 0 END) * 100.0 / SUM(1), 2) AS POURCENTAGE_SUPPRIME " +
+            " FROM dashboard.region r " +
+            " INNER JOIN dashboard.district d ON r.id = d.region_id" +
+            " INNER JOIN dashboard.site s ON d.id = s.district_id " +
+            " INNER JOIN dashboard.patient p ON s.id = p.site_id" +
+            " INNER JOIN dashboard.analysis a ON p.id = a.patient_id " +
+            " INNER join dashboard.test t on t.id = a.test_id " +
+            " WHERE r.id = :regionId AND  " +
+            " EXTRACT(YEAR FROM a.drcpt) = :year " +
+            " GROUP BY s.id, s.new_site_short_name, EXTRACT(YEAR FROM a.drcpt); ", nativeQuery = true)
+ List<Object[]> getPatientBySiteForOneRegion(@Param("regionId") Long regionId , @Param("year") int year);
 
 }

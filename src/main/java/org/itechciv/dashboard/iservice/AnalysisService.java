@@ -128,6 +128,95 @@ List<Object[]> getTestByAgeCategoryBetweenFourtyFiveAndFourtyNineForAllRegion(@P
 List<Object[]> getTestByAgeCategoryGreaterThanFiftyForAllRegion(@Param("year") int year);
 
 
+List<Object[]> tendancetest2021();
+List<Object[]> tendancetest2022();
+List<Object[]> tendancetest2023();
+
+// test par tranche d age region
+List<Object[]> yourMethodName(Long regionId, int year);
+List<Object[]> yourMethodNameOne(Long regionId, int year);
+List<Object[]> yourMethodNametwo(Long regionId, int year);
+List<Object[]> yourMethodNamethree(Long regionId, int year);
+List<Object[]> yourMethodNamefour(Long regionId, int year);
+List<Object[]> yourMethodNameFive(Long regionId, int year);
+List<Object[]> yourMethodNameSix(Long regionId, int year);
+List<Object[]> yourMethodNameseven(Long regionId, int year);
+List<Object[]> yourMethodNameheight(Long regionId, int year);
+List<Object[]> yourMethodNamenine(Long regionId, int year);
+List<Object[]> yourMethodNameten(Long regionId, int year);
+List<Object[]> yourMethodNameeleven(Long regionId, int year);
+
+
+// test par tranche d age district
+List<Object[]> yourMethodDistrictName(Long districtId, int year);
+List<Object[]> yourMethodDistrictNameOne(Long districtId, int year);
+List<Object[]> yourMethodDistrictNametwo(Long districtId, int year);
+List<Object[]> yourMethodDistrictNamethree(Long districtId, int year);
+List<Object[]> yourMethodDistrictNamefour(Long districtId, int year);
+List<Object[]> yourMethodDistrictNameFive(Long districtId, int year); 
+List<Object[]> yourMethodDistrictNameSix(Long districtId, int year);
+List<Object[]> yourMethodDistrictNameseven(Long districtId, int year);
+List<Object[]> yourMethodDistrictNameheight(Long districtId, int year);
+List<Object[]> yourMethodDistrictNamenine(Long districtId, int year);
+List<Object[]> yourMethodDistrictNameten(Long districtId, int year);
+List<Object[]> yourMethodDistrictNameeleven(Long districtId, int year);
+
+// test par tranche d age site
+List<Object[]> yourMethodSiteName(Long siteId, int year);
+List<Object[]> yourMethodSiteNameOne(Long siteId, int year);
+List<Object[]> yourMethodSiteNametwo(Long siteId, int year);
+List<Object[]> yourMethodSiteNamethree(Long siteId, int year);
+List<Object[]> yourMethodSiteNamefour(Long siteId, int year);
+List<Object[]> yourMethodSiteNameFive(Long siteId, int year);
+List<Object[]> yourMethodSiteNameSix(Long siteId, int year);
+List<Object[]> yourMethodSiteNameseven(Long siteId, int year);
+List<Object[]> yourMethodSiteNameheight(Long districtId, int year);
+List<Object[]> yourMethodSiteNamenine(Long siteId, int year);
+List<Object[]> yourMethodSiteNameten(Long siteId, int year);
+List<Object[]> yourMethodSiteNameeleven(Long siteId, int year);
+
+//pour toute les regions
+
+List<Object[]>MethodRegion(int year);
+List<Object[]>MethodRegionOne(int year);
+List<Object[]>MethodRegionThree(int year);
+List<Object[]>MethodRegionfour(int year);
+List<Object[]>MethodRegionfive(int year);
+List<Object[]>MethodRegionsix(int year);
+List<Object[]>MethodRegionseven(int year);
+List<Object[]>MethodRegionheight(int year);
+List<Object[]>MethodRegionnine(int year);
+List<Object[]>MethodRegionten(int year);
+List<Object[]>MethodRegioneleven(int year);
+List<Object[]>MethodRegiontwelve(int year);
+List<Object[]> findByYearByRegiontest(int year, Long regionId);
+
+
+List<Object[]> getAnalysisPatientMaleForDistrictWithYear(@RequestParam Long districtId, @RequestParam int year);
+List<Object[]> getAnalysisPatientFemaleForDistrictWithYear(@RequestParam Long districtId, @RequestParam int year);
+List<Object[]> getAnalysisPatientMaleForRegionWithYearM(@RequestParam Long regionId, @RequestParam int year);
+List<Object[]> getAnalysisPatientFemaleForRegionWithYearF(@RequestParam Long regionId, @RequestParam int year);
+List<Object[]> getAnalysisPatientMaleForSiteWithYearSiteM(@RequestParam Long siteId, @RequestParam int year);
+List<Object[]> getAnalysisPatientFemaleForSiteWithYearsiteF(@RequestParam Long siteId, @RequestParam int year);
+
+
+List<Object[]> getPatientForAllRegion(@Param("year") int year);
+List<Object[]> getPatientForDistrict(@Param("districtId") Long districtId , @Param("year") int year);
+List<Object[]> getPatientForDistrictWithSite(@Param("districtId") Long districtId , @Param("year") int year);
+
+List<Object[]> getTestedPatientByAgeBetweenTwoAndNineForOneDistrict(Long districtId, int year);
+List<Object[]> getTestedPatientByAgeBetweenTwoAndNineForOneSite(@Param("siteId") Long siteId, @Param("year") int year);
+
+List<Object[]> getTestBySiteForOneRegion(@Param("regionId") Long regionId , @Param("year") int year);
+List<Object[]> getPatientBySiteForOneRegion(@Param("regionId") Long regionId , @Param("year") int year);
+
+
+
+
+
+
+
+
 
 
 
