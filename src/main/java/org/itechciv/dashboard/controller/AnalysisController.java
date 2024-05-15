@@ -1016,6 +1016,38 @@ public class AnalysisController {
     return analysisServices.getPatientBySiteForOneRegion(regionId, year);
     }
 
+    @GetMapping("/testbypartner")
+    public List<Object[]> getTestByPartner(@RequestParam int year) {
+    return analysisServices.getTestByPartner(year);
+    }
+
+    @GetMapping("/patientbypartner")
+    public List<Object[]> getPatientByPartner(@RequestParam int year) {
+    return analysisServices.getPatientByPartner(year);
+    }
+
+
+    @GetMapping("/testyspecimenedta")
+    public List<Object[]> getestByspecimenEDTAPlasma(@RequestParam int partnerId) {
+    return analysisServices.getestByspecimenEDTAPlasma(partnerId);
+    }
+
+    @GetMapping("/testbyspecimendbs")
+    public List<Object[]> getestByspecimenDBS(@RequestParam int partnerId) {
+    return analysisServices.getestByspecimenDBS(partnerId);
+    }
+
+
+    @GetMapping("/testbyspecimenpsc")
+    public List<Object[]> getestByspecimenPSC(@RequestParam int partnerId) {
+    return analysisServices.getestByspecimenPSC(partnerId);
+    }
+
+
+
+
+
+
 
 /*
     @GetMapping("/count/inferieurmil")

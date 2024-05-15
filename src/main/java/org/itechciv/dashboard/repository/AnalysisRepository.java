@@ -4584,4 +4584,112 @@ List<Object[]> test(@Param("regionId") Long regionId, @Param("year") int year);
             " GROUP BY s.id, s.new_site_short_name, EXTRACT(YEAR FROM a.drcpt); ", nativeQuery = true)
  List<Object[]> getPatientBySiteForOneRegion(@Param("regionId") Long regionId , @Param("year") int year);
 
+ //Nombre de tests réalisés par partenaire
+ @Query(value = "SELECT pt.id, pt.name, " +
+ " SUM(CASE WHEN a.converted_result >= 1000 THEN 1 ELSE 0 END) AS TOTAL_NON_SUPPRIME, " +
+ " SUM(CASE WHEN a.converted_result = 0 THEN 1 WHEN a.converted_result < 1000 AND a.converted_result > 0 THEN 1 ELSE 0 END )AS TOTAL_SUPPRIME, " +
+ " SUM(CASE WHEN a.converted_result = 0 THEN 1 ELSE 0 END) AS TOTAL_INDETECTABLE_LL, " +
+ " SUM(CASE WHEN a.converted_result = -1 THEN 1 ELSE 0 END) AS TOTAL_INVALIDE " +
+ " FROM dashboard.region r " +
+ " INNER JOIN dashboard.district d ON r.id = d.region_id" +
+ " INNER JOIN dashboard.site s ON d.id = s.district_id " +
+ " INNER JOIN dashboard.patient p ON s.id = p.site_id" +
+ " INNER JOIN dashboard.analysis a ON p.id = a.patient_id " +
+ " INNER join dashboard.test t on t.id = a.test_id " +
+ " INNER join dashboard.site_partner sp on s.id = sp.site_id " +
+ " INNER join dashboard.partner pt on pt.id = sp.partner_id " +
+ " WHERE EXTRACT(YEAR FROM a.drcpt) = :year " +
+ " GROUP BY pt.id, pt.name, EXTRACT(YEAR FROM a.drcpt); ", nativeQuery = true)
+List<Object[]> getTestByPartner(@Param("year") int year);
+
+//Nombre de patients testés réalisés par site pour une region
+@Query(value = "SELECT pt.id, pt.name, " +
+" SUM(CASE WHEN a.converted_result >= 1000 THEN 1 ELSE 0 END) AS TOTAL_NON_SUPPRIME, " +
+" SUM(CASE WHEN a.converted_result = 0 THEN 1 WHEN a.converted_result < 1000 AND a.converted_result > 0 THEN 1 ELSE 0 END )AS TOTAL_SUPPRIME, " +
+" ROUND(SUM(CASE WHEN a.converted_result = 0 THEN 1 WHEN a.converted_result < 1000 AND a.converted_result > 0 THEN 1 ELSE 0 END) * 100.0 / SUM(1), 2) AS POURCENTAGE_SUPPRIME " +
+" FROM dashboard.region r " +
+" INNER JOIN dashboard.district d ON r.id = d.region_id" +
+" INNER JOIN dashboard.site s ON d.id = s.district_id " +
+" INNER JOIN dashboard.patient p ON s.id = p.site_id" +
+" INNER JOIN dashboard.analysis a ON p.id = a.patient_id " +
+" INNER join dashboard.test t on t.id = a.test_id " +
+" INNER join dashboard.site_partner sp on s.id = sp.site_id " +
+" INNER join dashboard.partner pt on pt.id = sp.partner_id " +
+" WHERE EXTRACT(YEAR FROM a.drcpt) = :year " +
+" GROUP BY pt.id, pt.name, EXTRACT(YEAR FROM a.drcpt); ", nativeQuery = true)
+List<Object[]> getPatientByPartner(@Param("year") int year);
+
+@Query(value = " SELECT TO_CHAR(a.drcpt, 'Mon-YYYY') AS date, pt.id, pt.name, " +
+" st.label, " +
+" COUNT(t.id) AS total_tests " +
+" FROM dashboard.region r " +
+" INNER JOIN dashboard.district d ON r.id = d.region_id " +
+" INNER JOIN dashboard.site s ON d.id = s.district_id " +
+" INNER JOIN dashboard.patient p ON s.id = p.site_id" +
+" INNER JOIN dashboard.analysis a ON p.id = a.patient_id " +
+" INNER join dashboard.test t on t.id = a.test_id " +
+" INNER join dashboard.site_partner sp on s.id = sp.site_id " +
+" INNER join dashboard.partner pt on pt.id = sp.partner_id " +
+" INNER JOIN dashboard.regimen rg ON a.regimen_id = rg.id " +
+" INNER JOIN dashboard.vl_reason vr ON a.vl_reason_id = vr.id " +
+" INNER JOIN dashboard.sample_type st ON a.sample_type_id = st.id " +
+" WHERE pt.id = :partnerId " +
+" AND a.drcpt BETWEEN '2023-01-01' AND CURRENT_DATE " +
+" AND st.label = 'Tube EDTA - Violet' " +
+" GROUP BY a.drcpt, TO_CHAR(a.drcpt, 'Mon-YYYY'), st.label, pt.id, pt.name " +
+" ORDER BY  a.drcpt ASC;", nativeQuery = true)
+List<Object[]> getestByspecimenEDTAPlasma(@Param("partnerId") int partnerId);
+
+
+@Query(value = " SELECT TO_CHAR(a.drcpt, 'Mon-YYYY') AS date,  pt.id, pt.name, " +
+" st.label, " +
+" COUNT(t.id) AS total_tests " +
+" FROM dashboard.region r " +
+" INNER JOIN dashboard.district d ON r.id = d.region_id" +
+" INNER JOIN dashboard.site s ON d.id = s.district_id " +
+" INNER JOIN dashboard.patient p ON s.id = p.site_id" +
+" INNER JOIN dashboard.analysis a ON p.id = a.patient_id " +
+" INNER join dashboard.test t on t.id = a.test_id " +
+" INNER join dashboard.site_partner sp on s.id = sp.site_id " +
+" INNER join dashboard.partner pt on pt.id = sp.partner_id " +
+" INNER JOIN dashboard.regimen rg ON a.regimen_id = rg.id " +
+" INNER JOIN dashboard.vl_reason vr ON a.vl_reason_id = vr.id " +
+" INNER JOIN dashboard.sample_type st ON a.sample_type_id = st.id " +
+" WHERE pt.id = :partnerId " +
+" AND a.drcpt BETWEEN '2023-01-01' AND CURRENT_DATE " +
+" AND st.label = 'DBS' " +
+" GROUP BY a.drcpt, TO_CHAR(a.drcpt, 'Mon-YYYY'), st.label, pt.id, pt.name " +
+" ORDER BY a.drcpt ASC;", nativeQuery = true)
+List<Object[]> getestByspecimenDBS(@Param("partnerId") int partnerId);
+
+
+@Query(value = " SELECT TO_CHAR(a.drcpt, 'Mon-YYYY') AS date, pt.id, pt.name, " +
+" st.label, " +
+" COUNT(t.id) AS total_tests " +
+" FROM dashboard.region r " +
+" INNER JOIN dashboard.district d ON r.id = d.region_id" +
+" INNER JOIN dashboard.site s ON d.id = s.district_id " +
+" INNER JOIN dashboard.patient p ON s.id = p.site_id" +
+" INNER JOIN dashboard.analysis a ON p.id = a.patient_id " +
+" INNER join dashboard.test t on t.id = a.test_id " +
+" INNER join dashboard.site_partner sp on s.id = sp.site_id " +
+" INNER join dashboard.partner pt on pt.id = sp.partner_id " +
+" INNER JOIN dashboard.regimen rg ON a.regimen_id = rg.id " +
+" INNER JOIN dashboard.vl_reason vr ON a.vl_reason_id = vr.id " +
+" INNER JOIN dashboard.sample_type st ON a.sample_type_id = st.id " +
+" WHERE pt.id = :partnerId " +
+" AND a.drcpt BETWEEN '2023-01-01' AND CURRENT_DATE " +
+" AND st.label = 'PSC' " +
+" GROUP BY a.drcpt, TO_CHAR(a.drcpt, 'Mon-YYYY'), st.label, pt.id, pt.name  " +
+" ORDER BY a.drcpt ASC;", nativeQuery = true)
+List<Object[]> getestByspecimenPSC(@Param("partnerId") int partnerId);
+
+
+
+
+
+
+
+
+
 }

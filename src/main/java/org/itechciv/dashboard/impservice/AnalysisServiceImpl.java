@@ -1994,4 +1994,59 @@ public List<Object[]> getPatientBySiteForOneRegion(Long regionId, int year) {
        }
 }
 
+@Override
+public List<Object[]> getTestByPartner(int year) {
+    try{
+        return analisysRepo.getTestByPartner(year);
+
+    }catch(Exception ex){
+        ex.printStackTrace();
+        return Collections.emptyList();
+       }
+}
+
+@Override
+public List<Object[]> getPatientByPartner(int year) {
+    try{
+        return analisysRepo.getPatientByPartner(year);
+
+    }catch(Exception ex){
+        ex.printStackTrace();
+        return Collections.emptyList();
+       }
+}
+
+@Override
+public List<Object[]> getestByspecimenEDTAPlasma(int partnerId) {
+    try{
+        return analisysRepo.getestByspecimenEDTAPlasma(partnerId);
+
+    }catch(Exception ex){
+        ex.printStackTrace();
+        return Collections.emptyList();
+       }
+}
+
+@Override
+public List<Object[]> getestByspecimenDBS(int partnerId) {
+    try{
+        return analisysRepo.getestByspecimenDBS(partnerId);
+
+    }catch(Exception ex){
+        ex.printStackTrace();
+        return Collections.emptyList();
+       }
+}
+
+@Override
+public List<Object[]> getestByspecimenPSC(int partnerId) {
+    try{
+        return analisysRepo.getestByspecimenPSC(partnerId);
+
+    }catch(Exception ex){
+        ex.printStackTrace();
+        return Collections.emptyList();
+       }
+}
+
 }
