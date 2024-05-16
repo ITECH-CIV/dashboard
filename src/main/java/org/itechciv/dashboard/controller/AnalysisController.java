@@ -1043,6 +1043,22 @@ public class AnalysisController {
     return analysisServices.getestByspecimenPSC(partnerId);
     }
 
+    @GetMapping("/patientminusone")
+    public List<Object[]> getTestedPatientAgeCategoryBetweenFifteenAndNineteenForAllRegion(@RequestParam int year) {
+    return analysisServices.getTestedPatientAgeCategoryBetweenFifteenAndNineteenForAllRegion(year);
+    }
+
+    @GetMapping("/patientbydistrictm")
+    public List<Object[]> district7(@RequestParam Long districtId, @RequestParam int year) {
+    return analysisServices.district7(districtId, year);
+    }
+
+    @GetMapping("/patientbysitem")
+    public List<Object[]> site8(@RequestParam Long siteId, @RequestParam int year) {
+    return analysisServices.site8(siteId, year);
+    }
+ 
+
 
 
 

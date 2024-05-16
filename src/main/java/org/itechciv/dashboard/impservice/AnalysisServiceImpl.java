@@ -7,8 +7,6 @@ import java.util.List;
 import org.itechciv.dashboard.iservice.AnalysisService;
 import org.itechciv.dashboard.model.Analysis;
 import org.itechciv.dashboard.repository.AnalysisRepository;
-import org.itechciv.dashboard.response.Response;
-import org.itechciv.dashboard.response.Response.ResponseStatusEnum;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -2049,4 +2047,39 @@ public List<Object[]> getestByspecimenPSC(int partnerId) {
        }
 }
 
+@Override
+public List<Object[]> getTestedPatientAgeCategoryBetweenFifteenAndNineteenForAllRegion(int year) {
+    try{
+        return analisysRepo.getTestedPatientAgeCategoryBetweenFifteenAndNineteenForAllRegion(year);
+
+    }catch(Exception ex){
+        ex.printStackTrace();
+        return Collections.emptyList();
+       }
+}
+
+@Override
+public List<Object[]> district7(Long districtId, int year) {
+    try{
+        return analisysRepo.district7(districtId, year);
+
+    }catch(Exception ex){
+        ex.printStackTrace();
+        return Collections.emptyList();
+       }
+}
+
+
+
+@Override
+public List<Object[]> site8(Long siteId, int year) {
+    try{
+        return analisysRepo.site8(siteId, year);
+
+    }catch(Exception ex){
+        ex.printStackTrace();
+        return Collections.emptyList();
+       }
+}
+ 
 }

@@ -217,6 +217,14 @@ List<Object[]> getestByspecimenEDTAPlasma(@Param("partnerId") int partnerId);
 List<Object[]> getestByspecimenDBS(@Param("partnerId") int partnerId);
 List<Object[]> getestByspecimenPSC(@Param("partnerId") int partnerId);
 
+List<Object[]> getTestedPatientAgeCategoryBetweenFifteenAndNineteenForAllRegion(@Param("year") int year);
+List<Object[]> district7(@Param("districtId") Long districtId, @Param("year") int year);
+
+List<Object[]> site8(@Param("siteId") Long siteId, @Param("year") int year);
+
+
+
+
 
 
 
