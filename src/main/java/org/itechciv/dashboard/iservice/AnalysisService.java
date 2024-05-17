@@ -222,6 +222,10 @@ List<Object[]> district7(@Param("districtId") Long districtId, @Param("year") in
 
 List<Object[]> site8(@Param("siteId") Long siteId, @Param("year") int year);
 
+List<Object[]> getTestWithDetailsByPartner(@Param("year") int year, @Param("partnerId") Long partnerId);
+List<Object[]> getPatientWithDetailsByPartner(@Param("year") int year, @Param("partnerId") Long partnerId);
+
+
 
 
 

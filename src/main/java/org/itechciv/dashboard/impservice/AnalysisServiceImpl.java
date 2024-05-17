@@ -2081,5 +2081,27 @@ public List<Object[]> site8(Long siteId, int year) {
         return Collections.emptyList();
        }
 }
+
+@Override
+public List<Object[]> getTestWithDetailsByPartner(int year, Long partnerId) {
+    try{
+        return analisysRepo.getTestWithDetailsByPartner(year, partnerId);
+
+    }catch(Exception ex){
+        ex.printStackTrace();
+        return Collections.emptyList();
+       }
+}
+
+@Override
+public List<Object[]> getPatientWithDetailsByPartner(int year, Long partnerId) {
+    try{
+        return analisysRepo.getPatientWithDetailsByPartner(year, partnerId);
+
+    }catch(Exception ex){
+        ex.printStackTrace();
+        return Collections.emptyList();
+       }
+}
  
 }

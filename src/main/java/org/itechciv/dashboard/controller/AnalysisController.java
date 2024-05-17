@@ -1057,6 +1057,16 @@ public class AnalysisController {
     public List<Object[]> site8(@RequestParam Long siteId, @RequestParam int year) {
     return analysisServices.site8(siteId, year);
     }
+
+    @GetMapping("/testdetailbypartner")
+    public List<Object[]> getTestWithDetailsByPartner(@RequestParam int year, @RequestParam Long partnerId) {
+    return analysisServices.getTestWithDetailsByPartner(year, partnerId);
+    }
+
+    @GetMapping("/patientdetailbypartner")
+    public List<Object[]> getPatientWithDetailsByPartner(@RequestParam int year, @RequestParam Long partnerId) {
+    return analysisServices.getPatientWithDetailsByPartner(year, partnerId);
+    }
  
 
 
