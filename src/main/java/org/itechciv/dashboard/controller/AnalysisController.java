@@ -1067,14 +1067,109 @@ public class AnalysisController {
     public List<Object[]> getPatientWithDetailsByPartner(@RequestParam int year, @RequestParam Long partnerId) {
     return analysisServices.getPatientWithDetailsByPartner(year, partnerId);
     }
+
+
+    @GetMapping("/testbydistrictother")
+    public List<Object[]> districtSeven(@RequestParam int year, @RequestParam Long partnerId) {
+    return analysisServices.districtSeven(partnerId, year);
+    }
+
+
+    @GetMapping("/testallregionrone")
+    public List<Object[]> testOne(@RequestParam int year) {
+    return analysisServices.testOne(year);
+    }
+
+   @GetMapping("/testallregiontwo")
+    public List<Object[]> testTwo(@RequestParam int year) {
+    return analysisServices.testTwo(year);
+    }
  
 
+    @GetMapping("/testallregionthree")
+    public List<Object[]> testThree(@RequestParam int year) {
+    return analysisServices.testThree(year);
+    }
+ 
+
+    @GetMapping("/testallregionfour")
+    public List<Object[]> testFour(@RequestParam int year) {
+    return analysisServices.testFour(year);
+    }
+ 
+
+    @GetMapping("/testallregionfive")
+    public List<Object[]> testFive(@RequestParam int year) {
+    return analysisServices.testFive(year);
+    }
+ 
+
+    @GetMapping("/testallregionsix")
+    public List<Object[]> testSix(@RequestParam int year) {
+    return analysisServices.testSix(year);
+    }
+  
+
+    @GetMapping("/testbydistrictotherone")
+    public List<Object[]> districtEleven(@RequestParam int year, @RequestParam Long partnerId) {
+    return analysisServices.districtEleven(partnerId, year);
+    }
 
 
 
+    @GetMapping("/patientallregionone")
+    public List<Object[]> patientOne(@RequestParam int year) {
+    return analysisServices.patientOne(year);
+    }
 
+    @GetMapping("/patientallregiontwo")
+    public List<Object[]> patientTwo(@RequestParam int year) {
+    return analysisServices.patientTwo(year);
+    }
+ 
+    @GetMapping("/patientallregionthree")
+    public List<Object[]> patientThree(@RequestParam int year) {
+    return analysisServices.patientThree(year);
+    }
+ 
 
+    @GetMapping("/patientallregionfour")
+    public List<Object[]> patientFour(@RequestParam int year) {
+    return analysisServices.patientFour(year);
+    }
+ 
+    @GetMapping("/patientallregionfive")
+    public List<Object[]> patientFive(@RequestParam int year) {
+    return analysisServices.patientFive(year);
+    }
+ 
+    @GetMapping("/patientallregionsix")
+    public List<Object[]> patientSix(@RequestParam int year) {
+    return analysisServices.patientSix(year);
+    }
 
+    @GetMapping("/testforspecificpartner")
+    public List<Object[]> getTestForSpecificPartner(@RequestParam int year,  @RequestParam Long partnerId) {
+    return analysisServices.getTestForSpecificPartner(year, partnerId);
+    }
+
+    @GetMapping("/patientforspecificpartner")
+    public List<Object[]> getPatientForSpecificPartner(@RequestParam int year,  @RequestParam Long partnerId) {
+    return analysisServices.getPatientForSpecificPartner(year, partnerId);
+    }
+
+    @GetMapping("/patientmaleforspecificpartner")
+    public List<Object[]> getPatientForOnePartnerByMale(@RequestParam int year, @RequestParam Long partnerId) {
+    return analysisServices.getPatientForOnePartnerByMale(year, partnerId);
+    }
+
+    @GetMapping("/patientfemaleforspecificpartner")
+    public List<Object[]> getPatientForOnePartnerByFemale(@RequestParam int year, @RequestParam Long partnerId) {
+    return analysisServices.getPatientForOnePartnerByFemale(year, partnerId);
+    }
+ 
+ 
+ 
 /*
     @GetMapping("/count/inferieurmil")
     public long countTestsWithViralLoadLessThan1000() {

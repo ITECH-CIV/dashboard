@@ -8,6 +8,7 @@ import org.itechciv.dashboard.iservice.AnalysisService;
 import org.itechciv.dashboard.model.Analysis;
 import org.itechciv.dashboard.repository.AnalysisRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -2103,5 +2104,220 @@ public List<Object[]> getPatientWithDetailsByPartner(int year, Long partnerId) {
         return Collections.emptyList();
        }
 }
+
+@Override
+public List<Object[]> districtSeven(Long districtId, int year) {
+    try{
+        return analisysRepo.districtSeven(districtId, year);
+
+    }catch(Exception ex){
+        ex.printStackTrace();
+        return Collections.emptyList();
+       }
+}
+
+@Override
+public List<Object[]> districtEleven(Long districtId, int year) {
+    try{
+        return analisysRepo.districtEleven(districtId, year);
+
+    }catch(Exception ex){
+        ex.printStackTrace();
+        return Collections.emptyList();
+       }
+}
+
+@Override
+public List<Object[]> testOne(int year) {
+    try{
+        return analisysRepo.testOne(year);
+
+    }catch(Exception ex){
+        ex.printStackTrace();
+        return Collections.emptyList();
+       }
+}
+
+@Override
+public List<Object[]> testTwo(int year) {
+    try{
+        return analisysRepo.testTwo(year);
+
+    }catch(Exception ex){
+        ex.printStackTrace();
+        return Collections.emptyList();
+       }
+}
+
+@Override
+public List<Object[]> testThree(int year) {
+    try{
+        return analisysRepo.testThree(year);
+
+    }catch(Exception ex){
+        ex.printStackTrace();
+        return Collections.emptyList();
+       }
+}
+
+@Override
+public List<Object[]> testFour(int year) {
+    try{
+        return analisysRepo.testFour(year);
+
+    }catch(Exception ex){
+        ex.printStackTrace();
+        return Collections.emptyList();
+       }
+}
+
+@Override
+public List<Object[]> testFive(int year) {
+    try{
+        return analisysRepo.testFive(year);
+
+    }catch(Exception ex){
+        ex.printStackTrace();
+        return Collections.emptyList();
+       }
+}
+
+@Override
+public List<Object[]> testSix(int year) {
+    try{
+        return analisysRepo.testSix(year);
+
+    }catch(Exception ex){
+        ex.printStackTrace();
+        return Collections.emptyList();
+       }
+}
+
+@Override
+public List<Object[]> patientOne(int year) {
+    try{
+        return analisysRepo.patientOne(year);
+
+    }catch(Exception ex){
+        ex.printStackTrace();
+        return Collections.emptyList();
+       }    
+}
+
+
+@Override
+public List<Object[]> patientTwo(int year) {
+    try{
+        return analisysRepo.patientTwo(year);
+
+    }catch(Exception ex){
+        ex.printStackTrace();
+        return Collections.emptyList();
+       }    
+}
+ 
+
+
+@Override
+public List<Object[]> patientThree(int year) {
+    try{
+        return analisysRepo.patientThree(year);
+
+    }catch(Exception ex){
+        ex.printStackTrace();
+        return Collections.emptyList();
+       }    
+}
+ 
+
+
+@Override
+public List<Object[]> patientFour(int year) {
+    try{
+        return analisysRepo.patientFour(year);
+
+    }catch(Exception ex){
+        ex.printStackTrace();
+        return Collections.emptyList();
+       }    
+}
+ 
+
+
+@Override
+public List<Object[]> patientFive(int year) {
+    try{
+        return analisysRepo.patientFive(year);
+
+    }catch(Exception ex){
+        ex.printStackTrace();
+        return Collections.emptyList();
+       }    
+}
+ 
+
+
+@Override
+public List<Object[]> patientSix(int year) {
+    try{
+        return analisysRepo.patientSix(year);
+
+    }catch(Exception ex){
+        ex.printStackTrace();
+        return Collections.emptyList();
+       }    
+}
+
+@Override
+public List<Object[]> getTestForSpecificPartner(int year, Long partnerId) {
+    try{
+        return analisysRepo.getTestForSpecificPartner(year, partnerId);
+
+    }catch(Exception ex){
+        ex.printStackTrace();
+        return Collections.emptyList();
+       }    
+}
+
+@Override
+public List<Object[]> getPatientForSpecificPartner(int year, Long partnerId) {
+    try{
+        return analisysRepo.getPatientForSpecificPartner(year, partnerId);
+
+    }catch(Exception ex){
+        ex.printStackTrace();
+        return Collections.emptyList();
+       }    
+}
+
+  
+    //genre masculin
+    @Override
+    public List<Object[]> getPatientForOnePartnerByMale(int year, Long partnerId) {
+        String sex = "M"; // Sexe masculin
+        try{
+            return analisysRepo.getPatientForOnePartnerByMale(year, partnerId, sex);
+        }catch(Exception ex){
+            ex.printStackTrace();
+            return Collections.emptyList(); 
+        }
+    }
+
+    @Override
+    public List<Object[]> getPatientForOnePartnerByFemale(int year, Long partnerId) {
+        String sex = "F"; // Sexe Feminin
+        try{
+            return analisysRepo.getPatientForOnePartnerByFemale(year, partnerId, sex);
+        }catch(Exception ex){
+            ex.printStackTrace();
+            return Collections.emptyList(); 
+        }
+    }
+
+
+
+ 
+ 
+
  
 }

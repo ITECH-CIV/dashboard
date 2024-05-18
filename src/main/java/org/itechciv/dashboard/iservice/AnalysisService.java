@@ -226,6 +226,38 @@ List<Object[]> getTestWithDetailsByPartner(@Param("year") int year, @Param("part
 List<Object[]> getPatientWithDetailsByPartner(@Param("year") int year, @Param("partnerId") Long partnerId);
 
 
+List<Object[]> districtSeven(@Param("districtId") Long districtId, @Param("year") int year);
+List<Object[]>districtEleven(@Param("districtId") Long districtId , @Param("year") int year);
+
+List<Object[]>testOne(@Param("year") int year);
+List<Object[]>testTwo(@Param("year") int year);
+List<Object[]>testThree(@Param("year") int year);
+List<Object[]>testFour(@Param("year") int year);
+List<Object[]>testFive(@Param("year") int year);
+List<Object[]>testSix(@Param("year") int year); 
+
+List<Object[]> patientOne(@Param("year") int year);
+List<Object[]>patientTwo(@Param("year") int year);
+List<Object[]>patientThree(@Param("year") int year);
+List<Object[]>patientFour(@Param("year") int year);
+List<Object[]>patientFive(@Param("year") int year);
+List<Object[]>patientSix(@Param("year") int year);
+
+List<Object[]> getTestForSpecificPartner(@Param("year") int year, @Param("partnerId") Long partnerId);
+List<Object[]> getPatientForSpecificPartner(@Param("year") int year, @Param("partnerId") Long partnerId);
+
+List<Object[]>getPatientForOnePartnerByMale(@Param("year") int year, @Param("partnerId") Long partnerId);
+List<Object[]>getPatientForOnePartnerByFemale(@Param("year") int year, @Param("partnerId") Long partnerId);
+
+
+
+
+
+
+
+
+
+
 
 
 
