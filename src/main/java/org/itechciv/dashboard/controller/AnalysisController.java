@@ -1167,6 +1167,34 @@ public class AnalysisController {
     public List<Object[]> getPatientForOnePartnerByFemale(@RequestParam int year, @RequestParam Long partnerId) {
     return analysisServices.getPatientForOnePartnerByFemale(year, partnerId);
     }
+
+    @GetMapping("/testmaleforspecificpartner")
+    public List<Object[]> getTestForOnePartnerByMale(@RequestParam int year, @RequestParam Long partnerId) {
+    return analysisServices.getTestForOnePartnerByMale(year, partnerId);
+    }
+
+    @GetMapping("/testfemaleforspecificpartner")
+    public List<Object[]> getTestForOnePartnerByFemale(@RequestParam int year, @RequestParam Long partnerId) {
+    return analysisServices.getTestForOnePartnerByFemale(year, partnerId);
+    }
+
+    @GetMapping("/motifvlreasonbyonepartner")
+    public List<Object[]> motifVlreasonByOnePartner(@RequestParam int year, @RequestParam Long partnerId) {
+    return analysisServices.motifVlreasonByOnePartner(year, partnerId);
+    }
+ 
+    @GetMapping("/testbysiteforonepartner")
+    public List<Object[]> getTestBySiteForOnePartner(@RequestParam int year, @RequestParam Long partnerId) {
+    return analysisServices.getTestBySiteForOnePartner(partnerId, year);
+    }
+ 
+
+    @GetMapping("/patientbysiteforonepartner")
+    public List<Object[]> getPatientBySiteForOnePartner(@RequestParam int year, @RequestParam Long partnerId) {
+    return analysisServices.getPatientBySiteForOnePartner(partnerId, year);
+    }
+ 
+ 
  
  
  

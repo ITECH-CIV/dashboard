@@ -249,6 +249,20 @@ List<Object[]> getPatientForSpecificPartner(@Param("year") int year, @Param("par
 List<Object[]>getPatientForOnePartnerByMale(@Param("year") int year, @Param("partnerId") Long partnerId);
 List<Object[]>getPatientForOnePartnerByFemale(@Param("year") int year, @Param("partnerId") Long partnerId);
 
+List<Object[]> getTestForOnePartnerByMale(@Param("year") int year, @Param("partnerId") Long partnerId);
+
+List<Object[]> getTestForOnePartnerByFemale(@Param("year") int year, @Param("partnerId") Long partnerId);
+
+List<Object[]> motifVlreasonByOnePartner(@Param("year") int year, @Param("partnerId") Long partnerId);
+
+List<Object[]> getTestBySiteForOnePartner(@Param("partnerId") Long partnerId , @Param("year") int year);
+
+List<Object[]> getPatientBySiteForOnePartner(@Param("partnerId") Long partnerId , @Param("year") int year);
+
+
+
+
+
 
 
 

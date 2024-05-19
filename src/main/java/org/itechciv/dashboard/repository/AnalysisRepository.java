@@ -6161,6 +6161,123 @@ List<Object[]>getPatientForOnePartnerByMale(@Param("year") int year, @Param("par
 List<Object[]>getPatientForOnePartnerByFemale(@Param("year") int year, @Param("partnerId") Long partnerId, @Param("sex") String sex);
 
 
+//Nombre de tests réalisés par genre(Male) pour un partenaire
+@Query(value = "SELECT pt.id, pt.name, p.gender,  " +
+" SUM(CASE WHEN a.converted_result >= 1000 THEN 1 ELSE 0 END) AS TOTAL_SUPERIEUR_OU_EGAL_1000, " +
+" SUM(CASE WHEN a.converted_result < 1000 THEN 1 ELSE 0 END ) AS TOTAL_INFERIEUR_A_1000, " +
+" SUM(CASE WHEN a.converted_result = 0 THEN 1 ELSE 0 END) AS TOTAL_INDETECTABLE_LL, " +
+" SUM(CASE WHEN a.converted_result = -1 THEN 1 ELSE 0 END) AS TOTAL_INVALIDE_XXXX, " +
+" ROUND(SUM(CASE WHEN a.converted_result >= 1000 THEN 1 ELSE 0 END) * 100.0 / SUM(1), 2) AS POURCENTAGE_SUPERIEUR_OU_EGAL_A_1000, " +
+" ROUND(SUM(CASE WHEN a.converted_result < 1000 THEN 1 ELSE 0 END) * 100.0 / SUM(1), 2) AS POURCENTAGE_INFERIEUR_A_1000, " +
+" ROUND(SUM(CASE WHEN a.converted_result = 0 THEN 1 ELSE 0 END) * 100.0 / SUM(1), 2) AS POURCENTAGE_INDETECTABLE, " +
+" ROUND(SUM(CASE WHEN a.converted_result = -1 THEN 1 ELSE 0 END) * 100.0 / SUM(1), 2) AS POURCENTAGE_INVALIDE " +
+" FROM dashboard.region r " +
+" INNER JOIN dashboard.district d ON r.id = d.region_id" +
+" INNER JOIN dashboard.site s ON d.id = s.district_id " +
+" INNER JOIN dashboard.patient p ON s.id = p.site_id" +
+" INNER JOIN dashboard.analysis a ON p.id = a.patient_id " +
+" INNER JOIN dashboard.test t on t.id = a.test_id " +
+" INNER JOIN dashboard.site_partner sp on s.id = sp.site_id " +
+" INNER JOIN dashboard.partner pt on pt.id = sp.partner_id " +
+" WHERE pt.id = :partnerId AND p.gender = :sex AND  " +
+" EXTRACT(YEAR FROM a.drcpt) = :year " +
+" GROUP BY pt.id, pt.name, p.gender, EXTRACT(YEAR FROM a.drcpt); ", nativeQuery = true)
+List<Object[]> getTestForOnePartnerByMale(@Param("year") int year, @Param("partnerId") Long partnerId, @Param("sex") String sex);
+
+
+//Nombre de tests réalisés par genre(Female) pour un partenaire
+@Query(value = "SELECT pt.id, pt.name, p.gender,  " +
+" SUM(CASE WHEN a.converted_result >= 1000 THEN 1 ELSE 0 END) AS TOTAL_SUPERIEUR_OU_EGAL_1000, " +
+" SUM(CASE WHEN a.converted_result < 1000 THEN 1 ELSE 0 END ) AS TOTAL_INFERIEUR_A_1000, " +
+" SUM(CASE WHEN a.converted_result = 0 THEN 1 ELSE 0 END) AS TOTAL_INDETECTABLE_LL, " +
+" SUM(CASE WHEN a.converted_result = -1 THEN 1 ELSE 0 END) AS TOTAL_INVALIDE_XXXX, " +
+" ROUND(SUM(CASE WHEN a.converted_result >= 1000 THEN 1 ELSE 0 END) * 100.0 / SUM(1), 2) AS POURCENTAGE_SUPERIEUR_OU_EGAL_A_1000, " +
+" ROUND(SUM(CASE WHEN a.converted_result < 1000 THEN 1 ELSE 0 END) * 100.0 / SUM(1), 2) AS POURCENTAGE_INFERIEUR_A_1000, " +
+" ROUND(SUM(CASE WHEN a.converted_result = 0 THEN 1 ELSE 0 END) * 100.0 / SUM(1), 2) AS POURCENTAGE_INDETECTABLE, " +
+" ROUND(SUM(CASE WHEN a.converted_result = -1 THEN 1 ELSE 0 END) * 100.0 / SUM(1), 2) AS POURCENTAGE_INVALIDE " +
+" FROM dashboard.region r " +
+" INNER JOIN dashboard.district d ON r.id = d.region_id" +
+" INNER JOIN dashboard.site s ON d.id = s.district_id " +
+" INNER JOIN dashboard.patient p ON s.id = p.site_id" +
+" INNER JOIN dashboard.analysis a ON p.id = a.patient_id " +
+" INNER JOIN dashboard.test t on t.id = a.test_id " +
+" INNER JOIN dashboard.site_partner sp on s.id = sp.site_id " +
+" INNER JOIN dashboard.partner pt on pt.id = sp.partner_id " +
+" WHERE pt.id = :partnerId AND p.gender = :sex AND  " +
+" EXTRACT(YEAR FROM a.drcpt) = :year " +
+" GROUP BY pt.id, pt.name, p.gender, EXTRACT(YEAR FROM a.drcpt); ", nativeQuery = true)
+List<Object[]> getTestForOnePartnerByFemale(@Param("year") int year, @Param("partnerId") Long partnerId, @Param("sex") String sex);
+
+
+
+// Motif de le demande des tests
+@Query(
+        "SELECT pt.id, pt.name, " +
+                "'CV contrôle sous ARV', " +
+                "ROUND(SUM(CASE WHEN vl.name = 'CV contrôle sous ARV' THEN 1 ELSE 0 END) * 100.0 / COUNT(a.id), 2) AS cvControleSousARV, " +
+                "'Autres', " +
+                "ROUND(SUM(CASE WHEN vl.name = 'Autres' THEN 1 ELSE 0 END) * 100.0 / COUNT(a.id), 2) AS Autres, " +
+                "'Echec clinique', " +
+                "ROUND(SUM(CASE WHEN vl.name = 'Echec clinique' THEN 1 ELSE 0 END) * 100.0 / COUNT(a.id), 2) AS echecClinique, " +
+                "'Echec immunologique', " +
+                "ROUND(SUM(CASE WHEN vl.name = 'Echec immunologique' THEN 1 ELSE 0 END) * 100.0 / COUNT(a.id), 2) AS echecImmunologique, " +
+                "'Echec virologique', " +
+                "ROUND(SUM(CASE WHEN vl.name = 'Echec virologique' THEN 1 ELSE 0 END) * 100.0 / COUNT(a.id), 2) AS echecVirologique, " +
+                "'Autres (à préciser)', " +
+                "ROUND(SUM(CASE WHEN vl.name = 'Autres (à préciser)' THEN 1 ELSE 0 END) * 100.0 / COUNT(a.id), 2) AS autres, " +
+                "'', " +
+                "ROUND(SUM(CASE WHEN vl.name = '' THEN 1 ELSE 0 END) * 100.0 / COUNT(a.id), 2) AS invalide " +
+                "FROM Region r " +
+                "JOIN District d ON r.id = d.region.id " +
+                "JOIN Site s ON d.id = s.district.id " +
+                "JOIN Patient p ON s.id = p.site.id " +
+                "JOIN Analysis a ON p.id = a.patient.id " +
+                "JOIN Test t ON a.test.id = t.id " +
+                "JOIN Regimen reg ON a.regimen.id = reg.id " +
+                "JOIN VlReason vl ON a.vlReason.id = vl.id " +
+                "JOIN SitePartner sp on s.id = sp.site.id " +
+                "JOIN Partner pt on pt.id = sp.partner.id " +
+                "WHERE pt.id = :partnerId AND " +
+                "EXTRACT(YEAR FROM a.drcpt) = :year " + 
+                "GROUP BY pt.id, pt.name, EXTRACT(YEAR FROM a.drcpt) "
+                )
+List<Object[]> motifVlreasonByOnePartner(@Param("year") int year, @Param("partnerId") Long partnerId);
+
+
+
+ //Nombre de tests réalisés par site pour un partenaire
+ @Query(value = "SELECT pt.id, pt.name, s.id, SUBSTRING(s.newSiteShortName, 0, 13)," +
+ " SUM(CASE WHEN a.convertedResult >= 1000 THEN 1 ELSE 0 END) AS TOTAL_SUPERIEUR_OU_EGAL_1000, " +
+ " SUM(CASE WHEN a.convertedResult < 1000 THEN 1 ELSE 0 END ) AS TOTAL_INFERIEUR_A_1000, " +
+ " SUM(CASE WHEN a.convertedResult = 0 THEN 1 ELSE 0 END) AS TOTAL_INDETECTABLE_LL, " +
+ " SUM(CASE WHEN a.convertedResult = -1 THEN 1 ELSE 0 END) AS TOTAL_INVALIDE_XXXX " +
+ " FROM Region r " +
+ " JOIN District d ON r.id = d.region.id " +
+ " JOIN Site s ON d.id = s.district.id " +
+ " JOIN Patient p ON s.id = p.site.id " +
+ " JOIN Analysis a ON p.id = a.patient.id " +
+ " JOIN SitePartner sp on s.id = sp.site.id " +
+ " JOIN Partner pt on pt.id = sp.partner.id " +
+ " WHERE pt.id = :partnerId AND EXTRACT(YEAR FROM a.drcpt) = :year " +
+ " GROUP BY pt.id, pt.name, s.id, s.newSiteShortName, EXTRACT(YEAR FROM a.drcpt)")
+ List<Object[]> getTestBySiteForOnePartner(@Param("partnerId") Long partnerId , @Param("year") int year);
+
+ //Nombre de patients testés par site pour un partenaire
+ @Query(value = "SELECT pt.id, pt.name, s.id, SUBSTRING(s.newSiteShortName, 0, 13)," +
+ " SUM(CASE WHEN a.convertedResult >= 1000 THEN 1 ELSE 0 END) AS TOTAL_NON_SUPPRIME, " +
+ " SUM(CASE WHEN a.convertedResult < 1000 AND a.convertedResult > 0 THEN 1 ELSE 0 END ) AS TOTAL_SUPPRIME, " +
+ " ROUND(SUM(CASE WHEN a.convertedResult = 0 THEN 1 WHEN a.convertedResult < 1000 AND a.convertedResult > 0 THEN 1 ELSE 0 END) * 100.0 / SUM(1), 2) AS POURCENTAGE_SUPPRIME " +
+ " FROM Region r " +
+ " JOIN District d ON r.id = d.region.id " +
+ " JOIN Site s ON d.id = s.district.id " +
+ " JOIN Patient p ON s.id = p.site.id " +
+ " JOIN Analysis a ON p.id = a.patient.id " +
+ " JOIN SitePartner sp on s.id = sp.site.id " +
+ " JOIN Partner pt on pt.id = sp.partner.id " +
+ " WHERE pt.id = :partnerId AND EXTRACT(YEAR FROM a.drcpt) = :year " +
+ " GROUP BY pt.id, pt.name, s.id, s.newSiteShortName, EXTRACT(YEAR FROM a.drcpt)")
+ List<Object[]> getPatientBySiteForOnePartner(@Param("partnerId") Long partnerId , @Param("year") int year);
+
 
 
 

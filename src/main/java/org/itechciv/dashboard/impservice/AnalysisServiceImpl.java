@@ -2294,7 +2294,7 @@ public List<Object[]> getPatientForSpecificPartner(int year, Long partnerId) {
     //genre masculin
     @Override
     public List<Object[]> getPatientForOnePartnerByMale(int year, Long partnerId) {
-        String sex = "M"; // Sexe masculin
+        String sex = "M"; 
         try{
             return analisysRepo.getPatientForOnePartnerByMale(year, partnerId, sex);
         }catch(Exception ex){
@@ -2305,19 +2305,73 @@ public List<Object[]> getPatientForSpecificPartner(int year, Long partnerId) {
 
     @Override
     public List<Object[]> getPatientForOnePartnerByFemale(int year, Long partnerId) {
-        String sex = "F"; // Sexe Feminin
+        String sex = "F"; 
         try{
             return analisysRepo.getPatientForOnePartnerByFemale(year, partnerId, sex);
         }catch(Exception ex){
             ex.printStackTrace();
             return Collections.emptyList(); 
         }
-    }
+    } 
+
+    @Override
+    public List<Object[]> getTestForOnePartnerByMale(int year, Long partnerId) {
+        String sex = "M"; 
+        try{
+            return analisysRepo.getTestForOnePartnerByMale(year, partnerId, sex);
+        }catch(Exception ex){
+            ex.printStackTrace();
+            return Collections.emptyList(); 
+        }
+    } 
+
+    @Override
+    public List<Object[]> getTestForOnePartnerByFemale(int year, Long partnerId) {
+        String sex = "F"; 
+        try{
+            return analisysRepo.getTestForOnePartnerByFemale(year, partnerId, sex);
+        }catch(Exception ex){
+            ex.printStackTrace();
+            return Collections.emptyList(); 
+        }
+    } 
 
 
+@Override
+public List<Object[]> motifVlreasonByOnePartner(int year, Long partnerId) {
+    try{
+        return analisysRepo.motifVlreasonByOnePartner(year, partnerId);
 
- 
- 
+    }catch(Exception ex){
+        ex.printStackTrace();
+        return Collections.emptyList();
+       }    
+}
 
- 
+
+@Override
+public List<Object[]> getTestBySiteForOnePartner(Long partnerId, int year) {
+    try{
+        return analisysRepo.getTestBySiteForOnePartner(partnerId,year);
+
+    }catch(Exception ex){
+        ex.printStackTrace();
+        return Collections.emptyList();
+       }    
+}
+
+
+@Override
+public List<Object[]> getPatientBySiteForOnePartner(Long partnerId, int year) {
+    try{
+        return analisysRepo.getPatientBySiteForOnePartner(partnerId, year);
+
+    }catch(Exception ex){
+        ex.printStackTrace();
+        return Collections.emptyList();
+       }    
+}
+
+
+  
 }
