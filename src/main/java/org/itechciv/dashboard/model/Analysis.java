@@ -69,6 +69,14 @@ public class Analysis {
 	  @JoinColumn(name ="labId", nullable = false)
 	  private Lab lab;
 
+	  @ManyToOne
+	  @JoinColumn(name ="ageCdcId", nullable = true)
+	  private AgeCategory ageCdc; 
+
+	  @ManyToOne
+	  @JoinColumn(name ="ageNationalId", nullable = true)
+	  private AgeCategory ageNational; 
+
 		public Analysis() {
 			super();
 		}
@@ -191,6 +199,22 @@ public class Analysis {
 
 		public void setLab(Lab lab) {
 			this.lab = lab;
+		} 
+
+		public AgeCategory getAgeCdc() {
+			return ageCdc;
+		}
+
+		public void setAgeCdc(AgeCategory ageCdc) {
+			this.ageCdc = ageCdc;
+		}
+
+		public AgeCategory getAgeNational() {
+			return ageNational;
+		}
+
+		public void setAgeNational(AgeCategory ageNational) {
+			this.ageNational = ageNational;
 		}
 
 		@Override
@@ -199,6 +223,10 @@ public class Analysis {
 					+ ", grossResult=" + grossResult + ", convertedResult=" + convertedResult + ", analysisStatus="
 					+ analysisStatus + ", labno=" + labno + ", drcpt=" + drcpt + ", dintv=" + dintv + ", sampleType="
 					+ sampleType + ", test=" + test + ", patient=" + patient + ", regimen=" + regimen + ", vlReason="
-					+ vlReason + ", lab=" + lab + "]";
-		}		
+					+ vlReason + ", lab=" + lab + ", ageCdc=" + ageCdc + ", ageNational=" + ageNational + "]";
+		}
+
+		
+
+		
 }

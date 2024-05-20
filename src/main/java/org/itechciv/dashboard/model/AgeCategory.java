@@ -1,10 +1,14 @@
  package org.itechciv.dashboard.model;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import jakarta.persistence.OneToMany;
 import jakarta.persistence.Table;
 
 @Entity
@@ -21,6 +25,14 @@ public class AgeCategory  {
       @Column(name="type")
       private String type;
 
+	   
+	  @Column(name="min_cat", nullable = true)
+	  private int minCat;
+	  
+	   
+	  @Column(name="max_cat", nullable = true)
+	  private int maxCat;
+	  
 	public AgeCategory() {
 		super();
 	}
@@ -52,5 +64,11 @@ public class AgeCategory  {
 	@Override
 	public String toString() {
 		return "AgeCategory [id=" + id + ", label=" + label + ", type=" + type + "]";
-	} 
+	}
+
+
+	
+
+	
+
 }

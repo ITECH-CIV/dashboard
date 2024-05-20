@@ -1,5 +1,9 @@
 package org.itechciv.dashboard.controller;
 
+import java.util.List;
+import java.util.Map;
+
+import org.itechciv.dashboard.helper.CategoryAge;
 import org.itechciv.dashboard.helper.ConstantMessage;
 import org.itechciv.dashboard.helper.ResponseMessage;
 import org.itechciv.dashboard.iservice.UploadService;
@@ -8,6 +12,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.CrossOrigin;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -223,5 +228,29 @@ public class UploadController {
 				  message = ConstantMessage.ERROR;
 			      return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(new ResponseMessage(message, ex.getMessage()));
 			  } 	 
-		}	
+		}
+		
+		
+		@GetMapping("/listcdcage")
+		public List<CategoryAge> getCDCAgeCategory() {
+		return uploadService.getCDCAgeCategory();
+		}
+
+		@GetMapping("/listnationalage")
+		public  List<CategoryAge> getNationalAgeCategory() {
+		return uploadService.getNationalAgeCategory();
+		}
+
+		@GetMapping("/cdcagecategorybyid")
+		public  Integer getCDCAgeCategorieId(@RequestParam Integer age) {
+		return uploadService.getCDCAgeCategorieId(age);
+		}
+
+		@GetMapping("/ntionalagecategorybyid")
+		public  Integer getNationalCategoriesId(@RequestParam Integer age) {
+		return uploadService.getNationalCategoriesId(age);
+		}
+
+
+
 }

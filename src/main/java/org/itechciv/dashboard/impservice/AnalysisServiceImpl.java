@@ -2360,7 +2360,6 @@ public List<Object[]> getTestBySiteForOnePartner(Long partnerId, int year) {
        }    
 }
 
-
 @Override
 public List<Object[]> getPatientBySiteForOnePartner(Long partnerId, int year) {
     try{
@@ -2371,6 +2370,88 @@ public List<Object[]> getPatientBySiteForOnePartner(Long partnerId, int year) {
         return Collections.emptyList();
        }    
 }
+/********************************************************************************************************************************** */
+/* @Override
+public List<Object[]> getTestByCategoryAgeMinus2(Long partnerId, int year) {
+    try{
+        return analisysRepo.getTestByCategoryAgeMinus2(partnerId,year);
+
+    }catch(Exception ex){
+        ex.printStackTrace();
+        return Collections.emptyList();
+       }  
+} */
+/* 
+@Override
+public List<Object[]> getTestByCategoryAgeBetweenTwoAndNine(Long partnerId, int year) {
+    try{
+        return analisysRepo.getTestByCategoryAgeBetweenTwoAndNine(partnerId,year);
+
+    }catch(Exception ex){
+        ex.printStackTrace();
+        return Collections.emptyList();
+       }  
+}
+ */
+/* 
+@Override
+public List<Object[]> getTestBySpecificCategoryAgeBetweenTenAndFourteen(Long partnerId, int year) {
+    try{
+        return analisysRepo.getTestBySpecificCategoryAgeBetweenTenAndFourteen(partnerId, year);
+
+    }catch(Exception ex){
+        ex.printStackTrace();
+        return Collections.emptyList();
+       }  
+} */
+/* 
+
+@Override
+public List<Object[]> getTestBySpecificCategoryAgeBetweenFifteenAndNineteen(Long partnerId, int year) {
+    try{
+        return analisysRepo.getTestBySpecificCategoryAgeBetweenFifteenAndNineteen(partnerId, year);
+
+    }catch(Exception ex){
+        ex.printStackTrace();
+        return Collections.emptyList();
+       }  
+} */
+/* 
+@Override
+public List<Object[]> getTestBySpecificCategoryAgeBetweenTwentyAndTwentyFour(Long partnerId, int year) {
+    try{
+        return analisysRepo.getTestBySpecificCategoryAgeBetweenTwentyAndTwentyFour(partnerId, year);
+
+    }catch(Exception ex){
+        ex.printStackTrace();
+        return Collections.emptyList();
+       }  
+}
+ */
+/* 
+@Override
+public List<Object[]> getTestBySpecificCategoryAgeGreaterThanTwentyFive(Long partnerId, int year) {
+    try{
+        return analisysRepo.getTestBySpecificCategoryAgeGreaterThanTwentyFive(partnerId, year);
+
+    }catch(Exception ex){
+        ex.printStackTrace();
+        return Collections.emptyList();
+       }  
+} */
+
+//Méthode optimisee
+/* 
+@Override
+public List<Object[]> testCategorieOptimize(Long partnerId, int year) {
+    try{
+        return analisysRepo.testCategorieOptimize(partnerId, year);
+
+    }catch(Exception ex){
+        ex.printStackTrace();
+        return Collections.emptyList();
+       }  
+} */
 
 
   

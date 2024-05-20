@@ -8,9 +8,11 @@ import java.time.format.DateTimeFormatter;
 import java.util.Date;
 import java.util.List;
 import java.util.Locale;
+import java.util.Map;
 import java.util.Objects;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
+
 
 import org.apache.commons.lang3.ObjectUtils;
 import org.apache.commons.lang3.StringUtils;
@@ -22,12 +24,14 @@ import org.apache.poi.xssf.usermodel.XSSFCell;
 import org.apache.poi.xssf.usermodel.XSSFRow;
 import org.apache.poi.xssf.usermodel.XSSFSheet;
 import org.apache.poi.xssf.usermodel.XSSFWorkbook;
+import org.itechciv.dashboard.helper.CategoryAge;
 import org.itechciv.dashboard.helper.Constants;
 import org.itechciv.dashboard.helper.ProcessDate;
 import org.itechciv.dashboard.helper.ProcessString;
 import org.itechciv.dashboard.helper.ProcessType;
 import org.itechciv.dashboard.helper.ProcessCell;
 import org.itechciv.dashboard.iservice.UploadService;
+import org.itechciv.dashboard.model.AgeCategory;
 import org.itechciv.dashboard.model.Analysis;
 import org.itechciv.dashboard.model.Regimen;
 import org.itechciv.dashboard.model.District;
@@ -42,6 +46,7 @@ import org.itechciv.dashboard.model.SampleType;
 import org.itechciv.dashboard.model.Test;
 import org.itechciv.dashboard.model.VihType;
 import org.itechciv.dashboard.model.VlReason;
+import org.itechciv.dashboard.repository.AgeCategoryRepository;
 import org.itechciv.dashboard.repository.AnalysisRepository;
 import org.itechciv.dashboard.repository.RegimenRepository;
 import org.itechciv.dashboard.repository.DistrictRepository;
@@ -59,12 +64,18 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.multipart.MultipartFile;
+
+import jakarta.persistence.EntityManager;
+import jakarta.persistence.PersistenceContext;
+import jakarta.persistence.Query;
+
 import org.apache.poi.ss.usermodel.FormulaEvaluator;
 
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Calendar;
 import java.util.GregorianCalendar;
+import java.util.HashMap;
 
 @Service
 @Transactional
@@ -108,6 +119,17 @@ public class UploadServiceImpl implements UploadService {
 
 	@Autowired
 	private AnalysisRepository analysisRepository;
+
+	@Autowired
+	private AgeCategoryRepository ageCategoryRepository;
+
+	@PersistenceContext
+	private EntityManager em;
+
+
+	List<CategoryAge> cdcAgeCategories = getCDCAgeCategory();
+	List<CategoryAge> nationalAgeCategories = getNationalAgeCategory();
+
 
 	// Import Lab Data
 	@Override
@@ -240,6 +262,16 @@ public class UploadServiceImpl implements UploadService {
 		SampleType st = null;
 		VlReason vr = null;
 		Analysis a = null;
+
+		AgeCategory cdc = null;
+		AgeCategory inCdc = null;
+
+		AgeCategory national = null;
+		AgeCategory inNational = null;
+
+		long ageCdcId = 0;
+		long ageNationalId = 0;
+
 
        try {
     	   
@@ -431,6 +463,39 @@ public class UploadServiceImpl implements UploadService {
 	 	                    //System.out.println("valeur-numeric: " + a.getGrossResult() + " " + a.getConvertedResult() + "\n");
 
 		            }
+
+					 ageCdcId = getCDCAgeCategorieId((int) row.getCell(13).getNumericCellValue());
+
+                     cdc = ageCategoryRepository.getOne(ageCdcId);
+
+					 boolean checkCdcAge = (cdc == null);
+						
+						if (checkCdcAge) {
+							//inCdc = labRepository.findLabByPrefix(Constants.LAB_NAME_OTHER);
+							//System.out.println("Lab-constant:" + inLab.getPrefix() + "\n");
+
+							cdc = inCdc;
+						}
+
+						ageNationalId = getNationalCategoriesId((int) row.getCell(13).getNumericCellValue());
+
+						national = ageCategoryRepository.getOne(ageNationalId);
+
+						boolean checkNationalAge = (national == null);
+						
+						if (checkNationalAge) {
+							//inNational = labRepository.findLabByPrefix(Constants.LAB_NAME_OTHER);
+
+							national = inNational;
+						}
+
+
+
+
+
+                    //a.setAgeCdc(getCDCAgeCategorieId((int) row.getCell(13).getNumericCellValue()));
+					//a.setAgeNational(getNationalCategoriesId((int) row.getCell(13).getNumericCellValue()));
+
 	            	
 	            	 a.setAnalysisStatus((int) row.getCell(19).getNumericCellValue());
 					 a.setCompletedDate(ProcessType.toLocalDateTime(evaluator, row.getCell(21)));
@@ -701,7 +766,84 @@ public class UploadServiceImpl implements UploadService {
 			ex.printStackTrace();
 			return false;
 		}
+	} 
+
+
+	public List<CategoryAge> getCDCAgeCategory() {
+	String sql = "SELECT id, min_cat, max_cat FROM dashboard.age_category where type = 'CDC CI'";
+	List<CategoryAge> response = new ArrayList<CategoryAge>();
+	try{
+		Query query = em.createNativeQuery(sql);
+		@SuppressWarnings("unchecked")
+	    List<Object[]> results = query.getResultList();
+		for(Object[] o : results){
+			CategoryAge ageClass = new CategoryAge();
+			ageClass.setId(Long.parseLong(o[0].toString()));
+			ageClass.setAgeMax(Integer.parseInt(o[1].toString()));
+			ageClass.setAgeMin(Integer.parseInt(o[2].toString()));
+
+			response.add(ageClass);
+		}
+
+	}catch(Exception e){
+		e.printStackTrace();
 	}
+	return response;
+}
+
+
+public  List<CategoryAge> getNationalAgeCategory() {
+	String sql = "SELECT id, min_cat, max_cat FROM dashboard.age_category where type = 'National'";
+	List<CategoryAge> response = new ArrayList<CategoryAge>();
+	try{
+		Query query = em.createNativeQuery(sql);
+		@SuppressWarnings("unchecked")
+	    List<Object[]> results = query.getResultList();
+		for(Object[] o : results){
+			CategoryAge ageClass = new CategoryAge();
+			ageClass.setId(Long.parseLong(o[0].toString()));
+			ageClass.setAgeMax(Integer.parseInt(o[1].toString()));
+			ageClass.setAgeMin(Integer.parseInt(o[2].toString()));
+
+			response.add(ageClass);
+
+		}
+
+	}catch(Exception e){
+		e.printStackTrace();
+	}
+	return response;
+}
+
+
+
+public long getCDCAgeCategorieId(Integer age){
+   long cat = 0;
+   for(CategoryAge ageCat:cdcAgeCategories){
+	if(age >= ageCat.getAgeMin() && age < ageCat.getAgeMax()){
+	cat = ageCat.getId();
+     }
+	}
+    return cat;
+  }
+
+
+
+public long getNationalCategoriesId(Integer age){
+	long cat = 0;
+	for(CategoryAge ageCat:nationalAgeCategories){
+	 if(age >= ageCat.getAgeMin() && age < ageCat.getAgeMax()){
+	 cat = ageCat.getId();
+	  }
+	 }
+	 return cat;
+   }
+ 
+ 
+
+
+
+
 
 	
 }

@@ -6279,6 +6279,160 @@ List<Object[]> motifVlreasonByOnePartner(@Param("year") int year, @Param("partne
  List<Object[]> getPatientBySiteForOnePartner(@Param("partnerId") Long partnerId , @Param("year") int year);
 
 
+ /******************************************************************************************************************************* */
+/* @Query(value = "SELECT " +
+" SUM(CASE WHEN a.convertedResult >= 1000 THEN 1 ELSE 0 END) AS TOTAL_NON_SUPPRIME, " +
+" SUM(CASE WHEN a.convertedResult < 1000 AND a.convertedResult > 0 THEN 1 ELSE 0 END ) AS TOTAL_SUPPRIME, " +
+" SUM(CASE WHEN a.convertedResult = 0 THEN 1 ELSE 0 END) AS TOTAL_INDETECTABLE_LL, " +
+" SUM(CASE WHEN a.convertedResult = -1 THEN 1 ELSE 0 END) AS TOTAL_INVALIDE, " +
+" ROUND(SUM(CASE WHEN a.convertedResult >= 1000 THEN 1 ELSE 0 END) * 100.0 / SUM(1), 2) AS POURCENTAGE_NON_SUPPRIME, " +
+" ROUND(SUM(CASE WHEN a.convertedResult = 0 THEN 1 WHEN a.convertedResult < 1000 AND a.convertedResult > 0 THEN 1 ELSE 0 END) * 100.0 / SUM(1), 2) AS POURCENTAGE_SUPPRIME, " +
+" ROUND(SUM(CASE WHEN a.convertedResult = 0 THEN 1 ELSE 0 END) * 100.0 / SUM(1), 2) AS POURCENTAGE_INDETECTABLE, " +
+" ROUND(SUM(CASE WHEN a.convertedResult = -1 THEN 1 ELSE 0 END) * 100.0 / SUM(1), 2) AS POURCENTAGE_INVALIDE " +
+" FROM Region r " +
+" INNER JOIN District d ON r.id = d.region.id " +
+" INNER JOIN Site s ON d.id = s.district.id " +
+" INNER JOIN Patient p ON s.id = p.site.id " +
+" INNER JOIN Analysis a ON p.id = a.patient.id " +
+" INNER JOIN AgeCategory ag ON ag.id = a.ageCategory.id " +
+" WHERE pt.id = :partnerId AND EXTRACT(YEAR FROM a.drcpt) = :year AND " +
+" FLOOR(EXTRACT(YEAR FROM CURRENT_DATE()) - EXTRACT(YEAR FROM p.birthDate)) > 25 " +
+" GROUP BY EXTRACT(YEAR FROM a.drcpt)")
+List<Object[]>testCategorieOptimize(@Param("year") int year, @Param("partnerId") Long partnerId ); */
+
+/* @Query(value = "SELECT " +
+" SUM(CASE WHEN a.convertedResult >= 1000 THEN 1 ELSE 0 END) AS TOTAL_NON_SUPPRIME, " +
+" SUM(CASE WHEN a.convertedResult < 1000 AND a.convertedResult > 0 THEN 1 ELSE 0 END ) AS TOTAL_SUPPRIME, " +
+" SUM(CASE WHEN a.convertedResult = 0 THEN 1 ELSE 0 END) AS TOTAL_INDETECTABLE_LL, " +
+" SUM(CASE WHEN a.convertedResult = -1 THEN 1 ELSE 0 END) AS TOTAL_INVALIDE, " +
+" ROUND(SUM(CASE WHEN a.convertedResult >= 1000 THEN 1 ELSE 0 END) * 100.0 / SUM(1), 2) AS POURCENTAGE_NON_SUPPRIME, " +
+" ROUND(SUM(CASE WHEN a.convertedResult = 0 THEN 1 WHEN a.convertedResult < 1000 AND a.convertedResult > 0 THEN 1 ELSE 0 END) * 100.0 / SUM(1), 2) AS POURCENTAGE_SUPPRIME, " +
+" ROUND(SUM(CASE WHEN a.convertedResult = 0 THEN 1 ELSE 0 END) * 100.0 / SUM(1), 2) AS POURCENTAGE_INDETECTABLE, " +
+" ROUND(SUM(CASE WHEN a.convertedResult = -1 THEN 1 ELSE 0 END) * 100.0 / SUM(1), 2) AS POURCENTAGE_INVALIDE " +
+" FROM Region r " +
+" INNER JOIN District d ON r.id = d.region.id " +
+" INNER JOIN Site s ON d.id = s.district.id " +
+" INNER JOIN Patient p ON s.id = p.site.id " +
+" INNER JOIN Analysis a ON p.id = a.patient.id " +
+" INNER JOIN AgeCategory ag ON ag.id = a.ageCategory.id " +
+" WHERE pt.id = :partnerId AND EXTRACT(YEAR FROM a.drcpt) = :year AND " +
+" FLOOR(EXTRACT(YEAR FROM CURRENT_DATE()) - EXTRACT(YEAR FROM p.birthDate)) < 2" +
+" GROUP BY EXTRACT(YEAR FROM a.drcpt)")
+List<Object[]>getTestByCategoryAgeMinus2(@Param("year") int year, @Param("partnerId") Long partnerId ); */
+/* 
+@Query(value = "SELECT " +
+" SUM(CASE WHEN a.convertedResult >= 1000 THEN 1 ELSE 0 END) AS TOTAL_NON_SUPPRIME, " +
+" SUM(CASE WHEN a.convertedResult < 1000 AND a.convertedResult > 0 THEN 1 ELSE 0 END ) AS TOTAL_SUPPRIME, " +
+" SUM(CASE WHEN a.convertedResult = 0 THEN 1 ELSE 0 END) AS TOTAL_INDETECTABLE_LL, " +
+" SUM(CASE WHEN a.convertedResult = -1 THEN 1 ELSE 0 END) AS TOTAL_INVALIDE, " +
+" ROUND(SUM(CASE WHEN a.convertedResult >= 1000 THEN 1 ELSE 0 END) * 100.0 / SUM(1), 2) AS POURCENTAGE_NON_SUPPRIME, " +
+" ROUND(SUM(CASE WHEN a.convertedResult = 0 THEN 1 WHEN a.convertedResult < 1000 AND a.convertedResult > 0 THEN 1 ELSE 0 END) * 100.0 / SUM(1), 2) AS POURCENTAGE_SUPPRIME, " +
+" ROUND(SUM(CASE WHEN a.convertedResult = 0 THEN 1 ELSE 0 END) * 100.0 / SUM(1), 2) AS POURCENTAGE_INDETECTABLE, " +
+" ROUND(SUM(CASE WHEN a.convertedResult = -1 THEN 1 ELSE 0 END) * 100.0 / SUM(1), 2) AS POURCENTAGE_INVALIDE " +
+" FROM Region r " +
+" INNER JOIN District d ON r.id = d.region.id " +
+" INNER JOIN Site s ON d.id = s.district.id " +
+" INNER JOIN Patient p ON s.id = p.site.id " +
+" INNER JOIN Analysis a ON p.id = a.patient.id " +
+" INNER JOIN AgeCategory ag ON ag.id = a.ageCategory.id " +
+" WHERE EXTRACT(YEAR FROM a.drcpt) = :year AND " +
+" FLOOR(EXTRACT(YEAR FROM CURRENT_DATE()) - EXTRACT(YEAR FROM p.birthDate)) BETWEEN 2 AND 9  " +
+" GROUP BY EXTRACT(YEAR FROM a.drcpt)")
+List<Object[]>getTestByCategoryAgeBetweenTwoAndNine(@Param("year") int year);
+ */
+
+/* 
+@Query(value = "SELECT " +
+" SUM(CASE WHEN a.convertedResult >= 1000 THEN 1 ELSE 0 END) AS TOTAL_NON_SUPPRIME, " +
+" SUM(CASE WHEN a.convertedResult < 1000 AND a.convertedResult > 0 THEN 1 ELSE 0 END ) AS TOTAL_SUPPRIME, " +
+" SUM(CASE WHEN a.convertedResult = 0 THEN 1 ELSE 0 END) AS TOTAL_INDETECTABLE_LL, " +
+" SUM(CASE WHEN a.convertedResult = -1 THEN 1 ELSE 0 END) AS TOTAL_INVALIDE, " +
+" ROUND(SUM(CASE WHEN a.convertedResult >= 1000 THEN 1 ELSE 0 END) * 100.0 / SUM(1), 2) AS POURCENTAGE_NON_SUPPRIME, " +
+" ROUND(SUM(CASE WHEN a.convertedResult = 0 THEN 1 WHEN a.convertedResult < 1000 AND a.convertedResult > 0 THEN 1 ELSE 0 END) * 100.0 / SUM(1), 2) AS POURCENTAGE_SUPPRIME, " +
+" ROUND(SUM(CASE WHEN a.convertedResult = 0 THEN 1 ELSE 0 END) * 100.0 / SUM(1), 2) AS POURCENTAGE_INDETECTABLE, " +
+" ROUND(SUM(CASE WHEN a.convertedResult = -1 THEN 1 ELSE 0 END) * 100.0 / SUM(1), 2) AS POURCENTAGE_INVALIDE " +
+" FROM Region r " +
+" INNER JOIN District d ON r.id = d.region.id " +
+" INNER JOIN Site s ON d.id = s.district.id " +
+" INNER JOIN Patient p ON s.id = p.site.id " +
+" INNER JOIN Analysis a ON p.id = a.patient.id " +
+" INNER JOIN AgeCategory ag ON ag.id = a.ageCategory.id " +
+" WHERE EXTRACT(YEAR FROM a.drcpt) = :year AND " +
+" FLOOR(EXTRACT(YEAR FROM CURRENT_DATE()) - EXTRACT(YEAR FROM p.birthDate)) BETWEEN 10 AND 14 " +
+" GROUP BY EXTRACT(YEAR FROM a.drcpt)")
+List<Object[]>getTestBySpecificCategoryAgeBetweenTenAndFourteen(@Param("year") int year);
+ */
+/* 
+@Query(value = "SELECT " +
+" SUM(CASE WHEN a.convertedResult >= 1000 THEN 1 ELSE 0 END) AS TOTAL_NON_SUPPRIME, " +
+" SUM(CASE WHEN a.convertedResult < 1000 AND a.convertedResult > 0 THEN 1 ELSE 0 END ) AS TOTAL_SUPPRIME, " +
+" SUM(CASE WHEN a.convertedResult = 0 THEN 1 ELSE 0 END) AS TOTAL_INDETECTABLE_LL, " +
+" SUM(CASE WHEN a.convertedResult = -1 THEN 1 ELSE 0 END) AS TOTAL_INVALIDE, " +
+" ROUND(SUM(CASE WHEN a.convertedResult >= 1000 THEN 1 ELSE 0 END) * 100.0 / SUM(1), 2) AS POURCENTAGE_NON_SUPPRIME, " +
+" ROUND(SUM(CASE WHEN a.convertedResult = 0 THEN 1 WHEN a.convertedResult < 1000 AND a.convertedResult > 0 THEN 1 ELSE 0 END) * 100.0 / SUM(1), 2) AS POURCENTAGE_SUPPRIME, " +
+" ROUND(SUM(CASE WHEN a.convertedResult = 0 THEN 1 ELSE 0 END) * 100.0 / SUM(1), 2) AS POURCENTAGE_INDETECTABLE, " +
+" ROUND(SUM(CASE WHEN a.convertedResult = -1 THEN 1 ELSE 0 END) * 100.0 / SUM(1), 2) AS POURCENTAGE_INVALIDE " +
+" FROM Region r " +
+" INNER JOIN District d ON r.id = d.region.id " +
+" INNER JOIN Site s ON d.id = s.district.id " +
+" INNER JOIN Patient p ON s.id = p.site.id " +
+" INNER JOIN Analysis a ON p.id = a.patient.id " +
+" INNER JOIN AgeCategory ag ON ag.id = a.ageCategory.id " +
+" WHERE EXTRACT(YEAR FROM a.drcpt) = :year AND " +
+" FLOOR(EXTRACT(YEAR FROM CURRENT_DATE()) - EXTRACT(YEAR FROM p.birthDate)) BETWEEN 15 AND 19 " +
+" GROUP BY EXTRACT(YEAR FROM a.drcpt)")
+List<Object[]>getTestBySpecificCategoryAgeBetweenFifteenAndNineteen(@Param("year") int year);
+ */
+/* 
+@Query(value = "SELECT " +
+" SUM(CASE WHEN a.convertedResult >= 1000 THEN 1 ELSE 0 END) AS TOTAL_NON_SUPPRIME, " +
+" SUM(CASE WHEN a.convertedResult < 1000 AND a.convertedResult > 0 THEN 1 ELSE 0 END ) AS TOTAL_SUPPRIME, " +
+" SUM(CASE WHEN a.convertedResult = 0 THEN 1 ELSE 0 END) AS TOTAL_INDETECTABLE_LL, " +
+" SUM(CASE WHEN a.convertedResult = -1 THEN 1 ELSE 0 END) AS TOTAL_INVALIDE, " +
+" ROUND(SUM(CASE WHEN a.convertedResult >= 1000 THEN 1 ELSE 0 END) * 100.0 / SUM(1), 2) AS POURCENTAGE_NON_SUPPRIME, " +
+" ROUND(SUM(CASE WHEN a.convertedResult = 0 THEN 1 WHEN a.convertedResult < 1000 AND a.convertedResult > 0 THEN 1 ELSE 0 END) * 100.0 / SUM(1), 2) AS POURCENTAGE_SUPPRIME, " +
+" ROUND(SUM(CASE WHEN a.convertedResult = 0 THEN 1 ELSE 0 END) * 100.0 / SUM(1), 2) AS POURCENTAGE_INDETECTABLE, " +
+" ROUND(SUM(CASE WHEN a.convertedResult = -1 THEN 1 ELSE 0 END) * 100.0 / SUM(1), 2) AS POURCENTAGE_INVALIDE " +
+" FROM Region r " +
+" INNER JOIN District d ON r.id = d.region.id " +
+" INNER JOIN Site s ON d.id = s.district.id " +
+" INNER JOIN Patient p ON s.id = p.site.id " +
+" INNER JOIN Analysis a ON p.id = a.patient.id " +
+" INNER JOIN AgeCategory ag ON ag.id = a.ageCategory.id " +
+" WHERE EXTRACT(YEAR FROM a.drcpt) = :year AND " +
+" FLOOR(EXTRACT(YEAR FROM CURRENT_DATE()) - EXTRACT(YEAR FROM p.birthDate)) BETWEEN 20 AND 24 " +
+" GROUP BY EXTRACT(YEAR FROM a.drcpt)")
+List<Object[]>getTestBySpecificCategoryAgeBetweenTwentyAndTwentyFour(@Param("year") int year);
+ */
+/* 
+@Query(value = "SELECT " +
+" SUM(CASE WHEN a.convertedResult >= 1000 THEN 1 ELSE 0 END) AS TOTAL_NON_SUPPRIME, " +
+" SUM(CASE WHEN a.convertedResult < 1000 AND a.convertedResult > 0 THEN 1 ELSE 0 END ) AS TOTAL_SUPPRIME, " +
+" SUM(CASE WHEN a.convertedResult = 0 THEN 1 ELSE 0 END) AS TOTAL_INDETECTABLE_LL, " +
+" SUM(CASE WHEN a.convertedResult = -1 THEN 1 ELSE 0 END) AS TOTAL_INVALIDE, " +
+" ROUND(SUM(CASE WHEN a.convertedResult >= 1000 THEN 1 ELSE 0 END) * 100.0 / SUM(1), 2) AS POURCENTAGE_NON_SUPPRIME, " +
+" ROUND(SUM(CASE WHEN a.convertedResult = 0 THEN 1 WHEN a.convertedResult < 1000 AND a.convertedResult > 0 THEN 1 ELSE 0 END) * 100.0 / SUM(1), 2) AS POURCENTAGE_SUPPRIME, " +
+" ROUND(SUM(CASE WHEN a.convertedResult = 0 THEN 1 ELSE 0 END) * 100.0 / SUM(1), 2) AS POURCENTAGE_INDETECTABLE, " +
+" ROUND(SUM(CASE WHEN a.convertedResult = -1 THEN 1 ELSE 0 END) * 100.0 / SUM(1), 2) AS POURCENTAGE_INVALIDE " +
+" FROM Region r " +
+" INNER JOIN District d ON r.id = d.region.id " +
+" INNER JOIN Site s ON d.id = s.district.id " +
+" INNER JOIN Patient p ON s.id = p.site.id " +
+" INNER JOIN Analysis a ON p.id = a.patient.id " +
+" INNER JOIN AgeCategory ag ON ag.id = a.ageCategory.id " +
+" WHERE EXTRACT(YEAR FROM a.drcpt) = :year AND " +
+" FLOOR(EXTRACT(YEAR FROM CURRENT_DATE()) - EXTRACT(YEAR FROM p.birthDate)) > 25 " +
+" GROUP BY EXTRACT(YEAR FROM a.drcpt)")
+List<Object[]>getTestBySpecificCategoryAgeGreaterThanTwentyFive(@Param("year") int year);
+ */
+
+
+
+
+
+
+
+
 
 
 

@@ -2,7 +2,9 @@ package org.itechciv.dashboard.iservice;
 
 import java.time.LocalDateTime;
 import java.util.List;
+import java.util.Map;
 
+import org.itechciv.dashboard.helper.CategoryAge;
 import org.itechciv.dashboard.model.Analysis;
 import org.itechciv.dashboard.response.Response;
 import org.springframework.data.repository.query.Param;
@@ -258,6 +260,21 @@ List<Object[]> motifVlreasonByOnePartner(@Param("year") int year, @Param("partne
 List<Object[]> getTestBySiteForOnePartner(@Param("partnerId") Long partnerId , @Param("year") int year);
 
 List<Object[]> getPatientBySiteForOnePartner(@Param("partnerId") Long partnerId , @Param("year") int year);
+
+
+/************************************************************************************************************************ */
+//List<Object[]>getTestByCategoryAgeMinus2(@Param("year") int year, @Param("partnerId") Long partnerId);
+//List<Object[]>getTestByCategoryAgeBetweenTwoAndNine(@Param("year") int year, @Param("partnerId") Long partnerId);
+//List<Object[]>getTestBySpecificCategoryAgeBetweenTenAndFourteen(@Param("year") int year, @Param("partnerId") Long partnerId);
+//List<Object[]>getTestBySpecificCategoryAgeBetweenFifteenAndNineteen(@Param("year") int year, @Param("partnerId") Long partnerId);
+//List<Object[]>getTestBySpecificCategoryAgeBetweenTwentyAndTwentyFour(@Param("year") int year, @Param("partnerId") Long partnerId);
+//List<Object[]>getTestBySpecificCategoryAgeGreaterThanTwentyFive(@Param("year") int year, @Param("partnerId") Long partnerId);
+
+
+//List<Object[]> testCategorieOptimize(@Param("year") int year, @Param("partnerId") Long partnerId);
+
+
+
 
 
 

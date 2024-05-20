@@ -1,7 +1,9 @@
 package org.itechciv.dashboard.controller;
 
 import java.util.List;
+import java.util.Map;
 
+import org.itechciv.dashboard.helper.CategoryAge;
 import org.itechciv.dashboard.iservice.AnalysisService;
 import org.itechciv.dashboard.response.Response;
 import org.itechciv.dashboard.response.Response.ResponseStatusEnum;
@@ -1187,16 +1189,93 @@ public class AnalysisController {
     public List<Object[]> getTestBySiteForOnePartner(@RequestParam int year, @RequestParam Long partnerId) {
     return analysisServices.getTestBySiteForOnePartner(partnerId, year);
     }
+
+ 
+/* 
+    @GetMapping("/testcategoryone")
+    public List<Object[]> getTestByCategoryAgeMinus2(@RequestParam int year, @RequestParam Long partnerId) {
+    return analysisServices.getTestByCategoryAgeMinus2(year);
+    }
+ */
+
+/* 
+    @GetMapping("/testcategorytwo")
+    public List<Object[]> getTestByCategoryAgeBetweenTwoAndNine(@RequestParam int year, @RequestParam Long partnerId) {
+    return analysisServices.getTestByCategoryAgeBetweenTwoAndNine(year);
+    }
+ */
+/* 
+
+    @GetMapping("/testcategorythree")
+    public List<Object[]> getTestBySpecificCategoryAgeBetweenTenAndFourteen(@RequestParam int year, @RequestParam Long partnerId) {
+    return analysisServices.getTestBySpecificCategoryAgeBetweenTenAndFourteen(year);
+    }
+ */
+
+/* 
+    @GetMapping("/testcategoryfour")
+    public List<Object[]> getTestBySpecificCategoryAgeBetweenFifteenAndNineteen(@RequestParam int year) {
+    return analysisServices.getTestBySpecificCategoryAgeBetweenFifteenAndNineteen(year);
+    }
+ */
+
+/* 
+    @GetMapping("/testcategoryfive")
+    public List<Object[]> getTestBySpecificCategoryAgeBetweenTwentyAndTwentyFour(@RequestParam int year) {
+    return analysisServices.getTestBySpecificCategoryAgeBetweenTwentyAndTwentyFour(year);
+    }
+ */
+
+/* 
+    @GetMapping("/testcategorysix")
+    public List<Object[]> getTestBySpecificCategoryAgeGreaterThanTwentyFive(@RequestParam int year) {
+    return analysisServices.getTestBySpecificCategoryAgeGreaterThanTwentyFive(year);
+    }
+ */
+
+/* 
+    @GetMapping("/testcategoryoptimize")
+    public List<Object[]> testCategorieOptimize(@RequestParam int year) {
+    return analysisServices.testCategorieOptimize(year);
+    }
+ */
+
+
+ 
+ 
+ 
  
 
-    @GetMapping("/patientbysiteforonepartner")
-    public List<Object[]> getPatientBySiteForOnePartner(@RequestParam int year, @RequestParam Long partnerId) {
-    return analysisServices.getPatientBySiteForOnePartner(partnerId, year);
-    }
- 
- 
- 
- 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
  
 /*
     @GetMapping("/count/inferieurmil")
