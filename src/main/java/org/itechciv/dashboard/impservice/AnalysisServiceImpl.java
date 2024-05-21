@@ -1,14 +1,10 @@
 package org.itechciv.dashboard.impservice;
-
-import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
-
 import org.itechciv.dashboard.iservice.AnalysisService;
 import org.itechciv.dashboard.model.Analysis;
 import org.itechciv.dashboard.repository.AnalysisRepository;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -2369,7 +2365,53 @@ public List<Object[]> getPatientBySiteForOnePartner(Long partnerId, int year) {
         ex.printStackTrace();
         return Collections.emptyList();
        }    
+} 
+
+
+@Override
+public List<Object[]> geTestByCategoryCDCForOnePartner(Long partnerId, int year) {
+    try{
+        return analisysRepo.geTestByCategoryCDCForOnePartner(partnerId, year);
+
+    }catch(Exception ex){
+        ex.printStackTrace();
+        return Collections.emptyList();
+       }    
 }
+
+@Override
+public List<Object[]> geTestByCategoryNationalForOnePartner(Long partnerId, int year) {
+    try{
+        return analisysRepo.geTestByCategoryNationalForOnePartner(partnerId, year);
+
+    }catch(Exception ex){
+        ex.printStackTrace();
+        return Collections.emptyList();
+       }    
+}
+
+@Override
+public List<Object[]> getPatientByCategoryCdciForOnePartner(Long partnerId, int year) {
+    try{
+        return analisysRepo.getPatientByCategoryCdciForOnePartner(partnerId, year);
+
+    }catch(Exception ex){
+        ex.printStackTrace();
+        return Collections.emptyList();
+       }    
+}
+
+@Override
+public List<Object[]> getPatientByCategoryNationalForOnePartner(Long partnerId, int year) {
+    try{
+        return analisysRepo.getPatientByCategoryNationalForOnePartner(partnerId, year);
+
+    }catch(Exception ex){
+        ex.printStackTrace();
+        return Collections.emptyList();
+       }    
+}
+
 /********************************************************************************************************************************** */
 /* @Override
 public List<Object[]> getTestByCategoryAgeMinus2(Long partnerId, int year) {

@@ -1190,6 +1190,31 @@ public class AnalysisController {
     return analysisServices.getTestBySiteForOnePartner(partnerId, year);
     }
 
+
+    @GetMapping("/testbycdcforonepartner")
+    public List<Object[]> geTestByCategoryCDCForOnePartner(@RequestParam int year, @RequestParam Long partnerId) {
+    return analysisServices.geTestByCategoryCDCForOnePartner(partnerId, year);
+    }
+
+    
+    @GetMapping("/testbynationalforonepartner")
+    public List<Object[]> geTestByCategoryNationalForOnePartner(@RequestParam int year, @RequestParam Long partnerId) {
+    return analysisServices.geTestByCategoryNationalForOnePartner(partnerId, year);
+    }
+
+
+    @GetMapping("/patientbycdcforonepartner")
+    public List<Object[]> getPatientByCategoryCdciForOnePartner(@RequestParam int year, @RequestParam Long partnerId) {
+    return analysisServices.getPatientByCategoryCdciForOnePartner(partnerId, year);
+    }
+
+
+    @GetMapping("/patientbynationalforonepartner")
+    public List<Object[]> getPatientByCategoryNationalForOnePartner(@RequestParam int year, @RequestParam Long partnerId) {
+    return analysisServices.getPatientByCategoryNationalForOnePartner(partnerId, year);
+    }
+
+
  
 /* 
     @GetMapping("/testcategoryone")

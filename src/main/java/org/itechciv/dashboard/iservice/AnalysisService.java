@@ -262,6 +262,15 @@ List<Object[]> getTestBySiteForOnePartner(@Param("partnerId") Long partnerId , @
 List<Object[]> getPatientBySiteForOnePartner(@Param("partnerId") Long partnerId , @Param("year") int year);
 
 
+List<Object[]> geTestByCategoryCDCForOnePartner(@Param("partnerId") Long partnerId , @Param("year") int year);
+List<Object[]> geTestByCategoryNationalForOnePartner(@Param("partnerId") Long partnerId , @Param("year") int year);
+List<Object[]> getPatientByCategoryCdciForOnePartner(@Param("partnerId") Long partnerId , @Param("year") int year);
+List<Object[]> getPatientByCategoryNationalForOnePartner(@Param("partnerId") Long partnerId , @Param("year") int year);
+
+
+
+
+
 /************************************************************************************************************************ */
 //List<Object[]>getTestByCategoryAgeMinus2(@Param("year") int year, @Param("partnerId") Long partnerId);
 //List<Object[]>getTestByCategoryAgeBetweenTwoAndNine(@Param("year") int year, @Param("partnerId") Long partnerId);
