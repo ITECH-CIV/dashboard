@@ -69,13 +69,11 @@ public class Analysis {
 	  @JoinColumn(name ="labId", nullable = false)
 	  private Lab lab;
 
-	  @ManyToOne
-	  @JoinColumn(name ="ageCdcId", nullable = true)
-	  private AgeCategory ageCdc; 
+	  @Column(name ="ageCdcId", nullable = true)
+	  private Integer ageCdc; 
 
-	  @ManyToOne
-	  @JoinColumn(name ="ageNationalId", nullable = true)
-	  private AgeCategory ageNational; 
+	  @Column(name ="ageNationalId", nullable = true)
+	  private Integer ageNational; 
 
 		public Analysis() {
 			super();
@@ -201,19 +199,19 @@ public class Analysis {
 			this.lab = lab;
 		} 
 
-		public AgeCategory getAgeCdc() {
+		public Integer getAgeCdc() {
 			return ageCdc;
 		}
 
-		public void setAgeCdc(AgeCategory ageCdc) {
+		public void setAgeCdc(Integer ageCdc) {
 			this.ageCdc = ageCdc;
 		}
 
-		public AgeCategory getAgeNational() {
+		public Integer getAgeNational() {
 			return ageNational;
 		}
 
-		public void setAgeNational(AgeCategory ageNational) {
+		public void setAgeNational(Integer ageNational) {
 			this.ageNational = ageNational;
 		}
 
@@ -225,6 +223,8 @@ public class Analysis {
 					+ sampleType + ", test=" + test + ", patient=" + patient + ", regimen=" + regimen + ", vlReason="
 					+ vlReason + ", lab=" + lab + ", ageCdc=" + ageCdc + ", ageNational=" + ageNational + "]";
 		}
+
+		
 
 		
 

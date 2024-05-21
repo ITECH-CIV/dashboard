@@ -242,12 +242,12 @@ public class UploadController {
 		}
 
 		@GetMapping("/cdcagecategorybyid")
-		public  Integer getCDCAgeCategorieId(@RequestParam Integer age) {
+		public  long getCDCAgeCategorieId(@RequestParam Integer age) {
 		return uploadService.getCDCAgeCategorieId(age);
 		}
 
 		@GetMapping("/ntionalagecategorybyid")
-		public  Integer getNationalCategoriesId(@RequestParam Integer age) {
+		public  long getNationalCategoriesId(@RequestParam Integer age) {
 		return uploadService.getNationalCategoriesId(age);
 		}
 

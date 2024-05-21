@@ -10,6 +10,7 @@ public class Constants {
   public static final String REGIMEN_NAME_OTHER = "Autres";
   public static final String VIH_TYPE_NAME_OTHER = "Autres";
   public static final String LAB_NAME_OTHER = "AUTRES";
+  public static final String AGE_CATEGORY_OTHER = "Autres";
 
 
   

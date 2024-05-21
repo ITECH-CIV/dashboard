@@ -1,37 +1,16 @@
 package org.itechciv.dashboard.impservice;
 
-import java.text.SimpleDateFormat;
-import java.time.Instant;
-import java.time.LocalDateTime;
-import java.time.ZoneId;
-import java.time.format.DateTimeFormatter;
-import java.util.Date;
+
 import java.util.List;
-import java.util.Locale;
-import java.util.Map;
-import java.util.Objects;
-import java.util.regex.Matcher;
-import java.util.regex.Pattern;
-
-
-import org.apache.commons.lang3.ObjectUtils;
-import org.apache.commons.lang3.StringUtils;
-import org.apache.poi.ss.usermodel.Cell;
 import org.apache.poi.ss.usermodel.CellType;
-import org.apache.poi.ss.usermodel.DataFormatter;
-import org.apache.poi.ss.usermodel.DateUtil;
-import org.apache.poi.xssf.usermodel.XSSFCell;
 import org.apache.poi.xssf.usermodel.XSSFRow;
 import org.apache.poi.xssf.usermodel.XSSFSheet;
 import org.apache.poi.xssf.usermodel.XSSFWorkbook;
 import org.itechciv.dashboard.helper.CategoryAge;
 import org.itechciv.dashboard.helper.Constants;
-import org.itechciv.dashboard.helper.ProcessDate;
 import org.itechciv.dashboard.helper.ProcessString;
 import org.itechciv.dashboard.helper.ProcessType;
-import org.itechciv.dashboard.helper.ProcessCell;
 import org.itechciv.dashboard.iservice.UploadService;
-import org.itechciv.dashboard.model.AgeCategory;
 import org.itechciv.dashboard.model.Analysis;
 import org.itechciv.dashboard.model.Regimen;
 import org.itechciv.dashboard.model.District;
@@ -40,13 +19,11 @@ import org.itechciv.dashboard.model.Partner;
 import org.itechciv.dashboard.model.Site;
 import org.itechciv.dashboard.model.SitePartner;
 import org.itechciv.dashboard.model.Patient;
-import org.itechciv.dashboard.model.PatientAnalyseExcelItem;
 import org.itechciv.dashboard.model.Region;
 import org.itechciv.dashboard.model.SampleType;
 import org.itechciv.dashboard.model.Test;
 import org.itechciv.dashboard.model.VihType;
 import org.itechciv.dashboard.model.VlReason;
-import org.itechciv.dashboard.repository.AgeCategoryRepository;
 import org.itechciv.dashboard.repository.AnalysisRepository;
 import org.itechciv.dashboard.repository.RegimenRepository;
 import org.itechciv.dashboard.repository.DistrictRepository;
@@ -73,9 +50,6 @@ import org.apache.poi.ss.usermodel.FormulaEvaluator;
 
 import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.Calendar;
-import java.util.GregorianCalendar;
-import java.util.HashMap;
 
 @Service
 @Transactional
@@ -83,69 +57,64 @@ public class UploadServiceImpl implements UploadService {
 
 	@Autowired
 	private LabRepository labRepository;
-	
+
 	@Autowired
 	private RegionRepository regionRepository;
-	
+
 	@Autowired
 	private DistrictRepository districtRepository;
-	
+
 	@Autowired
 	private SiteRepository siteRepository;
-	
+
 	@Autowired
 	private VihTypeRepository vihTypeRepository;
-	
+
 	@Autowired
 	private PartnerRepository partnerRepository;
-	
+
 	@Autowired
 	private TestRepository testRepository;
-	
+
 	@Autowired
 	private SampleTypeRepository sampleTypeRepository;
-	
+
 	@Autowired
 	private SitePartnerRepository sitePartnerRepository;
-	
+
 	@Autowired
 	private PatientRepository patientRepository;
-	
+
 	@Autowired
 	private RegimenRepository regimenRepository;
-	
+
 	@Autowired
 	private VlReasonRepository vlReasonRepository;
 
 	@Autowired
 	private AnalysisRepository analysisRepository;
 
-	@Autowired
-	private AgeCategoryRepository ageCategoryRepository;
-
 	@PersistenceContext
 	private EntityManager em;
 
-
-	List<CategoryAge> cdcAgeCategories = getCDCAgeCategory();
-	List<CategoryAge> nationalAgeCategories = getNationalAgeCategory();
-
+	List<CategoryAge> cdcAgeCategories;
+	List<CategoryAge> nationalAgeCategories;
 
 	// Import Lab Data
 	@Override
 	public boolean storeLabImport(MultipartFile file) {
 
 		Lab l = null;
-		
+
 		try {
 
 			XSSFWorkbook workbook = new XSSFWorkbook(file.getInputStream());
 
 			XSSFSheet spreadsheet = workbook.getSheetAt(0);
-		
-			System.out.println("LENGTH ::::: " + 	spreadsheet.getPhysicalNumberOfRows() + "\n");
 
-			for (int i = 2; i < spreadsheet.getPhysicalNumberOfRows() +1; i++) {
+			System.out.println("LENGTH ::::: " + spreadsheet.getPhysicalNumberOfRows() + "\n");
+
+			for (int i = 2; i < spreadsheet.getPhysicalNumberOfRows() + 1; i++) {
 
 				XSSFRow row = spreadsheet.getRow(i);
 
@@ -154,12 +123,12 @@ public class UploadServiceImpl implements UploadService {
 					l = labRepository.findLabByPrefix(row.getCell(1).getStringCellValue());
 
 					if (l == null) {
-						 l = new Lab();
-						 l.setName(ProcessType.getCellStringValue(row.getCell(0)));
-						 l.setPrefix(ProcessType.getCellStringValue(row.getCell(1)));
-						 
-				  l = labRepository.save(l);
-					
+						l = new Lab();
+						l.setName(ProcessType.getCellStringValue(row.getCell(0)));
+						l.setPrefix(ProcessType.getCellStringValue(row.getCell(1)));
+
+						l = labRepository.save(l);
+
 					}
 				}
 				workbook.close();
@@ -170,21 +139,21 @@ public class UploadServiceImpl implements UploadService {
 			return false;
 		}
 	}
-	
+
 	// IMPORT LOCALITE: Region, District, Site
 	@Override
 	public boolean storeLocaliteImport(MultipartFile file) {
-		
+
 		Region r = null;
 		District d = null;
 		Site s = null;
 		Partner p = null;
-		
+
 		try {
-			
+
 			XSSFWorkbook workbook = new XSSFWorkbook(file.getInputStream());
 			XSSFSheet spreadsheet = workbook.getSheetAt(0);
-			
+
 			for (int i = 7; i < spreadsheet.getPhysicalNumberOfRows(); i++) {
 
 				XSSFRow row = spreadsheet.getRow(i);
@@ -220,7 +189,7 @@ public class UploadServiceImpl implements UploadService {
 					String str = String.valueOf((int) row.getCell(6).getNumericCellValue());
 
 					s = siteRepository.findSiteByOldCode(str);
-					
+
 					if (s == null) {
 						Site inSite = new Site();
 						inSite.setOldCodeSiteDHIS2(str);
@@ -237,15 +206,14 @@ public class UploadServiceImpl implements UploadService {
 				}
 				workbook.close();
 			}
-			
+
 			return true;
-			
-		}catch(Exception ex) {
+
+		} catch (Exception ex) {
 			ex.printStackTrace();
 			return false;
 		}
-		
-		
+
 	}
 
 	@Override
@@ -263,25 +231,20 @@ public class UploadServiceImpl implements UploadService {
 		VlReason vr = null;
 		Analysis a = null;
 
-		AgeCategory cdc = null;
-		AgeCategory inCdc = null;
+		Integer ageCdcId = null;
+		Integer ageNationalId = null;
 
-		AgeCategory national = null;
-		AgeCategory inNational = null;
+		cdcAgeCategories = this.getCDCAgeCategory();
+		nationalAgeCategories = this.getNationalAgeCategory();
 
-		long ageCdcId = 0;
-		long ageNationalId = 0;
+		try {
 
-
-       try {
-    	   
-    		XSSFWorkbook workbook = new XSSFWorkbook(file.getInputStream());
+			XSSFWorkbook workbook = new XSSFWorkbook(file.getInputStream());
 			XSSFSheet spreadsheet = workbook.getSheetAt(0);
 			FormulaEvaluator evaluator = workbook.getCreationHelper().createFormulaEvaluator();
 
-			
-			for(int i= 1; i <  spreadsheet.getPhysicalNumberOfRows(); i++) {
-				
+			for (int i = 1; i < spreadsheet.getPhysicalNumberOfRows(); i++) {
+
 				XSSFRow row = spreadsheet.getRow(i);
 				// Test
 				if (row.getCell(3) != null) {
@@ -329,24 +292,24 @@ public class UploadServiceImpl implements UploadService {
 						// System.out.println("updated-facilitys:" +f.getId()+"\n");
 					}
 				}
-				//Patient
+				// Patient
 				if (row.getCell(4) != null) {
-					
+
 					// VihType
 					if (row.getCell(23) != null) {
 
 						vt = vihTypeRepository.findVihTypeByName(ProcessType.getCellStringValue(row.getCell(23)));
 
 						boolean checkVihType = (vt == null);
-						
-						if(checkVihType) {
-							
+
+						if (checkVihType) {
+
 							inVht = vihTypeRepository.findVihTypeByName(Constants.VIH_TYPE_NAME_OTHER);
 
-						    vt = inVht;	
+							vt = inVht;
 						}
 					}
-					
+
 					p = new Patient();
 
 					p.setSubjectno(ProcessType.getCellStringValue(row.getCell(2)));
@@ -356,32 +319,33 @@ public class UploadServiceImpl implements UploadService {
 					p.setAgeYears((int) row.getCell(13).getNumericCellValue());
 					p.setAgeMonths((int) row.getCell(14).getNumericCellValue());
 					p.setAgeWeeks((int) row.getCell(15).getNumericCellValue());
-					p.setArvInitDate(ProcessType.getCellDateValue(evaluator, row.getCell(26)));	
+					p.setArvInitDate(ProcessType.getCellDateValue(evaluator, row.getCell(26)));
 					p.setSite(s);
 					p.setVihType(vt);
-					
-					p = patientRepository.save(p);	
+
+					p = patientRepository.save(p);
 				}
-				//Analyse
-				
+				// Analyse
+
 				if (row.getCell(19) != null) {
-					
+
 					// Regimen
-					String molecule = ProcessString.concatenateCurrentValue(row.getCell(28), row.getCell(29), row.getCell(30));
-					//System.out.println("concatenateCurrentValue ::: " + molecule + "\n");
+					String molecule = ProcessString.concatenateCurrentValue(row.getCell(28), row.getCell(29),
+							row.getCell(30));
+					// System.out.println("concatenateCurrentValue ::: " + molecule + "\n");
 					reg = regimenRepository.findRegimenByName(molecule);
-					//System.out.println("diet-values:" + d.getName() + "\n" );
+					// System.out.println("diet-values:" + d.getName() + "\n" );
 					boolean checkRegimen = (reg == null);
-					
+
 					if (checkRegimen) {
 						inReg = regimenRepository.findRegimenByName(Constants.REGIMEN_NAME_OTHER);
 						reg = inReg;
-						//System.out.println("regimen-other:" + reg.getName() + "\n");
+						// System.out.println("regimen-other:" + reg.getName() + "\n");
 					}
-					
+
 					// Sample type
 					if (row.getCell(18) != null) {
-						
+
 						st = sampleTypeRepository.findSampleTypeByName(ProcessType.getCellStringValue(row.getCell(18)));
 
 						if (st == null) {
@@ -391,159 +355,143 @@ public class UploadServiceImpl implements UploadService {
 							st = sampleTypeRepository.save(inSampleType);
 						}
 					}
-					
+
 					// VlReason
-					
-						vr = vlReasonRepository.findVlReasonByName(ProcessType.getCellStringValue(row.getCell(33)));
 
-						if (vr == null) {
-							VlReason inVlReason = new VlReason();
-							inVlReason.setName(ProcessType.getCellStringValue(row.getCell(33)));
+					vr = vlReasonRepository.findVlReasonByName(ProcessType.getCellStringValue(row.getCell(33)));
 
-							vr = vlReasonRepository.save(inVlReason);
-						}
-						
-				  //Lab
-						
+					if (vr == null) {
+						VlReason inVlReason = new VlReason();
+						inVlReason.setName(ProcessType.getCellStringValue(row.getCell(33)));
+
+						vr = vlReasonRepository.save(inVlReason);
+					}
+
+					// Lab
+
 					if (row.getCell(0) != null) {
-						
+
 						String labValue = ProcessString.labNoSubValue(row.getCell(0));
-						
-						//System.out.println("lab-value:" + labValue + "\n");
-						
+
+						// System.out.println("lab-value:" + labValue + "\n");
+
 						lab = labRepository.findLabByPrefix(labValue);
-						
-						//System.out.println("Lab-existing:" + lab + "\n");
+
+						// System.out.println("Lab-existing:" + lab + "\n");
 
 						boolean checkLabValue = (lab == null);
-						
+
 						if (checkLabValue) {
 							inLab = labRepository.findLabByPrefix(Constants.LAB_NAME_OTHER);
-							//System.out.println("Lab-constant:" + inLab.getPrefix() + "\n");
+							// System.out.println("Lab-constant:" + inLab.getPrefix() + "\n");
 
 							lab = inLab;
 						}
 					}
-					//Analysis
-					 
+					// Analysis
+
 					a = new Analysis();
 
-	            	 if (row.getCell(16).getCellType() == CellType.STRING ) {
-	            		 
-	            		 String str = row.getCell(16).getStringCellValue();
-	            		 
-	 					 //System.out.println("viral-load-string: " + row.getCell(16).getStringCellValue() + "\n");
-	 					 
-	 					 List<String> tabConstants = Arrays.asList("<LL", "< LL", "LL");
-	 					 
-	 					 //a = new Analysis();
+					if (row.getCell(16).getCellType() == CellType.STRING) {
 
-	 					 if(tabConstants.contains(str) ) {
-	 						a.setGrossResult(str);
-	 						a.setConvertedResult(0);
-		 					 
-	                        //System.out.println("valeur-49: " + a.getGrossResult() + " " + a.getConvertedResult() + "\n");
-		
-	 					}else {
-	 						a.setGrossResult("");
-	 						a.setConvertedResult(-1);
-	 						
-                            //System.out.println("valeur-XXXX: " + a.getGrossResult() + " " + a.getConvertedResult() + "\n");
-	 						
-	 						}
-	 				}
-	            	 
-	            	 if (row.getCell(16).getCellType() == CellType.NUMERIC ) {
-	            		 
-		 					//System.out.println("viral-load-numeric: " + row.getCell(16).getNumericCellValue() + "\n");
-		 					
-	 						a.setGrossResult("");
-	 						a.setConvertedResult((int) row.getCell(16).getNumericCellValue());
-	 						
-	 	                    //System.out.println("valeur-numeric: " + a.getGrossResult() + " " + a.getConvertedResult() + "\n");
+						String str = row.getCell(16).getStringCellValue();
 
-		            }
+						// System.out.println("viral-load-string: " +
+						// row.getCell(16).getStringCellValue() + "\n");
 
-					 ageCdcId = getCDCAgeCategorieId((int) row.getCell(13).getNumericCellValue());
+						List<String> tabConstants = Arrays.asList("<LL", "< LL", "LL");
 
-                     cdc = ageCategoryRepository.getOne(ageCdcId);
+						// a = new Analysis();
 
-					 boolean checkCdcAge = (cdc == null);
-						
-						if (checkCdcAge) {
-							//inCdc = labRepository.findLabByPrefix(Constants.LAB_NAME_OTHER);
-							//System.out.println("Lab-constant:" + inLab.getPrefix() + "\n");
+						if (tabConstants.contains(str)) {
+							a.setGrossResult(str);
+							a.setConvertedResult(0);
 
-							cdc = inCdc;
+							// System.out.println("valeur-49: " + a.getGrossResult() + " " +
+							// a.getConvertedResult() + "\n");
+
+						} else {
+							a.setGrossResult("");
+							a.setConvertedResult(-1);
+
+							// System.out.println("valeur-XXXX: " + a.getGrossResult() + " " +
+							// a.getConvertedResult() + "\n");
+
 						}
+					}
 
-						ageNationalId = getNationalCategoriesId((int) row.getCell(13).getNumericCellValue());
+					if (row.getCell(16).getCellType() == CellType.NUMERIC) {
 
-						national = ageCategoryRepository.getOne(ageNationalId);
+						// System.out.println("viral-load-numeric: " +
+						// row.getCell(16).getNumericCellValue() + "\n");
 
-						boolean checkNationalAge = (national == null);
-						
-						if (checkNationalAge) {
-							//inNational = labRepository.findLabByPrefix(Constants.LAB_NAME_OTHER);
+						a.setGrossResult("");
+						a.setConvertedResult((int) row.getCell(16).getNumericCellValue());
 
-							national = inNational;
-						}
+						// System.out.println("valeur-numeric: " + a.getGrossResult() + " " +
+						// a.getConvertedResult() + "\n");
 
+					}
 
+					ageCdcId = getCDCAgeCategorieId((int) row.getCell(13).getNumericCellValue());
+					ageNationalId = getNationalCategoriesId((int) row.getCell(13).getNumericCellValue());
 
+					System.out.println("row.getCell(13).getNumericCellValue(): "+row.getCell(13).getNumericCellValue());
 
+					System.out.println("listeCdci:" +this.getCDCAgeCategory().get(0).toString());
+					System.out.println("listeNational:" +this.getNationalAgeCategory().get(0).toString());
+					System.out.println("ageCdcId:"+ageCdcId);
+					System.out.println("ageNationalId:"+ageNationalId);
 
-                    //a.setAgeCdc(getCDCAgeCategorieId((int) row.getCell(13).getNumericCellValue()));
-					//a.setAgeNational(getNationalCategoriesId((int) row.getCell(13).getNumericCellValue()));
+					a.setAgeCdc(ageCdcId);
+					a.setAgeNational(ageNationalId);
+					a.setAnalysisStatus((int) row.getCell(19).getNumericCellValue());
+					a.setCompletedDate(ProcessType.toLocalDateTime(evaluator, row.getCell(21)));
+					a.setReleasedDate(ProcessType.toLocalDateTime(evaluator, row.getCell(22)));
+					a.setLabno(ProcessType.getCellStringValue(row.getCell(0)));
+					a.setDintv(ProcessType.toLocalDateTime(evaluator, row.getCell(6)));
+					a.setDrcpt(ProcessType.toLocalDateTime(evaluator, row.getCell(5)));
+					a.setSampleType(st);
+					a.setTest(t);
+					a.setPatient(p);
+					a.setRegimen(reg);
+					a.setVlReason(vr);
+					a.setLab(lab);
 
-	            	
-	            	 a.setAnalysisStatus((int) row.getCell(19).getNumericCellValue());
-					 a.setCompletedDate(ProcessType.toLocalDateTime(evaluator, row.getCell(21)));
-					 a.setReleasedDate(ProcessType.toLocalDateTime(evaluator, row.getCell(22))); 
-					 a.setLabno(ProcessType.getCellStringValue(row.getCell(0)));
-					 a.setDintv(ProcessType.toLocalDateTime(evaluator, row.getCell(6)));
-					 a.setDrcpt(ProcessType.toLocalDateTime(evaluator, row.getCell(5)));
-					 a.setSampleType(st);
-					 a.setTest(t);
-					 a.setPatient(p);
-					 a.setRegimen(reg);
-					 a.setVlReason(vr);
-					 a.setLab(lab);
-					 
-	            	 a = analysisRepository.save(a); 
-	            	 	
+					a = analysisRepository.save(a);
+
 				}
-	
-			    workbook.close();			
-			}
-    	   return true;   
-       }catch(Exception ex) {
-    	   ex.printStackTrace();
-   		   return false;
 
-       }
+				workbook.close();
+			}
+			return true;
+		} catch (Exception ex) {
+			ex.printStackTrace();
+			return false;
+
+		}
 	}
-	
-	//Mise à jour des sites  avec nameSite, codeSiteDatim, nameSiteDatim
+
+	// Mise à jour des sites avec nameSite, codeSiteDatim, nameSiteDatim
 	@Override
 	public boolean updateSite(MultipartFile file) {
-		
+
 		Site s = null;
 		Test t = null;
 
-       try {
-    	   
-    		XSSFWorkbook workbook = new XSSFWorkbook(file.getInputStream());
+		try {
+
+			XSSFWorkbook workbook = new XSSFWorkbook(file.getInputStream());
 			XSSFSheet spreadsheet = workbook.getSheetAt(0);
-			
-			for(int i= 1; i <  spreadsheet.getPhysicalNumberOfRows(); i++) {
-				
+
+			for (int i = 1; i < spreadsheet.getPhysicalNumberOfRows(); i++) {
+
 				XSSFRow row = spreadsheet.getRow(i);
 				// Test
 				if (row.getCell(3) != null) {
 
 					t = testRepository.findTestByName(row.getCell(3).getStringCellValue());
-					//System.out.println("Test:" + t + "\n");
+					// System.out.println("Test:" + t + "\n");
 
 					if (t == null) {
 						Test inTest = new Test();
@@ -551,7 +499,7 @@ public class UploadServiceImpl implements UploadService {
 						inTest.setStudy(row.getCell(3).getStringCellValue());
 
 						t = testRepository.save(inTest);
-						//System.out.println("Test:" + t.toString());
+						// System.out.println("Test:" + t.toString());
 					}
 				}
 				// Site
@@ -585,90 +533,89 @@ public class UploadServiceImpl implements UploadService {
 						// System.out.println("updated-facilitys:" +f.getId()+"\n");
 					}
 				}
-			    workbook.close();			
+				workbook.close();
 			}
-    	   return true;   
-       }catch(Exception ex) {
-    	   ex.printStackTrace();
-   		   return false;
+			return true;
+		} catch (Exception ex) {
+			ex.printStackTrace();
+			return false;
 
-       }
+		}
 	}
-	
+
 	@Override
 	public boolean storePartnerImport(MultipartFile file) {
-		
+
 		Site s = null;
 		Partner p = null;
 		SitePartner sp = null;
 
-		
-	     try {
-	    	 
-	    		XSSFWorkbook workbook = new XSSFWorkbook(file.getInputStream());
-	    		XSSFSheet spreadsheet = workbook.getSheetAt(1);
-				System.out.println("SHEET-NAME: " + spreadsheet.getSheetName().toString() + "\n");
-				
-				for(int i = 6; i < spreadsheet.getPhysicalNumberOfRows(); i++) {
-					
-					XSSFRow row = spreadsheet.getRow(i);
-					
-					System.out.println("column-name: " + row.getCell(0).getStringCellValue() + "\n");
-					System.out.println("column-name---1: " + row.getCell(1).getStringCellValue() + "\n");
-					System.out.println("column-name---6: " + row.getCell(6).getStringCellValue() + "\n"); 
-					
-					if (row.getCell(1) != null) {
-						
-						s = siteRepository.findSiteByCodeSiteDatim(ProcessType.getCellStringValue(row.getCell(1)));
-						//List<Site> sites = siteRepository.findByCodeSiteDatim(ProcessType.getCellStringValue(row.getCell(1)));
-						//s= sites.get(0);
+		try {
 
-						if(s == null) {
-							Site inSite = new Site();
-							inSite.setNameSite(ProcessType.getCellStringValue(row.getCell(0)));
-							inSite.setCodeSiteDatim(ProcessType.getCellStringValue(row.getCell(1)));
-							
-							System.out.println("site-name:" +inSite.getNameSite() + "\n");
-							System.out.println("site-code-datim:" +inSite.getCodeSiteDatim() + "\n");
+			XSSFWorkbook workbook = new XSSFWorkbook(file.getInputStream());
+			XSSFSheet spreadsheet = workbook.getSheetAt(1);
+			System.out.println("SHEET-NAME: " + spreadsheet.getSheetName().toString() + "\n");
 
-							s = siteRepository.save(inSite);
-						}
+			for (int i = 6; i < spreadsheet.getPhysicalNumberOfRows(); i++) {
+
+				XSSFRow row = spreadsheet.getRow(i);
+
+				System.out.println("column-name: " + row.getCell(0).getStringCellValue() + "\n");
+				System.out.println("column-name---1: " + row.getCell(1).getStringCellValue() + "\n");
+				System.out.println("column-name---6: " + row.getCell(6).getStringCellValue() + "\n");
+
+				if (row.getCell(1) != null) {
+
+					s = siteRepository.findSiteByCodeSiteDatim(ProcessType.getCellStringValue(row.getCell(1)));
+					// List<Site> sites =
+					// siteRepository.findByCodeSiteDatim(ProcessType.getCellStringValue(row.getCell(1)));
+					// s= sites.get(0);
+
+					if (s == null) {
+						Site inSite = new Site();
+						inSite.setNameSite(ProcessType.getCellStringValue(row.getCell(0)));
+						inSite.setCodeSiteDatim(ProcessType.getCellStringValue(row.getCell(1)));
+
+						System.out.println("site-name:" + inSite.getNameSite() + "\n");
+						System.out.println("site-code-datim:" + inSite.getCodeSiteDatim() + "\n");
+
+						s = siteRepository.save(inSite);
 					}
-					
-					if (row.getCell(6) != null) {
-						
-						p = partnerRepository.findPartnerByName(ProcessType.getCellStringValue(row.getCell(6)));
-						System.out.println("partner-get:" +ProcessType.getCellStringValue(row.getCell(6))+ "\n");
+				}
 
-						if(p == null) {
-							Partner inPartner = new Partner();
-							inPartner.setName(ProcessType.getCellStringValue(row.getCell(6)));
-							
-							System.out.println("partner-name:" +inPartner.getName()+ "\n");
+				if (row.getCell(6) != null) {
 
-							p = partnerRepository.save(inPartner);
-						}
-				     }
-					
-				  sp = new SitePartner();
-				  sp.setSite(s);
-				  sp.setPartner(p);
-				  
+					p = partnerRepository.findPartnerByName(ProcessType.getCellStringValue(row.getCell(6)));
+					System.out.println("partner-get:" + ProcessType.getCellStringValue(row.getCell(6)) + "\n");
+
+					if (p == null) {
+						Partner inPartner = new Partner();
+						inPartner.setName(ProcessType.getCellStringValue(row.getCell(6)));
+
+						System.out.println("partner-name:" + inPartner.getName() + "\n");
+
+						p = partnerRepository.save(inPartner);
+					}
+				}
+
+				sp = new SitePartner();
+				sp.setSite(s);
+				sp.setPartner(p);
+
 				sp = sitePartnerRepository.save(sp);
-				
-			    workbook.close();			
-			}
-	    	 
-	    	 return true;
-	    	 
-	     }catch(Exception ex) {
-	    	 ex.printStackTrace();
-	 		return false;
 
-	     }		
+				workbook.close();
+			}
+
+			return true;
+
+		} catch (Exception ex) {
+			ex.printStackTrace();
+			return false;
+
+		}
 	}
 
-	
 	@Override
 	public boolean uploadTestImport(MultipartFile file) {
 
@@ -686,164 +633,153 @@ public class UploadServiceImpl implements UploadService {
 			XSSFSheet spreadsheet = workbook.getSheetAt(0);
 			System.out.println("SHEET-NAME: " + spreadsheet.getSheetName().toString() + "\n");
 
-
 			for (int i = 1; i < spreadsheet.getPhysicalNumberOfRows(); i++) {
-				
+
 				XSSFRow row = spreadsheet.getRow(i);
 
 				if (row.getCell(19) != null) {
-										
-	            	 if (row.getCell(16).getCellType() == CellType.STRING ) {
-	            		 
-	            		 String str = row.getCell(16).getStringCellValue();
-	            		 
-	 					 System.out.println("viral-load-string: " + row.getCell(16).getStringCellValue() + "\n");
-	 					 
-	 					 List<String> tabConstants = Arrays.asList("<LL", "< LL", "LL");
-	 					 
-	 			
-	 					 if(tabConstants.contains(str) ) {
-	 						
-	 						a = new Analysis();
-	 						a.setGrossResult(str);
-	 						a.setConvertedResult(0);
-		 					 
-	 System.out.println("valeur-49: " + a.getGrossResult() + " " + a.getConvertedResult() + "\n");
-		
-	 					}else {
-	 						a = new Analysis();
-	 						a.setGrossResult("");
-	 						a.setConvertedResult(-1);
-	 						
-    System.out.println("valeur-XXXX: " + a.getGrossResult() + " " + a.getConvertedResult() + "\n");
-	 						
-	 						}
-	 					}
-	            	 
-	            	 if (row.getCell(16).getCellType() == CellType.NUMERIC ) {
-	            		 
-		 					System.out.println("viral-load-numeric: " + row.getCell(16).getNumericCellValue() + "\n");
-		 					
-		 					a = new Analysis();
-	 						a.setGrossResult("");
-	 						a.setConvertedResult((int) row.getCell(16).getNumericCellValue());
-	 						
-	 	System.out.println("valeur-numeric: " + a.getGrossResult() + " " + a.getConvertedResult() + "\n");
 
-		            	 }
-	 				//a = analysisRepository.save(a);
+					if (row.getCell(16).getCellType() == CellType.STRING) {
 
-	            	 }
-				
-				
-				  //Lab
-						if (row.getCell(0) != null) {
-							
+						String str = row.getCell(16).getStringCellValue();
+
+						System.out.println("viral-load-string: " + row.getCell(16).getStringCellValue() + "\n");
+
+						List<String> tabConstants = Arrays.asList("<LL", "< LL", "LL");
+
+						if (tabConstants.contains(str)) {
+
+							a = new Analysis();
+							a.setGrossResult(str);
+							a.setConvertedResult(0);
+
+							System.out
+									.println("valeur-49: " + a.getGrossResult() + " " + a.getConvertedResult() + "\n");
+
+						} else {
+							a = new Analysis();
+							a.setGrossResult("");
+							a.setConvertedResult(-1);
+
+							System.out.println(
+									"valeur-XXXX: " + a.getGrossResult() + " " + a.getConvertedResult() + "\n");
+
+						}
+					}
+
+					if (row.getCell(16).getCellType() == CellType.NUMERIC) {
+
+						System.out.println("viral-load-numeric: " + row.getCell(16).getNumericCellValue() + "\n");
+
+						a = new Analysis();
+						a.setGrossResult("");
+						a.setConvertedResult((int) row.getCell(16).getNumericCellValue());
+
+						System.out
+								.println("valeur-numeric: " + a.getGrossResult() + " " + a.getConvertedResult() + "\n");
+
+					}
+					// a = analysisRepository.save(a);
+
+				}
+
+				// Lab
+				if (row.getCell(0) != null) {
+
 					String labValue = ProcessString.labNoSubValue(row.getCell(0));
-					
+
 					System.out.println("lab-value:" + labValue + "\n");
-					
+
 					lab = labRepository.findLabByPrefix(labValue);
-					
+
 					System.out.println("Lab-existing:" + lab + "\n");
 
 					boolean checkLabValue = (lab == null);
-					
+
 					if (checkLabValue) {
 						inLab = labRepository.findLabByPrefix(Constants.LAB_NAME_OTHER);
-						//System.out.println("Lab-constant:" + inLab.getPrefix() + "\n");
+						// System.out.println("Lab-constant:" + inLab.getPrefix() + "\n");
 
 						lab = inLab;
 					}
 				}
-	            	 
+
 				workbook.close();
 
-				} 
-				
+			}
+
 			return true;
 		} catch (Exception ex) {
 			ex.printStackTrace();
 			return false;
 		}
-	} 
-
+	}
 
 	public List<CategoryAge> getCDCAgeCategory() {
-	String sql = "SELECT id, min_cat, max_cat FROM dashboard.age_category where type = 'CDC CI'";
-	List<CategoryAge> response = new ArrayList<CategoryAge>();
-	try{
-		Query query = em.createNativeQuery(sql);
-		@SuppressWarnings("unchecked")
-	    List<Object[]> results = query.getResultList();
-		for(Object[] o : results){
-			CategoryAge ageClass = new CategoryAge();
-			ageClass.setId(Long.parseLong(o[0].toString()));
-			ageClass.setAgeMax(Integer.parseInt(o[1].toString()));
-			ageClass.setAgeMin(Integer.parseInt(o[2].toString()));
+		String sql = "SELECT id, min_cat, max_cat FROM dashboard.age_category where type = 'CDC CI'";
+		List<CategoryAge> response = new ArrayList<CategoryAge>();
+		try {
+			Query query = em.createNativeQuery(sql);
+			@SuppressWarnings("unchecked")
+			List<Object[]> results = query.getResultList();
+			for (Object[] o : results) {
+				CategoryAge ageClass = new CategoryAge();
+				ageClass.setId(Integer.parseInt(o[0].toString()));
+				ageClass.setAgeMin(Integer.parseInt(o[1].toString()));
+				ageClass.setAgeMax(Integer.parseInt(o[2].toString()));
 
-			response.add(ageClass);
+				response.add(ageClass);
+			}
+
+		} catch (Exception e) {
+			e.printStackTrace();
 		}
-
-	}catch(Exception e){
-		e.printStackTrace();
+		return response;
 	}
-	return response;
-}
 
+	public List<CategoryAge> getNationalAgeCategory() {
+		String sql = "SELECT id, min_cat, max_cat FROM dashboard.age_category where type = 'National'";
+		List<CategoryAge> response = new ArrayList<CategoryAge>();
+		try {
+			Query query = em.createNativeQuery(sql);
+			@SuppressWarnings("unchecked")
+			List<Object[]> results = query.getResultList();
+			for (Object[] o : results) {
+				CategoryAge ageClass = new CategoryAge();
+				ageClass.setId(Integer.parseInt(o[0].toString()));
+				ageClass.setAgeMin(Integer.parseInt(o[1].toString()));
+				ageClass.setAgeMax(Integer.parseInt(o[2].toString()));
 
-public  List<CategoryAge> getNationalAgeCategory() {
-	String sql = "SELECT id, min_cat, max_cat FROM dashboard.age_category where type = 'National'";
-	List<CategoryAge> response = new ArrayList<CategoryAge>();
-	try{
-		Query query = em.createNativeQuery(sql);
-		@SuppressWarnings("unchecked")
-	    List<Object[]> results = query.getResultList();
-		for(Object[] o : results){
-			CategoryAge ageClass = new CategoryAge();
-			ageClass.setId(Long.parseLong(o[0].toString()));
-			ageClass.setAgeMax(Integer.parseInt(o[1].toString()));
-			ageClass.setAgeMin(Integer.parseInt(o[2].toString()));
+				response.add(ageClass);
 
-			response.add(ageClass);
+			}
 
+		} catch (Exception e) {
+			e.printStackTrace();
 		}
-
-	}catch(Exception e){
-		e.printStackTrace();
+		return response;
 	}
-	return response;
-}
 
-
-
-public long getCDCAgeCategorieId(Integer age){
-   long cat = 0;
-   for(CategoryAge ageCat:cdcAgeCategories){
-	if(age >= ageCat.getAgeMin() && age < ageCat.getAgeMax()){
-	cat = ageCat.getId();
-     }
+	public Integer getCDCAgeCategorieId(Integer age) {
+		Integer cat = null;
+		for (CategoryAge ageCat : cdcAgeCategories) {
+			if (age >= ageCat.getAgeMin() && age < ageCat.getAgeMax()) {
+				cat = ageCat.getId();
+				break;
+			}
+		}
+		return cat;
 	}
-    return cat;
-  }
 
+	public Integer getNationalCategoriesId(Integer age) {
+		Integer cat = null;
+		for (CategoryAge ageCat : nationalAgeCategories) {
+			if (age >= ageCat.getAgeMin() && age < ageCat.getAgeMax()) {
+				cat = ageCat.getId();
+				break;
+			}
+		}
+		return cat;
+	}
 
-
-public long getNationalCategoriesId(Integer age){
-	long cat = 0;
-	for(CategoryAge ageCat:nationalAgeCategories){
-	 if(age >= ageCat.getAgeMin() && age < ageCat.getAgeMax()){
-	 cat = ageCat.getId();
-	  }
-	 }
-	 return cat;
-   }
- 
- 
-
-
-
-
-
-	
 }

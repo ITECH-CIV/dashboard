@@ -2,7 +2,7 @@ package org.itechciv.dashboard.helper;
 
 public class CategoryAge {
 
- private Long id;
+ private Integer id;
  private Integer ageMin;
  private Integer ageMax;
 
@@ -27,13 +27,13 @@ public void setAgeMax(Integer ageMax) {
 
 
 
-public Long getId() {
+public Integer getId() {
     return id;
 }
 
 
 
-public void setId(Long id) {
+public void setId(Integer id) {
     this.id = id;
 } 
 
