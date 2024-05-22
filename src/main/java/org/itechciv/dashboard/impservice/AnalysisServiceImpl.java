@@ -2489,6 +2489,17 @@ public List<Object[]> getestBySpecimenEdtaPlasmaForOneRegimen(Long regimenId) {
        }  
 }
 
+@Override
+public List<Object[]> getTestForOneRegimen(Long regimenId, int year) {
+    try{
+        return analisysRepo.getTestForOneRegimen(regimenId, year);
+
+    }catch(Exception ex){
+        ex.printStackTrace();
+        return Collections.emptyList();
+       }  
+}
+
 
 /********************************************************************************************************************************** */
 /* @Override

@@ -1254,6 +1254,13 @@ public class AnalysisController {
     return analysisServices.getestBySpecimenEdtaPlasmaForOneRegimen(regimenId);
     }
 
+
+    @GetMapping("/testforoneregimen")
+    public List<Object[]> getTestForOneRegimen(@RequestParam Long regimenId, @RequestParam int year) {
+    return analysisServices.getTestForOneRegimen(regimenId, year);
+    }
+
+
 /* 
     @GetMapping("/testcategoryone")
     public List<Object[]> getTestByCategoryAgeMinus2(@RequestParam int year, @RequestParam Long partnerId) {

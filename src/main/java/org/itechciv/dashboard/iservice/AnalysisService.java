@@ -278,6 +278,9 @@ List<Object[]> getestBySpecimenDBSForOneRegimen(@Param("regimenId") Long regimen
 List<Object[]> getestBySpecimenPSCForOneRegimen(@Param("regimenId") Long regimenId);
 List<Object[]> getestBySpecimenEdtaPlasmaForOneRegimen(@Param("regimenId") Long regimenId);
 
+List<Object[]> getTestForOneRegimen(@Param("regimenId") Long regimenId, @Param("year") int year);
+
+
 
 
 
