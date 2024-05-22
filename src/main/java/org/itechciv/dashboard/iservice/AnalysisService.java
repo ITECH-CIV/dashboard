@@ -268,6 +268,24 @@ List<Object[]> getPatientByCategoryCdciForOnePartner(@Param("partnerId") Long pa
 List<Object[]> getPatientByCategoryNationalForOnePartner(@Param("partnerId") Long partnerId , @Param("year") int year);
 
 
+List<Object[]> getTestByRegimenForAllPartner(@Param("year") int year);
+List<Object[]> getPatientByRegimenForAllPartner(@Param("year") int year);
+
+List<Object[]> getTestByRegimenForOnePartner(@Param("partnerId") Long partnerId, @Param("year") int year);
+List<Object[]> getPatientByRegimenForOnePartner(@Param("partnerId") Long partnerId, @Param("year") int year);
+
+List<Object[]> getestBySpecimenDBSForOneRegimen(@Param("regimenId") Long regimenId);
+List<Object[]> getestBySpecimenPSCForOneRegimen(@Param("regimenId") Long regimenId);
+List<Object[]> getestBySpecimenEdtaPlasmaForOneRegimen(@Param("regimenId") Long regimenId);
+
+
+
+
+
+
+
+
+
 
 
 

@@ -2412,6 +2412,84 @@ public List<Object[]> getPatientByCategoryNationalForOnePartner(Long partnerId, 
        }    
 }
 
+@Override
+public List<Object[]> getTestByRegimenForAllPartner(int year) {
+    try{
+        return analisysRepo.getTestByRegimenForAllPartner(year);
+
+    }catch(Exception ex){
+        ex.printStackTrace();
+        return Collections.emptyList();
+       }    
+}
+
+@Override
+public List<Object[]> getPatientByRegimenForAllPartner(int year) {
+    try{
+        return analisysRepo.getPatientByRegimenForAllPartner(year);
+
+    }catch(Exception ex){
+        ex.printStackTrace();
+        return Collections.emptyList();
+       }   
+}
+
+@Override
+public List<Object[]> getTestByRegimenForOnePartner(Long partnerId, int year) {
+    try{
+        return analisysRepo.getTestByRegimenForOnePartner(partnerId, year);
+
+    }catch(Exception ex){
+        ex.printStackTrace();
+        return Collections.emptyList();
+       }   
+}
+
+@Override
+public List<Object[]> getPatientByRegimenForOnePartner(Long partnerId, int year) {
+    try{
+        return analisysRepo.getPatientByRegimenForOnePartner(partnerId, year);
+
+    }catch(Exception ex){
+        ex.printStackTrace();
+        return Collections.emptyList();
+       }  
+}
+
+@Override
+public List<Object[]> getestBySpecimenDBSForOneRegimen(Long regimenId) {
+    try{
+        return analisysRepo.getestBySpecimenDBSForOneRegimen(regimenId);
+
+    }catch(Exception ex){
+        ex.printStackTrace();
+        return Collections.emptyList();
+       }  
+}
+
+@Override
+public List<Object[]> getestBySpecimenPSCForOneRegimen(Long regimenId) {
+    try{
+        return analisysRepo.getestBySpecimenPSCForOneRegimen(regimenId);
+
+    }catch(Exception ex){
+        ex.printStackTrace();
+        return Collections.emptyList();
+       }  
+}
+
+@Override
+public List<Object[]> getestBySpecimenEdtaPlasmaForOneRegimen(Long regimenId) {
+    try{
+        return analisysRepo.getestBySpecimenEdtaPlasmaForOneRegimen(regimenId);
+
+    }catch(Exception ex){
+        ex.printStackTrace();
+        return Collections.emptyList();
+       }  
+}
+
+
 /********************************************************************************************************************************** */
 /* @Override
 public List<Object[]> getTestByCategoryAgeMinus2(Long partnerId, int year) {

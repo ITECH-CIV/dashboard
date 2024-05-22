@@ -1215,7 +1215,45 @@ public class AnalysisController {
     }
 
 
- 
+    @GetMapping("/testbyregimenforallpartner")
+    public List<Object[]> getTestByRegimenForAllPartner(@RequestParam int year) {
+    return analysisServices.getTestByRegimenForAllPartner(year);
+    }
+
+
+    @GetMapping("/patientbyregimenforallpartner")
+    public List<Object[]> getPatientByRegimenForAllPartner(@RequestParam int year) {
+    return analysisServices.getPatientByRegimenForAllPartner(year);
+    }
+
+
+    @GetMapping("/testbyregimenforonepartner")
+    public List<Object[]> getTestByRegimenForOnePartner(@RequestParam int year, @RequestParam Long partnerId) {
+    return analysisServices.getTestByRegimenForOnePartner(partnerId, year);
+    }
+
+
+    @GetMapping("/patientbyregimenforonepartner")
+    public List<Object[]> getPatientByRegimenForOnePartner(@RequestParam int year, @RequestParam Long partnerId) {
+    return analysisServices.getPatientByRegimenForOnePartner(partnerId, year);
+    }
+
+
+    @GetMapping("/testdbsforoneregimen")
+    public List<Object[]> getestBySpecimenDBSForOneRegimen(@RequestParam Long regimenId) {
+    return analysisServices.getestBySpecimenDBSForOneRegimen(regimenId);
+    }
+
+    @GetMapping("/testpscforoneregimen")
+    public List<Object[]> getestBySpecimenPSCForOneRegimen(@RequestParam Long regimenId) {
+    return analysisServices.getestBySpecimenPSCForOneRegimen(regimenId);
+    }
+
+    @GetMapping("/testedtaforoneregimen")
+    public List<Object[]> getestBySpecimenEdtaPlasmaForOneRegimen(@RequestParam Long regimenId) {
+    return analysisServices.getestBySpecimenEdtaPlasmaForOneRegimen(regimenId);
+    }
+
 /* 
     @GetMapping("/testcategoryone")
     public List<Object[]> getTestByCategoryAgeMinus2(@RequestParam int year, @RequestParam Long partnerId) {
