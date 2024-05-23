@@ -296,6 +296,10 @@ List<Object[]> getestBySpecimenEdtaPlasmaForRegimenAndPartnerOne(@Param("regimen
 List<Object[]> getTestForRegimenAndPartnerOne(@Param("regimenId") Long regimenId, @Param("partnerId") Long partnerId, @Param("year") int year);
 
 
+List<Object[]> getTestByCDCMaleForRegimenAndPartnerOne(@Param("regimenId") Long regimenId, @Param("partnerId") Long partnerId, @Param("year") int year);
+
+
+
 
 
 
