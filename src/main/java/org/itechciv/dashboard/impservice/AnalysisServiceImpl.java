@@ -2651,6 +2651,17 @@ public List<Object[]> getTestAndPatientResultForPartnerAndRegion(int year) {
        }  
 }
 
+@Override
+public List<Object[]> getTestAndPatientResultForOnePartnerAndRegion(int year, Long partnerId) {
+    try{
+        return analisysRepo.getTestAndPatientResultForOnePartnerAndRegion(year, partnerId);
+
+    }catch(Exception ex){
+        ex.printStackTrace();
+        return Collections.emptyList();
+       }  
+}
+
 
 /********************************************************************************************************************************** */
 /* @Override

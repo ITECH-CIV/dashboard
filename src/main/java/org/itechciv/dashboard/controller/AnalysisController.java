@@ -1324,6 +1324,12 @@ public class AnalysisController {
     }
 
 
+    @GetMapping("/testandpatientresultforonepartnerandregion")
+    public List<Object[]> getTestAndPatientResultForOnePartnerAndRegion(@RequestParam int year, @RequestParam Long partnerId) {
+    return analysisServices.getTestAndPatientResultForOnePartnerAndRegion(year, partnerId);
+    }
+
+
 
 
 
