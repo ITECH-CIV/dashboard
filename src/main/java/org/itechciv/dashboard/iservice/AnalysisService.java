@@ -307,6 +307,8 @@ List<Object[]> getTestAndPatientResultForPartnerAndRegion(@Param("year") int yea
 List<Object[]> getTestAndPatientResultForOnePartnerAndRegion(@Param("year") int year, @Param("partnerId") Long partnerId);
 
 List<Object[]> getTestAndPatientResultForAllLab(@Param("year") int year);
+List<Object[]> getTestAndPatientResultForOneLab(@Param("year") int year, @Param("labId") Long labId);
+
 
 
 

@@ -2673,6 +2673,17 @@ public List<Object[]> getTestAndPatientResultForAllLab(int year) {
        }  
 }
 
+@Override
+public List<Object[]> getTestAndPatientResultForOneLab(int year, Long labId) {
+    try{
+        return analisysRepo.getTestAndPatientResultForOneLab(year, labId);
+
+    }catch(Exception ex){
+        ex.printStackTrace();
+        return Collections.emptyList();
+       }  
+}
+
 
 /********************************************************************************************************************************** */
 /* @Override

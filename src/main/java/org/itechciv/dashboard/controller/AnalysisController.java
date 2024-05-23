@@ -1335,6 +1335,13 @@ public class AnalysisController {
     }
 
 
+    @GetMapping("/testandpatientresultforonelab")
+    public List<Object[]> getTestAndPatientResultForOneLab(@RequestParam int year, @RequestParam Long labId) {
+    return analysisServices.getTestAndPatientResultForOneLab(year, labId);
+    }
+
+
+
 
 
 

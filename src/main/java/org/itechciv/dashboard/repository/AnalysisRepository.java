@@ -6874,7 +6874,8 @@ List<Object[]> getPatientByCDCMaleForRegimenAndPartnerOne(@Param("regimenId") Lo
   " GROUP BY reg.id, reg.name, part.name, EXTRACT(YEAR FROM a.drcpt)", nativeQuery = true) 
   List<Object[]> getTestAndPatientResultForOnePartnerAndRegion(@Param("year") int year, @Param("partnerId") Long partnerId);
   
-//STATISTIQUES DE PERFORMNCE DU LABO
+
+//STATISTIQUES DE PERFORMNCE POUR CHAQUE LABORATOIRE
 @Query(value =  " SELECT l.id, l.name,   " +
 " SUM(CASE WHEN a.converted_result >= 1000 THEN 1 ELSE 0 END) AS TOTAL_SUPERIEUR_OU_EGAL_1000, " +
 " SUM(CASE WHEN a.converted_result < 1000 THEN 1 ELSE 0 END ) AS TOTAL_INFERIEUR_A_1000, " +
@@ -6899,7 +6900,31 @@ List<Object[]> getPatientByCDCMaleForRegimenAndPartnerOne(@Param("regimenId") Lo
 " GROUP BY l.id, l.name, EXTRACT(YEAR FROM a.drcpt)", nativeQuery = true) 
 List<Object[]> getTestAndPatientResultForAllLab(@Param("year") int year);
 
-
+//STATISTIQUES DE PERFORMNCE POUR UN LABORATOIRE LABORATOIRE
+@Query(value =  " SELECT l.id, l.name,   " +
+" SUM(CASE WHEN a.converted_result >= 1000 THEN 1 ELSE 0 END) AS TOTAL_SUPERIEUR_OU_EGAL_1000, " +
+" SUM(CASE WHEN a.converted_result < 1000 THEN 1 ELSE 0 END ) AS TOTAL_INFERIEUR_A_1000, " +
+" SUM(CASE WHEN a.converted_result = 0 THEN 1 ELSE 0 END) AS TOTAL_INDETECTABLE_LL, " +
+" SUM(CASE WHEN a.converted_result = -1 THEN 1 ELSE 0 END) AS TOTAL_INVALIDE_XXXX, " +
+" SUM(1) AS TOTAL_TEST, " +
+" SUM(CASE WHEN a.converted_result >= 1000 THEN 2 ELSE 0 END) AS TOTAL_NON_SUPPRIME, " +
+" SUM(CASE WHEN a.converted_result < 1000 AND a.converted_result > 0 THEN 2 ELSE 0 END ) AS TOTAL_SUPPRIME, " +
+" SUM(CASE WHEN a.converted_result = 0 THEN 2 ELSE 0 END) AS TOTAL_INDETECTABLE_LL, " +
+" SUM(2) AS TOTAL_PATIENT " +
+" FROM  dashboard.analysis a " +
+" LEFT JOIN dashboard.patient pat on pat.id = a.patient_id " +
+" LEFT JOIN dashboard.site s on s.id = pat.site_id " +
+" JOIN dashboard.district dis on dis.id = s.district_id " +
+" JOIN dashboard.region reg on reg.id = dis.region_id " +
+" LEFT JOIN dashboard.age_category cdc_age_cat on cdc_age_cat.id = a.age_cdc_id " +
+" LEFT JOIN dashboard.site_partner site_part on site_part.site_id = s.id " +
+" JOIN dashboard.partner part on part.id = site_part.partner_id " +
+" JOIN dashboard.regimen rg on rg.id = a.regimen_id " +
+" JOIN dashboard.lab l on l.id = a.lab_id " +
+" WHERE  a.lab_id = :labId AND " +
+" EXTRACT(YEAR FROM a.drcpt) = :year " +
+" GROUP BY l.id, l.name, EXTRACT(YEAR FROM a.drcpt)", nativeQuery = true) 
+List<Object[]> getTestAndPatientResultForOneLab(@Param("year") int year, @Param("labId") Long labId);
 
 
 
