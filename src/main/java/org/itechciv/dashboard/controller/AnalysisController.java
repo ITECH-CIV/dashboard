@@ -1283,6 +1283,24 @@ public class AnalysisController {
     }
 
 
+    @GetMapping("/testbyspecimendbsforregimenandpartnerone")
+    public List<Object[]> getestBySpecimenDBSForRegimenAndPartnerOne(@RequestParam Long regimenId, @RequestParam Long partnerId) {
+    return analysisServices.getestBySpecimenDBSForRegimenAndPartnerOne(regimenId, partnerId);
+    }
+
+
+    @GetMapping("/testbyspecimenpscforregimenandpartnerone")
+    public List<Object[]> getestBySpecimenPSCForRegimenAndPartnerOne(@RequestParam Long regimenId, @RequestParam Long partnerId) {
+    return analysisServices.getestBySpecimenPSCForRegimenAndPartnerOne(regimenId, partnerId);
+    }
+
+
+    @GetMapping("/testbyspecimenedtaforregimenandpartnerone")
+    public List<Object[]> getestBySpecimenEdtaPlasmaForRegimenAndPartnerOne(@RequestParam Long regimenId, @RequestParam Long partnerId) {
+    return analysisServices.getestBySpecimenEdtaPlasmaForRegimenAndPartnerOne(regimenId, partnerId);
+    }
+
+
 
 
 

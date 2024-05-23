@@ -2548,6 +2548,39 @@ public List<Object[]> getPatientByCDCFemaleForOneRegimen(Long regimenId, int yea
        }  
 }
 
+@Override
+public List<Object[]> getestBySpecimenDBSForRegimenAndPartnerOne(Long regimenId, Long partnerId) {
+    try{
+        return analisysRepo.getestBySpecimenDBSForRegimenAndPartnerOne(regimenId, partnerId);
+
+    }catch(Exception ex){
+        ex.printStackTrace();
+        return Collections.emptyList();
+       }  
+}
+
+@Override
+public List<Object[]> getestBySpecimenPSCForRegimenAndPartnerOne(Long regimenId, Long partnerId) {
+    try{
+        return analisysRepo.getestBySpecimenPSCForRegimenAndPartnerOne(regimenId, partnerId);
+
+    }catch(Exception ex){
+        ex.printStackTrace();
+        return Collections.emptyList();
+       }  
+}
+
+@Override
+public List<Object[]> getestBySpecimenEdtaPlasmaForRegimenAndPartnerOne(Long regimenId, Long partnerId) {
+    try{
+        return analisysRepo.getestBySpecimenEdtaPlasmaForRegimenAndPartnerOne(regimenId, partnerId);
+
+    }catch(Exception ex){
+        ex.printStackTrace();
+        return Collections.emptyList();
+       }  
+}
+
 
 /********************************************************************************************************************************** */
 /* @Override

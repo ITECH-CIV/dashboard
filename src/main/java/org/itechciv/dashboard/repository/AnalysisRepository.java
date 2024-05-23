@@ -6631,6 +6631,70 @@ List<Object[]> getPatientByCDCMaleForOneRegimen(@Param("regimenId") Long regimen
   " GROUP BY pat.gender,cdc_age_cat.label, rg.name, EXTRACT(YEAR FROM a.drcpt)", nativeQuery = true) 
   List<Object[]> getPatientByCDCFemaleForOneRegimen(@Param("regimenId") Long regimenId, @Param("year") int year, @Param("sex") String sex);
   
+//NOMBRE DE TESTS REALISES PAR SPECIMEN SUR UNE PERIODE POUR UN PARTENAIRE ET UN REGIME CHOISI
+
+//DBS
+@Query(value = " SELECT TO_CHAR(a.drcpt, 'Mon-YYYY') AS date,  " +
+" st.label, " +
+" COUNT(t.id) AS total_tests " +
+" FROM dashboard.region r " +
+" INNER JOIN dashboard.district d ON r.id = d.region_id" +
+" INNER JOIN dashboard.site s ON d.id = s.district_id " +
+" INNER JOIN dashboard.patient p ON s.id = p.site_id" +
+" INNER JOIN dashboard.analysis a ON p.id = a.patient_id " +
+" INNER join dashboard.test t on t.id = a.test_id " +
+" INNER join dashboard.site_partner sp on s.id = sp.site_id " +
+" INNER join dashboard.partner pt on pt.id = sp.partner_id " +
+" INNER JOIN dashboard.regimen rg ON a.regimen_id = rg.id " +
+" INNER JOIN dashboard.vl_reason vr ON a.vl_reason_id = vr.id " +
+" INNER JOIN dashboard.sample_type st ON a.sample_type_id = st.id " +
+" WHERE st.label = 'DBS' AND a.regimen_id = :regimenId AND pt.id = :partnerId " +
+" AND a.drcpt BETWEEN '2022-01-01' AND CURRENT_DATE " +
+" GROUP BY a.drcpt, TO_CHAR(a.drcpt, 'Mon-YYYY'), st.label  " +
+" ORDER BY a.drcpt ASC;", nativeQuery = true)
+List<Object[]> getestBySpecimenDBSForRegimenAndPartnerOne(@Param("regimenId") Long regimenId, @Param("partnerId") Long partnerId );
+
+ //PSC
+ @Query(value = " SELECT TO_CHAR(a.drcpt, 'Mon-YYYY') AS date,  " +
+ " st.label, " +
+ " COUNT(t.id) AS total_tests " +
+ " FROM dashboard.region r " +
+ " INNER JOIN dashboard.district d ON r.id = d.region_id" +
+ " INNER JOIN dashboard.site s ON d.id = s.district_id " +
+ " INNER JOIN dashboard.patient p ON s.id = p.site_id" +
+ " INNER JOIN dashboard.analysis a ON p.id = a.patient_id " +
+ " INNER join dashboard.test t on t.id = a.test_id " +
+ " INNER join dashboard.site_partner sp on s.id = sp.site_id " +
+ " INNER join dashboard.partner pt on pt.id = sp.partner_id " +
+ " INNER JOIN dashboard.regimen rg ON a.regimen_id = rg.id " +
+ " INNER JOIN dashboard.vl_reason vr ON a.vl_reason_id = vr.id " +
+ " INNER JOIN dashboard.sample_type st ON a.sample_type_id = st.id " +
+ " WHERE st.label = 'PSC' AND a.regimen_id = :regimenId AND pt.id = :partnerId " +
+ " AND a.drcpt BETWEEN '2022-01-01' AND CURRENT_DATE " +
+ " GROUP BY a.drcpt, TO_CHAR(a.drcpt, 'Mon-YYYY'), st.label  " +
+ " ORDER BY a.drcpt ASC;", nativeQuery = true)
+ List<Object[]> getestBySpecimenPSCForRegimenAndPartnerOne(@Param("regimenId") Long regimenId, @Param("partnerId") Long partnerId);
+
+  //EDTA PLASMA
+  @Query(value = " SELECT TO_CHAR(a.drcpt, 'Mon-YYYY') AS date,  " +
+  " st.label, " +
+  " COUNT(t.id) AS total_tests " +
+  " FROM dashboard.region r " +
+  " INNER JOIN dashboard.district d ON r.id = d.region_id" +
+  " INNER JOIN dashboard.site s ON d.id = s.district_id " +
+  " INNER JOIN dashboard.patient p ON s.id = p.site_id" +
+  " INNER JOIN dashboard.analysis a ON p.id = a.patient_id " +
+  " INNER join dashboard.test t on t.id = a.test_id " +
+  " INNER join dashboard.site_partner sp on s.id = sp.site_id " +
+  " INNER join dashboard.partner pt on pt.id = sp.partner_id " +
+  " INNER JOIN dashboard.regimen rg ON a.regimen_id = rg.id " +
+  " INNER JOIN dashboard.vl_reason vr ON a.vl_reason_id = vr.id " +
+  " INNER JOIN dashboard.sample_type st ON a.sample_type_id = st.id " +
+  " WHERE st.label = 'Tube EDTA - Violet' AND a.regimen_id = :regimenId AND pt.id = :partnerId " +
+  " AND a.drcpt BETWEEN '2022-01-01' AND CURRENT_DATE " +
+  " GROUP BY a.drcpt, TO_CHAR(a.drcpt, 'Mon-YYYY'), st.label  " +
+  " ORDER BY a.drcpt ASC;", nativeQuery = true)
+  List<Object[]> getestBySpecimenEdtaPlasmaForRegimenAndPartnerOne(@Param("regimenId") Long regimenId, @Param("partnerId") Long partnerId);
 
 
 
