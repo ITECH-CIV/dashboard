@@ -1277,6 +1277,12 @@ public class AnalysisController {
     return analysisServices.getPatientByCDCMaleForOneRegimen(regimenId, year);
     }
 
+    @GetMapping("/patientbycdcfemininforoneregimen")
+    public List<Object[]> getPatientByCDCFemaleForOneRegimen(@RequestParam Long regimenId, @RequestParam int year) {
+    return analysisServices.getPatientByCDCFemaleForOneRegimen(regimenId, year);
+    }
+
+
 
 
 

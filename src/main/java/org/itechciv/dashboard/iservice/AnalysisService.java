@@ -286,6 +286,9 @@ List<Object[]> getTestByCdcFemaleForOneRegimen(@Param("regimenId") Long regimenI
 
 List<Object[]> getPatientByCDCMaleForOneRegimen(@Param("regimenId") Long regimenId, @Param("year") int year);
 
+List<Object[]> getPatientByCDCFemaleForOneRegimen(@Param("regimenId") Long regimenId, @Param("year") int year);
+
+
 
 
 
