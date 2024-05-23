@@ -6696,7 +6696,32 @@ List<Object[]> getestBySpecimenDBSForRegimenAndPartnerOne(@Param("regimenId") Lo
   " ORDER BY a.drcpt ASC;", nativeQuery = true)
   List<Object[]> getestBySpecimenEdtaPlasmaForRegimenAndPartnerOne(@Param("regimenId") Long regimenId, @Param("partnerId") Long partnerId);
 
-
+  //NOMBRE DE TESTS REALISES POUR UN REGIME THERAPEUTIQUE EN FONCTION DE L'ANNEE EN COURS POUR UN PARTENAIRE
+  @Query(value = "SELECT rg.name,  " +
+  " SUM(CASE WHEN a.convertedResult >= 1000 THEN 1 ELSE 0 END) AS TOTAL_SUPERIEUR_OU_EGAL_1000, " +
+  " SUM(CASE WHEN a.convertedResult < 1000 THEN 1 ELSE 0 END ) AS TOTAL_INFERIEUR_A_1000, " +
+  " SUM(CASE WHEN a.convertedResult = 0 THEN 1 ELSE 0 END) AS TOTAL_INDETECTABLE_LL, " +
+  " SUM(CASE WHEN a.convertedResult = -1 THEN 1 ELSE 0 END) AS TOTAL_INVALIDE_XXXX, " +
+  " SUM(1) AS TOTAL_TEST, " +
+  " SUM(CASE WHEN a.convertedResult >= 1000 THEN 1 WHEN a.convertedResult < 1000 AND a.convertedResult = 0 THEN 1 ELSE 0 END)AS TOTAL_VALIDE,  " +
+  " ROUND(SUM(CASE WHEN a.convertedResult >= 1000 THEN 1 ELSE 0 END) * 100.0 / SUM(1), 2) AS POURCENTAGE_SUPERIEUR_OU_EGAL_A_1000, " +
+  " ROUND(SUM(CASE WHEN a.convertedResult < 1000 THEN 1 ELSE 0 END) * 100.0 / SUM(1), 2) AS POURCENTAGE_INFERIEUR_A_1000, " +
+  " ROUND(SUM(CASE WHEN a.convertedResult = 0 THEN 1 ELSE 0 END) * 100.0 / SUM(1), 2) AS POURCENTAGE_INDETECTABLE, " +
+  " ROUND(SUM(CASE WHEN a.convertedResult = -1 THEN 1 ELSE 0 END) * 100.0 / SUM(1), 2) AS POURCENTAGE_INVALIDE " +
+  " FROM Region r " +
+  " JOIN District d ON r.id = d.region.id " +
+  " JOIN Site s ON d.id = s.district.id " +
+  " JOIN Patient p ON s.id = p.site.id " +
+  " JOIN Analysis a ON p.id = a.patient.id " +
+  " JOIN SitePartner sp on s.id = sp.site.id " +
+  " JOIN Partner pt on pt.id = sp.partner.id " +
+  " JOIN Regimen rg on rg.id = a.regimen.id " +
+  " WHERE a.regimen.id = :regimenId  AND  " +
+  " pt.id = :partnerId AND "  +
+  " EXTRACT(YEAR FROM a.drcpt) = :year                                                                        " +
+  " GROUP BY rg.name, EXTRACT(YEAR FROM a.drcpt)") 
+  List<Object[]> getTestForRegimenAndPartnerOne(@Param("regimenId") Long regimenId, @Param("partnerId") Long partnerId, @Param("year") int year);
+ 
 
 
   
