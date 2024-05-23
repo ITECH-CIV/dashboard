@@ -306,6 +306,9 @@ List<Object[]> getPatientByCDCFemaleForRegimenAndParterOne(@Param("regimenId") L
 List<Object[]> getTestAndPatientResultForPartnerAndRegion(@Param("year") int year);
 List<Object[]> getTestAndPatientResultForOnePartnerAndRegion(@Param("year") int year, @Param("partnerId") Long partnerId);
 
+List<Object[]> getTestAndPatientResultForAllLab(@Param("year") int year);
+
+
 
 
 
