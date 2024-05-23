@@ -303,6 +303,7 @@ List<Object[]> getPatientByCDCMaleForRegimenAndPartnerOne(@Param("regimenId") Lo
 List<Object[]> getPatientByCDCFemaleForRegimenAndParterOne(@Param("regimenId") Long regimenId, @Param("partnerId") Long partnerId, @Param("year") int year);
 
 
+List<Object[]> getTestAndPatientResultForPartnerAndRegion(@Param("year") int year);
 
 
 

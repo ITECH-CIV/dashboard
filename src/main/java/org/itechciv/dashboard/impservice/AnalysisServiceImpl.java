@@ -2640,6 +2640,17 @@ public List<Object[]> getPatientByCDCFemaleForRegimenAndParterOne(Long regimenId
        }  
 }
 
+@Override
+public List<Object[]> getTestAndPatientResultForPartnerAndRegion(int year) {
+    try{
+        return analisysRepo.getTestAndPatientResultForPartnerAndRegion(year);
+
+    }catch(Exception ex){
+        ex.printStackTrace();
+        return Collections.emptyList();
+       }  
+}
+
 
 /********************************************************************************************************************************** */
 /* @Override
