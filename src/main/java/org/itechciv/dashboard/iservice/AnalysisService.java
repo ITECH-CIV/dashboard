@@ -308,6 +308,26 @@ List<Object[]> getTestAndPatientResultForOnePartnerAndRegion(@Param("year") int 
 
 List<Object[]> getTestAndPatientResultForAllLab(@Param("year") int year);
 List<Object[]> getTestAndPatientResultForOneLab(@Param("year") int year, @Param("labId") Long labId);
+/****************************************************************************************************************************** */
+List<Object[]> getestAndPatientBySpecimenDBSForAllLab(@Param("year") int year);
+List<Object[]> getestAndPatientBySpecimenPSCForAllLab(@Param("year") int year);
+List<Object[]> getestAndPatientBySpecimenEdtaPlasmaForAllLab(@Param("year") int year);
+List<Object[]> getestAndPatientBySpecimenDBSForOneLab(@Param("year") int year, @Param("labId") Long labId);
+List<Object[]> getestAndPatientBySpecimenPSCForOneLab(@Param("year") int year, @Param("labId") Long labId);
+List<Object[]> getestAndPatientBySpecimenEdtaPlasmaForOneLab(@Param("year") int year, @Param("labId") Long labId);
+List<Object[]> getTestForAllLab(@Param("year") int year);
+List<Object[]> getTestForOneLab(@Param("year") int year, @Param("labId") Long labId);
+List<Object[]> getPatientForAllLab(@Param("year") int year);
+List<Object[]> getPatientForOneLab(@Param("year") int year, @Param("labId") Long labId);
+
+
+
+
+
+
+
+
+
 
 
 

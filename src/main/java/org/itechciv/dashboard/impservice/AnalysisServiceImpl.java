@@ -2684,6 +2684,116 @@ public List<Object[]> getTestAndPatientResultForOneLab(int year, Long labId) {
        }  
 }
 
+@Override
+public List<Object[]> getestAndPatientBySpecimenDBSForAllLab(int year) {
+    try{
+        return analisysRepo.getestAndPatientBySpecimenDBSForAllLab(year);
+
+    }catch(Exception ex){
+        ex.printStackTrace();
+        return Collections.emptyList();
+       }  
+}
+
+@Override
+public List<Object[]> getestAndPatientBySpecimenPSCForAllLab(int year) {
+    try{
+        return analisysRepo.getestAndPatientBySpecimenPSCForAllLab(year);
+
+    }catch(Exception ex){
+        ex.printStackTrace();
+        return Collections.emptyList();
+       }  
+}
+
+@Override
+public List<Object[]> getestAndPatientBySpecimenEdtaPlasmaForAllLab(int year) {
+    try{
+        return analisysRepo.getestAndPatientBySpecimenEdtaPlasmaForAllLab(year);
+
+    }catch(Exception ex){
+        ex.printStackTrace();
+        return Collections.emptyList();
+       } 
+}
+
+@Override
+public List<Object[]> getestAndPatientBySpecimenDBSForOneLab(int year, Long labId) {
+    try{
+        return analisysRepo.getestAndPatientBySpecimenDBSForOneLab(year, labId);
+
+    }catch(Exception ex){
+        ex.printStackTrace();
+        return Collections.emptyList();
+       } 
+}
+
+@Override
+public List<Object[]> getestAndPatientBySpecimenPSCForOneLab(int year, Long labId) {
+    try{
+        return analisysRepo.getestAndPatientBySpecimenPSCForOneLab(year, labId);
+
+    }catch(Exception ex){
+        ex.printStackTrace();
+        return Collections.emptyList();
+       } 
+}
+
+@Override
+public List<Object[]> getestAndPatientBySpecimenEdtaPlasmaForOneLab(int year, Long labId) {
+    try{
+        return analisysRepo.getestAndPatientBySpecimenEdtaPlasmaForOneLab(year, labId);
+
+    }catch(Exception ex){
+        ex.printStackTrace();
+        return Collections.emptyList();
+       } 
+}
+
+@Override
+public List<Object[]> getTestForAllLab(int year) {
+    try{
+        return analisysRepo.getTestForAllLab(year);
+
+    }catch(Exception ex){
+        ex.printStackTrace();
+        return Collections.emptyList();
+       } 
+}
+
+@Override
+public List<Object[]> getTestForOneLab(int year, Long labId) {
+    try{
+        return analisysRepo.getTestForOneLab(year, labId);
+
+    }catch(Exception ex){
+        ex.printStackTrace();
+        return Collections.emptyList();
+       } 
+}
+
+@Override
+public List<Object[]> getPatientForAllLab(int year) {
+    try{
+        return analisysRepo.getPatientForAllLab(year);
+
+    }catch(Exception ex){
+        ex.printStackTrace();
+        return Collections.emptyList();
+       } 
+}
+
+@Override
+public List<Object[]> getPatientForOneLab(int year, Long labId) {
+    try{
+        return analisysRepo.getPatientForOneLab(year, labId);
+
+    }catch(Exception ex){
+        ex.printStackTrace();
+        return Collections.emptyList();
+       } 
+}
+
 
 /********************************************************************************************************************************** */
 /* @Override

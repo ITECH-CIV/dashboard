@@ -6925,7 +6925,7 @@ List<Object[]> getTestAndPatientResultForAllLab(@Param("year") int year);
 " EXTRACT(YEAR FROM a.drcpt) = :year " +
 " GROUP BY l.id, l.name, EXTRACT(YEAR FROM a.drcpt)", nativeQuery = true) 
 List<Object[]> getTestAndPatientResultForOneLab(@Param("year") int year, @Param("labId") Long labId);
-
+/******************************************************************************************************************************* */
 //TESTS REALISES PAR SPECIMEN - POUR CHAQUE LABO
 //DBS
 @Query(value = " SELECT l.name,  " +

@@ -1339,14 +1339,61 @@ public class AnalysisController {
     public List<Object[]> getTestAndPatientResultForOneLab(@RequestParam int year, @RequestParam Long labId) {
     return analysisServices.getTestAndPatientResultForOneLab(year, labId);
     }
+/************************************************************************************************************************** */
+
+    @GetMapping("/testandpatientbyspecimendbsforalllab")
+    public List<Object[]> getestAndPatientBySpecimenDBSForAllLab(@RequestParam int year) {
+    return analysisServices.getestAndPatientBySpecimenDBSForAllLab(year);
+    }
 
 
+    @GetMapping("/testandpatientbyspecimenpscforalllab")
+    public List<Object[]> getestAndPatientBySpecimenPSCForAllLab(@RequestParam int year) {
+    return analysisServices.getestAndPatientBySpecimenPSCForAllLab(year);
+    }
 
 
+    @GetMapping("/testandpatientbyspecimenedtaforalllab")
+    public List<Object[]> getestAndPatientBySpecimenEdtaPlasmaForAllLab(@RequestParam int year) {
+    return analysisServices.getestAndPatientBySpecimenEdtaPlasmaForAllLab(year);
+    }
 
 
+    @GetMapping("/testandpatientbyspecimendbsforonelab")
+    public List<Object[]> getestAndPatientBySpecimenDBSForOneLab(@RequestParam int year, @RequestParam Long labId) {
+    return analysisServices.getestAndPatientBySpecimenDBSForOneLab(year, labId);
+    }
+
+    @GetMapping("/testandpatientbyspecimenpscforonelab")
+    public List<Object[]> getestAndPatientBySpecimenPSCForOneLab(@RequestParam int year, @RequestParam Long labId) {
+    return analysisServices.getestAndPatientBySpecimenPSCForOneLab(year, labId);
+    }
+
+    @GetMapping("/testandpatientbyspecimenedtaforonelab")
+    public List<Object[]> getestAndPatientBySpecimenEdtaPlasmaForOneLab(@RequestParam int year, @RequestParam Long labId) {
+    return analysisServices.getestAndPatientBySpecimenEdtaPlasmaForOneLab(year, labId);
+    }
 
 
+    @GetMapping("/testforalllab")
+    public List<Object[]> getTestForAllLab(@RequestParam int year) {
+    return analysisServices.getTestForAllLab(year);
+    }
+
+    @GetMapping("/testforonelab")
+    public List<Object[]> getTestForOneLab(@RequestParam int year, @RequestParam Long labId) {
+    return analysisServices.getTestForOneLab(year, labId);
+    }
+
+    @GetMapping("/patientforalllab")
+    public List<Object[]> getPatientForAllLab(@RequestParam int year) {
+    return analysisServices.getPatientForAllLab(year);
+    }
+
+    @GetMapping("/patientforonelab")
+    public List<Object[]> getPatientForOneLab(@RequestParam int year, @RequestParam Long labId) {
+    return analysisServices.getPatientForOneLab(year, labId);
+    }
 
 /* 
     @GetMapping("/testcategoryone")
