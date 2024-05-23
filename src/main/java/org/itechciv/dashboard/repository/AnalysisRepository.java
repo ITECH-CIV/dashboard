@@ -6926,23 +6926,242 @@ List<Object[]> getTestAndPatientResultForAllLab(@Param("year") int year);
 " GROUP BY l.id, l.name, EXTRACT(YEAR FROM a.drcpt)", nativeQuery = true) 
 List<Object[]> getTestAndPatientResultForOneLab(@Param("year") int year, @Param("labId") Long labId);
 
+//TESTS REALISES PAR SPECIMEN - POUR CHAQUE LABO
+//DBS
+@Query(value = " SELECT l.name,  " +
+" st.label, " +
+" COUNT(t.id) AS total_tests " +
+" SUM(CASE WHEN st.label = 'DBS' THEN 1 ELSE 0 END) AS TOTAL_DBS " +
+" ROUND(SUM(CASE WHEN st.label = 'DBS' THEN 1 ELSE 0 END) * 100.0 / COUNT(t.id), 2) AS POURCENTAGE_DBS " +
+" FROM dashboard.region r " +
+" INNER JOIN dashboard.district d ON r.id = d.region_id" +
+" INNER JOIN dashboard.site s ON d.id = s.district_id " +
+" INNER JOIN dashboard.patient p ON s.id = p.site_id" +
+" INNER JOIN dashboard.analysis a ON p.id = a.patient_id " +
+" INNER join dashboard.test t on t.id = a.test_id " +
+" INNER join dashboard.site_partner sp on s.id = sp.site_id " +
+" INNER join dashboard.partner pt on pt.id = sp.partner_id " +
+" INNER JOIN dashboard.regimen rg ON a.regimen_id = rg.id " +
+" INNER JOIN dashboard.vl_reason vr ON a.vl_reason_id = vr.id " +
+" INNER JOIN dashboard.sample_type st ON a.sample_type_id = st.id " +
+" JOIN dashboard.lab l on l.id = a.lab_id " +
+" WHERE st.label = 'DBS' AND " +
+" EXTRACT(YEAR FROM a.drcpt) = :year  " +
+" GROUP BY l.name,  st.label  " ,nativeQuery = true)
+List<Object[]> getestAndPatientBySpecimenDBSForAllLab(@Param("year") int year);
+
+ //PSC
+ @Query(value = " SELECT l.name,  " +
+ " st.label, " +
+ " COUNT(t.id) AS total_tests " +
+ " SUM(CASE WHEN st.label = 'PSC' THEN 1 ELSE 0 END) AS TOTAL_PSC " +
+ " ROUND(SUM(CASE WHEN st.label = 'PSC' THEN 1 ELSE 0 END) * 100.0 / COUNT(t.id), 2) AS POURCENTAGE_PSC " +
+ " FROM dashboard.region r " +
+ " INNER JOIN dashboard.district d ON r.id = d.region_id" +
+ " INNER JOIN dashboard.site s ON d.id = s.district_id " +
+ " INNER JOIN dashboard.patient p ON s.id = p.site_id" +
+ " INNER JOIN dashboard.analysis a ON p.id = a.patient_id " +
+ " INNER join dashboard.test t on t.id = a.test_id " +
+ " INNER join dashboard.site_partner sp on s.id = sp.site_id " +
+ " INNER join dashboard.partner pt on pt.id = sp.partner_id " +
+ " INNER JOIN dashboard.regimen rg ON a.regimen_id = rg.id " +
+ " INNER JOIN dashboard.vl_reason vr ON a.vl_reason_id = vr.id " +
+ " INNER JOIN dashboard.sample_type st ON a.sample_type_id = st.id " +
+ " JOIN dashboard.lab l on l.id = a.lab_id " +
+ " WHERE st.label = 'PSC' AND " +
+ " EXTRACT(YEAR FROM a.drcpt) = :year  " +
+ " GROUP BY l.name,  st.label  " ,nativeQuery = true)
+ List<Object[]> getestAndPatientBySpecimenPSCForAllLab(@Param("year") int year);
+
+  //EDTA PLASMA
+  @Query(value = " SELECT l.name,  " +
+  " st.label, " +
+  " COUNT(t.id) AS total_tests " +
+  " SUM(CASE WHEN st.label = 'Tube EDTA - Violet' THEN 1 ELSE 0 END) AS TOTAL_EDTA " +
+  " ROUND(SUM(CASE WHEN st.label = 'Tube EDTA - Violet' THEN 1 ELSE 0 END) * 100.0 / COUNT(t.id), 2) AS POURCENTAGE_EDTA " +
+  " FROM dashboard.region r " +
+  " INNER JOIN dashboard.district d ON r.id = d.region_id" +
+  " INNER JOIN dashboard.site s ON d.id = s.district_id " +
+  " INNER JOIN dashboard.patient p ON s.id = p.site_id" +
+  " INNER JOIN dashboard.analysis a ON p.id = a.patient_id " +
+  " INNER join dashboard.test t on t.id = a.test_id " +
+  " INNER join dashboard.site_partner sp on s.id = sp.site_id " +
+  " INNER join dashboard.partner pt on pt.id = sp.partner_id " +
+  " INNER JOIN dashboard.regimen rg ON a.regimen_id = rg.id " +
+  " INNER JOIN dashboard.vl_reason vr ON a.vl_reason_id = vr.id " +
+  " INNER JOIN dashboard.sample_type st ON a.sample_type_id = st.id " +
+  " WHERE st.label = 'Tube EDTA - Violet' AND " +
+  " EXTRACT(YEAR FROM a.drcpt) = :year  " +
+  " GROUP BY l.name, st.label " , nativeQuery = true)
+  List<Object[]> getestAndPatientBySpecimenEdtaPlasmaForAllLab(@Param("year") int year);
 
 
+//TESTS REALISES PAR SPECIMEN - POUR UN LABO
+//DBS
+@Query(value = " SELECT l.name,  " +
+" st.label, " +
+" COUNT(t.id) AS total_tests " +
+" SUM(CASE WHEN st.label = 'DBS' THEN 1 ELSE 0 END) AS TOTAL_DBS " +
+" ROUND(SUM(CASE WHEN st.label = 'DBS' THEN 1 ELSE 0 END) * 100.0 / COUNT(t.id), 2) AS POURCENTAGE_DBS " +
+" FROM dashboard.region r " +
+" INNER JOIN dashboard.district d ON r.id = d.region_id" +
+" INNER JOIN dashboard.site s ON d.id = s.district_id " +
+" INNER JOIN dashboard.patient p ON s.id = p.site_id" +
+" INNER JOIN dashboard.analysis a ON p.id = a.patient_id " +
+" INNER join dashboard.test t on t.id = a.test_id " +
+" INNER join dashboard.site_partner sp on s.id = sp.site_id " +
+" INNER join dashboard.partner pt on pt.id = sp.partner_id " +
+" INNER JOIN dashboard.regimen rg ON a.regimen_id = rg.id " +
+" INNER JOIN dashboard.vl_reason vr ON a.vl_reason_id = vr.id " +
+" INNER JOIN dashboard.sample_type st ON a.sample_type_id = st.id " +
+" JOIN dashboard.lab l on l.id = a.lab_id " +
+" WHERE a.lab_id = :labId AND  " +
+" st.label = 'DBS' AND " +
+" EXTRACT(YEAR FROM a.drcpt) = :year  " +
+" GROUP BY l.name,  st.label  " ,nativeQuery = true)
+List<Object[]> getestAndPatientBySpecimenDBSForOneLab(@Param("year") int year, @Param("labId") Long labId);
 
+ //PSC
+ @Query(value = " SELECT l.name,  " +
+ " st.label, " +
+ " COUNT(t.id) AS total_tests " +
+ " SUM(CASE WHEN st.label = 'PSC' THEN 1 ELSE 0 END) AS TOTAL_PSC " +
+ " ROUND(SUM(CASE WHEN st.label = 'PSC' THEN 1 ELSE 0 END) * 100.0 / COUNT(t.id), 2) AS POURCENTAGE_PSC " +
+ " FROM dashboard.region r " +
+ " INNER JOIN dashboard.district d ON r.id = d.region_id" +
+ " INNER JOIN dashboard.site s ON d.id = s.district_id " +
+ " INNER JOIN dashboard.patient p ON s.id = p.site_id" +
+ " INNER JOIN dashboard.analysis a ON p.id = a.patient_id " +
+ " INNER join dashboard.test t on t.id = a.test_id " +
+ " INNER join dashboard.site_partner sp on s.id = sp.site_id " +
+ " INNER join dashboard.partner pt on pt.id = sp.partner_id " +
+ " INNER JOIN dashboard.regimen rg ON a.regimen_id = rg.id " +
+ " INNER JOIN dashboard.vl_reason vr ON a.vl_reason_id = vr.id " +
+ " INNER JOIN dashboard.sample_type st ON a.sample_type_id = st.id " +
+ " JOIN dashboard.lab l on l.id = a.lab_id " +
+ " WHERE a.lab_id = :labId AND  " +
+ " st.label = 'PSC' AND " +
+ " EXTRACT(YEAR FROM a.drcpt) = :year  " +
+ " GROUP BY l.name,  st.label  " ,nativeQuery = true)
+ List<Object[]> getestAndPatientBySpecimenPSCForOneLab(@Param("year") int year, @Param("labId") Long labId);
 
+  //EDTA PLASMA
+  @Query(value = " SELECT l.name,  " +
+  " st.label, " +
+  " COUNT(t.id) AS total_tests " +
+  " SUM(CASE WHEN st.label = 'Tube EDTA - Violet' THEN 1 ELSE 0 END) AS TOTAL_EDTA " +
+  " ROUND(SUM(CASE WHEN st.label = 'Tube EDTA - Violet' THEN 1 ELSE 0 END) * 100.0 / COUNT(t.id), 2) AS POURCENTAGE_EDTA " +
+  " FROM dashboard.region r " +
+  " INNER JOIN dashboard.district d ON r.id = d.region_id" +
+  " INNER JOIN dashboard.site s ON d.id = s.district_id " +
+  " INNER JOIN dashboard.patient p ON s.id = p.site_id" +
+  " INNER JOIN dashboard.analysis a ON p.id = a.patient_id " +
+  " INNER join dashboard.test t on t.id = a.test_id " +
+  " INNER join dashboard.site_partner sp on s.id = sp.site_id " +
+  " INNER join dashboard.partner pt on pt.id = sp.partner_id " +
+  " INNER JOIN dashboard.regimen rg ON a.regimen_id = rg.id " +
+  " INNER JOIN dashboard.vl_reason vr ON a.vl_reason_id = vr.id " +
+  " INNER JOIN dashboard.sample_type st ON a.sample_type_id = st.id " +
+  " WHERE a.lab_id = :labId AND  " +
+  " st.label = 'Tube EDTA - Violet' AND " +
+  " EXTRACT(YEAR FROM a.drcpt) = :year  " +
+  " GROUP BY l.name, st.label " , nativeQuery = true)
+  List<Object[]> getestAndPatientBySpecimenEdtaPlasmaForOneLab(@Param("year") int year, @Param("labId") Long labId);
 
+//NOMBRE DE TESTS REALISES PAR LABORATOIRE
+@Query(value =  " SELECT l.id, l.name,   " +
+" SUM(CASE WHEN a.converted_result >= 1000 THEN 1 ELSE 0 END) AS TOTAL_SUPERIEUR_OU_EGAL_1000, " +
+" SUM(CASE WHEN a.converted_result < 1000 THEN 1 ELSE 0 END ) AS TOTAL_INFERIEUR_A_1000, " +
+" SUM(CASE WHEN a.converted_result = 0 THEN 1 ELSE 0 END) AS TOTAL_INDETECTABLE_LL, " +
+" SUM(CASE WHEN a.converted_result = -1 THEN 1 ELSE 0 END) AS TOTAL_INVALIDE_XXXX, " +
+" SUM(1) AS TOTAL_TEST, " +
+" ROUND(SUM(CASE WHEN a.converted_result >= 1000 THEN 1 ELSE 0 END) * 100.0 / SUM(1), 2) AS POURCENTAGE_SUPERIEUR_OU_EGAL_A_1000, " +
+" ROUND(SUM(CASE WHEN a.converted_result < 1000 THEN 1 ELSE 0 END) * 100.0 / SUM(1), 2) AS POURCENTAGE_INFERIEUR_A_1000, " +
+" ROUND(SUM(CASE WHEN a.converted_result = 0 THEN 1 ELSE 0 END) * 100.0 / SUM(1), 2) AS POURCENTAGE_INDETECTABLE, " +
+" ROUND(SUM(CASE WHEN a.converted_result = -1 THEN 1 ELSE 0 END) * 100.0 / SUM(1), 2) AS POURCENTAGE_INVALIDE " +
+" FROM  dashboard.analysis a " +
+" LEFT JOIN dashboard.patient pat on pat.id = a.patient_id " +
+" LEFT JOIN dashboard.site s on s.id = pat.site_id " +
+" JOIN dashboard.district dis on dis.id = s.district_id " +
+" JOIN dashboard.region reg on reg.id = dis.region_id " +
+" LEFT JOIN dashboard.age_category cdc_age_cat on cdc_age_cat.id = a.age_cdc_id " +
+" LEFT JOIN dashboard.site_partner site_part on site_part.site_id = s.id " +
+" JOIN dashboard.partner part on part.id = site_part.partner_id " +
+" JOIN dashboard.regimen rg on rg.id = a.regimen_id " +
+" JOIN dashboard.lab l on l.id = a.lab_id " +
+" WHERE  EXTRACT(YEAR FROM a.drcpt) = :year " +
+" GROUP BY l.id, l.name, EXTRACT(YEAR FROM a.drcpt)", nativeQuery = true) 
+List<Object[]> getTestForAllLab(@Param("year") int year);
 
+//NOMBRE DE TESTS REALISES POUR UN LABORATOIRE
+@Query(value =  " SELECT l.id, l.name,   " +
+" SUM(CASE WHEN a.converted_result >= 1000 THEN 1 ELSE 0 END) AS TOTAL_SUPERIEUR_OU_EGAL_1000, " +
+" SUM(CASE WHEN a.converted_result < 1000 THEN 1 ELSE 0 END ) AS TOTAL_INFERIEUR_A_1000, " +
+" SUM(CASE WHEN a.converted_result = 0 THEN 1 ELSE 0 END) AS TOTAL_INDETECTABLE_LL, " +
+" SUM(CASE WHEN a.converted_result = -1 THEN 1 ELSE 0 END) AS TOTAL_INVALIDE_XXXX, " +
+" SUM(1) AS TOTAL_TEST, " +
+" ROUND(SUM(CASE WHEN a.converted_result >= 1000 THEN 1 ELSE 0 END) * 100.0 / SUM(1), 2) AS POURCENTAGE_SUPERIEUR_OU_EGAL_A_1000, " +
+" ROUND(SUM(CASE WHEN a.converted_result < 1000 THEN 1 ELSE 0 END) * 100.0 / SUM(1), 2) AS POURCENTAGE_INFERIEUR_A_1000, " +
+" ROUND(SUM(CASE WHEN a.converted_result = 0 THEN 1 ELSE 0 END) * 100.0 / SUM(1), 2) AS POURCENTAGE_INDETECTABLE, " +
+" ROUND(SUM(CASE WHEN a.converted_result = -1 THEN 1 ELSE 0 END) * 100.0 / SUM(1), 2) AS POURCENTAGE_INVALIDE " +
+" FROM  dashboard.analysis a " +
+" LEFT JOIN dashboard.patient pat on pat.id = a.patient_id " +
+" LEFT JOIN dashboard.site s on s.id = pat.site_id " +
+" JOIN dashboard.district dis on dis.id = s.district_id " +
+" JOIN dashboard.region reg on reg.id = dis.region_id " +
+" LEFT JOIN dashboard.age_category cdc_age_cat on cdc_age_cat.id = a.age_cdc_id " +
+" LEFT JOIN dashboard.site_partner site_part on site_part.site_id = s.id " +
+" JOIN dashboard.partner part on part.id = site_part.partner_id " +
+" JOIN dashboard.regimen rg on rg.id = a.regimen_id " +
+" JOIN dashboard.lab l on l.id = a.lab_id " +
+" WHERE a.lab_id = :labId AND " +
+" EXTRACT(YEAR FROM a.drcpt) = :year " +
+" GROUP BY l.id, l.name, EXTRACT(YEAR FROM a.drcpt)", nativeQuery = true) 
+List<Object[]> getTestForOneLab(@Param("year") int year, @Param("labId") Long labId) ;
 
- //NOMBRE DE TESTS REALISES POUR UN REGIME CHOISI
+//NOMBRE PATIENTS TESTES POUR CHAQUE LABORATOIRE
+@Query(value =  " SELECT l.id, l.name,   " +
+" SUM(CASE WHEN a.converted_result >= 1000 THEN 1 ELSE 0 END) AS TOTAL_NON_SUPPRIME, " +
+" SUM(CASE WHEN a.converted_result < 1000 AND a.converted_result > 0 THEN 1 ELSE 0 END ) AS TOTAL_SUPPRIME, " +
+" SUM(CASE WHEN a.converted_result = 0 THEN 1 ELSE 0 END) AS TOTAL_INDETECTABLE_LL, " +
+" SUM(1) AS TOTAL_PATIENT " +
+" ROUND(SUM(CASE WHEN a.converted_result = 0 THEN 1 WHEN a.converted_result < 1000 AND a.converted_result > 0 THEN 1 ELSE 0 END) * 100.0 / SUM(1), 2) AS POURCENTAGE_SUPPRIME, " +
+" ROUND(SUM(CASE WHEN a.converted_result >= 1000 THEN 1 ELSE 0 END) * 100.0 / SUM(1), 2) AS POURCENTAGE_NON_SUPPRIME " +
+" FROM  dashboard.analysis a " +
+" LEFT JOIN dashboard.patient pat on pat.id = a.patient_id " +
+" LEFT JOIN dashboard.site s on s.id = pat.site_id " +
+" JOIN dashboard.district dis on dis.id = s.district_id " +
+" JOIN dashboard.region reg on reg.id = dis.region_id " +
+" LEFT JOIN dashboard.age_category cdc_age_cat on cdc_age_cat.id = a.age_cdc_id " +
+" LEFT JOIN dashboard.site_partner site_part on site_part.site_id = s.id " +
+" JOIN dashboard.partner part on part.id = site_part.partner_id " +
+" JOIN dashboard.regimen rg on rg.id = a.regimen_id " +
+" JOIN dashboard.lab l on l.id = a.lab_id " +
+" WHERE  EXTRACT(YEAR FROM a.drcpt) = :year " +
+" GROUP BY l.id, l.name, EXTRACT(YEAR FROM a.drcpt)", nativeQuery = true) 
+List<Object[]> getPatientForAllLab(@Param("year") int year);
 
- //NOMBRE DE TESTS REALISES PAR TRANCHE D'AGE POUR UN REGIME CHOISI
-
- //NOMBRE DE PATIENTS TESTES PAR TRANCHE D'GE POUR UN REGIME CHOISI
-
-
-
-
-
+@Query(value =  " SELECT l.id, l.name,   " +
+" SUM(CASE WHEN a.converted_result >= 1000 THEN 1 ELSE 0 END) AS TOTAL_NON_SUPPRIME, " +
+" SUM(CASE WHEN a.converted_result < 1000 AND a.converted_result > 0 THEN 1 ELSE 0 END ) AS TOTAL_SUPPRIME, " +
+" SUM(CASE WHEN a.converted_result = 0 THEN 1 ELSE 0 END) AS TOTAL_INDETECTABLE_LL, " +
+" SUM(1) AS TOTAL_PATIENT " +
+" ROUND(SUM(CASE WHEN a.converted_result = 0 THEN 1 WHEN a.converted_result < 1000 AND a.converted_result > 0 THEN 1 ELSE 0 END) * 100.0 / SUM(1), 2) AS POURCENTAGE_SUPPRIME, " +
+" ROUND(SUM(CASE WHEN a.converted_result >= 1000 THEN 1 ELSE 0 END) * 100.0 / SUM(1), 2) AS POURCENTAGE_NON_SUPPRIME " +
+" FROM  dashboard.analysis a " +
+" LEFT JOIN dashboard.patient pat on pat.id = a.patient_id " +
+" LEFT JOIN dashboard.site s on s.id = pat.site_id " +
+" JOIN dashboard.district dis on dis.id = s.district_id " +
+" JOIN dashboard.region reg on reg.id = dis.region_id " +
+" LEFT JOIN dashboard.age_category cdc_age_cat on cdc_age_cat.id = a.age_cdc_id " +
+" LEFT JOIN dashboard.site_partner site_part on site_part.site_id = s.id " +
+" JOIN dashboard.partner part on part.id = site_part.partner_id " +
+" JOIN dashboard.regimen rg on rg.id = a.regimen_id " +
+" JOIN dashboard.lab l on l.id = a.lab_id " +
+" WHERE a.lab_id = :labId  AND " +
+" EXTRACT(YEAR FROM a.drcpt) = :year " +
+" GROUP BY l.id, l.name, EXTRACT(YEAR FROM a.drcpt)", nativeQuery = true) 
+List<Object[]> getPatientForOneLab(@Param("year") int year, @Param("labId") Long labId);
 
 
  /******************************************************************************************************************************* */
