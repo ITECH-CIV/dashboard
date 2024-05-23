@@ -2500,6 +2500,18 @@ public List<Object[]> getTestForOneRegimen(Long regimenId, int year) {
        }  
 }
 
+@Override
+public List<Object[]> getTestByCDCMaleForOneRegimen(Long regimenId, int year) {
+    try{
+        String sex = "M"; // Sexe Masculin
+        return analisysRepo.getTestByCDCMaleForOneRegimen(regimenId, year, sex);
+
+    }catch(Exception ex){
+        ex.printStackTrace();
+        return Collections.emptyList();
+       }  
+}
+
 
 /********************************************************************************************************************************** */
 /* @Override

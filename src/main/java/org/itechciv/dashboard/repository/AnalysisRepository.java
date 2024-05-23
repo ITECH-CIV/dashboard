@@ -6509,7 +6509,6 @@ List<Object[]> getestBySpecimenDBSForOneRegimen(@Param("regimenId") Long regimen
   List<Object[]> getestBySpecimenEdtaPlasmaForOneRegimen(@Param("regimenId") Long regimenId);
 
    //NOMBRE DE TESTS REALISES POUR UN REGIME THERAPEUTIQUE EN FONCTION DE L'ANNEE EN COURS
-
  @Query(value = "SELECT rg.name,  " +
  " SUM(CASE WHEN a.convertedResult >= 1000 THEN 1 ELSE 0 END) AS TOTAL_SUPERIEUR_OU_EGAL_1000, " +
  " SUM(CASE WHEN a.convertedResult < 1000 THEN 1 ELSE 0 END ) AS TOTAL_INFERIEUR_A_1000, " +
@@ -6533,9 +6532,32 @@ List<Object[]> getestBySpecimenDBSForOneRegimen(@Param("regimenId") Long regimen
  " GROUP BY rg.name, EXTRACT(YEAR FROM a.drcpt)") 
  List<Object[]> getTestForOneRegimen(@Param("regimenId") Long regimenId, @Param("year") int year);
 
-   
-   
-
+   //NOMBRE DE TESTS REALISES PAR TRANCHE D'AGE POUR UN REGIME CHOISI
+  //CDC CI notation
+@Query(value =  " SELECT pat.gender, cdc_age_cat.label cdc_age_label, rg.name, " +
+" SUM(CASE WHEN a.converted_result >= 1000 THEN 1 ELSE 0 END) AS TOTAL_SUPERIEUR_OU_EGAL_1000, " +
+" SUM(CASE WHEN a.converted_result < 1000 THEN 1 ELSE 0 END ) AS TOTAL_INFERIEUR_A_1000, " +
+" SUM(CASE WHEN a.converted_result = 0 THEN 1 ELSE 0 END) AS TOTAL_INDETECTABLE_LL, " +
+" SUM(CASE WHEN a.converted_result = -1 THEN 1 ELSE 0 END) AS TOTAL_INVALIDE_XXXX, " +
+" ROUND(SUM(CASE WHEN a.converted_result >= 1000 THEN 1 ELSE 0 END) * 100.0 / SUM(1), 2) AS POURCENTAGE_SUPERIEUR_OU_EGAL_A_1000, " +
+" ROUND(SUM(CASE WHEN a.converted_result < 1000 THEN 1 ELSE 0 END) * 100.0 / SUM(1), 2) AS POURCENTAGE_INFERIEUR_A_1000, " +
+" ROUND(SUM(CASE WHEN a.converted_result = 0 THEN 1 ELSE 0 END) * 100.0 / SUM(1), 2) AS POURCENTAGE_INDETECTABLE, " +
+" ROUND(SUM(CASE WHEN a.converted_result = -1 THEN 1 ELSE 0 END) * 100.0 / SUM(1), 2) AS POURCENTAGE_INVALIDE " +
+" FROM  dashboard.analysis a " +
+" LEFT JOIN dashboard.patient pat on pat.id = a.patient_id " +
+" LEFT JOIN dashboard.site s on s.id = pat.site_id " +
+" JOIN dashboard.district dis on dis.id = s.district_id " +
+" JOIN dashboard.region reg on reg.id = dis.region_id " +
+" LEFT JOIN dashboard.age_category cdc_age_cat on cdc_age_cat.id = a.age_cdc_id " +
+" LEFT JOIN dashboard.site_partner site_part on site_part.site_id = s.id " +
+" JOIN dashboard.partner part on part.id = site_part.partner_id " +
+" JOIN dashboard.regimen rg on rg.id = a.regimen_id " +
+" WHERE a.regimen_id = :regimenId  AND  " +   
+" cdc_age_cat.type = 'CDC CI' AND " +
+" pat.gender = :sex AND " +
+" EXTRACT(YEAR FROM a.drcpt) = :year  " +
+" GROUP BY pat.gender,cdc_age_cat.label, rg.name, EXTRACT(YEAR FROM a.drcpt)", nativeQuery = true) 
+List<Object[]> getTestByCDCMaleForOneRegimen(@Param("regimenId") Long regimenId, @Param("year") int year, @Param("sex") String sex);
 
 
 

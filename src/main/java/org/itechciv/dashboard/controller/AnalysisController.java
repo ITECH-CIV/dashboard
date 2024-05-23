@@ -1260,6 +1260,12 @@ public class AnalysisController {
     return analysisServices.getTestForOneRegimen(regimenId, year);
     }
 
+    @GetMapping("/testbycdcmaleforoneregimen")
+    public List<Object[]> getTestByCDCMaleForOneRegimen(@RequestParam Long regimenId, @RequestParam int year) {
+    return analysisServices.getTestByCDCMaleForOneRegimen(regimenId, year);
+    }
+
+
 
 /* 
     @GetMapping("/testcategoryone")
