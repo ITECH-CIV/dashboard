@@ -2807,6 +2807,44 @@ public List<Object[]> getPatientByCDCMaleAndPartnerAll(int year) {
        }  
 }
 
+@Override
+public List<Object[]> getPatientByCDCFemaleAndPartnerAll(int year) {
+    try{
+        String sex = "F"; // Sexe Feminin
+        return analisysRepo.getPatientByCDCFemaleAndPartnerAll(year, sex);
+
+    }catch(Exception ex){
+        ex.printStackTrace();
+        return Collections.emptyList();
+       }  
+}
+
+@Override
+public List<Object[]> getTestByCDCMaleAndPartnerAll(int year) {
+    try{
+        String sex = "M"; // Sexe Masculin
+        return analisysRepo.getTestByCDCMaleAndPartnerAll(year, sex);
+
+    }catch(Exception ex){
+        ex.printStackTrace();
+        return Collections.emptyList();
+       }  
+}
+
+
+@Override
+public List<Object[]> getTestByCDCFemaleAndPartnerAll(int year) {
+    try{
+        String sex = "F"; // Sexe Feminin
+        return analisysRepo.getTestByCDCFemaleAndPartnerAll(year, sex);
+
+    }catch(Exception ex){
+        ex.printStackTrace();
+        return Collections.emptyList();
+       }  
+}
+
+
 
 
 

@@ -1400,6 +1400,26 @@ public class AnalysisController {
     return analysisServices.getPatientByCDCMaleAndPartnerAll(year);
     }
 
+    @GetMapping("/patientbycdcfemaleandallpartner")
+    public List<Object[]> getPatientByCDCFemaleAndPartnerAll(@RequestParam int year) {
+    return analysisServices.getPatientByCDCFemaleAndPartnerAll(year);
+    }
+
+    @GetMapping("/testbycdcmaleandallpartner")
+    public List<Object[]> getTestByCDCMaleAndPartnerAll(@RequestParam int year) {
+    return analysisServices.getTestByCDCMaleAndPartnerAll(year);
+    }
+
+    @GetMapping("/testbycdcfemaleandallpartner")
+    public List<Object[]> getTestByCDCFemaleAndPartnerAll(@RequestParam int year) {
+    return analysisServices.getTestByCDCFemaleAndPartnerAll(year);
+    }
+
+
+
+
+
+
 
 /* 
     @GetMapping("/testcategoryone")
