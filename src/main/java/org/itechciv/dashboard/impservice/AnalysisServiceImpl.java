@@ -2844,6 +2844,18 @@ public List<Object[]> getTestByCDCFemaleAndPartnerAll(int year) {
        }  
 }
 
+@Override
+public List<Object[]> getPatientByCDCMaleAndPartnerOne(int year, Long partnerId) {
+    try{
+        String sex = "M"; // Sexe Masculin
+        return analisysRepo.getPatientByCDCMaleAndPartnerOne(year, partnerId, sex);
+
+    }catch(Exception ex){
+        ex.printStackTrace();
+        return Collections.emptyList();
+       }  
+}
+
 
 
 

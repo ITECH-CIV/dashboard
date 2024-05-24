@@ -326,6 +326,9 @@ List<Object[]> getPatientByCDCFemaleAndPartnerAll(@Param("year") int year);
 List<Object[]> getTestByCDCMaleAndPartnerAll(@Param("year") int year);
 List<Object[]> getTestByCDCFemaleAndPartnerAll(@Param("year") int year);
 
+List<Object[]> getPatientByCDCMaleAndPartnerOne(@Param("year") int year, @Param("partnerId") Long partnerId);
+
+
 
 
 
