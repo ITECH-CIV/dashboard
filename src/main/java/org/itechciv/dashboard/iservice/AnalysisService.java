@@ -320,6 +320,9 @@ List<Object[]> getTestForOneLab(@Param("year") int year, @Param("labId") Long la
 List<Object[]> getPatientForAllLab(@Param("year") int year);
 List<Object[]> getPatientForOneLab(@Param("year") int year, @Param("labId") Long labId);
 
+List<Object[]> getPatientByCDCMaleAndPartnerAll(@Param("year") int year);
+
+
 
 
 

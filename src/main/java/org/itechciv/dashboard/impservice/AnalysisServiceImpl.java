@@ -5,6 +5,7 @@ import org.itechciv.dashboard.iservice.AnalysisService;
 import org.itechciv.dashboard.model.Analysis;
 import org.itechciv.dashboard.repository.AnalysisRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -2793,6 +2794,20 @@ public List<Object[]> getPatientForOneLab(int year, Long labId) {
         return Collections.emptyList();
        } 
 }
+
+@Override
+public List<Object[]> getPatientByCDCMaleAndPartnerAll(int year) {
+    try{
+        String sex = "M"; // Sexe Masculin
+        return analisysRepo.getPatientByCDCMaleAndPartnerAll(year, sex);
+
+    }catch(Exception ex){
+        ex.printStackTrace();
+        return Collections.emptyList();
+       }  
+}
+
+
 
 
 /********************************************************************************************************************************** */

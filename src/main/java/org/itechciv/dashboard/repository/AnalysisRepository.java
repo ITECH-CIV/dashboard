@@ -6925,13 +6925,13 @@ List<Object[]> getTestAndPatientResultForAllLab(@Param("year") int year);
 " EXTRACT(YEAR FROM a.drcpt) = :year " +
 " GROUP BY l.id, l.name, EXTRACT(YEAR FROM a.drcpt)", nativeQuery = true) 
 List<Object[]> getTestAndPatientResultForOneLab(@Param("year") int year, @Param("labId") Long labId);
-/******************************************************************************************************************************* */
+
 //TESTS REALISES PAR SPECIMEN - POUR CHAQUE LABO
 //DBS
 @Query(value = " SELECT l.name,  " +
 " st.label, " +
-" COUNT(t.id) AS total_tests " +
-" SUM(CASE WHEN st.label = 'DBS' THEN 1 ELSE 0 END) AS TOTAL_DBS " +
+" COUNT(t.id) AS total_tests, " +
+" SUM(CASE WHEN st.label = 'DBS' THEN 1 ELSE 0 END) AS TOTAL_DBS, " +
 " ROUND(SUM(CASE WHEN st.label = 'DBS' THEN 1 ELSE 0 END) * 100.0 / COUNT(t.id), 2) AS POURCENTAGE_DBS " +
 " FROM dashboard.region r " +
 " INNER JOIN dashboard.district d ON r.id = d.region_id" +
@@ -6953,8 +6953,8 @@ List<Object[]> getestAndPatientBySpecimenDBSForAllLab(@Param("year") int year);
  //PSC
  @Query(value = " SELECT l.name,  " +
  " st.label, " +
- " COUNT(t.id) AS total_tests " +
- " SUM(CASE WHEN st.label = 'PSC' THEN 1 ELSE 0 END) AS TOTAL_PSC " +
+ " COUNT(t.id) AS total_tests, " +
+ " SUM(CASE WHEN st.label = 'PSC' THEN 1 ELSE 0 END) AS TOTAL_PSC, " +
  " ROUND(SUM(CASE WHEN st.label = 'PSC' THEN 1 ELSE 0 END) * 100.0 / COUNT(t.id), 2) AS POURCENTAGE_PSC " +
  " FROM dashboard.region r " +
  " INNER JOIN dashboard.district d ON r.id = d.region_id" +
@@ -6976,8 +6976,8 @@ List<Object[]> getestAndPatientBySpecimenDBSForAllLab(@Param("year") int year);
   //EDTA PLASMA
   @Query(value = " SELECT l.name,  " +
   " st.label, " +
-  " COUNT(t.id) AS total_tests " +
-  " SUM(CASE WHEN st.label = 'Tube EDTA - Violet' THEN 1 ELSE 0 END) AS TOTAL_EDTA " +
+  " COUNT(t.id) AS total_tests, " +
+  " SUM(CASE WHEN st.label = 'Tube EDTA - Violet' THEN 1 ELSE 0 END) AS TOTAL_EDTA, " +
   " ROUND(SUM(CASE WHEN st.label = 'Tube EDTA - Violet' THEN 1 ELSE 0 END) * 100.0 / COUNT(t.id), 2) AS POURCENTAGE_EDTA " +
   " FROM dashboard.region r " +
   " INNER JOIN dashboard.district d ON r.id = d.region_id" +
@@ -6990,6 +6990,7 @@ List<Object[]> getestAndPatientBySpecimenDBSForAllLab(@Param("year") int year);
   " INNER JOIN dashboard.regimen rg ON a.regimen_id = rg.id " +
   " INNER JOIN dashboard.vl_reason vr ON a.vl_reason_id = vr.id " +
   " INNER JOIN dashboard.sample_type st ON a.sample_type_id = st.id " +
+  " JOIN dashboard.lab l on l.id = a.lab_id " +
   " WHERE st.label = 'Tube EDTA - Violet' AND " +
   " EXTRACT(YEAR FROM a.drcpt) = :year  " +
   " GROUP BY l.name, st.label " , nativeQuery = true)
@@ -7000,8 +7001,8 @@ List<Object[]> getestAndPatientBySpecimenDBSForAllLab(@Param("year") int year);
 //DBS
 @Query(value = " SELECT l.name,  " +
 " st.label, " +
-" COUNT(t.id) AS total_tests " +
-" SUM(CASE WHEN st.label = 'DBS' THEN 1 ELSE 0 END) AS TOTAL_DBS " +
+" COUNT(t.id) AS total_tests, " +
+" SUM(CASE WHEN st.label = 'DBS' THEN 1 ELSE 0 END) AS TOTAL_DBS, " +
 " ROUND(SUM(CASE WHEN st.label = 'DBS' THEN 1 ELSE 0 END) * 100.0 / COUNT(t.id), 2) AS POURCENTAGE_DBS " +
 " FROM dashboard.region r " +
 " INNER JOIN dashboard.district d ON r.id = d.region_id" +
@@ -7024,8 +7025,8 @@ List<Object[]> getestAndPatientBySpecimenDBSForOneLab(@Param("year") int year, @
  //PSC
  @Query(value = " SELECT l.name,  " +
  " st.label, " +
- " COUNT(t.id) AS total_tests " +
- " SUM(CASE WHEN st.label = 'PSC' THEN 1 ELSE 0 END) AS TOTAL_PSC " +
+ " COUNT(t.id) AS total_tests, " +
+ " SUM(CASE WHEN st.label = 'PSC' THEN 1 ELSE 0 END) AS TOTAL_PSC, " +
  " ROUND(SUM(CASE WHEN st.label = 'PSC' THEN 1 ELSE 0 END) * 100.0 / COUNT(t.id), 2) AS POURCENTAGE_PSC " +
  " FROM dashboard.region r " +
  " INNER JOIN dashboard.district d ON r.id = d.region_id" +
@@ -7048,8 +7049,8 @@ List<Object[]> getestAndPatientBySpecimenDBSForOneLab(@Param("year") int year, @
   //EDTA PLASMA
   @Query(value = " SELECT l.name,  " +
   " st.label, " +
-  " COUNT(t.id) AS total_tests " +
-  " SUM(CASE WHEN st.label = 'Tube EDTA - Violet' THEN 1 ELSE 0 END) AS TOTAL_EDTA " +
+  " COUNT(t.id) AS total_tests, " +
+  " SUM(CASE WHEN st.label = 'Tube EDTA - Violet' THEN 1 ELSE 0 END) AS TOTAL_EDTA, " +
   " ROUND(SUM(CASE WHEN st.label = 'Tube EDTA - Violet' THEN 1 ELSE 0 END) * 100.0 / COUNT(t.id), 2) AS POURCENTAGE_EDTA " +
   " FROM dashboard.region r " +
   " INNER JOIN dashboard.district d ON r.id = d.region_id" +
@@ -7062,6 +7063,7 @@ List<Object[]> getestAndPatientBySpecimenDBSForOneLab(@Param("year") int year, @
   " INNER JOIN dashboard.regimen rg ON a.regimen_id = rg.id " +
   " INNER JOIN dashboard.vl_reason vr ON a.vl_reason_id = vr.id " +
   " INNER JOIN dashboard.sample_type st ON a.sample_type_id = st.id " +
+  " JOIN dashboard.lab l on l.id = a.lab_id " +
   " WHERE a.lab_id = :labId AND  " +
   " st.label = 'Tube EDTA - Violet' AND " +
   " EXTRACT(YEAR FROM a.drcpt) = :year  " +
@@ -7124,7 +7126,7 @@ List<Object[]> getTestForOneLab(@Param("year") int year, @Param("labId") Long la
 " SUM(CASE WHEN a.converted_result >= 1000 THEN 1 ELSE 0 END) AS TOTAL_NON_SUPPRIME, " +
 " SUM(CASE WHEN a.converted_result < 1000 AND a.converted_result > 0 THEN 1 ELSE 0 END ) AS TOTAL_SUPPRIME, " +
 " SUM(CASE WHEN a.converted_result = 0 THEN 1 ELSE 0 END) AS TOTAL_INDETECTABLE_LL, " +
-" SUM(1) AS TOTAL_PATIENT " +
+" SUM(1) AS TOTAL_PATIENT, " +
 " ROUND(SUM(CASE WHEN a.converted_result = 0 THEN 1 WHEN a.converted_result < 1000 AND a.converted_result > 0 THEN 1 ELSE 0 END) * 100.0 / SUM(1), 2) AS POURCENTAGE_SUPPRIME, " +
 " ROUND(SUM(CASE WHEN a.converted_result >= 1000 THEN 1 ELSE 0 END) * 100.0 / SUM(1), 2) AS POURCENTAGE_NON_SUPPRIME " +
 " FROM  dashboard.analysis a " +
@@ -7141,11 +7143,12 @@ List<Object[]> getTestForOneLab(@Param("year") int year, @Param("labId") Long la
 " GROUP BY l.id, l.name, EXTRACT(YEAR FROM a.drcpt)", nativeQuery = true) 
 List<Object[]> getPatientForAllLab(@Param("year") int year);
 
+//NOMBRE DE PATIENTS TESTES POUR UN LABORATOIRE
 @Query(value =  " SELECT l.id, l.name,   " +
 " SUM(CASE WHEN a.converted_result >= 1000 THEN 1 ELSE 0 END) AS TOTAL_NON_SUPPRIME, " +
 " SUM(CASE WHEN a.converted_result < 1000 AND a.converted_result > 0 THEN 1 ELSE 0 END ) AS TOTAL_SUPPRIME, " +
 " SUM(CASE WHEN a.converted_result = 0 THEN 1 ELSE 0 END) AS TOTAL_INDETECTABLE_LL, " +
-" SUM(1) AS TOTAL_PATIENT " +
+" SUM(1) AS TOTAL_PATIENT, " +
 " ROUND(SUM(CASE WHEN a.converted_result = 0 THEN 1 WHEN a.converted_result < 1000 AND a.converted_result > 0 THEN 1 ELSE 0 END) * 100.0 / SUM(1), 2) AS POURCENTAGE_SUPPRIME, " +
 " ROUND(SUM(CASE WHEN a.converted_result >= 1000 THEN 1 ELSE 0 END) * 100.0 / SUM(1), 2) AS POURCENTAGE_NON_SUPPRIME " +
 " FROM  dashboard.analysis a " +
@@ -7162,6 +7165,54 @@ List<Object[]> getPatientForAllLab(@Param("year") int year);
 " EXTRACT(YEAR FROM a.drcpt) = :year " +
 " GROUP BY l.id, l.name, EXTRACT(YEAR FROM a.drcpt)", nativeQuery = true) 
 List<Object[]> getPatientForOneLab(@Param("year") int year, @Param("labId") Long labId);
+
+//PARTENAIRE PAR AGE
+  //NOMBRE DE PATIENTS TESTES PAR AGE
+
+  //CDC CI notation - Masculin
+@Query(value =  " SELECT pat.gender, cdc_age_cat.label cdc_age_label," +
+" SUM(CASE WHEN a.converted_result >= 1000 THEN 1 ELSE 0 END) AS TOTAL_NON_SUPPRIME, " +
+" SUM(CASE WHEN a.converted_result < 1000 AND a.converted_result > 0 THEN 1 ELSE 0 END ) AS TOTAL_SUPPRIME, " +
+" ROUND(SUM(CASE WHEN a.converted_result = 0 THEN 1 WHEN a.converted_result < 1000 AND a.converted_result > 0 THEN 1 ELSE 0 END) * 100.0 / SUM(1), 2) AS POURCENTAGE_SUPPRIME, " +
+" ROUND(SUM(CASE WHEN a.converted_result >= 1000 THEN 1 ELSE 0 END) * 100.0 / SUM(1), 2) AS POURCENTAGE_NON_SUPPRIME " +
+" FROM  dashboard.analysis a " +
+" LEFT JOIN dashboard.patient pat on pat.id = a.patient_id " +
+" LEFT JOIN dashboard.site s on s.id = pat.site_id " +
+" JOIN dashboard.district dis on dis.id = s.district_id " +
+" JOIN dashboard.region reg on reg.id = dis.region_id " +
+" LEFT JOIN dashboard.age_category cdc_age_cat on cdc_age_cat.id = a.age_cdc_id " +
+" LEFT JOIN dashboard.site_partner site_part on site_part.site_id = s.id " +
+" JOIN dashboard.partner part on part.id = site_part.partner_id " +
+" JOIN dashboard.regimen rg on rg.id = a.regimen_id " +
+" WHERE cdc_age_cat.type = 'CDC CI' AND " +   
+" pat.gender = :sex AND " +
+" EXTRACT(YEAR FROM a.drcpt) = :year  " +
+" GROUP BY pat.gender,cdc_age_cat.label, EXTRACT(YEAR FROM a.drcpt)", nativeQuery = true) 
+List<Object[]> getPatientByCDCMaleAndPartnerAll(@Param("year") int year, @Param("sex") String sex);
+
+  //CDC CI notation - Feminin
+  @Query(value =  " SELECT pat.gender, cdc_age_cat.label cdc_age_label,  " +
+  " SUM(CASE WHEN a.converted_result >= 1000 THEN 1 ELSE 0 END) AS TOTAL_NON_SUPPRIME, " +
+  " SUM(CASE WHEN a.converted_result < 1000 AND a.converted_result > 0 THEN 1 ELSE 0 END ) AS TOTAL_SUPPRIME, " +
+  " ROUND(SUM(CASE WHEN a.converted_result = 0 THEN 1 WHEN a.converted_result < 1000 AND a.converted_result > 0 THEN 1 ELSE 0 END) * 100.0 / SUM(1), 2) AS POURCENTAGE_SUPPRIME, " +
+  " ROUND(SUM(CASE WHEN a.converted_result >= 1000 THEN 1 ELSE 0 END) * 100.0 / SUM(1), 2) AS POURCENTAGE_NON_SUPPRIME " +
+  " FROM  dashboard.analysis a " +
+  " LEFT JOIN dashboard.patient pat on pat.id = a.patient_id " +
+  " LEFT JOIN dashboard.site s on s.id = pat.site_id " +
+  " JOIN dashboard.district dis on dis.id = s.district_id " +
+  " JOIN dashboard.region reg on reg.id = dis.region_id " +
+  " LEFT JOIN dashboard.age_category cdc_age_cat on cdc_age_cat.id = a.age_cdc_id " +
+  " LEFT JOIN dashboard.site_partner site_part on site_part.site_id = s.id " +
+  " JOIN dashboard.partner part on part.id = site_part.partner_id " +
+  " JOIN dashboard.regimen rg on rg.id = a.regimen_id " +
+  " WHERE a.regimen_id = :regimenId  AND  " +   
+  " cdc_age_cat.type = 'CDC CI' AND " +
+  " pat.gender = :sex AND " +
+  " EXTRACT(YEAR FROM a.drcpt) = :year  " +
+  " GROUP BY pat.gender,cdc_age_cat.label, rg.name, EXTRACT(YEAR FROM a.drcpt)", nativeQuery = true) 
+  List<Object[]> getPatientByCDCFemaleAndPartnerAll(@Param("regimenId") Long regimenId, @Param("year") int year, @Param("sex") String sex);
+  
+
 
 
  /******************************************************************************************************************************* */
