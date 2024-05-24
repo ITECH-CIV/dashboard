@@ -1426,6 +1426,22 @@ public class AnalysisController {
     return analysisServices.getPatientByCDCFemaleAndPartnerOne(year, partnerId);
     }
 
+    @GetMapping("/testbycdcmaleandpartnerone")
+    public List<Object[]> getTestByCDCMaleAndPartnerOne(@RequestParam int year, @RequestParam Long partnerId) {
+    return analysisServices.getTestByCDCMaleAndPartnerOne(year, partnerId);
+    }
+
+    @GetMapping("/testbycdcfemaleandpartnerone")
+    public List<Object[]> getTestByCDCFemaleAndPartnerOne(@RequestParam int year, @RequestParam Long partnerId) {
+    return analysisServices.getTestByCDCFemaleAndPartnerOne(year, partnerId);
+    }
+
+
+
+
+
+
+
 
 
 
