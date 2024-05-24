@@ -7288,7 +7288,7 @@ List<Object[]> getPatientByCDCMaleAndPartnerAll(@Param("year") int year, @Param(
 List<Object[]> getPatientByCDCMaleAndPartnerOne(@Param("year") int year, @Param("partnerId") Long partnerId, @Param("sex") String sex);
 
   //CDC CI notation - Feminin
-  @Query(value =  " SELECT pat.gender, cdc_age_cat.label cdc_age_label,  " +
+  @Query(value =  " SELECT pat.gender, cdc_age_cat.label cdc_age_label, part.name,  " +
   " SUM(CASE WHEN a.converted_result >= 1000 THEN 1 ELSE 0 END) AS TOTAL_NON_SUPPRIME, " +
   " SUM(CASE WHEN a.converted_result < 1000 AND a.converted_result > 0 THEN 1 ELSE 0 END ) AS TOTAL_SUPPRIME, " +
   " ROUND(SUM(CASE WHEN a.converted_result = 0 THEN 1 WHEN a.converted_result < 1000 AND a.converted_result > 0 THEN 1 ELSE 0 END) * 100.0 / SUM(1), 2) AS POURCENTAGE_SUPPRIME, " +
@@ -7302,11 +7302,12 @@ List<Object[]> getPatientByCDCMaleAndPartnerOne(@Param("year") int year, @Param(
   " LEFT JOIN dashboard.site_partner site_part on site_part.site_id = s.id " +
   " JOIN dashboard.partner part on part.id = site_part.partner_id " +
   " JOIN dashboard.regimen rg on rg.id = a.regimen_id " +
-  " WHERE cdc_age_cat.type = 'CDC CI' AND  " +   
+  " WHERE cdc_age_cat.type = 'CDC CI' AND " +   
   " pat.gender = :sex AND " +
+  " part.id = :partnerId AND " +
   " EXTRACT(YEAR FROM a.drcpt) = :year  " +
-  " GROUP BY pat.gender,cdc_age_cat.label, EXTRACT(YEAR FROM a.drcpt)", nativeQuery = true) 
-  List<Object[]> getPatientByCDCFemaleAndPartnerAll(@Param("year") int year, @Param("sex") String sex);
+  " GROUP BY pat.gender,cdc_age_cat.label, part.name, EXTRACT(YEAR FROM a.drcpt)", nativeQuery = true) 
+  List<Object[]> getPatientByCDCFemaleAndPartnerOne(@Param("year") int year, @Param("partnerId") Long partnerId, @Param("sex") String sex);
 
 
   
