@@ -333,7 +333,10 @@ List<Object[]> getTestByCDCMaleAndPartnerOne(@Param("year") int year, @Param("pa
 List<Object[]> getTestByCDCFemaleAndPartnerOne(@Param("year") int year, @Param("partnerId") Long partnerId);
 
 List<Object[]> getTestBySpecimen(@Param("ageCategoryId") Long ageCategoryId);
-List<Object[]> getTestByAgeCategoryCdc(@Param("year") int year, @Param("ageCategoryId") Long ageCategoryId);
+List<Object[]> getTestByAgeCategoryCdc(@Param("year") int year, @Param("ageCategoryId") Long ageCategoryId); 
+
+List<Object[]> getPatientMaleByCdc(@Param("year") int year, @Param("ageCategoryId") Long ageCategoryId);
+
 
 
 
