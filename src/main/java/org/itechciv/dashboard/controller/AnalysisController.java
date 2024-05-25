@@ -1452,6 +1452,13 @@ public class AnalysisController {
     return analysisServices.getPatientMaleByCdc(year,ageCategoryId);
     }
 
+    @GetMapping("/patientfemalebycdc")
+    public List<Object[]> getPatientFemaleByCdc(@RequestParam int year, @RequestParam Long ageCategoryId) {
+    return analysisServices.getPatientFemaleByCdc(year,ageCategoryId);
+    }
+
+
+
 
 
 

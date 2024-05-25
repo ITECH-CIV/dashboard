@@ -2926,6 +2926,18 @@ public List<Object[]> getPatientMaleByCdc(int year, Long ageCategoryId) {
        }  
 }
 
+@Override
+public List<Object[]> getPatientFemaleByCdc(int year, Long ageCategoryId) {
+    try{
+        String sex = "F"; // Sexe Feminin
+        return analisysRepo.getPatientFemaleByCdc(year, ageCategoryId, sex);
+
+    }catch(Exception ex){
+        ex.printStackTrace();
+        return Collections.emptyList();
+       }  
+}
+
 
 
 

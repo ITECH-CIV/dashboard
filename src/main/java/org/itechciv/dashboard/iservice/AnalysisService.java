@@ -336,6 +336,8 @@ List<Object[]> getTestBySpecimen(@Param("ageCategoryId") Long ageCategoryId);
 List<Object[]> getTestByAgeCategoryCdc(@Param("year") int year, @Param("ageCategoryId") Long ageCategoryId); 
 
 List<Object[]> getPatientMaleByCdc(@Param("year") int year, @Param("ageCategoryId") Long ageCategoryId);
+List<Object[]> getPatientFemaleByCdc(@Param("year") int year, @Param("ageCategoryId") Long ageCategoryId);
+
 
 
 
