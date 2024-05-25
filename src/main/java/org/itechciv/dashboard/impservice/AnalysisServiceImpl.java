@@ -2903,6 +2903,21 @@ public List<Object[]> getTestBySpecimen(Long ageCategoryId) {
        }  
 }
 
+@Override
+public List<Object[]> getTestByAgeCategoryCdc(int year, Long ageCategoryId) {
+    try{
+        return analisysRepo.getTestByAgeCategoryCdc(year, ageCategoryId);
+
+    }catch(Exception ex){
+        ex.printStackTrace();
+        return Collections.emptyList();
+       }  
+}
+
+
+
+
+
 
 
 

@@ -7414,8 +7414,9 @@ List<Object[]> getTestBySpecimen(@Param("ageCategoryId") Long ageCategoryId);
  " INNER JOIN dashboard.test t on t.id = a.test_id " +
  " INNER JOIN dashboard.site_partner sp on s.id = sp.site_id " +
  " INNER JOIN dashboard.partner pt on pt.id = sp.partner_id " +
- " WHERE a.cdc_id = :ageCategoryId AND " +
- " cdc_age_cat.type = 'CDC CI' AND " +
+ " INNER JOIN dashboard.age_category ac ON ac.id = a.age_cdc_id "  +
+ " WHERE a.age_cdc_id = :ageCategoryId AND " +
+ " ac.type = 'CDC CI' AND " +
  " EXTRACT(YEAR FROM a.drcpt) = :year " +
  " GROUP BY EXTRACT(YEAR FROM a.drcpt);", nativeQuery = true)
 List<Object[]> getTestByAgeCategoryCdc(@Param("year") int year, @Param("ageCategoryId") Long ageCategoryId);

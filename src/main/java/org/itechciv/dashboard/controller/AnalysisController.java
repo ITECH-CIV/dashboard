@@ -1441,6 +1441,12 @@ public class AnalysisController {
     return analysisServices.getTestBySpecimen(ageCategoryId);
     }
 
+    @GetMapping("/testbyagecategorycdc")
+    public List<Object[]> getTestByAgeCategoryCdc(@RequestParam int year, @RequestParam Long ageCategoryId) {
+    return analysisServices.getTestByAgeCategoryCdc(year,ageCategoryId);
+    }
+
+
 
 
 
