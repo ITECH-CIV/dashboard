@@ -7386,8 +7386,8 @@ List<Object[]> getPatientByCDCMaleAndPartnerOne(@Param("year") int year, @Param(
 " INNER JOIN dashboard.sample_type st ON a.sample_type_id = st.id " +
 " INNER JOIN dashboard.age_category ac ON ac.id = a.age_cdc_id "  +
 " WHERE a.drcpt BETWEEN '2023-01-01' AND CURRENT_DATE " + 
-" AND a.cdc_id = :ageCategoryId " +
-" AND cdc_age_cat.type = 'CDC CI' " +
+" AND a.age_cdc_id = :ageCategoryId " +
+" AND ac.type = 'CDC CI' " +
 " GROUP BY a.drcpt,TO_CHAR(a.drcpt, 'Mon-YYYY'), st.label " +
 " ORDER BY a.drcpt ; " ,nativeQuery = true)
 List<Object[]> getTestBySpecimen(@Param("ageCategoryId") Long ageCategoryId);

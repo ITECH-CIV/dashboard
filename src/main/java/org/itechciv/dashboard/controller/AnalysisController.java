@@ -1436,6 +1436,11 @@ public class AnalysisController {
     return analysisServices.getTestByCDCFemaleAndPartnerOne(year, partnerId);
     }
 
+    @GetMapping("/testbyspecimenforonecategory")
+    public List<Object[]> getTestBySpecimen(@RequestParam Long ageCategoryId) {
+    return analysisServices.getTestBySpecimen(ageCategoryId);
+    }
+
 
 
 

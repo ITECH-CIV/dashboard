@@ -2892,6 +2892,17 @@ public List<Object[]> getTestByCDCFemaleAndPartnerOne(int year, Long partnerId) 
        }  
 }
 
+@Override
+public List<Object[]> getTestBySpecimen(Long ageCategoryId) {
+    try{
+        return analisysRepo.getTestBySpecimen(ageCategoryId);
+
+    }catch(Exception ex){
+        ex.printStackTrace();
+        return Collections.emptyList();
+       }  
+}
+
 
 
 
