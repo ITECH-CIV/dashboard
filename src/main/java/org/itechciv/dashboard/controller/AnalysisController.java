@@ -268,41 +268,41 @@ public class AnalysisController {
 
    /*********************************************************************************************************************************/
 
-        @GetMapping("/patientbyageminustwo")
-        public List<Object[]> getTestedPatientByAgeMinusTwoForOneRegion(@RequestParam Long regionId, @RequestParam int year) {
-        return analysisServices.getTestedPatientByAgeMinusTwoForOneRegion(regionId, year );
+  /*  @GetMapping("/patientbyageminustwo")
+   public List<Object[]> getTestedPatientByAgeMinusTwoForOneRegion(@RequestParam Long regionId, @RequestParam int year) {
+   return analysisServices.getTestedPatientByAgeMinusTwoForOneRegion(regionId, year );
 
-        }
+   } */
 
-        @GetMapping("/patientbyagetwoandnine")
+      /*   @GetMapping("/patientbyagetwoandnine")
         public List<Object[]> getTestedPatientByAgeBetweenTwoAndNineForOneRegion(@RequestParam Long regionId, @RequestParam int year) {
         return analysisServices.getTestedPatientByAgeBetweenTwoAndNineForOneRegion(regionId, year );
 
-        }
-
+        } */
+/* 
         @GetMapping("/patientbyagetenandfourteen")
         public List<Object[]> getTestedPatientByAgeBetweenTenAndFourteenForOneRegion(@RequestParam Long regionId, @RequestParam int year) {
         return analysisServices.getTestedPatientByAgeBetweenTenAndFourteenForOneRegion(regionId, year );
 
 
-        }
-
+        } */
+/* 
         @GetMapping("/patientbyagefifteennineteen")
         public List<Object[]> getTestedPatientByAgeBetweenFifteenAndNineteenForOneRegion(@RequestParam Long regionId, @RequestParam int year) {
         return analysisServices.getTestedPatientByAgeBetweenFifteenAndNineteenForOneRegion(regionId, year );
 
         }
-
+ *//* 
         @GetMapping("/patientbyagetwentyandtwentyfour")
         public List<Object[]> getTestedPatientByAgeBetweenTwentyAndTwentyFourForOneRegion(@RequestParam Long regionId, @RequestParam int year) {
         return analysisServices.getTestedPatientByAgeBetweenTwentyAndTwentyFourForOneRegion(regionId, year );
 
-        }
+        } *//* 
 
         @GetMapping("/patientbyagegreaterthantwentyfive")
         public List<Object[]> getTestedPatientByAgeGreaterThanTwentyFiveForOneRegion(@RequestParam Long regionId, @RequestParam int year) {
         return analysisServices.getTestedPatientByAgeGreaterThanTwentyFiveForOneRegion(regionId, year );
-        }
+        } */
 
         @GetMapping("/patientbyageminustwoforallregion")
         public List<Object[]> getTestedPatientByAgeMinusTwoForAllRegion(@RequestParam int year) {
@@ -336,22 +336,22 @@ public class AnalysisController {
         return analysisServices.getTestedPatientByAgeGreaterThanTwentyFiveForAllRegion(year );
         }
 
-        @GetMapping("/a")
+      /*   @GetMapping("/a")
         public List<Object[]> getTestedPatientByAgeCategoryMinusTwoForOneRegion(@RequestParam Long regionId, @RequestParam int year) {
         return analysisServices.getTestedPatientByAgeCategoryMinusTwoForOneRegion(regionId, year );
-        }
+        } */
 
-        @GetMapping("/b")
+      /*   @GetMapping("/b")
         public List<Object[]> getTestedPatientByAgeCategoryBetweenOneAndFourForOneRegion(@RequestParam Long regionId, @RequestParam int year) {
         return analysisServices.getTestedPatientByAgeCategoryBetweenOneAndFourForOneRegion(regionId, year );
-        }
+        } */
 
-        @GetMapping("/c")
+        /* @GetMapping("/c")
         public List<Object[]> getTestedPatientByAgeCategoryBetweenFiveAndNineForOneRegion(@RequestParam Long regionId, @RequestParam int year) {
         return analysisServices.getTestedPatientByAgeCategoryBetweenFiveAndNineForOneRegion(regionId, year );
-        }
+        } */
 
-        @GetMapping("/d")
+      /*   @GetMapping("/d")
         public List<Object[]> getTestedPatientByAgeCategoryBetweenTenAndFourteenForOneRegion(@RequestParam Long regionId, @RequestParam int year) {
         return analysisServices.getTestedPatientByAgeCategoryBetweenTenAndFourteenForOneRegion(regionId, year );
         }
@@ -369,9 +369,9 @@ public class AnalysisController {
         @GetMapping("/g")
         public List<Object[]> getTestedPatientByAgeCategoryBetweenThirtyAndThirtyFourForOneRegion(@RequestParam Long regionId, @RequestParam int year) {
         return analysisServices.getTestedPatientByAgeCategoryBetweenThirtyAndThirtyFourForOneRegion(regionId, year );
-        }
+        } */
 
-
+/* 
         @GetMapping("/h")
         public List<Object[]> getTestedPatientByAgeCategoryBetweenThirtyFourAndThirtyNineForOneRegion(@RequestParam Long regionId, @RequestParam int year) {
         return analysisServices.getTestedPatientByAgeCategoryBetweenThirtyFourAndThirtyNineForOneRegion(regionId, year );
@@ -390,7 +390,7 @@ public class AnalysisController {
         @GetMapping("/k")
         public List<Object[]> getTestedPatientByAgeCategoryGreaterThanFiftyForOneRegion(@RequestParam Long regionId, @RequestParam int year) {
         return analysisServices.getTestedPatientByAgeCategoryGreaterThanFiftyForOneRegion(regionId, year );
-        }
+        } */
 
         @GetMapping("/l")
         public List<Object[]> getPatientTestedByAgeCategoryMinusTwoForAllRegion(@RequestParam int year) {
@@ -461,43 +461,43 @@ public class AnalysisController {
         return analysisServices.getPatientTestedByAgeCategoryGreaterThanFiftyForAllRegion(year );
         }
 
-
+/* 
         //Nombre de tests réalisés par tranche d'âge
         @GetMapping("/x")
         public List<Object[]> getTestByAgeMinusTwoForOneRegion(@RequestParam Long regionId, @RequestParam int year) {
         return analysisServices.getTestByAgeMinusTwoForOneRegion(regionId, year );
-        }
+        } */
 
-
+/* 
         @GetMapping("/y")
         public List<Object[]> getTestByAgeBetweenTwoAndNineForOneRegion(@RequestParam Long regionId, @RequestParam int year) {
         return analysisServices.getTestByAgeBetweenTwoAndNineForOneRegion(regionId, year );
-        }
+        } */
 
-
+/* 
         @GetMapping("/z")
         public List<Object[]> getTestByAgeBetweenTenAndFourteenForOneRegion(@RequestParam Long regionId, @RequestParam int year) {
         return analysisServices.getTestByAgeBetweenTenAndFourteenForOneRegion(regionId, year );
         }
 
-
-        @GetMapping("/aa")
+ */
+       /*  @GetMapping("/aa")
         public List<Object[]> getTestByAgeBetweenFifteenAndNineteenForOneRegion(@RequestParam Long regionId, @RequestParam int year) {
         return analysisServices.getTestByAgeBetweenFifteenAndNineteenForOneRegion(regionId, year );
         }
-
-
+ */
+/* 
         @GetMapping("/ab")
         public List<Object[]> getTestByAgeBetweenTwentyAndTwentyFourForOneRegion(@RequestParam Long regionId, @RequestParam int year) {
         return analysisServices.getTestByAgeBetweenTwentyAndTwentyFourForOneRegion(regionId, year );
-        }
+        } */
 
 
-
+/* 
         @GetMapping("/ac")
         public List<Object[]> getTestByAgeGreaterThanTwentyFiveForOneRegion(@RequestParam Long regionId, @RequestParam int year) {
         return analysisServices.getTestByAgeGreaterThanTwentyFiveForOneRegion(regionId, year );
-        }
+        } */
 
 
         @GetMapping("/ad")
@@ -983,10 +983,10 @@ public class AnalysisController {
         return analysisServices.MethodRegiontwelve(year);
     }
     /************************************************************************************************************************* */
-    @GetMapping("/patientforregion")
+   /*  @GetMapping("/patientforregion")
     public List<Object[]> getPatientForAllRegion( @RequestParam int year) {
         return analysisServices.getPatientForAllRegion(year);
-    }
+    } */
 
     @GetMapping("/patientbydistrict")
     public List<Object[]> getPatientForDistrict (@RequestParam Long districtId, @RequestParam int year) {
@@ -1007,27 +1007,27 @@ public class AnalysisController {
     public List<Object[]> getTestedPatientByAgeBetweenTwoAndNineForOneSite(@RequestParam Long siteId, @RequestParam int year) {
     return analysisServices.getTestedPatientByAgeBetweenTwoAndNineForOneSite(siteId, year);
     }
-
+/* 
     @GetMapping("/testbysiteforregion")
     public List<Object[]> getTestBySiteForOneRegion(@RequestParam Long regionId, @RequestParam int year) {
     return analysisServices.getTestBySiteForOneRegion(regionId, year);
     }
-
-    @GetMapping("/patientbysiteforregion")
-    public List<Object[]> getPatientBySiteForOneRegion(@RequestParam Long regionId, @RequestParam int year) {
-    return analysisServices.getPatientBySiteForOneRegion(regionId, year);
-    }
-
-    @GetMapping("/testbypartner")
-    public List<Object[]> getTestByPartner(@RequestParam int year) {
-    return analysisServices.getTestByPartner(year);
-    }
-
-    @GetMapping("/patientbypartner")
+ *//* 
+@GetMapping("/patientbysiteforregion")
+public List<Object[]> getPatientBySiteForOneRegion(@RequestParam Long regionId, @RequestParam int year) {
+return analysisServices.getPatientBySiteForOneRegion(regionId, year);
+} */
+/*  */
+/* @GetMapping("/testbypartner")
+public List<Object[]> getTestByPartner(@RequestParam int year) {
+return analysisServices.getTestByPartner(year);
+}
+ */
+    /* @GetMapping("/patientbypartner")
     public List<Object[]> getPatientByPartner(@RequestParam int year) {
     return analysisServices.getPatientByPartner(year);
     }
-
+ */
 
     @GetMapping("/testyspecimenedta")
     public List<Object[]> getestByspecimenEDTAPlasma(@RequestParam int partnerId) {
@@ -1045,20 +1045,20 @@ public class AnalysisController {
     return analysisServices.getestByspecimenPSC(partnerId);
     }
 
-    @GetMapping("/patientminusone")
+    /* @GetMapping("/patientminusone")
     public List<Object[]> getTestedPatientAgeCategoryBetweenFifteenAndNineteenForAllRegion(@RequestParam int year) {
     return analysisServices.getTestedPatientAgeCategoryBetweenFifteenAndNineteenForAllRegion(year);
-    }
-
+    } */
+/* 
     @GetMapping("/patientbydistrictm")
     public List<Object[]> district7(@RequestParam Long districtId, @RequestParam int year) {
     return analysisServices.district7(districtId, year);
-    }
-
+    } */
+/* 
     @GetMapping("/patientbysitem")
     public List<Object[]> site8(@RequestParam Long siteId, @RequestParam int year) {
     return analysisServices.site8(siteId, year);
-    }
+    } */
 
     @GetMapping("/testdetailbypartner")
     public List<Object[]> getTestWithDetailsByPartner(@RequestParam int year, @RequestParam Long partnerId) {
@@ -1069,47 +1069,47 @@ public class AnalysisController {
     public List<Object[]> getPatientWithDetailsByPartner(@RequestParam int year, @RequestParam Long partnerId) {
     return analysisServices.getPatientWithDetailsByPartner(year, partnerId);
     }
-
+/* 
 
     @GetMapping("/testbydistrictother")
     public List<Object[]> districtSeven(@RequestParam int year, @RequestParam Long partnerId) {
     return analysisServices.districtSeven(partnerId, year);
     }
 
-
-    @GetMapping("/testallregionrone")
+ */
+    /* @GetMapping("/testallregionrone")
     public List<Object[]> testOne(@RequestParam int year) {
     return analysisServices.testOne(year);
-    }
-
+    } */
+/* 
    @GetMapping("/testallregiontwo")
     public List<Object[]> testTwo(@RequestParam int year) {
     return analysisServices.testTwo(year);
-    }
+    } */
  
-
+/* 
     @GetMapping("/testallregionthree")
     public List<Object[]> testThree(@RequestParam int year) {
     return analysisServices.testThree(year);
-    }
- 
+    } */
+ /* 
 
     @GetMapping("/testallregionfour")
     public List<Object[]> testFour(@RequestParam int year) {
     return analysisServices.testFour(year);
-    }
+    } */
  
-
+/* 
     @GetMapping("/testallregionfive")
     public List<Object[]> testFive(@RequestParam int year) {
     return analysisServices.testFive(year);
-    }
+    } */
  
 
-    @GetMapping("/testallregionsix")
+  /*   @GetMapping("/testallregionsix")
     public List<Object[]> testSix(@RequestParam int year) {
     return analysisServices.testSix(year);
-    }
+    } */
   
 
     @GetMapping("/testbydistrictotherone")
@@ -1339,7 +1339,1250 @@ public class AnalysisController {
     public List<Object[]> getTestAndPatientResultForOneLab(@RequestParam int year, @RequestParam Long labId) {
     return analysisServices.getTestAndPatientResultForOneLab(year, labId);
     }
-/************************************************************************************************************************** */
+/****************************************************DEBUT******************************************************* */
+
+@GetMapping("/patienttrancheoneregion")
+    public List<Object[]> getTestedPatientByAgeMinusTwoForOneRegion(@RequestParam Long regionId, @RequestParam int year) {
+        return analysisServices.getTestedPatientByAgeMinusTwoForOneRegion(regionId,  year);
+    }
+
+    
+    @GetMapping("/patienttranchetwooneregion")
+    public List<Object[]> getTestedPatientByAgeBetweenTwoAndNineForOneRegion(@RequestParam Long regionId, @RequestParam int year) {
+        return analysisServices.getTestedPatientByAgeBetweenTwoAndNineForOneRegion(regionId,  year);
+    }
+
+    
+
+    @GetMapping("/patienttranchethreeoneregion")
+    public List<Object[]> getTestedPatientByAgeBetweenTenAndFourteenForOneRegion(@RequestParam Long regionId, @RequestParam int year) {
+        return analysisServices.getTestedPatientByAgeBetweenTenAndFourteenForOneRegion(regionId,  year);
+    }
+
+    
+    @GetMapping("/patienttranchefouroneregion")
+    public List<Object[]> getTestedPatientByAgeBetweenFifteenAndNineteenForOneRegion(@RequestParam Long regionId, @RequestParam int year) {
+        return analysisServices.getTestedPatientByAgeBetweenFifteenAndNineteenForOneRegion(regionId,  year);
+    }
+
+    
+    @GetMapping("/patienttranchefiveoneregion")
+    public List<Object[]> getTestedPatientByAgeBetweenTwentyAndTwentyFourForOneRegion(@RequestParam Long regionId, @RequestParam int year) {
+        return analysisServices.getTestedPatientByAgeBetweenTwentyAndTwentyFourForOneRegion(regionId,  year);
+    }
+
+    @GetMapping("/patienttranchesixoneregion")
+    public List<Object[]> getTestedPatientByAgeGreaterThanTwentyFiveForOneRegion(@RequestParam Long regionId, @RequestParam int year) {
+        return analysisServices.getTestedPatientByAgeGreaterThanTwentyFiveForOneRegion(regionId,  year);
+    }
+
+    
+
+    //pour toute les regions
+
+
+    @GetMapping("/testregionO")
+    public List<Object[]> getPatientForAllRegion( @RequestParam int year) {
+        return analysisServices.getPatientForAllRegion( year);
+    }
+
+
+
+
+    //tranche d age cdci pour chaque region patient testé
+
+
+    @GetMapping("/patienttranchecdcioneparregion")
+    public List<Object[]> getTestedPatientByAgeCategoryMinusTwoForOneRegion(@RequestParam Long regionId, @RequestParam int year) {
+        return analysisServices.getTestedPatientByAgeCategoryMinusTwoForOneRegion(regionId,  year);
+    }
+
+
+
+    @GetMapping("/patienttranchecdcitwoparregion")
+    public List<Object[]> getTestedPatientByAgeCategoryBetweenOneAndFourForOneRegion(@RequestParam Long regionId, @RequestParam int year) {
+        return analysisServices.getTestedPatientByAgeCategoryBetweenOneAndFourForOneRegion(regionId,  year);
+    }
+
+
+
+    @GetMapping("/patienttranchecdcithreeparregion")
+    public List<Object[]> getTestedPatientByAgeCategoryBetweenFiveAndNineForOneRegion(@RequestParam Long regionId, @RequestParam int year) {
+        return analysisServices.getTestedPatientByAgeCategoryBetweenFiveAndNineForOneRegion(regionId,  year);
+    }
+
+
+
+    @GetMapping("/patienttranchecdcifourparregion")
+    public List<Object[]> getTestedPatientByAgeCategoryBetweenTenAndFourteenForOneRegion(@RequestParam Long regionId, @RequestParam int year) {
+        return analysisServices.getTestedPatientByAgeCategoryBetweenTenAndFourteenForOneRegion(regionId,  year);
+    }
+
+
+
+
+
+
+    @GetMapping("/patienttranchecdcitwelveparregion")
+    public List<Object[]> getTestedPatientAgeCategoryBetweenFifteenAndNineteenForOneRegion(@RequestParam Long regionId, @RequestParam int year) {
+        return analysisServices.getTestedPatientAgeCategoryBetweenFifteenAndNineteenForOneRegion(regionId,  year);
+    }
+
+
+
+    @GetMapping("/patienttranchecdcifiveparregion")
+    public List<Object[]> getTestedPatientByAgeCategoryBetweenTwentyAndTwentyFourForOneRegion(@RequestParam Long regionId, @RequestParam int year) {
+        return analysisServices.getTestedPatientByAgeCategoryBetweenTwentyAndTwentyFourForOneRegion(regionId,  year);
+    }
+
+
+
+    @GetMapping("/patienttranchecdcisixparregion")
+    public List<Object[]> getTestedPatientByAgeCategoryBetweenTwentyFiveAndTwentyNineForOneRegion(@RequestParam Long regionId, @RequestParam int year) {
+        return analysisServices.getTestedPatientByAgeCategoryBetweenTwentyFiveAndTwentyNineForOneRegion(regionId,  year);
+    }
+
+
+
+
+    @GetMapping("/patienttranchecdcisevenparregion")
+    public List<Object[]> getTestedPatientByAgeCategoryBetweenThirtyAndThirtyFourForOneRegion(@RequestParam Long regionId, @RequestParam int year) {
+        return analysisServices.getTestedPatientByAgeCategoryBetweenThirtyAndThirtyFourForOneRegion(regionId,  year);
+    }
+
+
+
+
+    @GetMapping("/patienttranchecdciheightparregion")
+    public List<Object[]> getTestedPatientByAgeCategoryBetweenThirtyFourAndThirtyNineForOneRegion(@RequestParam Long regionId, @RequestParam int year) {
+        return analysisServices.getTestedPatientByAgeCategoryBetweenThirtyFourAndThirtyNineForOneRegion(regionId,  year);
+    }
+
+
+
+
+    @GetMapping("/patienttranchecdcinineparregion")
+    public List<Object[]> getTestedPatientByAgeCategoryBetweenFourtyAndFourtyFourForOneRegion(@RequestParam Long regionId, @RequestParam int year) {
+        return analysisServices.getTestedPatientByAgeCategoryBetweenFourtyAndFourtyFourForOneRegion(regionId,  year);
+    }
+
+
+
+    @GetMapping("/patienttranchecdcitenparregion")
+    public List<Object[]> getTestedPatientByAgeCategoryBetweenFourtyFiveAndFourtyNineForOneRegion(@RequestParam Long regionId, @RequestParam int year) {
+        return analysisServices.getTestedPatientByAgeCategoryBetweenFourtyFiveAndFourtyNineForOneRegion(regionId,  year);
+    }
+
+
+    @GetMapping("/patienttranchecdcielevenparregion")
+    public List<Object[]> getTestedPatientByAgeCategoryGreaterThanFiftyForOneRegion(@RequestParam Long regionId, @RequestParam int year) {
+        return analysisServices.getTestedPatientByAgeCategoryGreaterThanFiftyForOneRegion(regionId,  year);
+    }
+
+
+
+
+    //tranche d age cidici pour toute les regions patient testé
+
+
+
+
+    @GetMapping("/patienttranchecdciregionone")
+    public List<Object[]> getTestedPatientByAgeCategoryMinusTwoForAllRegion( @RequestParam int year) {
+        return analysisServices.getTestedPatientByAgeCategoryMinusTwoForAllRegion(year);
+    }
+
+
+
+
+    @GetMapping("/patienttranchecdciregiontwo")
+    public List<Object[]> getTestedPatientByAgeCategoryBetweenOneAndFourForAllRegion( @RequestParam int year) {
+        return analysisServices.getTestedPatientByAgeCategoryBetweenOneAndFourForAllRegion(year);
+    }
+
+
+
+
+    @GetMapping("/patienttranchecdciregionthree")
+    public List<Object[]> getTestedPatientByAgeCategoryBetweenFiveAndNineForAllRegion( @RequestParam int year) {
+        return analysisServices.getTestedPatientByAgeCategoryBetweenFiveAndNineForAllRegion(year);
+    }
+
+
+
+
+    @GetMapping("/patienttranchecdciregionfour")
+    public List<Object[]> getTestedPatientByAgeCategoryBetweenTenAndFourteenForAllRegion( @RequestParam int year) {
+        return analysisServices.getTestedPatientByAgeCategoryBetweenTenAndFourteenForAllRegion(year);
+    }
+
+
+
+    @GetMapping("/patienttranchecdciregionfive")
+    public List<Object[]> getTestedPatientAgeCategoryBetweenFifteenAndNineteenForAllRegion( @RequestParam int year) {
+        return analysisServices.getTestedPatientAgeCategoryBetweenFifteenAndNineteenForAllRegion(year);
+    }
+
+
+
+
+
+
+    @GetMapping("/patienttranchecdciregionsix")
+    public List<Object[]> getTestedPatientByAgeCategoryBetweenTwentyAndTwentyFourForAllRegion( @RequestParam int year) {
+        return analysisServices.getTestedPatientByAgeCategoryBetweenTwentyAndTwentyFourForAllRegion(year);
+    }
+
+
+
+    @GetMapping("/patienttranchecdciregionseven")
+    public List<Object[]> getTestedPatientByAgeCategoryBetweenTwentyFiveAndTwentyNineForAllRegion( @RequestParam int year) {
+        return analysisServices.getTestedPatientByAgeCategoryBetweenTwentyFiveAndTwentyNineForAllRegion(year);
+    }
+
+
+
+    @GetMapping("/patienttranchecdciregionheight")
+    public List<Object[]> getTestedPatientByAgeCategoryBetweenThirtyAndThirtyFourForAllRegion( @RequestParam int year) {
+        return analysisServices.getTestedPatientByAgeCategoryBetweenThirtyAndThirtyFourForAllRegion(year);
+    }
+
+
+
+    @GetMapping("/patienttranchecdciregionnine")
+    public List<Object[]> getTestedPatientByAgeCategoryBetweenThirtyFourAndThirtyNineForAllRegion( @RequestParam int year) {
+        return analysisServices.getTestedPatientByAgeCategoryBetweenThirtyFourAndThirtyNineForAllRegion(year);
+    }
+
+
+
+    @GetMapping("/patienttranchecdciregionten")
+    public List<Object[]> getTestedPatientByAgeCategoryBetweenFourtyAndFourtyFourForAllRegion( @RequestParam int year) {
+        return analysisServices.getTestedPatientByAgeCategoryBetweenFourtyAndFourtyFourForAllRegion(year);
+    }
+
+
+    @GetMapping("/patienttranchecdciregioneleven")
+    public List<Object[]> getTestedPatientByAgeCategoryBetweenFourtyFiveAndFourtyNineForAllRegion( @RequestParam int year) {
+        return analysisServices.getTestedPatientByAgeCategoryBetweenFourtyFiveAndFourtyNineForAllRegion(year);
+    }
+
+
+    @GetMapping("/patienttranchecdciregiontwelve")
+    public List<Object[]> getTestedPatientByAgeCategoryGreaterThanFiftyForAllRegion( @RequestParam int year) {
+        return analysisServices.getTestedPatientByAgeCategoryGreaterThanFiftyForAllRegion(year);
+    }
+
+    
+    //district cdci
+
+
+
+    @GetMapping("/districtone")
+    public List<Object[]> district1(@RequestParam Long districtId, @RequestParam int year) {
+        return analysisServices.district1(districtId,  year);
+    }
+
+
+
+    @GetMapping("/districttwo")
+    public List<Object[]> district2(@RequestParam Long districtId, @RequestParam int year) {
+        return analysisServices.district2(districtId,  year);
+    }
+
+
+    @GetMapping("/districtthree")
+    public List<Object[]> district3(@RequestParam Long districtId, @RequestParam int year) {
+        return analysisServices.district3(districtId,  year);
+    }
+
+
+    @GetMapping("/districtfour")
+    public List<Object[]> district4(@RequestParam Long districtId, @RequestParam int year) {
+        return analysisServices.district4(districtId,  year);
+    }
+
+
+    @GetMapping("/districtfive")
+    public List<Object[]> district5(@RequestParam Long districtId, @RequestParam int year) {
+        return analysisServices.district5(districtId,  year);
+    }
+
+
+    @GetMapping("/districtsix")
+    public List<Object[]> district6(@RequestParam Long districtId, @RequestParam int year) {
+        return analysisServices.district6(districtId,  year);
+    }
+
+
+    @GetMapping("/districtseven")
+    public List<Object[]> district7(@RequestParam Long districtId, @RequestParam int year) {
+        return analysisServices.district7(districtId,  year);
+    }
+
+
+    @GetMapping("/districtheight")
+    public List<Object[]> district8(@RequestParam Long districtId, @RequestParam int year) {
+        return analysisServices.district8(districtId,  year);
+    }
+
+
+    @GetMapping("/districtnine")
+    public List<Object[]> district9(@RequestParam Long districtId, @RequestParam int year) {
+        return analysisServices.district9(districtId,  year);
+    }
+
+
+    @GetMapping("/districtten")
+    public List<Object[]> district10(@RequestParam Long districtId, @RequestParam int year) {
+        return analysisServices.district10(districtId,  year);
+    }
+
+
+
+    @GetMapping("/districteleven")
+    public List<Object[]> district11(@RequestParam Long districtId, @RequestParam int year) {
+        return analysisServices.district11(districtId,  year);
+    }
+
+
+
+
+    @GetMapping("/districttwelve")
+    public List<Object[]> district12(@RequestParam Long districtId, @RequestParam int year) {
+        return analysisServices.district12(districtId,  year);
+    }
+
+
+//nombre de patient testés par site detaillé  cdci
+
+
+
+@GetMapping("/tranchedetaillsiteone")
+public List<Object[]> site1(@RequestParam Long siteId, @RequestParam int year) {
+    return analysisServices.site1(siteId,  year);
+}
+
+
+
+@GetMapping("/tranchedetaillsitetwo")
+public List<Object[]> site2(@RequestParam Long siteId, @RequestParam int year) {
+    return analysisServices.site2(siteId,  year);
+}
+
+
+
+
+@GetMapping("/tranchedetaillsitethree")
+public List<Object[]> site3(@RequestParam Long siteId, @RequestParam int year) {
+    return analysisServices.site3(siteId,  year);
+}
+
+
+
+
+@GetMapping("/tranchedetaillsitefour")
+public List<Object[]> site4(@RequestParam Long siteId, @RequestParam int year) {
+    return analysisServices.site4(siteId,  year);
+}
+
+
+@GetMapping("/tranchedetaillsitefive")
+public List<Object[]> site5(@RequestParam Long siteId, @RequestParam int year) {
+    return analysisServices.site5(siteId,  year);
+}
+
+
+@GetMapping("/tranchedetaillsitesix")
+public List<Object[]> site6(@RequestParam Long siteId, @RequestParam int year) {
+    return analysisServices.site6(siteId,  year);
+}
+
+
+@GetMapping("/tranchedetaillsiteseven")
+public List<Object[]> site7(@RequestParam Long siteId, @RequestParam int year) {
+    return analysisServices.site7(siteId,  year);
+}
+
+
+@GetMapping("/tranchedetaillsiteheight")
+public List<Object[]> site8(@RequestParam Long siteId, @RequestParam int year) {
+    return analysisServices.site8(siteId,  year);
+}
+
+
+@GetMapping("/tranchedetaillsitenine")
+public List<Object[]> site9(@RequestParam Long siteId, @RequestParam int year) {
+    return analysisServices.site9(siteId,  year);
+}
+
+
+@GetMapping("/tranchedetaillsiteten")
+public List<Object[]> site10(@RequestParam Long siteId, @RequestParam int year) {
+    return analysisServices.site10(siteId,  year);
+}
+
+
+@GetMapping("/tranchedetaillsiteeleven")
+public List<Object[]> site11(@RequestParam Long siteId, @RequestParam int year) {
+    return analysisServices.site11(siteId,  year);
+}
+
+
+@GetMapping("/tranchedetaillsitetwelve")
+public List<Object[]> site12(@RequestParam Long siteId, @RequestParam int year) {
+    return analysisServices.site12(siteId,  year);
+}
+
+
+@GetMapping("/testnationaltrancheoneregion")
+public List<Object[]> getTestByAgeMinusTwoForOneRegion(@RequestParam Long regionId, @RequestParam int year) {
+    return analysisServices.getTestByAgeMinusTwoForOneRegion(regionId,year);
+}
+
+
+
+@GetMapping("/testnationaltrancheoneregiontwo")
+public List<Object[]> getTestByAgeBetweenTwoAndNineForOneRegion(@RequestParam Long regionId, @RequestParam int year) {
+    return analysisServices.getTestByAgeBetweenTwoAndNineForOneRegion(regionId,year);
+}
+
+
+
+@GetMapping("/testnationaltrancheoneregionthree")
+public List<Object[]> getTestByAgeBetweenTenAndFourteenForOneRegion(@RequestParam Long regionId, @RequestParam int year) {
+    return analysisServices.getTestByAgeBetweenTenAndFourteenForOneRegion(regionId,year);
+}
+
+
+@GetMapping("/testnationaltrancheoneregionfour")
+public List<Object[]> getTestByAgeBetweenFifteenAndNineteenForOneRegion(@RequestParam Long regionId, @RequestParam int year) {
+    return analysisServices.getTestByAgeBetweenFifteenAndNineteenForOneRegion(regionId,year);
+}
+
+
+
+
+@GetMapping("/testnationaltrancheoneregionfive")
+public List<Object[]> getTestByAgeBetweenTwentyAndTwentyFourForOneRegion(@RequestParam Long regionId, @RequestParam int year) {
+    return analysisServices.getTestByAgeBetweenTwentyAndTwentyFourForOneRegion(regionId,year);
+}
+
+
+
+
+@GetMapping("/testnationaltrancheoneregionsix")
+public List<Object[]> getTestByAgeGreaterThanTwentyFiveForOneRegion(@RequestParam Long regionId, @RequestParam int year) {
+    return analysisServices.getTestByAgeGreaterThanTwentyFiveForOneRegion(regionId,year);
+}
+
+
+    //Nombr de tests realisés par tranche d age partie nationale par district
+
+
+    @GetMapping("/testnationaltranchedistrictone")
+    public List<Object[]> districtSeven(@RequestParam Long districtId, @RequestParam int year) {
+        return analysisServices.districtSeven(districtId,year);
+    }
+
+
+    @GetMapping("/testnationaltranchedistricttwo")
+    public List<Object[]> districtEight(@RequestParam Long districtId, @RequestParam int year) {
+        return analysisServices.districtEight(districtId,year);
+    }
+
+    @GetMapping("/testnationaltranchedistrictthree")
+    public List<Object[]> districtNine(@RequestParam Long districtId, @RequestParam int year) {
+        return analysisServices.districtNine(districtId,year);
+    }
+
+    @GetMapping("/testnationaltranchedistrictfour")
+    public List<Object[]> districtTen(@RequestParam Long districtId, @RequestParam int year) {
+        return analysisServices.districtTen(districtId,year);
+    }
+
+    @GetMapping("/testnationaltranchedistrictfive")
+    public List<Object[]> districtEleven(@RequestParam Long districtId, @RequestParam int year) {
+        return analysisServices.districtEleven(districtId,year);
+    }
+
+    @GetMapping("/testnationaltranchedistrictsix")
+    public List<Object[]> districtTwelve(@RequestParam Long districtId, @RequestParam int year) {
+        return analysisServices.districtTwelve(districtId,year);
+    }
+
+    
+
+    //Nombre de tests realisés par site de tranche d age partie nationale
+
+
+
+
+    @GetMapping("/testnationaltranchesiteone")
+    public List<Object[]> siteSeven(@RequestParam Long siteId, @RequestParam int year) {
+        return analysisServices.siteSeven(siteId,year);
+    }
+
+
+
+
+    @GetMapping("/testnationaltranchesitetwo")
+    public List<Object[]> siteEight(@RequestParam Long siteId, @RequestParam int year) {
+        return analysisServices.siteEight(siteId,year);
+    }
+
+
+
+    @GetMapping("/testnationaltranchesitethree")
+    public List<Object[]> siteNine(@RequestParam Long siteId, @RequestParam int year) {
+        return analysisServices.siteNine(siteId,year);
+    }
+
+
+
+    @GetMapping("/testnationaltranchesitefour")
+    public List<Object[]> siteTen(@RequestParam Long siteId, @RequestParam int year) {
+        return analysisServices.siteTen(siteId,year);
+    }
+
+
+
+    @GetMapping("/testnationaltranchesitefive")
+    public List<Object[]> siteEleven(@RequestParam Long siteId, @RequestParam int year) {
+        return analysisServices.siteEleven(siteId,year);
+    }
+
+
+
+    @GetMapping("/testnationaltranchesitesix")
+    public List<Object[]> siteTwelve(@RequestParam Long siteId, @RequestParam int year) {
+        return analysisServices.siteTwelve(siteId,year);
+    }
+
+    
+
+//NOmbre de patient testés par tranche d age nationale <2 a >25 pour chaque district
+
+
+
+
+@GetMapping("/patientnationaldistrictone")
+public List<Object[]> districtOne(@RequestParam Long districtId, @RequestParam int year) {
+    return analysisServices.districtOne(districtId,year);
+}
+
+
+
+@GetMapping("/patientnationaldistricttwo")
+public List<Object[]> districtTwo(@RequestParam Long districtId, @RequestParam int year) {
+    return analysisServices.districtTwo(districtId,year);
+}
+
+
+
+@GetMapping("/patientnationaldistricthree")
+public List<Object[]> districtThree(@RequestParam Long districtId, @RequestParam int year) {
+    return analysisServices.districtThree(districtId,year);
+}
+
+
+
+@GetMapping("/patientnationaldistrictfour")
+public List<Object[]> districtFour(@RequestParam Long districtId, @RequestParam int year) {
+    return analysisServices.districtFour(districtId,year);
+}
+
+
+
+@GetMapping("/patientnationaldistrictfive")
+public List<Object[]> districtFive(@RequestParam Long districtId, @RequestParam int year) {
+    return analysisServices.districtFive(districtId,year);
+}
+
+
+
+@GetMapping("/patientnationaldistrictsix")
+public List<Object[]> districtSix(@RequestParam Long districtId, @RequestParam int year) {
+    return analysisServices.districtSix(districtId,year);
+}
+
+
+
+    //patient testé partie nationale par site
+
+
+    @GetMapping("/patientnationalsiteone")
+    public List<Object[]> siteOne(@RequestParam Long siteId, @RequestParam int year) {
+        return analysisServices.siteOne(siteId,year);
+    }
+
+
+    @GetMapping("/patientnationalsitetwo")
+    public List<Object[]> siteTwo(@RequestParam Long siteId, @RequestParam int year) {
+        return analysisServices.siteTwo(siteId,year);
+    }
+
+
+
+    @GetMapping("/patientnationalsitethree")
+    public List<Object[]> siteThree(@RequestParam Long siteId, @RequestParam int year) {
+        return analysisServices.siteThree(siteId,year);
+    }
+
+
+
+    @GetMapping("/patientnationalsitefour")
+    public List<Object[]> siteFour(@RequestParam Long siteId, @RequestParam int year) {
+        return analysisServices.siteFour(siteId,year);
+    }
+
+
+
+    @GetMapping("/patientnationalsitefive")
+    public List<Object[]> siteFive(@RequestParam Long siteId, @RequestParam int year) {
+        return analysisServices.siteFive(siteId,year);
+    }
+
+
+
+    @GetMapping("/patientnationalsitesix")
+    public List<Object[]> siteSix(@RequestParam Long siteId, @RequestParam int year) {
+        return analysisServices.siteSix(siteId,year);
+    }
+
+
+    @GetMapping("/testnationalglobalregionone")
+    public List<Object[]> testOne( @RequestParam int year) {
+        return analysisServices.testOne(year);
+    }
+
+
+
+    @GetMapping("/testnationalglobalregiontwo")
+    public List<Object[]> testTwo( @RequestParam int year) {
+        return analysisServices.testTwo(year);
+    }
+
+
+
+    @GetMapping("/testnationalglobalregionthree")
+    public List<Object[]> testThree( @RequestParam int year) {
+        return analysisServices.testThree(year);
+    }
+
+
+
+    @GetMapping("/testnationalglobalregionfour")
+    public List<Object[]> testFour( @RequestParam int year) {
+        return analysisServices.testFour(year);
+    }
+
+    @GetMapping("/testnationalglobalregionfive")
+    public List<Object[]> testFive( @RequestParam int year) {
+        return analysisServices.testFive(year);
+    }
+
+
+    @GetMapping("/testnationalglobalregionsix")
+    public List<Object[]> testSix( @RequestParam int year) {
+        return analysisServices.testSix(year);
+    } 
+
+    
+
+//controller patient testé pour toute les regions nationale
+
+
+@GetMapping("/patientnationalglobalregionone")
+public List<Object[]> patientOnen( @RequestParam int year) {
+    return analysisServices.patientOnen(year);
+}
+
+@GetMapping("/patientnationalglobalregiontwo")
+public List<Object[]> patientTwon( @RequestParam int year) {
+    return analysisServices.patientTwon(year);
+}
+
+@GetMapping("/patientnationalglobalregionthree")
+public List<Object[]> patientThreen( @RequestParam int year) {
+    return analysisServices.patientThreen(year);
+}
+
+@GetMapping("/patientnationalglobalregionfour")
+public List<Object[]> patientFourn( @RequestParam int year) {
+    return analysisServices.patientFourn(year);
+}
+
+@GetMapping("/patientnationalglobalregionfive")
+public List<Object[]> patientFiven( @RequestParam int year) {
+    return analysisServices.patientFiven(year);
+}
+
+@GetMapping("/patientnationalglobalregionsix")
+public List<Object[]> patientSixn( @RequestParam int year) {
+    return analysisServices.patientSixn(year);
+}
+
+
+
+    //indicateur liste site de la region
+
+    @GetMapping("/testlistesitebyregion")
+    public List<Object[]> getTestBySiteForOneRegion(@RequestParam Long regionId, @RequestParam int year) {
+        return analysisServices.getTestBySiteForOneRegion(regionId,year);
+    }
+
+    @GetMapping("/patientlistesitebyregion")
+    public List<Object[]> getPatientBySiteForOneRegion(@RequestParam Long regionId, @RequestParam int year) {
+        return analysisServices.getPatientBySiteForOneRegion(regionId,year);
+    }
+
+
+
+    //deuxieme page partenaire
+
+
+
+//test realise par partenaire
+@GetMapping("/testrealisebypartenaire")
+public List<Object[]> getTestByPartner( @RequestParam int year) {
+    return analysisServices.getTestByPartner(year);
+}
+
+
+//nombre de patient testé par partenaire
+
+
+@GetMapping("/patientbypartenaire")
+public List<Object[]> getPatientByPartner( @RequestParam int year) {
+    return analysisServices.getPatientByPartner(year);
+}
+
+
+
+
+
+
+
+@GetMapping("/partnerspecimenedta")
+public List<Object[]> getestByspecimenEDTAPlasmapartenaire(@RequestParam int partnerId) {
+    return analysisServices.getestByspecimenEDTAPlasmapartenaire(partnerId);
+}
+
+
+
+
+
+
+@GetMapping("/partnerspecimendbs")
+public List<Object[]> getestByspecimenDBSpartenaire(@RequestParam int partnerId) {
+    return analysisServices.getestByspecimenDBSpartenaire(partnerId);
+}
+
+
+
+
+@GetMapping("/partnerspecimenpsc")
+public List<Object[]> getestByspecimenPSCpartenaire(@RequestParam int partnerId) {
+    return analysisServices.getestByspecimenPSCpartenaire(partnerId);
+}
+
+//Tests realisés par partenaires
+
+
+
+
+@GetMapping("/testrealisebypartenaireone")
+public List<Object[]> getTestWithDetailsByPartner(@RequestParam int year,@RequestParam Long partnerId) {
+    return analysisServices.getTestWithDetailsByPartner(year, partnerId);
+}
+
+//patient testé par partenaire
+
+
+
+
+@GetMapping("/patienttestbypartenaireone")
+public List<Object[]> getPatientForSpecificPartner(@RequestParam int year,@RequestParam Long partnerId) {
+    return analysisServices.getPatientForSpecificPartner(year, partnerId);
+}
+
+
+// partenaire par genre feminin ou masculin
+
+
+
+
+
+@GetMapping("/testrealisebypartenairgendermasc")
+public List<Object[]> getTestForOnePartnerByMale(@RequestParam int year,@RequestParam Long partnerId) {
+    return analysisServices.getTestForOnePartnerByMale(year, partnerId);
+}
+
+
+@GetMapping("/testrealisebypartenairgenderfem")
+public List<Object[]> getTestForOnePartnerByFemale(@RequestParam int year,@RequestParam Long partnerId) {
+    return analysisServices.getTestForOnePartnerByFemale(year, partnerId);
+}
+
+
+//patient testés par genre masculin et feminin
+
+
+@GetMapping("/patientbypartenairgendermasc")
+public List<Object[]> getPatientForOnePartnerByMale(@RequestParam int year,@RequestParam Long partnerId) {
+    return analysisServices.getPatientForOnePartnerByMale(year, partnerId);
+}
+
+
+@GetMapping("/patientbypartenairgenderfem")
+public List<Object[]> getPatientForOnePartnerByFemale(@RequestParam int year,@RequestParam Long partnerId) {
+    return analysisServices.getPatientForOnePartnerByFemale(year, partnerId);
+}
+
+
+
+
+@GetMapping("/motifbypartenaire")
+public List<Object[]> motifVlreasonByOnePartner(@RequestParam int year,@RequestParam Long partnerId) {
+    return analysisServices.motifVlreasonByOnePartner(year, partnerId);
+}
+
+
+
+//site par partenaire
+
+
+@GetMapping("/testsitebypartenaire")
+public List<Object[]> getTestBySiteForOnePartner(@RequestParam Long partnerId, @RequestParam int year) {
+    return analysisServices.getTestBySiteForOnePartner(partnerId,year);
+}
+
+
+
+
+
+
+@GetMapping("/patientsitebypartenaire")
+public List<Object[]> getPatientBySiteForOnePartner(@RequestParam Long partnerId, @RequestParam int year) {
+    return analysisServices.getPatientBySiteForOnePartner(partnerId,year);
+}
+
+
+
+
+
+
+
+@GetMapping("/listetoutregion")
+public List<Object[]> getTestsAndPatientsByRegionliste(@RequestParam int year) {
+    return analysisServices.getTestsAndPatientsByRegionliste(year);
+}
+
+
+
+
+
+
+
+@GetMapping("/listetoutdistrict")
+public List<Object[]> getTestsAndPatientsByDistrictliste(@RequestParam int year) {
+    return analysisServices.getTestsAndPatientsByDistrictliste(year);
+}
+
+
+//liste tout les partenaires
+
+
+@GetMapping("/listetoutpartenaire")
+public List<Object[]> getTestsAndPatientsBySitePartnerliste(@RequestParam int year) {
+    return analysisServices.getTestsAndPatientsBySitePartnerliste(year);
+}
+
+
+
+
+
+@GetMapping("/listechaquepartenaire")
+public List<Object[]> getTestsAndPatientsBySitechaquepartenaireliste(@RequestParam int year,@RequestParam Long partnerId) {
+    return analysisServices.getTestsAndPatientsBySitechaquepartenaireliste(year, partnerId);
+}
+
+
+
+
+
+
+@GetMapping("/testpartenaireregimen")
+public List<Object[]> getTestByRegimenForAllPartnerone(@RequestParam int year) {
+    return analysisServices.getTestByRegimenForAllPartnerone(year);
+}
+
+
+
+
+
+
+@GetMapping("/patientpartenaireregimen")
+public List<Object[]> getPatientByRegimenForAllPartnertwo(@RequestParam int year) {
+    return analysisServices.getPatientByRegimenForAllPartnertwo(year);
+}
+
+
+//lorsqu on selectionne un partenaire son regime theurapeutique
+
+
+
+
+
+
+@GetMapping("/testregimebyonepartenaire")
+public List<Object[]> getTestByRegimenForOnePartnerOne(@RequestParam Long partnerId, @RequestParam int year) {
+    return analysisServices.getTestByRegimenForOnePartnerOne(partnerId,year);
+}
+
+
+
+
+@GetMapping("/patientregimebyonepartenaire")
+public List<Object[]> getPatientByRegimenForOnePartnerOne(@RequestParam Long partnerId, @RequestParam int year) {
+    return analysisServices.getPatientByRegimenForOnePartnerOne(partnerId,year);
+}
+
+
+
+
+
+
+
+
+
+@GetMapping("/regimendbs")
+public List<Object[]> getestBySpecimenDBSForOneRegimen(@RequestParam Long regimenId) {
+    return analysisServices.getestBySpecimenDBSForOneRegimen(regimenId);
+}
+
+
+
+
+@GetMapping("/regimenpsc")
+public List<Object[]> getestBySpecimenPSCForOneRegimen(@RequestParam Long regimenId) {
+    return analysisServices.getestBySpecimenPSCForOneRegimen(regimenId);
+}
+
+
+
+
+
+
+@GetMapping("/regimenedta")
+public List<Object[]> getestBySpecimenEdtaPlasmaForOneRegimen(@RequestParam Long regimenId) {
+    return analysisServices.getestBySpecimenEdtaPlasmaForOneRegimen(regimenId);
+}
+
+
+
+
+
+
+
+@GetMapping("/testbyregimen")
+public List<Object[]> getTestForOneRegimen(@RequestParam Long regimenId, @RequestParam int year) {
+    return analysisServices.getTestForOneRegimen(regimenId,year);
+}
+
+
+
+//LIste par region
+
+
+@GetMapping("/listeregionpartenaire")
+public List<Object[]> getTestAndPatientResultForPartnerAndRegion( @RequestParam int year) {
+    return analysisServices.getTestAndPatientResultForPartnerAndRegion(year);
+}
+
+
+
+
+
+
+
+@GetMapping("/listeregiononepartenaire")
+public List<Object[]> getTestAndPatientResultForOnePartnerAndRegion(@RequestParam int year,@RequestParam Long partnerId) {
+    return analysisServices.getTestAndPatientResultForOnePartnerAndRegion(year, partnerId);
+}
+
+/*
+@GetMapping("/count/inferieurmil")
+public long countTestsWithViralLoadLessThan1000() {
+    return analysisServices.countTestsWithViralLoadLessThan1000();
+}
+
+
+@GetMapping("/count/inferieurll")
+public long countTestWithViralLoadLL() {
+    return analysisServices.countTestWithViralLoadLL();
+}
+
+
+@GetMapping("/count/supegal")
+public long countTestWithViralLoadSupegal() {
+    return analysisServices.countTestWithViralLoadSupegal();
+}
+
+
+//varialLoad Invalide
+
+
+@GetMapping("/count/viraleLoadInvalide")
+public long countTestInvalideviralLoad() {
+    return analysisServices.countTestInvalideviralLoad();
+}
+
+
+@GetMapping("/count/{regionName}")
+public int countTestsByRegionAndViralLoad(@PathVariable String regionName) {
+    return analysisServices.countTestsByRegionAndViralLoad(regionName);
+}
+
+@GetMapping("/countAnalysis")
+public int countTestsByRegionDateAndSampleType(
+        @PathVariable String regionName,
+        Date testDate) {
+    return analysisServices.countTestsByRegionDateAndSampleType(regionName, testDate);
+}
+
+@GetMapping("/dashboard/data")
+public List<Object[]> getDashboardData(
+        //public List<Object[]> getDashboardData(
+        @RequestParam String regionName,
+        @RequestParam @DateTimeFormat(pattern = "yyyy-MM-dd") Date testDate
+) {
+    return analysisServices.getDashboardData(regionName, testDate);
+}
+
+
+//controller
+
+@GetMapping("/testCount")
+
+
+public ResponseEntity<List<Object[]>> getTestCountsByMonth(
+        @RequestParam("regionName") String regionName,
+        @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) @RequestParam("startDate") Date startDate,
+        @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) @RequestParam("endDate") Date endDate) {
+
+    List<Object[]> result = analysisServices.getTestCountsByMonth(regionName, startDate, endDate);
+    return new ResponseEntity<>(result, HttpStatus.OK);
+}
+
+
+//pieChart
+
+//inferieur LL par region
+
+@GetMapping("/testsWithLL/{regionName}")
+public List<Object[]> TestsWithViralLoadLessThanLL(@PathVariable String regionName) {
+    return analysisServices.TestsWithViralLoadLessThanLL(regionName);
+}
+
+
+
+//>=1000
+
+@GetMapping("/supMill/{regionName}")
+public List<Object[]> TestsWithViralLoadLessThansup1000(@PathVariable String regionName) {
+    return analysisServices.TestsWithViralLoadLessThansup1000(regionName);
+}
+
+
+
+//<1000 par region
+
+@GetMapping("/infMill/{regionName}")
+public List<Object[]> TestsWithViralLoadLessThanInf1000(@PathVariable String regionName) {
+    return analysisServices.TestsWithViralLoadLessThanInf1000(regionName);
+}
+
+
+
+
+@GetMapping("/difMill/{regionName}")
+public List<Object[]> TestsWithViralLoadLessThanDif1000(@PathVariable String regionName) {
+    return analysisServices.TestsWithViralLoadLessThanDif1000(regionName);
+}
+
+
+//controlleur pour le gender
+
+@GetMapping("/gender/count")
+public List<Object[]> countTestsByYearAndGender(
+        @RequestParam String regionName,
+        @RequestParam int year
+) {
+    return analysisServices.countTestsByYearAndGender(regionName, year);
+}
+
+
+
+//controller pour le supprimé
+
+@GetMapping("/supprime/totalTests")
+public List<Object[]> getTotalTestsByYearAndSupprime(@RequestParam("regionName") String regionName) {
+    return analysisServices.getTotalTestsByYearAndSupprime(regionName);
+}
+
+
+
+//non supprime
+
+@GetMapping("/nonsupprime/totalTests")
+
+public List<Object[]> getTotalTestsByYearAndGenderNonSupprime(@RequestParam("regionName") String regionName) {
+    return analysisServices.getTotalTestsByYearAndGenderNonSupprime(regionName);
+}
+
+
+
+//nouveau qui renvoie toute les donnees
+
+
+
+@GetMapping("/totalgenderSup/test")
+public List<Object[]> getTotalTestsByYearAndSupp(@RequestParam("regionName") String regionName) {
+    return analysisServices.getTotalTestsByYearAndSupp(regionName);
+}
+
+
+@GetMapping("/genre/total")
+public List<Object[]> getTotalTestsByTesterByGenreFM(@RequestParam("regionName") String regionName) {
+    return analysisServices.getTotalTestsByTesterByGenreFM(regionName);
+}
+
+
+
+@GetMapping("/dashboard/reponsebymonth")
+public ResponseEntity<?> getAnalysisData(@RequestParam("regionName") String regionName) {
+    try {
+        List<Object[]> analysisData = analysisServices.getAnalysisData(regionName);
+        return ResponseEntity.ok().body(analysisData);
+    } catch (Exception e) {
+        return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("Error occurred: " + e.getMessage());
+    }
+}
+
+@GetMapping("/test/dataG")
+public List<Object[]> getAnalysisTestData() {
+    return analysisServices.getAnalysisTestDatar();
+}
+
+//controller  pour le nombre de tests realisés par site de la region
+
+@GetMapping("/sitedelaregion")
+public List<Object[]> getAnalysisDataByRegion(@RequestParam("regionName") String regionName) {
+    return analysisServices.getAnalysisDataByRegion(regionName);
+}
+
+
+@GetMapping("/patientByregion")
+public List<Object[]> getAnalysisDataByPatientRegion(@RequestParam("regionName") String regionName) {
+    return analysisServices.getAnalysisDataByPatientRegion(regionName);
+}
+
+
+//controlleur pour raisoon ou motif
+@GetMapping("/reasons")
+public List<Object[]> countReasonsByRegionmotif(@RequestParam String regionName) {
+    return analysisServices.countReasonsByRegionmotif(regionName);
+}
+
+
+@GetMapping("/tendancetest")
+public ResponseEntity<List<Object[]>> getTendanceByDateAndRegion(@RequestParam String regionName) {
+    List<Object[]> data = analysisServices.getTendanceByDateAndRegion(regionName);
+    return ResponseEntity.ok(data);
+}
+
+//controller pour district
+
+//dbs et edta pour district
+
+@GetMapping("/districtbydbs")
+public List<Object[]> getDBSData(@RequestParam String districtName) {
+    return analysisServices.getDISTRICTDBSData(districtName);
+}
+
+@GetMapping("/districtbyedta")
+public List<Object[]> getDISTRICTEDTAData(@RequestParam String districtName) {
+    return analysisServices.getDISTRICTEDTAData(districtName);
+}
+
+
+
+
+@GetMapping("/districtpieresults")
+public List<Object[]> getAnalysisPieDistrictResults(@RequestParam String districtName) {
+    return analysisServices.getAnalysisPieDistrictResults(districtName);
+}
+
+
+*/
+
+
+
+
+
+
+
+
+
+
+
+
+
+    
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+/******************************************FIN************************************************ */
 
     @GetMapping("/testandpatientbyspecimendbsforalllab")
     public List<Object[]> getestAndPatientBySpecimenDBSForAllLab(@RequestParam int year) {
@@ -1458,6 +2701,96 @@ public class AnalysisController {
     }
 
 
+
+
+
+    //NOmbre de tests realisés par tranche d age nationale <2 a >25 pour chaque region
+
+
+/* 
+
+    @GetMapping("/testnationaltrancheoneregion")
+    public List<Object[]> getTestByAgeMinusTwoForOneRegion(@RequestParam Long regionId, @RequestParam int year) {
+        return analysisServices.getTestByAgeMinusTwoForOneRegion(regionId,year);
+    }
+
+ */
+
+/* 
+
+    @GetMapping("/testnationaltrancheoneregiontwo")
+    public List<Object[]> getTestByAgeBetweenTwoAndNineForOneRegion(@RequestParam Long regionId, @RequestParam int year) {
+        return analysisServices.getTestByAgeBetweenTwoAndNineForOneRegion(regionId,year);
+    } */
+
+
+/* 
+
+    @GetMapping("/testnationaltrancheoneregionthree")
+    public List<Object[]> getTestByAgeBetweenTenAndFourteenForOneRegion(@RequestParam Long regionId, @RequestParam int year) {
+        return analysisServices.getTestByAgeBetweenTenAndFourteenForOneRegion(regionId,year);
+    } */
+
+
+/* 
+
+    @GetMapping("/testnationaltrancheoneregionfour")
+    public List<Object[]> getTestByAgeBetweenFifteenAndNineteenForOneRegion(@RequestParam Long regionId, @RequestParam int year) {
+        return analysisServices.getTestByAgeBetweenFifteenAndNineteenForOneRegion(regionId,year);
+    }
+ */
+
+
+/* 
+    @GetMapping("/testnationaltrancheoneregionfive")
+    public List<Object[]> getTestByAgeBetweenTwentyAndTwentyFourForOneRegion(@RequestParam Long regionId, @RequestParam int year) {
+        return analysisServices.getTestByAgeBetweenTwentyAndTwentyFourForOneRegion(regionId,year);
+    } */
+
+
+/* 
+
+    @GetMapping("/testnationaltrancheoneregionsix")
+    public List<Object[]> getTestByAgeGreaterThanTwentyFiveForOneRegion(@RequestParam Long regionId, @RequestParam int year) {
+        return analysisServices.getTestByAgeGreaterThanTwentyFiveForOneRegion(regionId,year);
+    } */
+
+
+
+    //Nombr de tests realisés par tranche d age partie nationale par district
+
+/* 
+    @GetMapping("/testnationaltranchedistrictone")
+    public List<Object[]> districtSeven(@RequestParam Long districtId, @RequestParam int year) {
+        return analysisServices.districtSeven(districtId,year);
+    } */
+
+/* 
+    @GetMapping("/testnationaltranchedistricttwo")
+    public List<Object[]> districtEight(@RequestParam Long districtId, @RequestParam int year) {
+        return analysisServices.districtEight(districtId,year);
+    } *//* 
+
+    @GetMapping("/testnationaltranchedistrictthree")
+    public List<Object[]> districtNine(@RequestParam Long districtId, @RequestParam int year) {
+        return analysisServices.districtNine(districtId,year);
+    } */
+/* 
+    @GetMapping("/testnationaltranchedistrictfour")
+    public List<Object[]> districtTen(@RequestParam Long districtId, @RequestParam int year) {
+        return analysisServices.districtTen(districtId,year);
+    } */
+
+   /*  @GetMapping("/testnationaltranchedistrictfive")
+    public List<Object[]> districtEleven(@RequestParam Long districtId, @RequestParam int year) {
+        return analysisServices.districtEleven(districtId,year);
+    } */
+/* 
+    @GetMapping("/testnationaltranchedistrictsix")
+    public List<Object[]> districtTwelve(@RequestParam Long districtId, @RequestParam int year) {
+        return analysisServices.districtTwelve(districtId,year);
+    }
+ */
 
 
 
