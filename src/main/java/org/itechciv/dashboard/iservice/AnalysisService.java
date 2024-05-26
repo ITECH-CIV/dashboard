@@ -67,18 +67,18 @@ List<Object[]> getTestedPatientByAgeBetweenTenAndFourteenForAllRegion(@Param("ye
 List<Object[]> getTestedPatientByAgeBetweenFifteenAndNineteenForAllRegion(@Param("year") int year);
 List<Object[]> getTestedPatientByAgeBetweenTwentyAndTwentyFourForAllRegion(@Param("year") int year);
 List<Object[]> getTestedPatientByAgeGreaterThanTwentyFiveForAllRegion(@Param("year") int year);
-List<Object[]> getTestedPatientByAgeCategoryMinusTwoForOneRegion(@Param("regionId") Long regionId, @Param("year") int year);
-List<Object[]> getTestedPatientByAgeCategoryBetweenOneAndFourForOneRegion(@Param("regionId") Long regionId, @Param("year") int year); 
-List<Object[]> getTestedPatientByAgeCategoryBetweenFiveAndNineForOneRegion(@Param("regionId") Long regionId, @Param("year") int year);
-List<Object[]> getTestedPatientByAgeCategoryBetweenTenAndFourteenForOneRegion(@Param("regionId") Long regionId, @Param("year") int year);
-List<Object[]> getTestedPatientAgeCategoryBetweenFifteenAndNineteenForOneRegion(@Param("regionId") Long regionId, @Param("year") int year);
-List<Object[]> getTestedPatientByAgeCategoryBetweenTwentyAndTwentyFourForOneRegion(@Param("regionId") Long regionId, @Param("year") int year);
-List<Object[]> getTestedPatientByAgeCategoryBetweenTwentyFiveAndTwentyNineForOneRegion(@Param("regionId") Long regionId, @Param("year") int year);
-List<Object[]> getTestedPatientByAgeCategoryBetweenThirtyAndThirtyFourForOneRegion(@Param("regionId") Long regionId, @Param("year") int year);
-List<Object[]> getTestedPatientByAgeCategoryBetweenThirtyFourAndThirtyNineForOneRegion(@Param("regionId") Long regionId, @Param("year") int year);
-List<Object[]> getTestedPatientByAgeCategoryBetweenFourtyAndFourtyFourForOneRegion(@Param("regionId") Long regionId, @Param("year") int year);
-List<Object[]> getTestedPatientByAgeCategoryBetweenFourtyFiveAndFourtyNineForOneRegion(@Param("regionId") Long regionId, @Param("year") int year);
-List<Object[]> getTestedPatientByAgeCategoryGreaterThanFiftyForOneRegion(@Param("regionId") Long regionId, @Param("year") int year);
+//List<Object[]> getTestedPatientByAgeCategoryMinusTwoForOneRegion(@Param("regionId") Long regionId, @Param("year") int year);
+//List<Object[]> getTestedPatientByAgeCategoryBetweenOneAndFourForOneRegion(@Param("regionId") Long regionId, @Param("year") int year); 
+//List<Object[]> getTestedPatientByAgeCategoryBetweenFiveAndNineForOneRegion(@Param("regionId") Long regionId, @Param("year") int year);
+//List<Object[]> getTestedPatientByAgeCategoryBetweenTenAndFourteenForOneRegion(@Param("regionId") Long regionId, @Param("year") int year);
+//List<Object[]> getTestedPatientAgeCategoryBetweenFifteenAndNineteenForOneRegion(@Param("regionId") Long regionId, @Param("year") int year);
+//List<Object[]> getTestedPatientByAgeCategoryBetweenTwentyAndTwentyFourForOneRegion(@Param("regionId") Long regionId, @Param("year") int year);
+//List<Object[]> getTestedPatientByAgeCategoryBetweenTwentyFiveAndTwentyNineForOneRegion(@Param("regionId") Long regionId, @Param("year") int year);
+//List<Object[]> getTestedPatientByAgeCategoryBetweenThirtyAndThirtyFourForOneRegion(@Param("regionId") Long regionId, @Param("year") int year);
+//List<Object[]> getTestedPatientByAgeCategoryBetweenThirtyFourAndThirtyNineForOneRegion(@Param("regionId") Long regionId, @Param("year") int year);
+//List<Object[]> getTestedPatientByAgeCategoryBetweenFourtyAndFourtyFourForOneRegion(@Param("regionId") Long regionId, @Param("year") int year);
+//List<Object[]> getTestedPatientByAgeCategoryBetweenFourtyFiveAndFourtyNineForOneRegion(@Param("regionId") Long regionId, @Param("year") int year);
+//List<Object[]> getTestedPatientByAgeCategoryGreaterThanFiftyForOneRegion(@Param("regionId") Long regionId, @Param("year") int year);
 List<Object[]> getPatientTestedByAgeCategoryMinusTwoForAllRegion(@Param("year") int year);
 List<Object[]> getPatientTestedByAgeCategoryBetweenOneAndFourForAllegion(@Param("year") int year);
 List<Object[]> getPatientTestedByAgeCategoryBetweenFiveAndNineForAllRegion(@Param("year") int year);
@@ -202,7 +202,7 @@ List<Object[]> getAnalysisPatientMaleForSiteWithYearSiteM(@RequestParam Long sit
 List<Object[]> getAnalysisPatientFemaleForSiteWithYearsiteF(@RequestParam Long siteId, @RequestParam int year);
 
 
-List<Object[]> getPatientForAllRegion(@Param("year") int year);
+//List<Object[]> getPatientForAllRegion(@Param("year") int year);
 List<Object[]> getPatientForDistrict(@Param("districtId") Long districtId , @Param("year") int year);
 List<Object[]> getPatientForDistrictWithSite(@Param("districtId") Long districtId , @Param("year") int year);
 
@@ -219,17 +219,17 @@ List<Object[]> getestByspecimenEDTAPlasma(@Param("partnerId") int partnerId);
 List<Object[]> getestByspecimenDBS(@Param("partnerId") int partnerId);
 List<Object[]> getestByspecimenPSC(@Param("partnerId") int partnerId);
 
-List<Object[]> getTestedPatientAgeCategoryBetweenFifteenAndNineteenForAllRegion(@Param("year") int year);
+//List<Object[]> getTestedPatientAgeCategoryBetweenFifteenAndNineteenForAllRegion(@Param("year") int year);
 List<Object[]> district7(@Param("districtId") Long districtId, @Param("year") int year);
 
-List<Object[]> site8(@Param("siteId") Long siteId, @Param("year") int year);
+//List<Object[]> site8(@Param("siteId") Long siteId, @Param("year") int year);
 
 List<Object[]> getTestWithDetailsByPartner(@Param("year") int year, @Param("partnerId") Long partnerId);
 List<Object[]> getPatientWithDetailsByPartner(@Param("year") int year, @Param("partnerId") Long partnerId);
 
 
-List<Object[]> districtSeven(@Param("districtId") Long districtId, @Param("year") int year);
-List<Object[]>districtEleven(@Param("districtId") Long districtId , @Param("year") int year);
+//List<Object[]> districtSeven(@Param("districtId") Long districtId, @Param("year") int year);
+//List<Object[]>districtEleven(@Param("districtId") Long districtId , @Param("year") int year);
 
 List<Object[]>testOne(@Param("year") int year);
 List<Object[]>testTwo(@Param("year") int year);
@@ -404,94 +404,46 @@ List<Object[]> site9(@RequestParam Long siteId, @RequestParam int year);
 List<Object[]> site10(@RequestParam Long siteId, @RequestParam int year);
 List<Object[]> site11(@RequestParam Long siteId, @RequestParam int year);
 List<Object[]> site12(@RequestParam Long siteId, @RequestParam int year);
-
-
-
-
 List<Object[]> districtEight(@RequestParam Long districtId, @RequestParam int year);
-
-List<Object[]> districtNine(@RequestParam Long districtId, @RequestParam int year);
+ List<Object[]> districtNine(@RequestParam Long districtId, @RequestParam int year);
  List<Object[]> districtTen(@RequestParam Long districtId, @RequestParam int year);
  List<Object[]> districtEleven(@RequestParam Long districtId, @RequestParam int year);
-
  List<Object[]> districtTwelve(@RequestParam Long districtId, @RequestParam int year);
-
-
- public List<Object[]> siteSeven(@RequestParam Long siteId, @RequestParam int year);
-
-
- public List<Object[]> siteEight(@RequestParam Long siteId, @RequestParam int year) ;
-
-
-
- public List<Object[]> siteNine(@RequestParam Long siteId, @RequestParam int year);
-
-
-
- public List<Object[]> siteTen(@RequestParam Long siteId, @RequestParam int year);
-
-
-
- public List<Object[]> siteEleven(@RequestParam Long siteId, @RequestParam int year) ;
-
-
-
- public List<Object[]> siteTwelve(@RequestParam Long siteId, @RequestParam int year) ;
-
-
-
-
-
-public List<Object[]> districtOne(@RequestParam Long districtId, @RequestParam int year);
-
-
-
-public List<Object[]> districtTwo(@RequestParam Long districtId, @RequestParam int year) ;
-
-
-
-public List<Object[]> districtThree(@RequestParam Long districtId, @RequestParam int year);
-
-
-public List<Object[]> districtFour(@RequestParam Long districtId, @RequestParam int year) ;
-
-
-
-public List<Object[]> districtFive(@RequestParam Long districtId, @RequestParam int year);
-
-
-
-public List<Object[]> districtSix(@RequestParam Long districtId, @RequestParam int year);
-
-
-
-public List<Object[]> siteOne(@RequestParam Long siteId, @RequestParam int year);
-
-
-public List<Object[]> siteTwo(@RequestParam Long siteId, @RequestParam int year) ;
-
-
-public List<Object[]> siteThree(@RequestParam Long siteId, @RequestParam int year) ;
-
-
-public List<Object[]> siteFour(@RequestParam Long siteId, @RequestParam int year) ;
-
-
-
-public List<Object[]> siteFive(@RequestParam Long siteId, @RequestParam int year) ;
-
-
-public List<Object[]> siteSix(@RequestParam Long siteId, @RequestParam int year) ;
-
-
-
-
-public List<Object[]> patientOnen( @RequestParam int year);
-public List<Object[]> patientTwon( @RequestParam int year) ;
-public List<Object[]> patientThreen( @RequestParam int year) ;
-public List<Object[]> patientFourn( @RequestParam int year) ;
-public List<Object[]> patientFiven( @RequestParam int year) ;
-public List<Object[]> patientSixn( @RequestParam int year) ;
+ List<Object[]> siteSeven(@RequestParam Long siteId, @RequestParam int year);
+ List<Object[]> siteEight(@RequestParam Long siteId, @RequestParam int year) ;
+ List<Object[]> siteNine(@RequestParam Long siteId, @RequestParam int year);
+ List<Object[]> siteTen(@RequestParam Long siteId, @RequestParam int year);
+ List<Object[]> siteEleven(@RequestParam Long siteId, @RequestParam int year) ;
+ List<Object[]> siteTwelve(@RequestParam Long siteId, @RequestParam int year) ;
+List<Object[]> districtOne(@RequestParam Long districtId, @RequestParam int year);
+List<Object[]> districtTwo(@RequestParam Long districtId, @RequestParam int year) ;
+List<Object[]> districtThree(@RequestParam Long districtId, @RequestParam int year);
+List<Object[]> districtFour(@RequestParam Long districtId, @RequestParam int year) ;
+List<Object[]> districtFive(@RequestParam Long districtId, @RequestParam int year);
+List<Object[]> districtSix(@RequestParam Long districtId, @RequestParam int year);
+List<Object[]> siteOne(@RequestParam Long siteId, @RequestParam int year);
+List<Object[]> siteTwo(@RequestParam Long siteId, @RequestParam int year) ;
+List<Object[]> siteThree(@RequestParam Long siteId, @RequestParam int year) ;
+List<Object[]> siteFour(@RequestParam Long siteId, @RequestParam int year) ;
+List<Object[]> siteFive(@RequestParam Long siteId, @RequestParam int year) ;
+List<Object[]> siteSix(@RequestParam Long siteId, @RequestParam int year) ;
+List<Object[]> patientOnen( @RequestParam int year);
+List<Object[]> patientTwon( @RequestParam int year) ;
+List<Object[]> patientThreen( @RequestParam int year) ;
+List<Object[]> patientFourn( @RequestParam int year) ;
+List<Object[]> patientFiven( @RequestParam int year) ;
+List<Object[]> patientSixn( @RequestParam int year) ;
+List<Object[]> getestByspecimenEDTAPlasmapartenaire(@RequestParam int partnerId) ;
+List<Object[]> getestByspecimenDBSpartenaire(@RequestParam int partnerId) ;
+List<Object[]> getestByspecimenPSCpartenaire(@RequestParam int partnerId) ;
+List<Object[]> getTestsAndPatientsByRegionliste(@RequestParam int year);
+List<Object[]> getTestsAndPatientsByDistrictliste(@RequestParam int year) ;
+List<Object[]> getTestsAndPatientsBySitePartnerliste(@RequestParam int year) ;
+List<Object[]> getTestsAndPatientsBySitechaquepartenaireliste(@RequestParam int year,@RequestParam Long partnerId);
+List<Object[]> getTestByRegimenForAllPartnerone(@RequestParam int year);
+List<Object[]> getPatientByRegimenForAllPartnertwo(@RequestParam int year) ;
+List<Object[]> getTestByRegimenForOnePartnerOne(@RequestParam Long partnerId, @RequestParam int year) ;
+List<Object[]> getPatientByRegimenForOnePartnerOne(@RequestParam Long partnerId, @RequestParam int year) ;
 
 
 

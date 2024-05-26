@@ -6879,7 +6879,7 @@ List<Object[]> getPatientByCDCMaleForRegimenAndPartnerOne(@Param("regimenId") Lo
 
 
 //STATISTIQUES DE PERFORMNCE POUR CHAQUE LABORATOIRE
-@Query(value =  " SELECT l.id, l.name,   " +
+@Query(value =  " SELECT a.lab_id, a.lab_name,   " +
 " SUM(CASE WHEN a.converted_result >= 1000 THEN 1 ELSE 0 END) AS TOTAL_SUPERIEUR_OU_EGAL_1000, " +
 " SUM(CASE WHEN a.converted_result < 1000 THEN 1 ELSE 0 END ) AS TOTAL_INFERIEUR_A_1000, " +
 " SUM(CASE WHEN a.converted_result = 0 THEN 1 ELSE 0 END) AS TOTAL_INDETECTABLE_LL, " +
@@ -6900,10 +6900,10 @@ List<Object[]> getPatientByCDCMaleForRegimenAndPartnerOne(@Param("regimenId") Lo
 " JOIN dashboard.regimen rg on rg.id = a.regimen_id " +
 " JOIN dashboard.lab l on l.id = a.lab_id " +
 " WHERE  EXTRACT(YEAR FROM a.drcpt) = :year " +
-" GROUP BY l.id, l.name, EXTRACT(YEAR FROM a.drcpt)", nativeQuery = true) 
+" GROUP BY a.lab_id, a.lab_name, EXTRACT(YEAR FROM a.drcpt)", nativeQuery = true) 
 List<Object[]> getTestAndPatientResultForAllLab(@Param("year") int year);
 
-//STATISTIQUES DE PERFORMNCE POUR UN LABORATOIRE LABORATOIRE
+//STATISTIQUES DE PERFORMNCE POUR UN LABORATOIRE
 @Query(value =  " SELECT l.id, l.name,   " +
 " SUM(CASE WHEN a.converted_result >= 1000 THEN 1 ELSE 0 END) AS TOTAL_SUPERIEUR_OU_EGAL_1000, " +
 " SUM(CASE WHEN a.converted_result < 1000 THEN 1 ELSE 0 END ) AS TOTAL_INFERIEUR_A_1000, " +

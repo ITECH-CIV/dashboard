@@ -1059,11 +1059,11 @@ return analysisServices.getTestByPartner(year);
     public List<Object[]> site8(@RequestParam Long siteId, @RequestParam int year) {
     return analysisServices.site8(siteId, year);
     } */
-
+/* 
     @GetMapping("/testdetailbypartner")
     public List<Object[]> getTestWithDetailsByPartner(@RequestParam int year, @RequestParam Long partnerId) {
     return analysisServices.getTestWithDetailsByPartner(year, partnerId);
-    }
+    } */
 
     @GetMapping("/patientdetailbypartner")
     public List<Object[]> getPatientWithDetailsByPartner(@RequestParam int year, @RequestParam Long partnerId) {
@@ -1154,36 +1154,36 @@ return analysisServices.getTestByPartner(year);
     public List<Object[]> getTestForSpecificPartner(@RequestParam int year,  @RequestParam Long partnerId) {
     return analysisServices.getTestForSpecificPartner(year, partnerId);
     }
-
+/* 
     @GetMapping("/patientforspecificpartner")
     public List<Object[]> getPatientForSpecificPartner(@RequestParam int year,  @RequestParam Long partnerId) {
     return analysisServices.getPatientForSpecificPartner(year, partnerId);
-    }
-
+    } */
+/* 
     @GetMapping("/patientmaleforspecificpartner")
     public List<Object[]> getPatientForOnePartnerByMale(@RequestParam int year, @RequestParam Long partnerId) {
     return analysisServices.getPatientForOnePartnerByMale(year, partnerId);
-    }
-
+    } */
+/* 
     @GetMapping("/patientfemaleforspecificpartner")
     public List<Object[]> getPatientForOnePartnerByFemale(@RequestParam int year, @RequestParam Long partnerId) {
     return analysisServices.getPatientForOnePartnerByFemale(year, partnerId);
-    }
-
+    } */
+/* 
     @GetMapping("/testmaleforspecificpartner")
     public List<Object[]> getTestForOnePartnerByMale(@RequestParam int year, @RequestParam Long partnerId) {
     return analysisServices.getTestForOnePartnerByMale(year, partnerId);
-    }
+    } */
 
-    @GetMapping("/testfemaleforspecificpartner")
+   /*  @GetMapping("/testfemaleforspecificpartner")
     public List<Object[]> getTestForOnePartnerByFemale(@RequestParam int year, @RequestParam Long partnerId) {
     return analysisServices.getTestForOnePartnerByFemale(year, partnerId);
     }
-
+ *//* 
     @GetMapping("/motifvlreasonbyonepartner")
     public List<Object[]> motifVlreasonByOnePartner(@RequestParam int year, @RequestParam Long partnerId) {
     return analysisServices.motifVlreasonByOnePartner(year, partnerId);
-    }
+    } */
  
     @GetMapping("/testbysiteforonepartner")
     public List<Object[]> getTestBySiteForOnePartner(@RequestParam int year, @RequestParam Long partnerId) {
@@ -1238,27 +1238,27 @@ return analysisServices.getTestByPartner(year);
     return analysisServices.getPatientByRegimenForOnePartner(partnerId, year);
     }
 
-
+/* 
     @GetMapping("/testdbsforoneregimen")
     public List<Object[]> getestBySpecimenDBSForOneRegimen(@RequestParam Long regimenId) {
     return analysisServices.getestBySpecimenDBSForOneRegimen(regimenId);
-    }
-
+    } */
+/* 
     @GetMapping("/testpscforoneregimen")
     public List<Object[]> getestBySpecimenPSCForOneRegimen(@RequestParam Long regimenId) {
     return analysisServices.getestBySpecimenPSCForOneRegimen(regimenId);
-    }
-
+    } */
+/* 
     @GetMapping("/testedtaforoneregimen")
     public List<Object[]> getestBySpecimenEdtaPlasmaForOneRegimen(@RequestParam Long regimenId) {
     return analysisServices.getestBySpecimenEdtaPlasmaForOneRegimen(regimenId);
-    }
+    } */
 
-
+/* 
     @GetMapping("/testforoneregimen")
     public List<Object[]> getTestForOneRegimen(@RequestParam Long regimenId, @RequestParam int year) {
     return analysisServices.getTestForOneRegimen(regimenId, year);
-    }
+    } */
 
     @GetMapping("/testbycdcmaleforoneregimen")
     public List<Object[]> getTestByCDCMaleForOneRegimen(@RequestParam Long regimenId, @RequestParam int year) {
@@ -1318,16 +1318,16 @@ return analysisServices.getTestByPartner(year);
     }
 
 
-    @GetMapping("/testandpatientresultforpartnerandregion")
+    /* @GetMapping("/testandpatientresultforpartnerandregion")
     public List<Object[]> getTestAndPatientResultForPartnerAndRegion(@RequestParam int year) {
     return analysisServices.getTestAndPatientResultForPartnerAndRegion(year);
-    }
-
+    } */
+/* 
 
     @GetMapping("/testandpatientresultforonepartnerandregion")
     public List<Object[]> getTestAndPatientResultForOnePartnerAndRegion(@RequestParam int year, @RequestParam Long partnerId) {
     return analysisServices.getTestAndPatientResultForOnePartnerAndRegion(year, partnerId);
-    }
+    } */
 
     @GetMapping("/testandpatientresultforalllab")
     public List<Object[]> getTestAndPatientResultForAllLab(@RequestParam int year) {
