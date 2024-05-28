@@ -7925,7 +7925,7 @@ List<Object[]> getPatientByAgeNationalForAllRegion(@Param("year") int year);
 " GROUP BY r.id, r.name,  EXTRACT(YEAR FROM a.drcpt) ")
 List<Object[]> getNotDeletionByRegion(@Param("year") int year);
 
-@Query(value = "SELECT " +
+@Query(value = "SELECT d.id, d.name, " +
 " SUM(CASE WHEN a.convertedResult >= 1000 THEN 1 ELSE 0 END) AS TOTAL_NON_SUPPRIME, " +
 " SUM(CASE WHEN a.convertedResult < 1000 AND a.convertedResult > 0 THEN 1 ELSE 0 END ) AS TOTAL_SUPPRIME, " +
 " ROUND(SUM(CASE WHEN a.convertedResult >= 1000 THEN 1 ELSE 0 END) * 100.0 / SUM(1), 2) AS POURCENTAGE_NON_SUPPRIME " +
@@ -7938,7 +7938,7 @@ List<Object[]> getNotDeletionByRegion(@Param("year") int year);
 " JOIN Regimen reg ON a.regimen.id = reg.id " +
 " JOIN VlReason vl ON a.vlReason.id = vl.id " +
 " WHERE EXTRACT(YEAR FROM a.drcpt) = :year " +
-" GROUP BY d.id, EXTRACT(YEAR FROM a.drcpt) ")
+" GROUP BY d.id, d.name, EXTRACT(YEAR FROM a.drcpt) ")
 List<Object[]> getNotDeletionByDistrict(@Param("year") int year);
 
 
