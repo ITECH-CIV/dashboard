@@ -7,6 +7,7 @@ import java.util.Map;
 import org.itechciv.dashboard.helper.CategoryAge;
 import org.itechciv.dashboard.model.Analysis;
 import org.itechciv.dashboard.response.Response;
+import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -37,7 +38,7 @@ public interface AnalysisService extends GenericService<Analysis, Long> {
     List<Object[]> motifVlreasonByOneRegion(int year, Long regionId);
     List<Object[]> motifVlreasonByDistrict(int year, Long districtId);
     List<Object[]> motifVlreasonBySite(int year, Long siteId);
-    long getTotalTestsByYear(int year);
+    //long getTotalTestsByYear(int year);
     List<Object[]> listeTestByRegion(int year);
     List<Object[]> listeTestByDistrict(int year);
     List<Object[]> listeTestBySite(int year);
@@ -102,11 +103,11 @@ List<Object[]> getTestByAgeMinusTwoForAllRegion(@Param("year") int year);
 List<Object[]> getTestByAgeBetweenTwoAndNineForAllRegion(@Param("year") int year);
 List<Object[]> getTestByAgeBetweenTenAndFourteenForAllRegion(@Param("year") int year);
 List<Object[]> getTestByAgeBetweenFifteenAndNineteenForAllRegion(@Param("year") int year);
-List<Object[]> getTestByAgeBetweenTwentyAndTwentyFourForAllRegion(@Param("year") int year);
+//List<Object[]> getTestByAgeBetweenTwentyAndTwentyFourForAllRegion(@Param("year") int year);
 List<Object[]> getTestByAgeGreaterThanTwentyFiveForAllRegion(@Param("year") int year);
 List<Object[]> getTestByAgeCategoryMinusTwoForOneRegion(@Param("regionId") Long regionId, @Param("year") int year);
 List<Object[]> getTestByAgeCategoryBetweenOneAndFourForOneRegion(@Param("regionId") Long regionId, @Param("year") int year);
-List<Object[]> getTestByAgeCategoryBetweenFiveAndNineForOneRegion(@Param("regionId") Long regionId, @Param("year") int year);
+//List<Object[]> getTestByAgeCategoryBetweenFiveAndNineForOneRegion(@Param("regionId") Long regionId, @Param("year") int year);
 List<Object[]> getTestByAgeCategoryBetweenTenAndFourteenForOneRegion(@Param("regionId") Long regionId, @Param("year") int year);
 List<Object[]> getTestByAgeCategoryBetweenFifteenAndNineteenForOneRegion(@Param("regionId") Long regionId, @Param("year") int year);
 List<Object[]> getTestByAgeCategoryBetweenTwentyAndTwentyFourForOneRegion(@Param("regionId") Long regionId, @Param("year") int year);
@@ -130,9 +131,9 @@ List<Object[]> getTestByAgeCategoryBetweenFourtyFiveAndFourtyNineForAllRegion(@P
 List<Object[]> getTestByAgeCategoryGreaterThanFiftyForAllRegion(@Param("year") int year);
 
 
-List<Object[]> tendancetest2021();
-List<Object[]> tendancetest2022();
-List<Object[]> tendancetest2023();
+//List<Object[]> tendancetest2021();
+//List<Object[]> tendancetest2022();
+//List<Object[]> tendancetest2023();
 
 // test par tranche d age region
 List<Object[]> yourMethodName(Long regionId, int year);
@@ -228,7 +229,7 @@ List<Object[]> getTestWithDetailsByPartner(@Param("year") int year, @Param("part
 List<Object[]> getPatientWithDetailsByPartner(@Param("year") int year, @Param("partnerId") Long partnerId);
 
 
-//List<Object[]> districtSeven(@Param("districtId") Long districtId, @Param("year") int year);
+List<Object[]> districtSeven(@Param("districtId") Long districtId, @Param("year") int year);
 //List<Object[]>districtEleven(@Param("districtId") Long districtId , @Param("year") int year);
 
 List<Object[]>testOne(@Param("year") int year);
@@ -341,12 +342,12 @@ List<Object[]> getPatientFemaleByCdc(@Param("year") int year, @Param("ageCategor
 
 
 /**************************************************DEBUT************************************************* */
-List<Object[]> getTestedPatientByAgeMinusTwoForOneRegion(@Param("year") int year, @Param("regionId") Long regionId);
-List<Object[]> getTestedPatientByAgeBetweenTwoAndNineForOneRegion(@Param("year") int year, @Param("regionId") Long regionId);
-List<Object[]> getTestedPatientByAgeBetweenTenAndFourteenForOneRegion(@Param("year") int year, @Param("regionId") Long regionId);
-List<Object[]> getTestedPatientByAgeBetweenFifteenAndNineteenForOneRegion(@Param("year") int year, @Param("regionId") Long regionId);
-List<Object[]> getTestedPatientByAgeBetweenTwentyAndTwentyFourForOneRegion(@Param("year") int year, @Param("regionId") Long regionId);
-List<Object[]> getTestedPatientByAgeGreaterThanTwentyFiveForOneRegion(@Param("year") int year, @Param("regionId") Long regionId);
+//List<Object[]> getTestedPatientByAgeMinusTwoForOneRegion(@Param("year") int year, @Param("regionId") Long regionId);
+//List<Object[]> getTestedPatientByAgeBetweenTwoAndNineForOneRegion(@Param("year") int year, @Param("regionId") Long regionId);
+//List<Object[]> getTestedPatientByAgeBetweenTenAndFourteenForOneRegion(@Param("year") int year, @Param("regionId") Long regionId);
+//List<Object[]> getTestedPatientByAgeBetweenFifteenAndNineteenForOneRegion(@Param("year") int year, @Param("regionId") Long regionId);
+//List<Object[]> getTestedPatientByAgeBetweenTwentyAndTwentyFourForOneRegion(@Param("year") int year, @Param("regionId") Long regionId);
+//List<Object[]> getTestedPatientByAgeGreaterThanTwentyFiveForOneRegion(@Param("year") int year, @Param("regionId") Long regionId);
 List<Object[]> getPatientForAllRegion(@RequestParam int year);
 List<Object[]> getTestedPatientByAgeCategoryMinusTwoForOneRegion(@RequestParam Long regionId, @RequestParam int year); 
 List<Object[]> getTestedPatientByAgeCategoryBetweenOneAndFourForOneRegion(@RequestParam Long regionId, @RequestParam int year);
@@ -359,7 +360,7 @@ List<Object[]> getTestedPatientByAgeCategoryBetweenThirtyAndThirtyFourForOneRegi
 List<Object[]> getTestedPatientByAgeCategoryBetweenThirtyFourAndThirtyNineForOneRegion(@RequestParam Long regionId, @RequestParam int year);
 List<Object[]> getTestedPatientByAgeCategoryBetweenFourtyAndFourtyFourForOneRegion(@RequestParam Long regionId, @RequestParam int year);
 List<Object[]> getTestedPatientByAgeCategoryBetweenFourtyFiveAndFourtyNineForOneRegion(@RequestParam Long regionId, @RequestParam int year);
-List<Object[]> getTestedPatientByAgeCategoryGreaterThanFiftyForOneRegion(@RequestParam Long regionId, @RequestParam int year)
+List<Object[]> getTestedPatientByAgeCategoryGreaterThanFiftyForOneRegion(@RequestParam Long regionId, @RequestParam int year);
 
 //tranche d age cidici pour toute les regions patient testé
 List<Object[]> getTestedPatientByAgeCategoryMinusTwoForAllRegion( @RequestParam int year);
@@ -444,6 +445,45 @@ List<Object[]> getTestByRegimenForAllPartnerone(@RequestParam int year);
 List<Object[]> getPatientByRegimenForAllPartnertwo(@RequestParam int year) ;
 List<Object[]> getTestByRegimenForOnePartnerOne(@RequestParam Long partnerId, @RequestParam int year) ;
 List<Object[]> getPatientByRegimenForOnePartnerOne(@RequestParam Long partnerId, @RequestParam int year) ;
+
+
+ 
+List<Object[]> getViralLoadMaleByRegion(@Param("year") int year);
+List<Object[]> getViralLoadFemaleByRegion(@Param("year") int year);
+List<Object[]> getViralLoadNothingByRegion(@Param("year") int year);
+List<Object[]> getPatientMinusTenForAllRegion(@Param("year") int year);
+List<Object[]>getPatientBetweenTenAndFourteenForAllRegion(@Param("year") int year);
+List<Object[]> getPatientGreaterThanTwentyForAllRegion(@Param("year") int year);
+List<Object[]> motifVlreasonForAllRegion(@Param("year") int year);
+List<Object[]> getViralLoadMaleOtherByRegion(@Param("year") int year);
+List<Object[]> getViralLoadFemaleOtherByRegion(@Param("year") int year);
+List<Object[]> getViralLoadNothingOtherByRegion(@Param("year") int year);
+List<Object[]> getPatientByAgeNationalForAllRegion(@Param("year") int year);
+List<Object[]> getNotDeletionByRegion(@Param("year") int year);
+List<Object[]> getNotDeletionByDistrict(@Param("year") int year);
+List<Object[]> getNotDeletionBySite(@Param("year") int year);
+List<Object[]> getNotDeletionByPartner(@Param("year") int year);
+List<Object[]> getViralLoadDeletionForAllRegion(@Param("year") int year);
+List<Object[]> getPatientNothingAgeForAllRegion(@Param("year") int year);
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 

@@ -183,10 +183,10 @@ public class AnalysisController {
   } 
 
     //controller qui calcule le nombre total test
-    @GetMapping("/totaltest")
+    /* @GetMapping("/totaltest")
     public Long getTotalTestsByYear(@RequestParam int year) {
         return analysisServices.getTotalTestsByYear(year);
-    }
+    } */
 
     //controller qui calcule le nombre total test
     @GetMapping("/testByRegionName")
@@ -524,13 +524,13 @@ public class AnalysisController {
         }
 
 
-
+/* 
         @GetMapping("/ah")
         public List<Object[]> getTestByAgeBetweenTwentyAndTwentyFourForAllRegion(@RequestParam int year) {
         return analysisServices.getTestByAgeBetweenTwentyAndTwentyFourForAllRegion(year );
         }
 
-
+ */
 
         @GetMapping("/ai")
         public List<Object[]> getTestByAgeGreaterThanTwentyFiveForAllRegion(@RequestParam int year) {
@@ -544,11 +544,11 @@ public class AnalysisController {
         }
 
 
-        @GetMapping("/ak")
+       /*  @GetMapping("/ak")
         public List<Object[]> getTestByAgeCategoryBetweenFiveAndNineForOneRegion(@RequestParam Long regionId, @RequestParam int year) {
         return analysisServices.getTestByAgeCategoryBetweenFiveAndNineForOneRegion(regionId, year );
         }
-
+ */
 
 
         @GetMapping("/al")
@@ -715,21 +715,21 @@ public class AnalysisController {
     //NOMBRE DE TESTS REALISES PAR TRANCHE D'AGE
         
     // Tendances de Tests REalises par charge virale
-    @GetMapping("/tendancetest2021")
+  /*   @GetMapping("/tendancetest2021")
     public List<Object[]> tendancetest2021() {
         return analysisServices.tendancetest2021();
     }
-
-    @GetMapping("/tendancetest2022")
+ */
+    /* @GetMapping("/tendancetest2022")
     public List<Object[]> tendancetest2022() {
         return analysisServices.tendancetest2022();
-    }
+    } */
 
-    @GetMapping("/tendancetest2023")
+   /*  @GetMapping("/tendancetest2023")
     public List<Object[]> tendancetest2023() {
         return analysisServices.tendancetest2023();
     }
-
+ */
 
 //test par tranche d age pour chaque region
     @GetMapping("/trancheageoneregion")
@@ -2263,6 +2263,7 @@ public List<Object[]> getestBySpecimenDBSForOneRegimen(@RequestParam Long regime
 }
 
 
+//List<Object[]> getNotDeletionByDistrict(@Param("year") int year);
 
 
 @GetMapping("/regimenpsc")
@@ -2302,15 +2303,11 @@ public List<Object[]> getTestAndPatientResultForPartnerAndRegion( @RequestParam 
 }
 
 
-
-
-
-
-
 @GetMapping("/listeregiononepartenaire")
 public List<Object[]> getTestAndPatientResultForOnePartnerAndRegion(@RequestParam int year,@RequestParam Long partnerId) {
     return analysisServices.getTestAndPatientResultForOnePartnerAndRegion(year, partnerId);
 }
+
 
 /*
 @GetMapping("/count/inferieurmil")
@@ -2363,7 +2360,7 @@ public List<Object[]> getDashboardData(
 
 
 //controller
-
+getViralLoadMaleByRegion
 @GetMapping("/testCount")
 
 
@@ -2527,6 +2524,138 @@ public List<Object[]> getAnalysisPieDistrictResults(@RequestParam String distric
 
 
 */
+
+
+
+
+
+@GetMapping("/viralloadmalebyregion")
+public List<Object[]> getViralLoadMaleByRegion(@Param("year") int year){
+    return analysisServices.getViralLoadMaleByRegion(year);
+}
+
+
+@GetMapping("/viralloadfemalebyregion")
+public List<Object[]> getViralLoadFemaleByRegion(@Param("year") int year){
+    return analysisServices.getViralLoadFemaleByRegion(year);
+}
+
+
+@GetMapping("/viralloadnothingbyregion")
+public List<Object[]> getViralLoadNothingByRegion(@Param("year") int year){
+    return analysisServices.getViralLoadNothingByRegion(year);
+}
+
+
+@GetMapping("/patientminustenforallregion")
+public List<Object[]> getPatientMinusTenForAllRegion(@Param("year") int year){
+    return analysisServices.getPatientMinusTenForAllRegion(year);
+}
+
+
+@GetMapping("/patientbetweentenandfourteenforallregion")
+public List<Object[]> getPatientBetweenTenAndFourteenForAllRegion(@Param("year") int year){
+    return analysisServices.getPatientBetweenTenAndFourteenForAllRegion(year);
+}
+
+
+@GetMapping("/patientgreaterthantwentyforallregion")
+public List<Object[]> getPatientGreaterThanTwentyForAllRegion(@Param("year") int year){
+    return analysisServices.getPatientGreaterThanTwentyForAllRegion(year);
+}
+
+
+@GetMapping("/motifvlreasonforallregion")
+public List<Object[]> motifVlreasonForAllRegion(@Param("year") int year){
+    return analysisServices.motifVlreasonForAllRegion(year);
+}
+
+
+@GetMapping("/viralloadmaleotherbyregion")
+public List<Object[]> getViralLoadMaleOtherByRegion(@Param("year") int year){
+    return analysisServices.getViralLoadMaleOtherByRegion(year);
+}
+
+
+@GetMapping("/viralloadfemaleotherbyregion")
+public List<Object[]> getViralLoadFemaleOtherByRegion(@Param("year") int year){
+    return analysisServices.getViralLoadFemaleOtherByRegion(year);
+}
+
+
+@GetMapping("/viralloadnothingsbyregion")
+public List<Object[]> getViralLoadNothingOtherByRegion(@Param("year") int year){
+    return analysisServices.getViralLoadNothingOtherByRegion(year);
+}
+
+
+@GetMapping("/patientbyagenationalforallregion")
+public List<Object[]> getPatientByAgeNationalForAllRegion(@Param("year") int year){
+    return analysisServices.getPatientByAgeNationalForAllRegion(year);
+}
+
+
+@GetMapping("/notdeletionbyregion")
+public List<Object[]> getNotDeletionByRegion(@Param("year") int year){
+    return analysisServices.getNotDeletionByRegion(year);
+}
+
+
+@GetMapping("/notdeletionbydistrict")
+public List<Object[]> getNotDeletionByDistrict(@Param("year") int year){
+    return analysisServices.getNotDeletionByDistrict(year);
+}
+
+
+@GetMapping("/notdeletionbysite")
+public List<Object[]> getNotDeletionBySite(@Param("year") int year){
+    return analysisServices.getNotDeletionBySite(year);
+}
+
+
+@GetMapping("/notdeletionbypartner")
+public List<Object[]> getNotDeletionByPartner(@Param("year") int year){
+    return analysisServices.getNotDeletionByPartner(year);
+}
+
+
+
+@GetMapping("/viralloaddeletionforallregion")
+public List<Object[]> getViralLoadDeletionForAllRegion(@Param("year") int year){
+    return analysisServices.getViralLoadDeletionForAllRegion(year);
+}
+
+
+@GetMapping("/patientnothingageforallregion")
+public List<Object[]> getPatientNothingAgeForAllRegion(@Param("year") int year){
+    return analysisServices.getPatientNothingAgeForAllRegion(year);
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 

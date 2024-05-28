@@ -330,8 +330,7 @@ public class UploadServiceImpl implements UploadService {
 				if (row.getCell(19) != null) {
 
 					// Regimen
-					String molecule = ProcessString.concatenateCurrentValue(row.getCell(28), row.getCell(29),
-							row.getCell(30));
+					String molecule = ProcessString.concatenateCurrentValue(row.getCell(28), row.getCell(29), row.getCell(30));
 					// System.out.println("concatenateCurrentValue ::: " + molecule + "\n");
 					reg = regimenRepository.findRegimenByName(molecule);
 					// System.out.println("diet-values:" + d.getName() + "\n" );
