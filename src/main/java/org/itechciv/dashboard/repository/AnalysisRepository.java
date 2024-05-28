@@ -7958,7 +7958,7 @@ List<Object[]> getNotDeletionByDistrict(@Param("year") int year);
 " GROUP BY s.id, s.newSiteShortName, EXTRACT(YEAR FROM a.drcpt) ")
 List<Object[]> getNotDeletionBySite(@Param("year") int year);
 
-@Query(value = "SELECT   " +
+@Query(value = "SELECT pt.id, pt.name,  " +
 " SUM(CASE WHEN a.convertedResult >= 1000 THEN 1 ELSE 0 END) AS TOTAL_NON_SUPPRIME, " +
 " SUM(CASE WHEN a.convertedResult < 1000 AND a.convertedResult > 0 THEN 1 ELSE 0 END ) AS TOTAL_SUPPRIME, " +
 " ROUND(SUM(CASE WHEN a.convertedResult >= 1000 THEN 1 ELSE 0 END) * 100.0 / SUM(1), 2) AS POURCENTAGE_NON_SUPPRIME " +
@@ -7971,7 +7971,7 @@ List<Object[]> getNotDeletionBySite(@Param("year") int year);
 " JOIN Partner pt on pt.id = sp.partner.id " +
 " JOIN Regimen rg on rg.id = a.regimen.id " +
 " WHERE EXTRACT(YEAR FROM a.drcpt) = :year " +
-" GROUP BY p.id, EXTRACT(YEAR FROM a.drcpt)")
+" GROUP BY pt.id, pt.name, EXTRACT(YEAR FROM a.drcpt)")
 List<Object[]> getNotDeletionByPartner(@Param("year") int year);
 
 
