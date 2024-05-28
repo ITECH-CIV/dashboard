@@ -7905,11 +7905,11 @@ List<Object[]> getViralLoadNothingOtherByRegion(@Param("year") int year);
 " JOIN dashboard.regimen rg on rg.id = a.regimen_id " +
 " WHERE cdc_age_cat.type = 'National' AND " +   
 " EXTRACT(YEAR FROM a.drcpt) = :year  " +
-" GROUP BY cdc_age_cat.label, EXTRACT(YEAR FROM a.drcpt)", nativeQuery = true) 
+" GROUP BY  cdc_age_cat.label, EXTRACT(YEAR FROM a.drcpt)", nativeQuery = true) 
 List<Object[]> getPatientByAgeNationalForAllRegion(@Param("year") int year);
 
 //TAUX DE NON SUPPRESSION
-@Query(value = "SELECT " +
+@Query(value = "SELECT r.id, r.name,  " +
 " SUM(CASE WHEN a.convertedResult >= 1000 THEN 1 ELSE 0 END) AS TOTAL_NON_SUPPRIME, " +
 " SUM(CASE WHEN a.convertedResult < 1000 AND a.convertedResult > 0 THEN 1 ELSE 0 END ) AS TOTAL_SUPPRIME, " +
 " ROUND(SUM(CASE WHEN a.convertedResult >= 1000 THEN 1 ELSE 0 END) * 100.0 / SUM(1), 2) AS POURCENTAGE_NON_SUPPRIME " +
@@ -7922,7 +7922,7 @@ List<Object[]> getPatientByAgeNationalForAllRegion(@Param("year") int year);
 " JOIN Regimen reg ON a.regimen.id = reg.id " +
 " JOIN VlReason vl ON a.vlReason.id = vl.id " +
 " WHERE EXTRACT(YEAR FROM a.drcpt) = :year " +
-" GROUP BY r.id, EXTRACT(YEAR FROM a.drcpt) ")
+" GROUP BY r.id, r.name,  EXTRACT(YEAR FROM a.drcpt) ")
 List<Object[]> getNotDeletionByRegion(@Param("year") int year);
 
 @Query(value = "SELECT " +
