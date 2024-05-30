@@ -4058,9 +4058,9 @@ public List<Object[]> getNotDeletionForOneRegion(int year, Long regionId) {
 
 
 @Override
-public List<Object[]> getNotDeletionForOneDistrict(int year, Long districtId) {
+public List<Object[]> getNotDeletionForOneDistrict(int year, Long regionId) {
     try{
-        return analisysRepo.getNotDeletionForOneDistrict(year, districtId);
+        return analisysRepo.getNotDeletionForOneDistrict(year, regionId);
     }catch(Exception ex){
         ex.printStackTrace();
         return Collections.emptyList();
@@ -4069,9 +4069,9 @@ public List<Object[]> getNotDeletionForOneDistrict(int year, Long districtId) {
 
 
 @Override
-public List<Object[]> getNotDeletionForOneSite(int year, Long districtId) {
+public List<Object[]> getNotDeletionForOneSite(int year, Long regionId) {
     try{
-        return analisysRepo.getNotDeletionForOneSite(year, districtId);
+        return analisysRepo.getNotDeletionForOneSite(year, regionId);
     }catch(Exception ex){
         ex.printStackTrace();
         return Collections.emptyList();
@@ -4080,9 +4080,9 @@ public List<Object[]> getNotDeletionForOneSite(int year, Long districtId) {
 
 
 @Override
-public List<Object[]> getNotDeletionForOnePartner(int year, Long partnerId) {
+public List<Object[]> getNotDeletionForOnePartner(int year, Long regionId) {
     try{
-        return analisysRepo.getNotDeletionForOnePartner(year, partnerId);
+        return analisysRepo.getNotDeletionForOnePartner(year, regionId);
     }catch(Exception ex){
         ex.printStackTrace();
         return Collections.emptyList();

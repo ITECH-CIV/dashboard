@@ -477,9 +477,9 @@ List<Object[]> getPatientMinusTenForOneRegion(@Param("regionId") Long regionId, 
 List<Object[]> getViralLoadByGenderForAllRegion(int year);
 
 List<Object[]> getNotDeletionForOneRegion(@Param("year") int year, @Param("regionId") Long regionId);
-List<Object[]> getNotDeletionForOneDistrict(@Param("year") int year, @Param("districtId") Long districtId);
-List<Object[]> getNotDeletionForOneSite(@Param("year") int year, @Param("siteId") Long siteId);
-List<Object[]> getNotDeletionForOnePartner(@Param("year") int year, @Param("partnerId") Long partnerId);
+List<Object[]> getNotDeletionForOneDistrict(@Param("year") int year, @Param("regionId") Long regionId);
+List<Object[]> getNotDeletionForOneSite(@Param("year") int year, @Param("regionId") Long regionId);
+List<Object[]> getNotDeletionForOnePartner(@Param("year") int year, @Param("regionId") Long regionId);
 
 
 

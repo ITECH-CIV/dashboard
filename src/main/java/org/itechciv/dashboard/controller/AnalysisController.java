@@ -2673,20 +2673,20 @@ public List<Object[]> getNotDeletionForOneRegion(@Param("year") int year, @Reque
 
 
 @GetMapping("/viraloadnotdeletionforonedistrict")
-public List<Object[]> getNotDeletionForOneDistrict(@Param("year") int year, @RequestParam Long districtId){
-    return analysisServices.getNotDeletionForOneDistrict(year, districtId);
+public List<Object[]> getNotDeletionForOneDistrict(@Param("year") int year, @RequestParam Long regionId){
+    return analysisServices.getNotDeletionForOneDistrict(year, regionId);
 }
 
 
 @GetMapping("/viraloadnotdeletionforonesite")
-public List<Object[]> getNotDeletionForOneSite(@Param("year") int year, @RequestParam Long siteId){
-    return analysisServices.getNotDeletionForOneSite(year, siteId);
+public List<Object[]> getNotDeletionForOneSite(@Param("year") int year, @RequestParam Long regionId){
+    return analysisServices.getNotDeletionForOneSite(year, regionId);
 }
 
 
 @GetMapping("/viraloadnotdeletionforoneparner")
-public List<Object[]> getNotDeletionForOnePartner(@Param("year") int year, @RequestParam Long partnerId){
-    return analysisServices.getNotDeletionForOnePartner(year, partnerId);
+public List<Object[]> getNotDeletionForOnePartner(@Param("year") int year, @RequestParam Long regionId){
+    return analysisServices.getNotDeletionForOnePartner(year, regionId);
 }
 
 

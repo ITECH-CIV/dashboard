@@ -6122,7 +6122,7 @@ List<Object[]> motifVlreasonByOnePartner(@Param("year") int year, @Param("partne
 
  //Nombre de tests réalisés par tranche d'âge pour un partenaire
    //CDC CI Notation
-   @Query(value =  " SELECT part.name,  cdc_age_cat.label cdc_age_label, " +
+   @Query(value =  " SELECT cdc_age_cat.id, part.name,  cdc_age_cat.label cdc_age_label, " +
    " SUM(CASE WHEN a.converted_result >= 1000 THEN 1 ELSE 0 END) AS TOTAL_SUPERIEUR_OU_EGAL_1000, " +
    " SUM(CASE WHEN a.converted_result < 1000 THEN 1 ELSE 0 END ) AS TOTAL_INFERIEUR_A_1000, " + 
    " SUM(CASE WHEN a.converted_result = 0 THEN 1 ELSE 0 END) AS TOTAL_INDETECTABLE_LL,  " +
@@ -6140,12 +6140,12 @@ List<Object[]> motifVlreasonByOnePartner(@Param("year") int year, @Param("partne
    " LEFT JOIN dashboard.site_partner site_part on site_part.site_id = s.id " +
    " LEFT JOIN dashboard.partner part on part.id = site_part.partner_id " +
    " WHERE  part.id = :partnerId AND cdc_age_cat.type = 'CDC CI' AND EXTRACT(YEAR FROM a.drcpt) = :year " +	
-   " GROUP BY part.name, cdc_age_cat.label, EXTRACT(YEAR FROM a.drcpt)", nativeQuery = true)
+   " GROUP BY cdc_age_cat.id, part.name, cdc_age_cat.label, EXTRACT(YEAR FROM a.drcpt)" + 
+   " ORDER BY cdc_age_cat.id ASC " , nativeQuery = true)
    List<Object[]> geTestByCategoryCDCForOnePartner(@Param("partnerId") Long partnerId , @Param("year") int year);
 
-
 //National notation
-@Query(value = " SELECT part.name, nat_age_cat.label nat_age_label, " +
+@Query(value = " SELECT nat_age_cat.id, a.age_national_id, part.name, nat_age_cat.label nat_age_label, " +
 " SUM(CASE WHEN a.converted_result >= 1000 THEN 1 ELSE 0 END) AS TOTAL_SUPERIEUR_OU_EGAL_1000, " +
 " SUM(CASE WHEN a.converted_result < 1000 THEN 1 ELSE 0 END ) AS TOTAL_INFERIEUR_A_1000, " +
 " SUM(CASE WHEN a.converted_result = 0 THEN 1 ELSE 0 END) AS TOTAL_INDETECTABLE_LL, " +
@@ -6163,14 +6163,15 @@ List<Object[]> motifVlreasonByOnePartner(@Param("year") int year, @Param("partne
 " LEFT JOIN dashboard.site_partner site_part on site_part.site_id = s.id " +
 " LEFT JOIN dashboard.partner part on part.id = site_part.partner_id " +
 " WHERE part.id = :partnerId and nat_age_cat.type = 'National' AND EXTRACT(YEAR FROM a.drcpt) = :year " +	
-" GROUP BY part.name,nat_age_cat.label, EXTRACT(YEAR FROM a.drcpt)", nativeQuery = true)
+" GROUP BY nat_age_cat.id, a.age_national_id, part.name,nat_age_cat.label, EXTRACT(YEAR FROM a.drcpt)" +
+" ORDER BY nat_age_cat.id ASC " , nativeQuery = true)
 List<Object[]> geTestByCategoryNationalForOnePartner(@Param("partnerId") Long partnerId , @Param("year") int year);
 
 
 //Nombre de patients testés par tranche d'âge
 
   //CDC CI notation
-@Query(value =  " SELECT part.name, cdc_age_cat.label cdc_age_label, " +
+@Query(value =  " SELECT cdc_age_cat.id, part.name, cdc_age_cat.label cdc_age_label, " +
 " SUM(CASE WHEN a.converted_result >= 1000 THEN 1 ELSE 0 END) AS TOTAL_NON_SUPPRIME, " +
 " SUM(CASE WHEN a.converted_result < 1000 AND a.converted_result > 0 THEN 1 ELSE 0 END ) AS TOTAL_SUPPRIME, " +
 " ROUND(SUM(CASE WHEN a.converted_result = 0 THEN 1 WHEN a.converted_result < 1000 AND a.converted_result > 0 THEN 1 ELSE 0 END) * 100.0 / SUM(1), 2) AS POURCENTAGE_SUPPRIME " +
@@ -6183,12 +6184,13 @@ List<Object[]> geTestByCategoryNationalForOnePartner(@Param("partnerId") Long pa
 " LEFT JOIN dashboard.site_partner site_part on site_part.site_id = s.id " +
 " JOIN dashboard.partner part on part.id = site_part.partner_id " +
 " WHERE part.id = :partnerId  AND cdc_age_cat.type = 'CDC CI' AND EXTRACT(YEAR FROM a.drcpt) = :year " +	
-" GROUP BY part.name,cdc_age_cat.label,EXTRACT(YEAR FROM a.drcpt)", nativeQuery = true) 
+" GROUP BY cdc_age_cat.id, part.name,cdc_age_cat.label,EXTRACT(YEAR FROM a.drcpt)" +
+" ORDER BY cdc_age_cat.id ASC " , nativeQuery = true)
 List<Object[]> getPatientByCategoryCdciForOnePartner(@Param("partnerId") Long partnerId , @Param("year") int year);
 
 
   //National notation 
-  @Query(value = " SELECT part.name, nat_age_cat.label nat_age_label, " + 
+  @Query(value = " SELECT nat_age_cat.id, a.age_national_id, part.name, nat_age_cat.label nat_age_label, " + 
 " SUM(CASE WHEN a.converted_result >= 1000 THEN 1 ELSE 0 END) AS TOTAL_NON_SUPPRIME, " +
 " SUM(CASE WHEN a.converted_result < 1000 AND a.converted_result > 0 THEN 1 ELSE 0 END ) AS TOTAL_SUPPRIME, " +
 " ROUND(SUM(CASE WHEN a.converted_result = 0 THEN 1 WHEN a.converted_result < 1000 AND a.converted_result > 0 THEN 1 ELSE 0 END) * 100.0 / SUM(1), 2) AS POURCENTAGE_SUPPRIME " +
@@ -6201,7 +6203,8 @@ List<Object[]> getPatientByCategoryCdciForOnePartner(@Param("partnerId") Long pa
 " LEFT JOIN dashboard.site_partner site_part on site_part.site_id = s.id " +
 " JOIN dashboard.partner part on part.id = site_part.partner_id " +
 " WHERE part.id = :partnerId AND nat_age_cat.type = 'National' AND EXTRACT(YEAR FROM a.drcpt) = :year " +
-" GROUP BY part.name,nat_age_cat.label,EXTRACT(YEAR FROM a.drcpt)", nativeQuery = true)
+" GROUP BY nat_age_cat.id , a.age_national_id, part.name, nat_age_cat.label,EXTRACT(YEAR FROM a.drcpt)" + 
+" ORDER BY nat_age_cat.id ASC " , nativeQuery = true)
 List<Object[]> getPatientByCategoryNationalForOnePartner(@Param("partnerId") Long partnerId , @Param("year") int year);
 
 
@@ -8218,9 +8221,9 @@ List<Object[]> getNotDeletionForOneRegion(@Param("year") int year, @Param("regio
 " JOIN Regimen reg ON a.regimen.id = reg.id " +
 " JOIN VlReason vl ON a.vlReason.id = vl.id " +
 " WHERE EXTRACT(YEAR FROM a.drcpt) = :year AND " +
-" d.id = :districtId " +
+" r.id = :regionId " +
 " GROUP BY d.id, d.name, EXTRACT(YEAR FROM a.drcpt) ")
-List<Object[]> getNotDeletionForOneDistrict(@Param("year") int year, @Param("districtId") Long districtId);
+List<Object[]> getNotDeletionForOneDistrict(@Param("year") int year, @Param("regionId") Long regionId);
 
 
 @Query(value = "SELECT s.id, s.newSiteShortName," +
@@ -8236,9 +8239,9 @@ List<Object[]> getNotDeletionForOneDistrict(@Param("year") int year, @Param("dis
 " JOIN Regimen reg ON a.regimen.id = reg.id " +
 " JOIN VlReason vl ON a.vlReason.id = vl.id " +
 " WHERE EXTRACT(YEAR FROM a.drcpt) = :year AND " +
-" s.id = :siteId " +
+" r.id = :regionId " +
 " GROUP BY s.id, s.newSiteShortName, EXTRACT(YEAR FROM a.drcpt) ")
-List<Object[]> getNotDeletionForOneSite(@Param("year") int year, @Param("siteId") Long siteId);
+List<Object[]> getNotDeletionForOneSite(@Param("year") int year, @Param("regionId") Long regionId);
 
 @Query(value = "SELECT pt.id, pt.name,  " +
 " SUM(CASE WHEN a.convertedResult >= 1000 THEN 1 ELSE 0 END) AS TOTAL_NON_SUPPRIME, " +
@@ -8253,9 +8256,9 @@ List<Object[]> getNotDeletionForOneSite(@Param("year") int year, @Param("siteId"
 " JOIN Partner pt on pt.id = sp.partner.id " +
 " JOIN Regimen rg on rg.id = a.regimen.id " +
 " WHERE EXTRACT(YEAR FROM a.drcpt) = :year AND " +
-" pt.id = :partnerId " +
+" r.id = :regionId " +
 " GROUP BY pt.id, pt.name, EXTRACT(YEAR FROM a.drcpt)")
-List<Object[]> getNotDeletionForOnePartner(@Param("year") int year, @Param("partnerId") Long partnerId);
+List<Object[]> getNotDeletionForOnePartner(@Param("year") int year, @Param("regionId") Long regionId);
 
 
 //SUPPRESSION DE CHARGE VIRALE PAR REGION
