@@ -3977,6 +3977,120 @@ public List<Object[]> getPatientNothingAgeForAllRegion(int year) {
        }
 }
 
+@Override
+public List<Object[]> getViralLoadMaleForOneRegion(Long regionId, int year) {
+    String sex = "M"; // Sexe Masculin
+    try{
+        return analisysRepo.getViralLoadMaleForOneRegion(regionId, year, sex);
+    }catch(Exception ex){
+        ex.printStackTrace();
+        return Collections.emptyList();
+       }
+}
+
+@Override
+public List<Object[]> getViralLoadFemaleForOneRegion(Long regionId, int year) {
+    String sex = "F"; // Sexe Feminin
+    try{
+        return analisysRepo.getViralLoadFemaleForOneRegion(regionId, year, sex);
+    }catch(Exception ex){
+        ex.printStackTrace();
+        return Collections.emptyList();
+       }
+}
+
+
+@Override
+public List<Object[]> getViralLoadNothingForOneRegion(Long regionId, int year) {
+    try{
+        return analisysRepo.getViralLoadNothingForOneRegion(regionId, year);
+    }catch(Exception ex){
+        ex.printStackTrace();
+        return Collections.emptyList();
+       }
+}
+
+
+@Override
+public List<Object[]> getPatientMinusTenForOneRegion(Long regionId, int year) {
+    try{
+        return analisysRepo.getPatientMinusTenForOneRegion(regionId, year);
+    }catch(Exception ex){
+        ex.printStackTrace();
+        return Collections.emptyList();
+       }
+}
+
+
+@Override
+public List<Object[]> getPatientByAgeNationalForOneRegion(int year, Long regionId) {
+    try{
+        return analisysRepo.getPatientByAgeNationalForOneRegion(year, regionId);
+    }catch(Exception ex){
+        ex.printStackTrace();
+        return Collections.emptyList();
+       }
+}
+
+@Override
+public List<Object[]> getViralLoadByGenderForAllRegion(int year) {
+    String sexM = "M"; // Sexe Masculin
+    String sexF = "F"; // Sexe Feminin
+    try{
+        return analisysRepo.getViralLoadByGenderForAllRegion(year);
+    }catch(Exception ex){
+        ex.printStackTrace();
+        return Collections.emptyList();
+       }
+}
+
+
+
+@Override
+public List<Object[]> getNotDeletionForOneRegion(int year, Long regionId) {
+    try{
+        return analisysRepo.getNotDeletionForOneRegion(year, regionId);
+    }catch(Exception ex){
+        ex.printStackTrace();
+        return Collections.emptyList();
+       }
+}
+
+
+@Override
+public List<Object[]> getNotDeletionForOneDistrict(int year, Long districtId) {
+    try{
+        return analisysRepo.getNotDeletionForOneDistrict(year, districtId);
+    }catch(Exception ex){
+        ex.printStackTrace();
+        return Collections.emptyList();
+       }
+}
+
+
+@Override
+public List<Object[]> getNotDeletionForOneSite(int year, Long districtId) {
+    try{
+        return analisysRepo.getNotDeletionForOneSite(year, districtId);
+    }catch(Exception ex){
+        ex.printStackTrace();
+        return Collections.emptyList();
+       }
+}
+
+
+@Override
+public List<Object[]> getNotDeletionForOnePartner(int year, Long partnerId) {
+    try{
+        return analisysRepo.getNotDeletionForOnePartner(year, partnerId);
+    }catch(Exception ex){
+        ex.printStackTrace();
+        return Collections.emptyList();
+       }
+}
+
+
+
 /* 
 @Override
 public List<Object[]> tendancetest2021() {

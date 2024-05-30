@@ -2632,6 +2632,75 @@ public List<Object[]> getPatientNothingAgeForAllRegion(@Param("year") int year){
 }
 
 
+@GetMapping("/viraloadmaleforoneregion")
+public List<Object[]> getViralLoadMaleForOneRegion(@RequestParam Long regionId,@Param("year") int year){
+    return analysisServices.getViralLoadMaleForOneRegion(regionId, year);
+}
+
+
+@GetMapping("/viraloadfemaleforoneregion")
+public List<Object[]> getViralLoadFemaleForOneRegion(@RequestParam Long regionId,@Param("year") int year){
+    return analysisServices.getViralLoadFemaleForOneRegion(regionId, year);
+}
+
+@GetMapping("/viraloadnothingforoneregion")
+public List<Object[]> getViralLoadNothingForOneRegion(@RequestParam Long regionId, @Param("year") int year){
+    return analysisServices.getViralLoadNothingForOneRegion(regionId, year);
+}
+
+
+@GetMapping("/patientminustenforoneregion")
+public List<Object[]> getPatientMinusTenForOneRegion(@RequestParam Long regionId, @Param("year") int year){
+    return analysisServices.getPatientMinusTenForOneRegion(regionId, year);
+}
+
+
+@GetMapping("/virallodbygenderforallregion")
+public List<Object[]> getViralLoadByGenderForAllRegion(@Param("year") int year){
+    return analysisServices.getViralLoadByGenderForAllRegion(year);
+}
+
+
+@GetMapping("/patientbynationalageforoneregion")
+public List<Object[]> getPatientByAgeNationalForOneRegion(@Param("year") int year, @RequestParam Long regionId){
+    return analysisServices.getPatientByAgeNationalForOneRegion(year, regionId);
+}
+
+@GetMapping("/viraloadnotdeletionforoneregion")
+public List<Object[]> getNotDeletionForOneRegion(@Param("year") int year, @RequestParam Long regionId){
+    return analysisServices.getNotDeletionForOneRegion(year, regionId);
+}
+
+
+@GetMapping("/viraloadnotdeletionforonedistrict")
+public List<Object[]> getNotDeletionForOneDistrict(@Param("year") int year, @RequestParam Long districtId){
+    return analysisServices.getNotDeletionForOneDistrict(year, districtId);
+}
+
+
+@GetMapping("/viraloadnotdeletionforonesite")
+public List<Object[]> getNotDeletionForOneSite(@Param("year") int year, @RequestParam Long siteId){
+    return analysisServices.getNotDeletionForOneSite(year, siteId);
+}
+
+
+@GetMapping("/viraloadnotdeletionforoneparner")
+public List<Object[]> getNotDeletionForOnePartner(@Param("year") int year, @RequestParam Long partnerId){
+    return analysisServices.getNotDeletionForOnePartner(year, partnerId);
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
