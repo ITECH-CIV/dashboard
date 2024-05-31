@@ -7015,9 +7015,10 @@ List<Object[]> getPatientForOneLab(@Param("year") int year, @Param("labId") Long
   //NOMBRE DE PATIENTS TESTES PAR AGE
 
   //CDC CI notation - Masculin
-@Query(value =  " SELECT pat.gender, cdc_age_cat.label cdc_age_label," +
+@Query(value =  " SELECT part.id, pat.gender, cdc_age_cat.label cdc_age_label," +
 " SUM(CASE WHEN a.converted_result >= 1000 THEN 1 ELSE 0 END) AS TOTAL_NON_SUPPRIME, " +
 " SUM(CASE WHEN a.converted_result < 1000 AND a.converted_result > 0 THEN 1 ELSE 0 END ) AS TOTAL_SUPPRIME, " +
+" SUM (CASE WHEN a.converted_result >= 1000 THEN 1 WHEN a.converted_result < 1000 AND a.converted_result > 0 THEN 1 ELSE 0 END) AS TOTAL_SUPPRIME_ET_NON_SUPPRIME," +
 " ROUND(SUM(CASE WHEN a.converted_result = 0 THEN 1 WHEN a.converted_result < 1000 AND a.converted_result > 0 THEN 1 ELSE 0 END) * 100.0 / SUM(1), 2) AS POURCENTAGE_SUPPRIME, " +
 " ROUND(SUM(CASE WHEN a.converted_result >= 1000 THEN 1 ELSE 0 END) * 100.0 / SUM(1), 2) AS POURCENTAGE_NON_SUPPRIME " +
 " FROM  dashboard.analysis a " +
@@ -7032,13 +7033,14 @@ List<Object[]> getPatientForOneLab(@Param("year") int year, @Param("labId") Long
 " WHERE cdc_age_cat.type = 'CDC CI' AND " +   
 " pat.gender = :sex AND " +
 " EXTRACT(YEAR FROM a.drcpt) = :year  " +
-" GROUP BY pat.gender,cdc_age_cat.label, EXTRACT(YEAR FROM a.drcpt)", nativeQuery = true) 
+" GROUP BY part.id, pat.gender,cdc_age_cat.label, EXTRACT(YEAR FROM a.drcpt)", nativeQuery = true) 
 List<Object[]> getPatientByCDCMaleAndPartnerAll(@Param("year") int year, @Param("sex") String sex);
 
   //CDC CI notation - Feminin
-  @Query(value =  " SELECT pat.gender, cdc_age_cat.label cdc_age_label,  " +
+  @Query(value =  " SELECT part.id, pat.gender, cdc_age_cat.label cdc_age_label,  " +
   " SUM(CASE WHEN a.converted_result >= 1000 THEN 1 ELSE 0 END) AS TOTAL_NON_SUPPRIME, " +
   " SUM(CASE WHEN a.converted_result < 1000 AND a.converted_result > 0 THEN 1 ELSE 0 END ) AS TOTAL_SUPPRIME, " +
+  " SUM (CASE WHEN a.converted_result >= 1000 THEN 1 WHEN a.converted_result < 1000 AND a.converted_result > 0 THEN 1 ELSE 0 END) AS TOTAL_SUPPRIME_ET_NON_SUPPRIME," +
   " ROUND(SUM(CASE WHEN a.converted_result = 0 THEN 1 WHEN a.converted_result < 1000 AND a.converted_result > 0 THEN 1 ELSE 0 END) * 100.0 / SUM(1), 2) AS POURCENTAGE_SUPPRIME, " +
   " ROUND(SUM(CASE WHEN a.converted_result >= 1000 THEN 1 ELSE 0 END) * 100.0 / SUM(1), 2) AS POURCENTAGE_NON_SUPPRIME " +
   " FROM  dashboard.analysis a " +
@@ -7053,16 +7055,17 @@ List<Object[]> getPatientByCDCMaleAndPartnerAll(@Param("year") int year, @Param(
   " WHERE cdc_age_cat.type = 'CDC CI' AND  " +   
   " pat.gender = :sex AND " +
   " EXTRACT(YEAR FROM a.drcpt) = :year  " +
-  " GROUP BY pat.gender,cdc_age_cat.label, EXTRACT(YEAR FROM a.drcpt)", nativeQuery = true) 
+  " GROUP BY part.id, pat.gender,cdc_age_cat.label, EXTRACT(YEAR FROM a.drcpt)", nativeQuery = true) 
   List<Object[]> getPatientByCDCFemaleAndPartnerAll(@Param("year") int year, @Param("sex") String sex);
 
   //NOMBRE DE TESTS REALISES PAR TRANCHE D'AGE 
   //CDC CI notation - Masculin
-  @Query(value =  " SELECT pat.gender, cdc_age_cat.label cdc_age_label,   " +
+  @Query(value =  " SELECT part.id, pat.gender, cdc_age_cat.label cdc_age_label,   " +
   " SUM(CASE WHEN a.converted_result >= 1000 THEN 1 ELSE 0 END) AS TOTAL_SUPERIEUR_OU_EGAL_1000, " +
   " SUM(CASE WHEN a.converted_result < 1000 THEN 1 ELSE 0 END ) AS TOTAL_INFERIEUR_A_1000, " +
   " SUM(CASE WHEN a.converted_result = 0 THEN 1 ELSE 0 END) AS TOTAL_INDETECTABLE_LL, " +
   " SUM(CASE WHEN a.converted_result = -1 THEN 1 ELSE 0 END) AS TOTAL_INVALIDE_XXXX, " +
+  " SUM(CASE WHEN a.converted_result >= 1000 THEN 1 WHEN a.converted_result < 1000 THEN 1 WHEN a.converted_result = 0 THEN 1 WHEN a.converted_result = -1 THEN 1 ELSE 0 END) AS TOTAL_SUPPRIME_ET_NON_SUPPRIME," +
   " ROUND(SUM(CASE WHEN a.converted_result >= 1000 THEN 1 ELSE 0 END) * 100.0 / SUM(1), 2) AS POURCENTAGE_SUPERIEUR_OU_EGAL_A_1000, " +
   " ROUND(SUM(CASE WHEN a.converted_result < 1000 THEN 1 ELSE 0 END) * 100.0 / SUM(1), 2) AS POURCENTAGE_INFERIEUR_A_1000, " +
   " ROUND(SUM(CASE WHEN a.converted_result = 0 THEN 1 ELSE 0 END) * 100.0 / SUM(1), 2) AS POURCENTAGE_INDETECTABLE, " +
@@ -7079,15 +7082,16 @@ List<Object[]> getPatientByCDCMaleAndPartnerAll(@Param("year") int year, @Param(
   " WHERE cdc_age_cat.type = 'CDC CI' AND  " + 
   " pat.gender = :sex AND " +
   " EXTRACT(YEAR FROM a.drcpt) = :year  " +
-  " GROUP BY pat.gender,cdc_age_cat.label, EXTRACT(YEAR FROM a.drcpt)", nativeQuery = true) 
+  " GROUP BY part.id, pat.gender,cdc_age_cat.label, EXTRACT(YEAR FROM a.drcpt)", nativeQuery = true) 
   List<Object[]> getTestByCDCMaleAndPartnerAll(@Param("year") int year, @Param("sex") String sex);
   
   //CDC CI notation - Feminin
-  @Query(value =  " SELECT pat.gender, cdc_age_cat.label cdc_age_label,  " +
+  @Query(value =  " SELECT part.id, pat.gender, cdc_age_cat.label cdc_age_label,  " +
   " SUM(CASE WHEN a.converted_result >= 1000 THEN 1 ELSE 0 END) AS TOTAL_SUPERIEUR_OU_EGAL_1000, " +
   " SUM(CASE WHEN a.converted_result < 1000 THEN 1 ELSE 0 END ) AS TOTAL_INFERIEUR_A_1000, " +
   " SUM(CASE WHEN a.converted_result = 0 THEN 1 ELSE 0 END) AS TOTAL_INDETECTABLE_LL, " +
   " SUM(CASE WHEN a.converted_result = -1 THEN 1 ELSE 0 END) AS TOTAL_INVALIDE_XXXX, " +
+  " SUM(CASE WHEN a.converted_result >= 1000 THEN 1 WHEN a.converted_result < 1000 THEN 1 WHEN a.converted_result = 0 THEN 1 WHEN a.converted_result = -1 THEN 1 ELSE 0 END) AS TOTAL_SUPPRIME_ET_NON_SUPPRIME," +
   " ROUND(SUM(CASE WHEN a.converted_result >= 1000 THEN 1 ELSE 0 END) * 100.0 / SUM(1), 2) AS POURCENTAGE_SUPERIEUR_OU_EGAL_A_1000, " +
   " ROUND(SUM(CASE WHEN a.converted_result < 1000 THEN 1 ELSE 0 END) * 100.0 / SUM(1), 2) AS POURCENTAGE_INFERIEUR_A_1000, " +
   " ROUND(SUM(CASE WHEN a.converted_result = 0 THEN 1 ELSE 0 END) * 100.0 / SUM(1), 2) AS POURCENTAGE_INDETECTABLE, " +
@@ -7104,7 +7108,7 @@ List<Object[]> getPatientByCDCMaleAndPartnerAll(@Param("year") int year, @Param(
   " WHERE cdc_age_cat.type = 'CDC CI' AND  " +   
   " pat.gender = :sex AND " +
   " EXTRACT(YEAR FROM a.drcpt) = :year  " +
-  " GROUP BY pat.gender,cdc_age_cat.label, EXTRACT(YEAR FROM a.drcpt)", nativeQuery = true) 
+  " GROUP BY part.id, pat.gender,cdc_age_cat.label, EXTRACT(YEAR FROM a.drcpt)", nativeQuery = true) 
   List<Object[]> getTestByCDCFemaleAndPartnerAll(@Param("year") int year, @Param("sex") String sex);
 
   //PARTENAIRE PAR AGE
@@ -7285,8 +7289,7 @@ List<Object[]> getTestByAgeCategoryCdc(@Param("year") int year, @Param("ageCateg
  " GROUP BY pat.gender,cdc_age_cat.label, EXTRACT(YEAR FROM a.drcpt)", nativeQuery = true) 
  List<Object[]> getPatientMaleByCdc(@Param("year") int year, @Param("ageCategoryId") Long ageCategoryId, @Param("sex") String sex);
 
-
- //NOMBRE DE PATIENTS TESTES - FEMININ ET SELON UNE CATEGORIE D'AGE
+ 
  @Query(value =  " SELECT pat.gender, cdc_age_cat.label," +
  " SUM(CASE WHEN a.converted_result >= 1000 THEN 1 ELSE 0 END) AS TOTAL_NON_SUPPRIME, " +
  " SUM(CASE WHEN a.converted_result < 1000 AND a.converted_result > 0 THEN 1 ELSE 0 END ) AS TOTAL_SUPPRIME, " +
