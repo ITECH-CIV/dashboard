@@ -502,6 +502,11 @@ List<Object[]> getPatientByAgeCdcForDistrict(@Param("year") int year, @Param("ag
 List<Object[]> getPatientByAgeCdcForSite(@Param("year") int year, @Param("ageCategoryId") Long ageCategoryId);
 
 
+List<Object[]> getPatientByGenderForAllRegion(@Param("year") int year);
+List<Object[]> motifVlreasonForEntireRegion(@Param("year") int year);
+List<Object[]> motifVlreasonForOneRegion(@Param("year") int year, @Param("regionId") Long regionId);
+
+
 
 
 

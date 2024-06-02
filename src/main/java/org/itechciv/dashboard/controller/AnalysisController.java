@@ -2981,10 +2981,31 @@ public List<Object[]> getNotDeletionForOnePartner(@Param("year") int year, @Requ
     public List<Object[]> getPatientByAgeCdcForSite(@RequestParam int year, @RequestParam Long ageCategoryId) {
     return analysisServices.getPatientByAgeCdcForSite(year, ageCategoryId);
     }
-    
+
+
+
+    @GetMapping("/patientbygenderforallregion")
+    public List<Object[]> getPatientByGenderForAllRegion(@RequestParam int year) {
+    return analysisServices.getPatientByGenderForAllRegion(year);
+    } 
+
+
+    @GetMapping("/motifvlreasonforentireregion")
+    public List<Object[]> motifVlreasonForEntireRegion(@RequestParam int year) {
+    return analysisServices.motifVlreasonForEntireRegion(year);
+    }
+
+
+    @GetMapping("/motifvlreasonforoneregion")
+    public List<Object[]> motifVlreasonForOneRegion(@RequestParam int year, @Param("regionId") Long regionId) {
+    return analysisServices.motifVlreasonForOneRegion(year, regionId);
+    }
+
     
 
     
+    
+
 
     
     

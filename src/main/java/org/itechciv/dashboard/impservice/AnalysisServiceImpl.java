@@ -4243,7 +4243,37 @@ public List<Object[]> getPatientByAgeCdcForSite(int year, Long ageCategoryId) {
 }
 
 
+@Override
+public List<Object[]> getPatientByGenderForAllRegion(int year) {
+    try{
+        return analisysRepo.getPatientByGenderForAllRegion(year);
+    }catch(Exception ex){
+        ex.printStackTrace();
+        return Collections.emptyList();
+       }
+}
 
+
+@Override
+public List<Object[]> motifVlreasonForEntireRegion(int year) {
+    try{
+        return analisysRepo.motifVlreasonForEntireRegion(year);
+    }catch(Exception ex){
+        ex.printStackTrace();
+        return Collections.emptyList();
+       }
+}
+
+
+@Override
+public List<Object[]> motifVlreasonForOneRegion(int year, Long regionId) {
+    try{
+        return analisysRepo.motifVlreasonForOneRegion(year, regionId);
+    }catch(Exception ex){
+        ex.printStackTrace();
+        return Collections.emptyList();
+       }
+}
 
 
 
