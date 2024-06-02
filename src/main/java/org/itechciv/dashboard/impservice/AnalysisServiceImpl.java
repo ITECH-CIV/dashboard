@@ -2964,6 +2964,18 @@ public List<Object[]> getPatientFemaleByCdc(int year, Long ageCategoryId) {
         return Collections.emptyList();
        }  
 }
+
+
+@Override
+public List<Object[]> getPatientNothingByCdc(int year, Long ageCategoryId) {
+    try{
+        return analisysRepo.getPatientNothingByCdc(year, ageCategoryId);
+
+    }catch(Exception ex){
+        ex.printStackTrace();
+        return Collections.emptyList();
+       }  
+}
 /************************************************************DEBUT *****************************************************************/
 
 @Override
@@ -4088,6 +4100,103 @@ public List<Object[]> getNotDeletionForOnePartner(int year, Long regionId) {
         return Collections.emptyList();
        }
 }
+
+
+@Override
+public List<Object[]> getPatientByRegionForOneRegimen(Long regimenId, int year) {
+    try{
+        return analisysRepo.getPatientByRegionForOneRegimen(regimenId, year);
+    }catch(Exception ex){
+        ex.printStackTrace();
+        return Collections.emptyList();
+       }
+} 
+
+
+@Override
+public List<Object[]> getPatientByPartnerForOneRegimen(Long regimenId, int year) {
+    try{
+        return analisysRepo.getPatientByPartnerForOneRegimen(regimenId, year);
+    }catch(Exception ex){
+        ex.printStackTrace();
+        return Collections.emptyList();
+       }
+}
+
+
+@Override
+public List<Object[]> getPatientByDistrictForOneRegimen(Long regimenId, int year) {
+    try{
+        return analisysRepo.getPatientByDistrictForOneRegimen(regimenId, year);
+    }catch(Exception ex){
+        ex.printStackTrace();
+        return Collections.emptyList();
+       }
+}
+
+
+@Override
+public List<Object[]> getPatientBySiteForOneRegimen(Long regimenId, int year) {
+    try{
+        return analisysRepo.getPatientBySiteForOneRegimen(regimenId, year);
+    }catch(Exception ex){
+        ex.printStackTrace();
+        return Collections.emptyList();
+       }
+}
+
+
+@Override
+public List<Object[]> getPatientMaleByAgeCdcForOnRegimen(int year, Long regimenId) {
+    String sex = "M"; // Sexe Masculin
+    try{
+        return analisysRepo.getPatientMaleByAgeCdcForOnRegimen(year, regimenId, sex);
+    }catch(Exception ex){
+        ex.printStackTrace();
+        return Collections.emptyList();
+       }
+}
+
+
+
+@Override
+public List<Object[]> getPatientFemaleByAgeCdcForOnRegimen(int year, Long regimenId) {
+    String sex = "F"; // Sexe Feminin
+    try{
+        return analisysRepo.getPatientFemaleByAgeCdcForOnRegimen(year, regimenId, sex);
+    }catch(Exception ex){
+        ex.printStackTrace();
+        return Collections.emptyList();
+       }
+} 
+
+
+@Override
+public List<Object[]> getTestMaleByAgeCdcForOneRegimen(int year, Long regimenId) {
+    String sex = "M"; // Sexe Masculin
+    try{
+        return analisysRepo.getTestMaleByAgeCdcForOneRegimen(year, regimenId, sex);
+    }catch(Exception ex){
+        ex.printStackTrace();
+        return Collections.emptyList();
+       }
+}
+
+
+
+@Override
+public List<Object[]> getTestFemaleByAgeCdcForOneRegimen(int year, Long regimenId) {
+    String sex = "F"; // Sexe Feminin
+    try{
+        return analisysRepo.getTestFemaleByAgeCdcForOneRegimen(year, regimenId, sex);
+    }catch(Exception ex){
+        ex.printStackTrace();
+        return Collections.emptyList();
+       }
+}
+
+
+
 
 
 

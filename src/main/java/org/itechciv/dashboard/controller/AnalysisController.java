@@ -1,5 +1,6 @@
 package org.itechciv.dashboard.controller;
 
+import java.util.Collections;
 import java.util.List;
 import java.util.Map;
 
@@ -2897,6 +2898,77 @@ public List<Object[]> getNotDeletionForOnePartner(@Param("year") int year, @Requ
     public List<Object[]> getPatientFemaleByCdc(@RequestParam int year, @RequestParam Long ageCategoryId) {
     return analysisServices.getPatientFemaleByCdc(year,ageCategoryId);
     }
+
+
+    @GetMapping("/patientnothingbycdc")
+    public List<Object[]> getPatientNothingByCdc(@RequestParam int year, @RequestParam Long ageCategoryId) {
+    return analysisServices.getPatientNothingByCdc(year,ageCategoryId);
+    }
+
+
+    @GetMapping("/patientbyregionforoneregimen")
+    public List<Object[]> getPatientByRegionForOneRegimen(@RequestParam Long regimenId, @RequestParam int year) {
+    return analysisServices.getPatientByRegionForOneRegimen(regimenId, year);
+    }
+
+
+    @GetMapping("/patientbypartnerforoneregimen")
+    public List<Object[]> getPatientByPartnerForOneRegimen(@RequestParam Long regimenId, @RequestParam int year) {
+    return analysisServices.getPatientByPartnerForOneRegimen(regimenId, year);
+    }
+
+
+    @GetMapping("/patientbydistrictforoneregimen")
+    public List<Object[]> getPatientByDistrictForOneRegimen(@RequestParam Long regimenId, @RequestParam int year) {
+    return analysisServices.getPatientByDistrictForOneRegimen(regimenId, year);
+    }
+
+
+
+    @GetMapping("/patientbysiteforoneregimen")
+    public List<Object[]> getPatientBySiteForOneRegimen(@RequestParam Long regimenId, @RequestParam int year) {
+    return analysisServices.getPatientBySiteForOneRegimen(regimenId, year);
+    }
+
+
+
+
+    @GetMapping("/patientmalebyagecdcforoneregimen")
+    public List<Object[]> getPatientMaleByAgeCdcForOnRegimen(@RequestParam int year,@RequestParam Long regimenId) {
+    return analysisServices.getPatientMaleByAgeCdcForOnRegimen(year, regimenId);
+    }
+
+
+    @GetMapping("/patientfemalebyagecdcforoneregimen")
+    public List<Object[]> getPatientFemaleByAgeCdcForOnRegimen(@RequestParam int year, @RequestParam Long regimenId) {
+    return analysisServices.getPatientFemaleByAgeCdcForOnRegimen(year, regimenId);
+    }
+
+
+
+    @GetMapping("/testmalebyagecdcforoneregimen")
+    public List<Object[]> getTestMaleByAgeCdcForOneRegimen(@RequestParam int year, @RequestParam Long regimenId) {
+    return analysisServices.getTestMaleByAgeCdcForOneRegimen(year, regimenId);
+    }
+
+
+    @GetMapping("/testfemalebyagecdcforoneregimen")
+    public List<Object[]> getTestFemaleByAgeCdcForOneRegimen(@RequestParam int year, @RequestParam Long regimenId) {
+    return analysisServices.getTestFemaleByAgeCdcForOneRegimen(year, regimenId);
+    }
+
+
+
+
+    
+    
+
+
+
+
+
+
+
 
 
 

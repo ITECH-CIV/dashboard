@@ -338,6 +338,7 @@ List<Object[]> getTestByAgeCategoryCdc(@Param("year") int year, @Param("ageCateg
 
 List<Object[]> getPatientMaleByCdc(@Param("year") int year, @Param("ageCategoryId") Long ageCategoryId);
 List<Object[]> getPatientFemaleByCdc(@Param("year") int year, @Param("ageCategoryId") Long ageCategoryId);
+List<Object[]> getPatientNothingByCdc(@Param("year") int year, @Param("ageCategoryId") Long ageCategoryId);
 
 
 
@@ -481,9 +482,18 @@ List<Object[]> getNotDeletionForOneDistrict(@Param("year") int year, @Param("reg
 List<Object[]> getNotDeletionForOneSite(@Param("year") int year, @Param("regionId") Long regionId);
 List<Object[]> getNotDeletionForOnePartner(@Param("year") int year, @Param("regionId") Long regionId);
 
+List<Object[]> getPatientByRegionForOneRegimen(@Param("regimenId") Long regimenId, @Param("year") int year);
+
+List<Object[]> getPatientByPartnerForOneRegimen(@Param("regimenId") Long regimenId, @Param("year") int year);
+List<Object[]> getPatientByDistrictForOneRegimen(@Param("regimenId") Long regimenId, @Param("year") int year);
+List<Object[]> getPatientBySiteForOneRegimen(@Param("regimenId") Long regimenId, @Param("year") int year);
 
 
+List<Object[]> getPatientMaleByAgeCdcForOnRegimen(@Param("year") int year, @Param("regimenId") Long regimenId);
+List<Object[]> getPatientFemaleByAgeCdcForOnRegimen(@Param("year") int year, @Param("regimenId") Long regimenId);
 
+List<Object[]> getTestMaleByAgeCdcForOneRegimen(@Param("year") int year, @Param("regimenId") Long regimenId);
+List<Object[]> getTestFemaleByAgeCdcForOneRegimen(@Param("year") int year, @Param("regimenId") Long regimenId);
 
 
 
