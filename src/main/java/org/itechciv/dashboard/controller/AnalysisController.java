@@ -2958,7 +2958,33 @@ public List<Object[]> getNotDeletionForOnePartner(@Param("year") int year, @Requ
     }
 
 
+    @GetMapping("/patientbyagecdcforregion")
+    public List<Object[]> getPatientByAgeCdcForRegion(@RequestParam int year, @RequestParam Long ageCategoryId) {
+    return analysisServices.getPatientByAgeCdcForRegion(year, ageCategoryId);
+    }
 
+
+    @GetMapping("/patientbyagecdcforpartner")
+    public List<Object[]> getPatientByAgeCdcForPartner(@RequestParam int year, @RequestParam Long ageCategoryId) {
+    return analysisServices.getPatientByAgeCdcForPartner(year, ageCategoryId);
+    }
+
+
+    @GetMapping("/patientbyagecdcfordistrict")
+    public List<Object[]> getPatientByAgeCdcForDistrict(@RequestParam int year, @RequestParam Long ageCategoryId) {
+    return analysisServices.getPatientByAgeCdcForDistrict(year, ageCategoryId);
+    }
+
+
+
+    @GetMapping("/patientbyagecdcforsite")
+    public List<Object[]> getPatientByAgeCdcForSite(@RequestParam int year, @RequestParam Long ageCategoryId) {
+    return analysisServices.getPatientByAgeCdcForSite(year, ageCategoryId);
+    }
+    
+    
+
+    
 
     
     

@@ -496,6 +496,14 @@ List<Object[]> getTestMaleByAgeCdcForOneRegimen(@Param("year") int year, @Param(
 List<Object[]> getTestFemaleByAgeCdcForOneRegimen(@Param("year") int year, @Param("regimenId") Long regimenId);
 
 
+List<Object[]> getPatientByAgeCdcForRegion(@Param("year") int year, @Param("ageCategoryId") Long ageCategoryId);
+List<Object[]> getPatientByAgeCdcForPartner(@Param("year") int year, @Param("ageCategoryId") Long ageCategoryId);
+List<Object[]> getPatientByAgeCdcForDistrict(@Param("year") int year, @Param("ageCategoryId") Long ageCategoryId);
+List<Object[]> getPatientByAgeCdcForSite(@Param("year") int year, @Param("ageCategoryId") Long ageCategoryId);
+
+
+
+
 
 
 

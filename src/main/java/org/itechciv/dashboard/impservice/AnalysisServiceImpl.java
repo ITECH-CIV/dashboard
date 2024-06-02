@@ -4196,6 +4196,68 @@ public List<Object[]> getTestFemaleByAgeCdcForOneRegimen(int year, Long regimenI
 }
 
 
+@Override
+public List<Object[]> getPatientByAgeCdcForRegion(int year, Long ageCategoryId) {
+    try{
+        return analisysRepo.getPatientByAgeCdcForRegion(year, ageCategoryId);
+    }catch(Exception ex){
+        ex.printStackTrace();
+        return Collections.emptyList();
+       }
+}
+
+
+
+@Override
+public List<Object[]> getPatientByAgeCdcForPartner(int year, Long ageCategoryId) {
+    try{
+        return analisysRepo.getPatientByAgeCdcForPartner(year, ageCategoryId);
+    }catch(Exception ex){
+        ex.printStackTrace();
+        return Collections.emptyList();
+       }
+}
+
+
+
+
+@Override
+public List<Object[]> getPatientByAgeCdcForDistrict(int year, Long ageCategoryId) {
+    try{
+        return analisysRepo.getPatientByAgeCdcForDistrict(year, ageCategoryId);
+    }catch(Exception ex){
+        ex.printStackTrace();
+        return Collections.emptyList();
+       }
+}
+
+
+@Override
+public List<Object[]> getPatientByAgeCdcForSite(int year, Long ageCategoryId) {
+    try{
+        return analisysRepo.getPatientByAgeCdcForSite(year, ageCategoryId);
+    }catch(Exception ex){
+        ex.printStackTrace();
+        return Collections.emptyList();
+       }
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
