@@ -4368,9 +4368,25 @@ public List<Object[]> getPatientForAllCDCAgeCategory(int year) {
 }
 
 
+@Override
+public List<Object[]> getPatientForOneNationalAgeCategory(int year, Long ageCategoryId) {
+    try{
+        return analisysRepo.getPatientForOneNationalAgeCategory(year, ageCategoryId);
+    }catch(Exception ex){
+        ex.printStackTrace();
+        return Collections.emptyList();
+       }
+}
 
-
-
+@Override
+public List<Object[]> getPatientForOneCDCAgeCategory(int year, Long ageCategoryId) {
+    try{
+        return analisysRepo.getPatientForOneCDCAgeCategory(year, ageCategoryId);
+    }catch(Exception ex){
+        ex.printStackTrace();
+        return Collections.emptyList();
+       }
+}
 
 
 

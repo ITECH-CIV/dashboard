@@ -516,8 +516,8 @@ List<Object[]> getPatientForAllNationalAgeCategory(@Param("year") int year);
 
 List<Object[]> getPatientForAllCDCAgeCategory(@Param("year") int year);
 
-
-
+List<Object[]> getPatientForOneNationalAgeCategory(@Param("year") int year, @Param("ageCategoryId") Long ageCategoryId);
+List<Object[]> getPatientForOneCDCAgeCategory(@Param("year") int year, @Param("ageCategoryId") Long ageCategoryId);
 
 
 
