@@ -512,7 +512,9 @@ List<GenderOne> getPatientByGenderForOneRegion(@Param("year") int year, @Param("
 List<Object[]> motifVlreasonForEntireRegion(@Param("year") int year);
 List<Object[]> motifVlreasonForOneRegion(@Param("year") int year, @Param("regionId") Long regionId);
 
+List<Object[]> getPatientForAllNationalAgeCategory(@Param("year") int year);
 
+List<Object[]> getPatientForAllCDCAgeCategory(@Param("year") int year);
 
 
 

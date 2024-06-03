@@ -4326,9 +4326,6 @@ List<Object[]> results;
        }
 }
 
-
-
-
 @Override
 public List<Object[]> motifVlreasonForEntireRegion(int year) {
     try{
@@ -4339,11 +4336,31 @@ public List<Object[]> motifVlreasonForEntireRegion(int year) {
        }
 }
 
-
 @Override
 public List<Object[]> motifVlreasonForOneRegion(int year, Long regionId) {
     try{
         return analisysRepo.motifVlreasonForOneRegion(year, regionId);
+    }catch(Exception ex){
+        ex.printStackTrace();
+        return Collections.emptyList();
+       }
+}
+
+
+@Override
+public List<Object[]> getPatientForAllNationalAgeCategory(int year) {
+    try{
+        return analisysRepo.getPatientForAllNationalAgeCategory(year);
+    }catch(Exception ex){
+        ex.printStackTrace();
+        return Collections.emptyList();
+       }
+}
+
+@Override
+public List<Object[]> getPatientForAllCDCAgeCategory(int year) {
+    try{
+        return analisysRepo.getPatientForAllCDCAgeCategory(year);
     }catch(Exception ex){
         ex.printStackTrace();
         return Collections.emptyList();

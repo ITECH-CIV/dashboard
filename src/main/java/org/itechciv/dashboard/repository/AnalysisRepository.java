@@ -7636,9 +7636,6 @@ List<Object[]> getTestsAndPatientsBySitePartnerliste(@Param("year") int year);
 "ORDER BY total_tests DESC, TOTAL_SUPPRIME DESC, TOTAL_NON_SUPPRIME DESC")
 List<Object[]> getTestsAndPatientsBySitechaquepartenaireliste(@Param("year") int year, @Param("partnerId") Long partnerId);
 
-
-
-
     //NOMBRE DE TESTS REALISES PAR REGIME THERAPEUTIQUE POUR TOUS LES PARTENAIRES
     @Query(value = "SELECT rg.name,  " +
             " SUM(CASE WHEN a.convertedResult >= 1000 THEN 1 ELSE 0 END) AS TOTAL_SUPERIEUR_OU_EGAL_1000, " +
@@ -8680,6 +8677,45 @@ List<Object[]> getPatientByAgeCdcForDistrict(@Param("year") int year, @Param("ag
 " GROUP BY cdc_age_cat.id, cdc_age_cat.label, s.id, s.new_site_short_name, EXTRACT(YEAR FROM a.drcpt)", nativeQuery = true) 
 List<Object[]> getPatientByAgeCdcForSite(@Param("year") int year, @Param("ageCategoryId") Long ageCategoryId);
 
+//SUPPRESSION VIRALE - PAR AGE - POUR TOUTE TRANCHE D'AGE
+      //NOTATION NATIONALE
+@Query(value =  " SELECT cdc_age_cat.id, cdc_age_cat.label,  " +
+" SUM(CASE WHEN a.converted_result >= 1000 THEN 1 ELSE 0 END) AS TOTAL_NON_SUPPRIME, " +
+" SUM(CASE WHEN a.converted_result < 1000 AND a.converted_result > 0 THEN 1 ELSE 0 END ) AS TOTAL_SUPPRIME, " +
+" ROUND(SUM(CASE WHEN a.converted_result = 0 THEN 1 WHEN a.converted_result < 1000 AND a.converted_result > 0 THEN 1 ELSE 0 END) * 100.0 / SUM(1), 2) AS POURCENTAGE_SUPPRIME " +
+" FROM  dashboard.analysis a " +
+" LEFT JOIN dashboard.patient pat on pat.id = a.patient_id " +
+" LEFT JOIN dashboard.site s on s.id = pat.site_id " +
+" JOIN dashboard.district dis on dis.id = s.district_id " +
+" JOIN dashboard.region reg on reg.id = dis.region_id " +
+" LEFT JOIN dashboard.age_category cdc_age_cat on cdc_age_cat.id = a.age_national_id " +
+" LEFT JOIN dashboard.site_partner site_part on site_part.site_id = s.id " +
+" JOIN dashboard.partner part on part.id = site_part.partner_id " +
+" JOIN dashboard.regimen rg on rg.id = a.regimen_id " +
+" WHERE cdc_age_cat.type = 'National' AND " +   
+" EXTRACT(YEAR FROM a.drcpt) = :year " +
+" GROUP BY cdc_age_cat.id, cdc_age_cat.label, EXTRACT(YEAR FROM a.drcpt)" +
+" ORDER BY cdc_age_cat.id ASC " , nativeQuery = true) 
+List<Object[]> getPatientForAllNationalAgeCategory(@Param("year") int year);
+
+@Query(value =  " SELECT cdc_age_cat.id, cdc_age_cat.label,  " +
+" SUM(CASE WHEN a.converted_result >= 1000 THEN 1 ELSE 0 END) AS TOTAL_NON_SUPPRIME, " +
+" SUM(CASE WHEN a.converted_result < 1000 AND a.converted_result > 0 THEN 1 ELSE 0 END ) AS TOTAL_SUPPRIME, " +
+" ROUND(SUM(CASE WHEN a.converted_result = 0 THEN 1 WHEN a.converted_result < 1000 AND a.converted_result > 0 THEN 1 ELSE 0 END) * 100.0 / SUM(1), 2) AS POURCENTAGE_SUPPRIME " +
+" FROM  dashboard.analysis a " +
+" LEFT JOIN dashboard.patient pat on pat.id = a.patient_id " +
+" LEFT JOIN dashboard.site s on s.id = pat.site_id " +
+" JOIN dashboard.district dis on dis.id = s.district_id " +
+" JOIN dashboard.region reg on reg.id = dis.region_id " +
+" LEFT JOIN dashboard.age_category cdc_age_cat on cdc_age_cat.id = a.age_cdc_id " +
+" LEFT JOIN dashboard.site_partner site_part on site_part.site_id = s.id " +
+" JOIN dashboard.partner part on part.id = site_part.partner_id " +
+" JOIN dashboard.regimen rg on rg.id = a.regimen_id " +
+" WHERE cdc_age_cat.type = 'CDC CI' AND " +   
+" EXTRACT(YEAR FROM a.drcpt) = :year " +
+" GROUP BY cdc_age_cat.id, cdc_age_cat.label, EXTRACT(YEAR FROM a.drcpt)" +
+" ORDER BY cdc_age_cat.id ASC " , nativeQuery = true) 
+List<Object[]> getPatientForAllCDCAgeCategory(@Param("year") int year);
 
 
 

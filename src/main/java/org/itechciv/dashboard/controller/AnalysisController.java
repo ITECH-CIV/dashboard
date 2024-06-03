@@ -2997,8 +2997,10 @@ public List<Object[]> getNotDeletionForOnePartner(@Param("year") int year, @Requ
     return analysisServices.getPatientByGenderForOneRegion(year, regionId);
     } 
 
-
-
+    @GetMapping("/patientforallnationalagecategory")
+    public List<Object[]> getPatientForAllNationalAgeCategory(@RequestParam int year) {
+    return analysisServices.getPatientForAllNationalAgeCategory(year);
+    } 
 
     @GetMapping("/motifvlreasonforentireregion")
     public List<Object[]> motifVlreasonForEntireRegion(@RequestParam int year) {
@@ -3010,6 +3012,13 @@ public List<Object[]> getNotDeletionForOnePartner(@Param("year") int year, @Requ
     public List<Object[]> motifVlreasonForOneRegion(@RequestParam int year, @Param("regionId") Long regionId) {
     return analysisServices.motifVlreasonForOneRegion(year, regionId);
     }
+
+
+    @GetMapping("/patientforallcdcagecategory")
+    public List<Object[]> getPatientForAllCDCAgeCategory(@RequestParam int year) {
+    return analysisServices.getPatientForAllCDCAgeCategory(year);
+    }
+
 
     
 
