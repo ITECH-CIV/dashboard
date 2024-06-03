@@ -5,6 +5,8 @@ import java.util.List;
 import java.util.Map;
 
 import org.itechciv.dashboard.helper.CategoryAge;
+import org.itechciv.dashboard.helper.Gender;
+import org.itechciv.dashboard.helper.GenderOne;
 import org.itechciv.dashboard.iservice.AnalysisService;
 import org.itechciv.dashboard.response.Response;
 import org.itechciv.dashboard.response.Response.ResponseStatusEnum;
@@ -2985,9 +2987,17 @@ public List<Object[]> getNotDeletionForOnePartner(@Param("year") int year, @Requ
 
 
     @GetMapping("/patientbygenderforallregion")
-    public List<Object[]> getPatientByGenderForAllRegion(@RequestParam int year) {
+    public List<Gender> getPatientByGenderForAllRegion(@RequestParam int year) {
     return analysisServices.getPatientByGenderForAllRegion(year);
     } 
+
+
+    @GetMapping("/patientbygenderforoneregion")
+    public List<GenderOne> getPatientByGenderForOneRegion(@RequestParam int year, @Param("regionId") Long regionId) {
+    return analysisServices.getPatientByGenderForOneRegion(year, regionId);
+    } 
+
+
 
 
     @GetMapping("/motifvlreasonforentireregion")

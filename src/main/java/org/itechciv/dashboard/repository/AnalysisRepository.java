@@ -7753,6 +7753,26 @@ List<Object[]> getPatientByRegimenForOnePartnerOne(@Param("partnerId") Long part
    " GROUP BY p.gender, EXTRACT(YEAR FROM a.drcpt) ")
 List<Object[]> getPatientByGenderForAllRegion(@Param("year") int year);
 
+@Query(value = "SELECT r.name, p.gender, " +
+" SUM(CASE WHEN a.convertedResult >= 1000 THEN 1 ELSE 0 END) AS TOTAL_NON_SUPPRIME, " +
+" SUM(CASE WHEN a.convertedResult < 1000 AND a.convertedResult > 0 THEN 1 ELSE 0 END ) AS TOTAL_SUPPRIME, " +
+" ROUND(SUM(CASE WHEN a.convertedResult = 0 THEN 1 WHEN a.convertedResult < 1000 AND a.convertedResult > 0 THEN 1 ELSE 0 END) * 100.0 / SUM(1), 2) AS POURCENTAGE_SUPPRIME " +
+" FROM Region r " +
+" JOIN District d ON r.id = d.region.id " +
+" JOIN Site s ON d.id = s.district.id " +
+" JOIN Patient p ON s.id = p.site.id " +
+" JOIN Analysis a ON p.id = a.patient.id " +
+" JOIN Test t ON a.test.id = t.id " +
+" JOIN Regimen reg ON a.regimen.id = reg.id " +
+" JOIN VlReason vl ON a.vlReason.id = vl.id " +
+" WHERE EXTRACT(YEAR FROM a.drcpt) = :year " + 
+" AND r.id = :regionId " +
+" GROUP BY r.name, p.gender, EXTRACT(YEAR FROM a.drcpt) ")
+List<Object[]> getPatientByGenderForOneRegion(@Param("year") int year, @Param("regionId") Long regionId);
+
+
+
+ 
 
 @Query(value = "SELECT vl.name," +
 " SUM(CASE WHEN a.convertedResult >= 1000 THEN 1 ELSE 0 END) AS TOTAL_NON_SUPPRIME, " +

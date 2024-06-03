@@ -5,6 +5,8 @@ import java.util.List;
 import java.util.Map;
 
 import org.itechciv.dashboard.helper.CategoryAge;
+import org.itechciv.dashboard.helper.Gender;
+import org.itechciv.dashboard.helper.GenderOne;
 import org.itechciv.dashboard.model.Analysis;
 import org.itechciv.dashboard.response.Response;
 import org.springframework.data.jpa.repository.Query;
@@ -502,7 +504,11 @@ List<Object[]> getPatientByAgeCdcForDistrict(@Param("year") int year, @Param("ag
 List<Object[]> getPatientByAgeCdcForSite(@Param("year") int year, @Param("ageCategoryId") Long ageCategoryId);
 
 
-List<Object[]> getPatientByGenderForAllRegion(@Param("year") int year);
+//List<Object[]> getPatientByGenderForAllRegion(@Param("year") int year);
+List<Gender> getPatientByGenderForAllRegion(@Param("year") int year);
+List<GenderOne> getPatientByGenderForOneRegion(@Param("year") int year, @Param("regionId") Long regionId);
+
+
 List<Object[]> motifVlreasonForEntireRegion(@Param("year") int year);
 List<Object[]> motifVlreasonForOneRegion(@Param("year") int year, @Param("regionId") Long regionId);
 

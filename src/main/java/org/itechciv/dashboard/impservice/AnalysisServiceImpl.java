@@ -1,6 +1,11 @@
 package org.itechciv.dashboard.impservice;
+import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
+
+import org.itechciv.dashboard.helper.CategoryAge;
+import org.itechciv.dashboard.helper.Gender;
+import org.itechciv.dashboard.helper.GenderOne;
 import org.itechciv.dashboard.iservice.AnalysisService;
 import org.itechciv.dashboard.model.Analysis;
 import org.itechciv.dashboard.repository.AnalysisRepository;
@@ -4244,14 +4249,84 @@ public List<Object[]> getPatientByAgeCdcForSite(int year, Long ageCategoryId) {
 
 
 @Override
-public List<Object[]> getPatientByGenderForAllRegion(int year) {
+public List<Gender> getPatientByGenderForAllRegion(int year) {
+
+List<Gender> response = new ArrayList<Gender>();
+List<Object[]> results;
+
     try{
-        return analisysRepo.getPatientByGenderForAllRegion(year);
+        results =  analisysRepo.getPatientByGenderForAllRegion(year);
+
+        for(Object[] o: results){
+            Gender gender = new Gender();
+
+            if(o[0].equals("F")){
+				gender.setLabel(o[0].toString());
+				gender.setNotDeletionTotal(Integer.parseInt(o[1].toString()));
+				gender.setDeletionTotal(Integer.parseInt(o[2].toString()));
+                gender.setDeletionPercentage(Double.parseDouble(o[3].toString()));
+            }else if(o[0].equals("M")){
+                gender.setLabel(o[0].toString());
+				gender.setNotDeletionTotal(Integer.parseInt(o[1].toString()));
+				gender.setDeletionTotal(Integer.parseInt(o[2].toString()));
+                gender.setDeletionPercentage(Double.parseDouble(o[3].toString()));  
+            }else{
+                gender.setLabel("Aucune donnee");
+				gender.setNotDeletionTotal(Integer.parseInt(o[1].toString()));
+				gender.setDeletionTotal(Integer.parseInt(o[2].toString()));
+                gender.setDeletionPercentage(Double.parseDouble(o[3].toString())); 
+            }
+          response.add(gender);
+        }
+        return response;
+    }catch(Exception ex){
+        ex.printStackTrace();
+        return Collections.emptyList();
+       }
+} 
+
+
+@Override
+public List<GenderOne> getPatientByGenderForOneRegion(int year, Long regionId ) {
+
+List<GenderOne> response = new ArrayList<GenderOne>();
+List<Object[]> results;
+
+    try{
+        results =  analisysRepo.getPatientByGenderForOneRegion(year, regionId);
+
+        for(Object[] o: results){
+            GenderOne genderOne = new GenderOne();
+
+            if(o[1].equals("F")){
+                genderOne.setRegionName(o[0].toString());
+				genderOne.setLabel(o[1].toString());
+				genderOne.setNotDeletionTotal(Integer.parseInt(o[2].toString()));
+				genderOne.setDeletionTotal(Integer.parseInt(o[3].toString()));
+                genderOne.setDeletionPercentage(Double.parseDouble(o[4].toString()));
+            }else if(o[1].equals("M")){
+                genderOne.setRegionName(o[0].toString());
+                genderOne.setLabel(o[1].toString());
+				genderOne.setNotDeletionTotal(Integer.parseInt(o[2].toString()));
+				genderOne.setDeletionTotal(Integer.parseInt(o[3].toString()));
+                genderOne.setDeletionPercentage(Double.parseDouble(o[4].toString()));  
+            }else{
+                genderOne.setRegionName(o[0].toString());
+                genderOne.setLabel("Aucune donnee");
+				genderOne.setNotDeletionTotal(Integer.parseInt(o[2].toString()));
+				genderOne.setDeletionTotal(Integer.parseInt(o[3].toString()));
+                genderOne.setDeletionPercentage(Double.parseDouble(o[4].toString())); 
+            }
+          response.add(genderOne);
+        }
+        return response;
     }catch(Exception ex){
         ex.printStackTrace();
         return Collections.emptyList();
        }
 }
+
+
 
 
 @Override
