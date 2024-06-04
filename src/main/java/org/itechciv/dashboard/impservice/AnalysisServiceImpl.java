@@ -4454,6 +4454,40 @@ public List<Object[]> getPatientNoDataForOneRegion(int year, Long regionId) {
 }
 
 
+@Override
+public List<Object[]> getPatientMinusTenForOneRegion(int year, Long regionId) {
+    try{
+        return analisysRepo.getPatientMinusTenForOneRegion(year, regionId);
+    }catch(Exception ex){
+        ex.printStackTrace();
+        return Collections.emptyList();
+       }
+}
+
+
+@Override
+public List<Object[]> getPatientBetweenTenAndFourteenForOneRegion(int year, Long regionId) {
+    try{
+        return analisysRepo.getPatientBetweenTenAndFourteenForOneRegion(year, regionId);
+    }catch(Exception ex){
+        ex.printStackTrace();
+        return Collections.emptyList();
+       }
+}
+
+
+@Override
+public List<Object[]> getPatientGreaterThanTwentyForOneRegion(int year, Long regionId) {
+    try{
+        return analisysRepo.getPatientGreaterThanTwentyForOneRegion(year, regionId);
+    }catch(Exception ex){
+        ex.printStackTrace();
+        return Collections.emptyList();
+       }
+}
+
+
+
 
 
 

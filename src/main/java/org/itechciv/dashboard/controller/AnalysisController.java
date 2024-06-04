@@ -2553,6 +2553,11 @@ public List<Object[]> getViralLoadNothingByRegion(@Param("year") int year){
 @GetMapping("/patientminustenforallregion")
 public List<Object[]> getPatientMinusTenForAllRegion(@Param("year") int year){
     return analysisServices.getPatientMinusTenForAllRegion(year);
+} 
+
+@GetMapping("/patientminustenforoneregion")
+public List<Object[]> getPatientMinusTenForOneRegion(@Param("year") int year, @RequestParam Long regionId){
+    return analysisServices.getPatientMinusTenForOneRegion(year, regionId);
 }
 
 
@@ -2562,10 +2567,23 @@ public List<Object[]> getPatientBetweenTenAndFourteenForAllRegion(@Param("year")
 }
 
 
+@GetMapping("/patientbetweentenandfourteenforoneregion")
+public List<Object[]> getPatientBetweenTenAndFourteenForOneRegion(@Param("year") int year, @RequestParam Long regionId){
+    return analysisServices.getPatientBetweenTenAndFourteenForOneRegion(year,regionId);
+}
+
+
 @GetMapping("/patientgreaterthantwentyforallregion")
 public List<Object[]> getPatientGreaterThanTwentyForAllRegion(@Param("year") int year){
     return analysisServices.getPatientGreaterThanTwentyForAllRegion(year);
 }
+
+
+@GetMapping("/patientgreaterthantwentyforoneregion")
+public List<Object[]> getPatientGreaterThanTwentyForOneRegion(@Param("year") int year, @RequestParam Long regionId){
+    return analysisServices.getPatientGreaterThanTwentyForOneRegion(year, regionId);
+}
+
 
 
 @GetMapping("/motifvlreasonforallregion")
@@ -2651,12 +2669,12 @@ public List<Object[]> getViralLoadNothingForOneRegion(@RequestParam Long regionI
     return analysisServices.getViralLoadNothingForOneRegion(regionId, year);
 }
 
-
+/* 
 @GetMapping("/patientminustenforoneregion")
 public List<Object[]> getPatientMinusTenForOneRegion(@RequestParam Long regionId, @Param("year") int year){
     return analysisServices.getPatientMinusTenForOneRegion(regionId, year);
 }
-
+ */
 
 @GetMapping("/virallodbygenderforallregion")
 public List<Object[]> getViralLoadByGenderForAllRegion(@Param("year") int year){

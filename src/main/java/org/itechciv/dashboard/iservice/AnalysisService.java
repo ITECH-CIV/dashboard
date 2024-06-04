@@ -530,6 +530,9 @@ List<Object[]> getPatientNoDataForOneRegion(@Param("year") int year, @Param("reg
 
 
 
+List<Object[]> getPatientMinusTenForOneRegion(@Param("year") int year, @Param("regionId") Long regionId);
+List<Object[]> getPatientBetweenTenAndFourteenForOneRegion(@Param("year") int year, @Param("regionId") Long regionId);
+List<Object[]> getPatientGreaterThanTwentyForOneRegion(@Param("year") int year, @Param("regionId") Long regionId);
 
 
 

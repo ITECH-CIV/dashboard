@@ -7979,6 +7979,22 @@ List<Object[]> getViralLoadNothingByRegion(@Param("year") int year);
 " GROUP BY EXTRACT(YEAR FROM a.drcpt)")
 List<Object[]> getPatientMinusTenForAllRegion(@Param("year") int year);
 
+//10
+@Query(value = "SELECT " +
+" SUM(CASE WHEN a.convertedResult >= 1000 THEN 1 ELSE 0 END) AS TOTAL_NON_SUPPRIME, " +
+" SUM(CASE WHEN a.convertedResult < 1000 AND a.convertedResult > 0 THEN 1 ELSE 0 END ) AS TOTAL_SUPPRIME, " +
+" ROUND(SUM(CASE WHEN a.convertedResult = 0 THEN 1 WHEN a.convertedResult < 1000 AND a.convertedResult > 0 THEN 1 ELSE 0 END) * 100.0 / SUM(1), 2) AS POURCENTAGE_SUPPRIME " +
+" FROM Region r " +
+" JOIN District d ON r.id = d.region.id " +
+" JOIN Site s ON d.id = s.district.id " +
+" JOIN Patient p ON s.id = p.site.id " +
+" JOIN Analysis a ON p.id = a.patient.id " +
+" WHERE r.id = :regionId AND FLOOR(EXTRACT(YEAR FROM CURRENT_DATE()) - EXTRACT(YEAR FROM p.birthDate)) < 10 AND " + 
+" EXTRACT(YEAR FROM a.drcpt) = :year " +
+" GROUP BY EXTRACT(YEAR FROM a.drcpt)")
+List<Object[]> getPatientMinusTenForOneRegion(@Param("year") int year, @Param("regionId") Long regionId);
+
+
 // 10 et 19
 @Query(value = "SELECT " +
 " SUM(CASE WHEN a.convertedResult >= 1000 THEN 1 ELSE 0 END) AS TOTAL_NON_SUPPRIME, " +
@@ -7993,6 +8009,22 @@ List<Object[]> getPatientMinusTenForAllRegion(@Param("year") int year);
 " FLOOR(EXTRACT(YEAR FROM CURRENT_DATE()) - EXTRACT(YEAR FROM p.birthDate)) BETWEEN 10 AND 19  " +
 " GROUP BY EXTRACT(YEAR FROM a.drcpt)")
 List<Object[]>getPatientBetweenTenAndFourteenForAllRegion(@Param("year") int year);
+
+
+@Query(value = "SELECT " +
+" SUM(CASE WHEN a.convertedResult >= 1000 THEN 1 ELSE 0 END) AS TOTAL_NON_SUPPRIME, " +
+" SUM(CASE WHEN a.convertedResult < 1000 AND a.convertedResult > 0 THEN 1 ELSE 0 END ) AS TOTAL_SUPPRIME, " +
+" ROUND(SUM(CASE WHEN a.convertedResult = 0 THEN 1 WHEN a.convertedResult < 1000 AND a.convertedResult > 0 THEN 1 ELSE 0 END) * 100.0 / SUM(1), 2) AS POURCENTAGE_SUPPRIME " +
+" FROM Region r " +
+" INNER JOIN District d ON r.id = d.region.id " +
+" INNER JOIN Site s ON d.id = s.district.id " +
+" INNER JOIN Patient p ON s.id = p.site.id " +
+" INNER JOIN Analysis a ON p.id = a.patient.id " +
+" WHERE EXTRACT(YEAR FROM a.drcpt) = :year AND " +
+" r.id = :regionId AND FLOOR(EXTRACT(YEAR FROM CURRENT_DATE()) - EXTRACT(YEAR FROM p.birthDate)) BETWEEN 10 AND 19  " +
+" GROUP BY EXTRACT(YEAR FROM a.drcpt)")
+List<Object[]>getPatientBetweenTenAndFourteenForOneRegion(@Param("year") int year, @Param("regionId") Long regionId);
+
  
 //>20
 @Query(value = "SELECT " +
@@ -8008,6 +8040,45 @@ List<Object[]>getPatientBetweenTenAndFourteenForAllRegion(@Param("year") int yea
 " EXTRACT(YEAR FROM a.drcpt) = :year " +
 " GROUP BY EXTRACT(YEAR FROM a.drcpt)")
 List<Object[]> getPatientGreaterThanTwentyForAllRegion(@Param("year") int year);
+
+
+//>20
+@Query(value = "SELECT " +
+" SUM(CASE WHEN a.convertedResult >= 1000 THEN 1 ELSE 0 END) AS TOTAL_NON_SUPPRIME, " +
+" SUM(CASE WHEN a.convertedResult < 1000 AND a.convertedResult > 0 THEN 1 ELSE 0 END ) AS TOTAL_SUPPRIME, " +
+" ROUND(SUM(CASE WHEN a.convertedResult = 0 THEN 1 WHEN a.convertedResult < 1000 AND a.convertedResult > 0 THEN 1 ELSE 0 END) * 100.0 / SUM(1), 2) AS POURCENTAGE_SUPPRIME " +
+" FROM Region r " +
+" JOIN District d ON r.id = d.region.id " +
+" JOIN Site s ON d.id = s.district.id " +
+" JOIN Patient p ON s.id = p.site.id " +
+" JOIN Analysis a ON p.id = a.patient.id " +
+" WHERE r.id = :regionId AND FLOOR(EXTRACT(YEAR FROM CURRENT_DATE()) - EXTRACT(YEAR FROM p.birthDate)) > 20 AND " + 
+" EXTRACT(YEAR FROM a.drcpt) = :year " +
+" GROUP BY EXTRACT(YEAR FROM a.drcpt)")
+List<Object[]> getPatientGreaterThanTwentyForOneRegion(@Param("year") int year, @Param("regionId") Long regionId);
+
+
+
+
+
+/* @Query(value = "SELECT " +
+" SUM(CASE WHEN a.convertedResult >= 1000 THEN 1 ELSE 0 END) AS TOTAL_NON_SUPPRIME, " +
+" SUM(CASE WHEN a.convertedResult < 1000 AND a.convertedResult > 0 THEN 1 ELSE 0 END ) AS TOTAL_SUPPRIME, " +
+" ROUND(SUM(CASE WHEN a.convertedResult = 0 THEN 1 WHEN a.convertedResult < 1000 AND a.convertedResult > 0 THEN 1 ELSE 0 END) * 100.0 / SUM(1), 2) AS POURCENTAGE_SUPPRIME " +
+" FROM Region r " +
+" JOIN District d ON r.id = d.region.id " +
+" JOIN Site s ON d.id = s.district.id " +
+" JOIN Patient p ON s.id = p.site.id " +
+" JOIN Analysis a ON p.id = a.patient.id " +
+" WHERE FLOOR(EXTRACT(YEAR FROM CURRENT_DATE()) - EXTRACT(YEAR FROM p.birthDate)) > 20 AND " + 
+" EXTRACT(YEAR FROM a.drcpt) = :year " +
+" GROUP BY EXTRACT(YEAR FROM a.drcpt)")
+List<Object[]> getPatientGreaterThanTwentyForAllRegion(@Param("year") int year, @Param("regionId") Long regionId);
+ */
+
+
+
+
 
 //AUCUNE DONNEE
 @Query(value = "SELECT " +
