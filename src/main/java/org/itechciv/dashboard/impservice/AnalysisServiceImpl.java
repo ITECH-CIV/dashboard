@@ -3,6 +3,7 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
+import org.itechciv.dashboard.helper.AgeRange;
 import org.itechciv.dashboard.helper.CategoryAge;
 import org.itechciv.dashboard.helper.Gender;
 import org.itechciv.dashboard.helper.GenderOne;
@@ -4387,6 +4388,79 @@ public List<Object[]> getPatientForOneCDCAgeCategory(int year, Long ageCategoryI
         return Collections.emptyList();
        }
 }
+
+@Override
+public List<Object[]> getPatientMaleForAllRegion(int year) {
+    try{
+        return analisysRepo.getPatientMaleForAllRegion(year);
+    }catch(Exception ex){
+        ex.printStackTrace();
+        return Collections.emptyList();
+       }
+}
+
+
+@Override
+public List<Object[]> getPatientMaleForOneRegion(int year, Long regionId) {
+    try{
+        return analisysRepo.getPatientMaleForOneRegion(year, regionId);
+    }catch(Exception ex){
+        ex.printStackTrace();
+        return Collections.emptyList();
+       }
+}
+
+@Override
+public List<Object[]> getPatientFemininForAllRegion(int year) {
+    try{
+        return analisysRepo.getPatientFemininForAllRegion(year);
+    }catch(Exception ex){
+        ex.printStackTrace();
+        return Collections.emptyList();
+       }
+}
+
+
+@Override
+public List<Object[]> getPatientFemininForOneRegion(int year, Long regionId) {
+    try{
+        return analisysRepo.getPatientFemininForOneRegion(year, regionId);
+    }catch(Exception ex){
+        ex.printStackTrace();
+        return Collections.emptyList();
+       }
+}
+
+
+@Override
+public List<Object[]> getPatientNoDataForAllRegion(int year) {
+    try{
+        return analisysRepo.getPatientNoDataForAllRegion(year);
+    }catch(Exception ex){
+        ex.printStackTrace();
+        return Collections.emptyList();
+       }
+}
+
+
+@Override
+public List<Object[]> getPatientNoDataForOneRegion(int year, Long regionId) {
+    try{
+        return analisysRepo.getPatientNoDataForOneRegion(year, regionId);
+    }catch(Exception ex){
+        ex.printStackTrace();
+        return Collections.emptyList();
+       }
+}
+
+
+
+
+
+
+
+
+
 
 
 

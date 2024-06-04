@@ -3032,6 +3032,44 @@ public List<Object[]> getNotDeletionForOnePartner(@Param("year") int year, @Requ
     }
 
 
+
+    @GetMapping("/patientmaleforallregion")
+    public List<Object[]> getPatientMaleForAllRegion(@RequestParam int year) {
+    return analysisServices.getPatientMaleForAllRegion(year);
+    }
+
+
+
+    @GetMapping("/patientmaleforoneregion")
+    public List<Object[]> getPatientMaleForOneRegion(@RequestParam int year, @Param("regionId") Long regionId) {
+    return analysisServices.getPatientMaleForOneRegion(year, regionId);
+    }
+
+
+    @GetMapping("/patientfemininforallregion")
+    public List<Object[]> getPatientFemininForAllRegion(@RequestParam int year) {
+    return analysisServices.getPatientFemininForAllRegion(year);
+    }
+
+    @GetMapping("/patientfemininforoneregion")
+    public List<Object[]> getPatientFemininForOneRegion(@RequestParam int year, @Param("regionId") Long regionId) {
+    return analysisServices.getPatientFemininForOneRegion(year, regionId);
+    } 
+
+    @GetMapping("/patientnodataforoneregion")
+    public List<Object[]> getPatientNoDataForOneRegion(@RequestParam int year, @Param("regionId") Long regionId) {
+    return analysisServices.getPatientNoDataForOneRegion(year, regionId);
+    }
+
+
+
+
+
+    @GetMapping("/patientnodataforallregion")
+    public List<Object[]> getPatientNoDataForAllRegion(@RequestParam int year) {
+    return analysisServices.getPatientNoDataForAllRegion(year);
+    }
+
     
     
 

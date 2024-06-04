@@ -4,6 +4,7 @@ import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Map;
 
+import org.itechciv.dashboard.helper.AgeRange;
 import org.itechciv.dashboard.helper.CategoryAge;
 import org.itechciv.dashboard.helper.Gender;
 import org.itechciv.dashboard.helper.GenderOne;
@@ -518,10 +519,14 @@ List<Object[]> getPatientForAllCDCAgeCategory(@Param("year") int year);
 
 List<Object[]> getPatientForOneNationalAgeCategory(@Param("year") int year, @Param("ageCategoryId") Long ageCategoryId);
 List<Object[]> getPatientForOneCDCAgeCategory(@Param("year") int year, @Param("ageCategoryId") Long ageCategoryId);
+  
+List<Object[]> getPatientMaleForAllRegion(@Param("year") int year);  
+List<Object[]> getPatientFemininForAllRegion(@Param("year") int year);
+List<Object[]> getPatientNoDataForAllRegion(@Param("year") int year);
+List<Object[]> getPatientMaleForOneRegion(@Param("year") int year, @Param("regionId") Long regionId);
+List<Object[]> getPatientFemininForOneRegion(@Param("year") int year, @Param("regionId") Long regionId);
 
-
-
-
+List<Object[]> getPatientNoDataForOneRegion(@Param("year") int year, @Param("regionId") Long regionId);
 
 
 
