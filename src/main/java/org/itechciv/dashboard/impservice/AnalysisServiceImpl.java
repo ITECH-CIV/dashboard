@@ -4486,6 +4486,60 @@ public List<Object[]> getPatientGreaterThanTwentyForOneRegion(int year, Long reg
        }
 }
 
+@Override
+public List<Object[]> getPatientAgeNoDataForAllRegion(int year) {
+    try{
+        return analisysRepo.getPatientAgeNoDataForAllRegion(year);
+    }catch(Exception ex){
+        ex.printStackTrace();
+        return Collections.emptyList();
+       }
+}
+
+@Override
+public List<Object[]> getPatientAgeNoDataForOneRegion(int year, Long regionId) {
+    try{
+        return analisysRepo.getPatientAgeNoDataForOneRegion(year, regionId);
+    }catch(Exception ex){
+        ex.printStackTrace();
+        return Collections.emptyList();
+       }
+}
+
+
+@Override
+public List<Object[]> getestDBSForOneRegimen(Long regimenId) {
+    try{
+        return analisysRepo.getestDBSForOneRegimen(regimenId);
+    }catch(Exception ex){
+        ex.printStackTrace();
+        return Collections.emptyList();
+       }
+} 
+
+
+@Override
+public List<Object[]> getestPSCForOneRegimen(Long regimenId) {
+    try{
+        return analisysRepo.getestPSCForOneRegimen(regimenId);
+    }catch(Exception ex){
+        ex.printStackTrace();
+        return Collections.emptyList();
+       }
+}
+
+
+@Override
+public List<Object[]> getestEdtaPlasmaForOneRegimen(Long regimenId) {
+    try{
+        return analisysRepo.getestEdtaPlasmaForOneRegimen(regimenId);
+    }catch(Exception ex){
+        ex.printStackTrace();
+        return Collections.emptyList();
+       }
+}
+
+
 
 
 

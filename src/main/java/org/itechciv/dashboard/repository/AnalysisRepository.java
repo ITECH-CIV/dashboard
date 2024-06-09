@@ -6333,8 +6333,7 @@ List<Object[]> getestBySpecimenDBSForOneRegimen(@Param("regimenId") Long regimen
  List<Object[]> getestBySpecimenPSCForOneRegimen(@Param("regimenId") Long regimenId);
 
   //EDTA PLASMA
-  @Query(value = " SELECT TO_CHAR(a.drcpt, 'Mon-YYYY') AS date,  " +
-  " st.label, " +
+  @Query(value = " SELECT TO_CHAR(a.drcpt, 'Mon-YYYY') AS date, a.drcpt, " +
   " COUNT(t.id) AS total_tests " +
   " FROM dashboard.region r " +
   " INNER JOIN dashboard.district d ON r.id = d.region_id" +
@@ -6350,7 +6349,7 @@ List<Object[]> getestBySpecimenDBSForOneRegimen(@Param("regimenId") Long regimen
   " WHERE st.label = 'Tube EDTA - Violet' AND a.regimen_id = :regimenId " +
   " AND a.drcpt BETWEEN '2022-01-01' AND CURRENT_DATE " +
   " GROUP BY a.drcpt, TO_CHAR(a.drcpt, 'Mon-YYYY'), st.label  " +
-  " ORDER BY a.drcpt ASC;", nativeQuery = true)
+  " ORDER BY a.drcpt ASC, TO_CHAR(a.drcpt, 'Mon-YYYY');", nativeQuery = true)
   List<Object[]> getestBySpecimenEdtaPlasmaForOneRegimen(@Param("regimenId") Long regimenId);
 
    //NOMBRE DE TESTS REALISES POUR UN REGIME THERAPEUTIQUE EN FONCTION DE L'ANNEE EN COURS
@@ -7599,7 +7598,7 @@ List<Object[]> getTestsAndPatientsByDistrictliste(@Param("year") int year);
 "JOIN Regimen reg ON a.regimen.id = reg.id " +
 "JOIN VlReason vl ON a.vlReason.id = vl.id " +
 "WHERE EXTRACT(YEAR FROM a.drcpt) = :year " +
-"GROUP BY r.id, r.name, d.id, d.name, s.id, s.newSiteLongName, pt.id, pt.name " +
+"GROUP BY r.id, r.name, d.id, d.name, s.id, s.newSiteLongName, pt.name " +
 "ORDER BY total_tests DESC, TOTAL_SUPPRIME DESC, TOTAL_NON_SUPPRIME DESC")
 List<Object[]> getTestsAndPatientsBySitePartnerliste(@Param("year") int year);
 
@@ -8056,6 +8055,39 @@ List<Object[]> getPatientGreaterThanTwentyForAllRegion(@Param("year") int year);
 " EXTRACT(YEAR FROM a.drcpt) = :year " +
 " GROUP BY EXTRACT(YEAR FROM a.drcpt)")
 List<Object[]> getPatientGreaterThanTwentyForOneRegion(@Param("year") int year, @Param("regionId") Long regionId);
+
+
+
+
+@Query(value = "SELECT " +
+" SUM(CASE WHEN a.convertedResult >= 1000 THEN 1 ELSE 0 END) AS TOTAL_NON_SUPPRIME, " +
+" SUM(CASE WHEN a.convertedResult < 1000 AND a.convertedResult > 0 THEN 1 ELSE 0 END ) AS TOTAL_SUPPRIME, " +
+" ROUND(SUM(CASE WHEN a.convertedResult = 0 THEN 1 WHEN a.convertedResult < 1000 AND a.convertedResult > 0 THEN 1 ELSE 0 END) * 100.0 / SUM(1), 2) AS POURCENTAGE_SUPPRIME " +
+" FROM Region r " +
+" JOIN District d ON r.id = d.region.id " +
+" JOIN Site s ON d.id = s.district.id " +
+" JOIN Patient p ON s.id = p.site.id " +
+" JOIN Analysis a ON p.id = a.patient.id " +
+" WHERE p.ageYears = 0 AND " + 
+" EXTRACT(YEAR FROM a.drcpt) = :year " +
+" GROUP BY EXTRACT(YEAR FROM a.drcpt)")
+List<Object[]> getPatientAgeNoDataForAllRegion(@Param("year") int year);
+
+
+@Query(value = "SELECT " +
+" SUM(CASE WHEN a.convertedResult >= 1000 THEN 1 ELSE 0 END) AS TOTAL_NON_SUPPRIME, " +
+" SUM(CASE WHEN a.convertedResult < 1000 AND a.convertedResult > 0 THEN 1 ELSE 0 END ) AS TOTAL_SUPPRIME, " +
+" ROUND(SUM(CASE WHEN a.convertedResult = 0 THEN 1 WHEN a.convertedResult < 1000 AND a.convertedResult > 0 THEN 1 ELSE 0 END) * 100.0 / SUM(1), 2) AS POURCENTAGE_SUPPRIME " +
+" FROM Region r " +
+" JOIN District d ON r.id = d.region.id " +
+" JOIN Site s ON d.id = s.district.id " +
+" JOIN Patient p ON s.id = p.site.id " +
+" JOIN Analysis a ON p.id = a.patient.id " +
+" WHERE r.id = :regionId AND p.ageYears = 0 AND " + 
+" EXTRACT(YEAR FROM a.drcpt) = :year " +
+" GROUP BY EXTRACT(YEAR FROM a.drcpt)")
+List<Object[]> getPatientAgeNoDataForOneRegion(@Param("year") int year, @Param("regionId") Long regionId);
+
 
 
 
@@ -8928,6 +8960,75 @@ List<Object[]> getPatientForOneCDCAgeCategory(@Param("year") int year, @Param("a
 
 
 
+
+
+@Query(value =  " select formatted_date, yearmonth,label,SUM(total_tests)  " +
+" from ( SELECT DISTINCT TO_CHAR(a.drcpt, 'Mon-YYYY') AS formatted_date,TO_CHAR(a.drcpt, 'YYYYMM') AS yearmonth,  st.label as label, a.drcpt as receipt_date, " +
+" COUNT(t.id) AS total_tests " +
+" FROM dashboard.region r" +
+" INNER JOIN dashboard.district d ON r.id = d.region_id " +
+" INNER JOIN dashboard.site s ON d.id = s.district_id " +
+" INNER JOIN dashboard.patient p ON s.id = p.site_id " +
+" INNER JOIN dashboard.analysis a ON p.id = a.patient_id " +
+" INNER join dashboard.test t on t.id = a.test_id " +
+" INNER join dashboard.site_partner sp on s.id = sp.site_id " +
+" INNER join dashboard.partner pt on pt.id = sp.partner_id " +
+" INNER JOIN dashboard.regimen rg ON a.regimen_id = rg.id " +
+" INNER JOIN dashboard.vl_reason vr ON a.vl_reason_id = vr.id " +   
+" INNER JOIN dashboard.sample_type st ON a.sample_type_id = st.id " +
+" WHERE st.label = 'DBS' AND a.regimen_id = :regimenId " +
+" AND a.drcpt BETWEEN '2022-01-01' AND CURRENT_DATE " + 
+" GROUP BY a.drcpt, TO_CHAR(a.drcpt, 'Mon-YYYY'),yearmonth, st.label " + 
+" ORDER BY a.drcpt ASC ) req1 " + 
+" GROUP BY formatted_date, yearmonth,label " +
+" ORDER BY yearmonth ASC; " , nativeQuery = true) 
+List<Object[]> getestDBSForOneRegimen(@Param("regimenId") Long regimenId);
+
+
+@Query(value =  " select formatted_date, yearmonth,label,SUM(total_tests)  " +
+" from ( SELECT DISTINCT TO_CHAR(a.drcpt, 'Mon-YYYY') AS formatted_date,TO_CHAR(a.drcpt, 'YYYYMM') AS yearmonth,  st.label as label, a.drcpt as receipt_date, " +
+" COUNT(t.id) AS total_tests " +
+" FROM dashboard.region r" +
+" INNER JOIN dashboard.district d ON r.id = d.region_id " +
+" INNER JOIN dashboard.site s ON d.id = s.district_id " +
+" INNER JOIN dashboard.patient p ON s.id = p.site_id " +
+" INNER JOIN dashboard.analysis a ON p.id = a.patient_id " +
+" INNER join dashboard.test t on t.id = a.test_id " +
+" INNER join dashboard.site_partner sp on s.id = sp.site_id " +
+" INNER join dashboard.partner pt on pt.id = sp.partner_id " +
+" INNER JOIN dashboard.regimen rg ON a.regimen_id = rg.id " +
+" INNER JOIN dashboard.vl_reason vr ON a.vl_reason_id = vr.id " +   
+" INNER JOIN dashboard.sample_type st ON a.sample_type_id = st.id " +
+" WHERE st.label = 'PSC' AND a.regimen_id = :regimenId " +
+" AND a.drcpt BETWEEN '2022-01-01' AND CURRENT_DATE " + 
+" GROUP BY a.drcpt, TO_CHAR(a.drcpt, 'Mon-YYYY'),yearmonth, st.label " + 
+" ORDER BY a.drcpt ASC ) req1 " + 
+" GROUP BY formatted_date, yearmonth,label " +
+" ORDER BY yearmonth ASC; " , nativeQuery = true) 
+List<Object[]> getestPSCForOneRegimen(@Param("regimenId") Long regimenId);
+
+
+@Query(value =  " select formatted_date, yearmonth,label,SUM(total_tests)  " +
+" from ( SELECT DISTINCT TO_CHAR(a.drcpt, 'Mon-YYYY') AS formatted_date,TO_CHAR(a.drcpt, 'YYYYMM') AS yearmonth,  st.label as label, a.drcpt as receipt_date, " +
+" COUNT(t.id) AS total_tests " +
+" FROM dashboard.region r " +
+" INNER JOIN dashboard.district d ON r.id = d.region_id " +
+" INNER JOIN dashboard.site s ON d.id = s.district_id " +
+" INNER JOIN dashboard.patient p ON s.id = p.site_id " +
+" INNER JOIN dashboard.analysis a ON p.id = a.patient_id " +
+" INNER join dashboard.test t on t.id = a.test_id " +
+" INNER join dashboard.site_partner sp on s.id = sp.site_id " +
+" INNER join dashboard.partner pt on pt.id = sp.partner_id " +
+" INNER JOIN dashboard.regimen rg ON a.regimen_id = rg.id " +
+" INNER JOIN dashboard.vl_reason vr ON a.vl_reason_id = vr.id " +   
+" INNER JOIN dashboard.sample_type st ON a.sample_type_id = st.id " +
+" WHERE st.label = 'Tube EDTA - Violet' AND a.regimen_id = :regimenId " +
+" AND a.drcpt BETWEEN '2022-01-01' AND CURRENT_DATE " + 
+" GROUP BY a.drcpt, TO_CHAR(a.drcpt, 'Mon-YYYY'),yearmonth, st.label " + 
+" ORDER BY a.drcpt ASC ) req1 " + 
+" GROUP BY formatted_date, yearmonth,label " +
+" ORDER BY yearmonth ASC; " , nativeQuery = true) 
+List<Object[]> getestEdtaPlasmaForOneRegimen(@Param("regimenId") Long regimenId);
 
 
 

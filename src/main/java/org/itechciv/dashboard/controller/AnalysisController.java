@@ -3079,34 +3079,34 @@ public List<Object[]> getNotDeletionForOnePartner(@Param("year") int year, @Requ
     return analysisServices.getPatientNoDataForOneRegion(year, regionId);
     }
 
-
-
-
-
-    @GetMapping("/patientnodataforallregion")
-    public List<Object[]> getPatientNoDataForAllRegion(@RequestParam int year) {
-    return analysisServices.getPatientNoDataForAllRegion(year);
+    @GetMapping("/patientagenodataforallregion")
+    public List<Object[]> getPatientAgeNoDataForAllRegion(@RequestParam int year) {
+    return analysisServices.getPatientAgeNoDataForAllRegion(year);
     }
 
-    
-    
-
-    
-    
-
-
-    
-    
+    @GetMapping("/patientagenodataforoneregion")
+    public List<Object[]> getPatientAgeNoDataForOneRegion(@RequestParam int year, @Param("regionId") Long regionId) {
+    return analysisServices.getPatientAgeNoDataForOneRegion(year, regionId);
+    } 
 
 
+    @GetMapping("/testdbsforoneregimen")
+    public List<Object[]> getestDBSForOneRegimen(@Param("regimenId") Long regimenId) {
+    return analysisServices.getestDBSForOneRegimen(regimenId);
+    }
+
+
+    @GetMapping("/testpscforoneregimen")
+    public List<Object[]> getestPSCForOneRegimen(@Param("regimenId") Long regimenId) {
+    return analysisServices.getestPSCForOneRegimen(regimenId);
+    }
 
 
 
-
-
-
-
-
+    @GetMapping("/testedtaforoneregimen")
+    public List<Object[]> getestEdtaPlasmaForOneRegimen(@Param("regimenId") Long regimenId) {
+    return analysisServices.getestEdtaPlasmaForOneRegimen(regimenId);
+    }
 
 
     //NOmbre de tests realisés par tranche d age nationale <2 a >25 pour chaque region

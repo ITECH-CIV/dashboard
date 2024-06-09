@@ -535,6 +535,15 @@ List<Object[]> getPatientBetweenTenAndFourteenForOneRegion(@Param("year") int ye
 List<Object[]> getPatientGreaterThanTwentyForOneRegion(@Param("year") int year, @Param("regionId") Long regionId);
 
 
+List<Object[]> getPatientAgeNoDataForAllRegion(@Param("year") int year);
+List<Object[]> getPatientAgeNoDataForOneRegion(@Param("year") int year, @Param("regionId") Long regionId);
+
+
+List<Object[]> getestDBSForOneRegimen(@Param("regimenId") Long regimenId);
+List<Object[]> getestPSCForOneRegimen(@Param("regimenId") Long regimenId);
+List<Object[]> getestEdtaPlasmaForOneRegimen(@Param("regimenId") Long regimenId);
+
+
 
 
 
