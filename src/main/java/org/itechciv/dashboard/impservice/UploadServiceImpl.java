@@ -674,8 +674,7 @@ public class UploadServiceImpl implements UploadService {
 						a.setGrossResult("");
 						a.setConvertedResult((int) row.getCell(16).getNumericCellValue());
 
-						System.out
-								.println("valeur-numeric: " + a.getGrossResult() + " " + a.getConvertedResult() + "\n");
+						System.out.println("valeur-numeric: " + a.getGrossResult() + " " + a.getConvertedResult() + "\n");
 
 					}
 					// a = analysisRepository.save(a);

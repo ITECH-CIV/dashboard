@@ -6050,8 +6050,6 @@ List<Object[]> getTestForOnePartnerByMale(@Param("year") int year, @Param("partn
 " GROUP BY pt.id, pt.name, p.gender, EXTRACT(YEAR FROM a.drcpt); ", nativeQuery = true)
 List<Object[]> getTestForOnePartnerByFemale(@Param("year") int year, @Param("partnerId") Long partnerId, @Param("sex") String sex);
 
-
-
 // Motif de le demande des tests
 @Query(
         "SELECT pt.id, pt.name, " +
@@ -7881,7 +7879,7 @@ List<Object[]> getPatientByGenderForOneRegion(@Param("year") int year, @Param("r
 "JOIN Analysis a ON p.id = a.patient.id " +
 "JOIN Test t ON a.test.id = t.id " +
 "JOIN Regimen reg ON a.regimen.id = reg.id " +
-"JOIN VlReason vl ON a.vlReason.id = vl.id " +
+"LEFT JOIN VlReason vl ON a.vlReason.id = vl.id " +
 "WHERE EXTRACT(YEAR FROM a.drcpt) = :year " +
 "GROUP BY vl.name, EXTRACT(YEAR FROM a.drcpt)")
 List<Object[]> motifVlreasonForEntireRegion(@Param("year") int year);
