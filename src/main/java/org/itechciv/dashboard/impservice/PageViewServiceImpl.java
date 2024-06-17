@@ -16,6 +16,10 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import jakarta.persistence.EntityManager;
+import jakarta.persistence.PersistenceContext;
+import jakarta.persistence.Query;
+
 @Service
 @Transactional
 public class PageViewServiceImpl extends GenericServiceImpl<PageView, Long> implements PageViewService {
@@ -25,6 +29,10 @@ private PageRepository pageRepository;
 
 @Autowired
 private PageViewRepository pageViewRepository;
+
+@PersistenceContext
+private EntityManager em;
+
 
 public boolean isUniqueView(String visitorIp, Long pageId) {
 
@@ -45,47 +53,57 @@ public boolean isUniqueView(String visitorIp, Long pageId) {
        }
 } 
 
-PageView savePageView(PageViewDto pageViewDto){
+public PageView savePageView(PageViewDto pageViewDto){
 
 
     String ipVisitor = pageViewDto.getVisitorIp();
     String pageLabel = pageViewDto.getLabelPage();
-    Page page =  new Page();
+    String pageUrl = pageViewDto.getPageUrl();
+    Page page =  null;
+    Page inPage = null;
+    Page result = new Page();
     PageView pageView = new PageView();
     PageView res = null;
     Long pageId = null;
+
 
     try{
 
         page = pageRepository.findPageByLabel(pageLabel);
 
-        if(page != null){
-            pageId = page.getId();
+        if(page == null){
 
-           boolean checkUniqueView = isUniqueView(ipVisitor, pageId) == true;
+            inPage = new Page();
+            inPage.setLabel(pageLabel);  
+            inPage.setUrl(pageUrl);  
+            inPage.setTotalViews(1);
 
-           if(checkUniqueView){
-
-            pageView.setVisitorIp(ipVisitor);
+            page = pageRepository.save(inPage);
+  
             pageView.setPage(page);
+            pageView.setVisitorIp(ipVisitor);
             pageView.setViewDate(new Date());
 
-            res = pageViewRepository.save(pageView);
+        res = pageViewRepository.save(pageView);
+          
+        }else{
+            pageId = page.getId();
+            System.out.println("page-id:" +pageId );
+            
+            pageRepository.updateTotalViews(pageId, pageLabel, pageUrl);
 
-            if(res != null){
-                pageViewRepository.updateTotalViews(pageId, page.getLabel() , page.getUrl());
-            }
+            pageView.setPage(page);
+            pageView.setVisitorIp(ipVisitor);
+            pageView.setViewDate(new Date());
 
-           }
-
+        res = pageViewRepository.save(pageView); 
+        
         }
-   
     }catch(Exception ex){
         ex.printStackTrace();
-
     }
+    return res;
 }
-
 
     
 }

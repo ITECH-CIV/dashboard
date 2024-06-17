@@ -5,6 +5,7 @@ import java.util.List;
 import java.util.Optional;
 
 import org.itechciv.dashboard.dto.PageViewDto;
+import org.itechciv.dashboard.helper.ResponseMessage;
 import org.itechciv.dashboard.iservice.PageService;
 import org.itechciv.dashboard.iservice.PageViewService;
 import org.itechciv.dashboard.model.Page;
@@ -15,11 +16,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.CrossOrigin;
-import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -34,31 +33,13 @@ public class PageViewController {
 
     @RequestMapping(method = RequestMethod.POST, value="/save")
 	@ResponseBody
-	public ResponseEntity<Response> savePageView(@RequestBody PageViewDto pageViewDto) {  
+	public PageView savePageView(@RequestBody PageViewDto pageViewDto) {  
 		
-		Response res = new Response() ; 
-		ResponseEntity<Response> result;
+		PageView result = new PageView() ; 
 				
-		try {
-
-			res = pageViewService.savePageView(pageViewDto); 
+		result = pageViewService.savePageView(pageViewDto); 
 			
-			   if(res!=null) { 
-					
-					result= new ResponseEntity<>(res, HttpStatus.OK);
-					
-				} else 
-				{
-					result= new ResponseEntity<>(res,HttpStatus.NOT_FOUND);
-				}	
-				
-			} 
-			catch (Exception ex) { 
-				
-				res =  new  Response(ResponseStatusEnum.ERROR,null,ex.getMessage(), false);
-				result= new ResponseEntity<>(res,HttpStatus.INTERNAL_SERVER_ERROR);
-			} 
-		return result;
+		return result;	 
 	} 
     
     

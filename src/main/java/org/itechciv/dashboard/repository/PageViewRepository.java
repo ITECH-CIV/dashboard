@@ -17,10 +17,16 @@ public interface PageViewRepository extends JpaRepository<PageView, Long> {
 	List<PageView> findListViewForOneVisitor(@Param("pageId") Long pageId, @Param("visitorIp") String visitorIp);  
 
 
-    @Query(value = " UPDATE dashboard.page p " + 
-			" SET p.totalViews = p.totalViews + 1 " + 
+    @Query(value = " UPDATE dashboard.page as p " + 
+			" SET p.total_views = p.total_views + 1 " + 
 			" WHERE p.id =?1 AND p.label =?2 and p.url =?3", nativeQuery = true)	
-	List<PageView> updateTotalViews(@Param("pageId") Long pageId, @Param("label") String label, @Param("url") String url);  
-
+	void updateTotalViews(@Param("pageId") Long pageId, @Param("label") String label, @Param("url") String url); 
 	
+	
+    @Query(value = " INSERT INTO dashboard.page p " + 
+			" SET p.total_views = p.total_views + 1 " + 
+			" WHERE p.id =?1 AND p.label =?2 and p.url =?3", nativeQuery = true)	
+	PageView addView(@Param("label") String label, @Param("url") String url, @Param("view") int view);  
+
+
 }

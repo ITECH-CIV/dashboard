@@ -8,6 +8,8 @@ public class PageViewDto {
     
      private String labelPage;
 
+     private String pageUrl;
+
     public String getVisitorIp() {
         return visitorIp;
     }
@@ -22,6 +24,14 @@ public class PageViewDto {
 
     public void setLabelPage(String labelPage) {
         this.labelPage = labelPage;
+    }
+
+    public String getPageUrl() {
+        return pageUrl;
+    }
+
+    public void setPageUrl(String pageUrl) {
+        this.pageUrl = pageUrl;
     }
 
     

@@ -26,7 +26,22 @@ public class PageServiceImpl extends GenericServiceImpl<Page, Long> implements P
             return 0;
         }
         return total;
-    }
+    } 
+
+	@Override
+	public long getTotalViewsForOnePage(Long pageId){
+
+        long total;
+
+        try {
+            total = pageRepository.getTotalViewsForOnePage(pageId);
+        } catch (Exception ex) {
+            return 0;
+        }
+        return total;
+
+	} 
+
 @Override
 public Page getByLabel(String label) {
 		

@@ -54,7 +54,7 @@ public interface SiteRepository extends JpaRepository<Site, Long> {
 	List<Site> findByCodeSiteDatim(String codeSiteDatim);
 
 
-    @Query(value = "SELECT * FROM dashboard.site WHERE dashboard.site.district_id = :districtId", nativeQuery = true)
+    @Query(value = "SELECT * FROM dashboard.site s WHERE s.district_id =?1", nativeQuery = true)
     List<Site> findSiteByDistrictId(@Param("districtId") Long districtId);
 
 

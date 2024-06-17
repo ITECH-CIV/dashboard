@@ -25,6 +25,9 @@ public class PageView {
      @ManyToOne
      @JoinColumn(name ="page_id", nullable = false)
      private Page page; 
+
+     @Column(name = "page_url")
+     private String pageUrl; 
     
      @Column(name = "view_date")
      private Date viewDate; 
@@ -85,5 +88,15 @@ public int getMonthDate() {
 public void setMonthDate(int monthDate) {
     this.monthDate = monthDate;
 }
+
+public String getPageUrl() {
+    return pageUrl;
+}
+
+public void setPageUrl(String pageUrl) {
+    this.pageUrl = pageUrl;
+}
+
+
       
 }
