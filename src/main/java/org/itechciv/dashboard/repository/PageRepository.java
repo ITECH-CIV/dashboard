@@ -23,26 +23,46 @@ public interface PageRepository extends JpaRepository<Page, Long> {
 			" WHERE p.id =?1", nativeQuery = true)	
 	long getTotalViewsForOnePage(@Param("pageId") Long pageId);  
 
-
-	//Nombre total de vues pour un mois choisi
+	//Nombre total de vues - mois en cours
 
 	  //Pour toutes les pages 
+	  @Query(value = " SELECT SUM(total_views) as total_views " + 
+	  " FROM dashboard.page p " + 
+	  " JOIN dashboard.page_view pv ON pv.page_id = p.id " +
+	  " WHERE EXTRACT(month FROM pv.view_date) = EXTRACT(month FROM now()) ", nativeQuery = true)	
+	long getTotalViewsForAllPagesForOneMonth();  
+
+
+
+	@Query(value = " SELECT SUM(total_views) as total_views " + 
+	" FROM dashboard.page p " + 
+	" JOIN dashboard.page_view pv ON pv.page_id = p.id " +
+	" WHERE EXTRACT(month FROM pv.view_date) = EXTRACT(month FROM now()) AND p.id = :pageId ", nativeQuery = true)	
+  long getTotalViewsForOnePageForOneMonth(@Param("pageId") Long pageId);  
+
 
 	  //Pour une page 
 
 	//Nombre total de vues pour le mois précédent  
 
-	  //Pour toutes les pages 
+	//Pour toutes les pages 
+	@Query(value = " SELECT SUM(total_views) as total_views " + 
+	" FROM dashboard.page p " + 
+	" JOIN dashboard.page_view pv ON pv.page_id = p.id " +
+	" WHERE EXTRACT(month FROM pv.view_date) = EXTRACT(MONTH FROM CURRENT_TIMESTAMP - INTERVAL '1' MONTH) ", nativeQuery = true)	
+  long getTotalViewsForAllPagesForPreviousMonth();  
 
-
-	  //Pour une page
-
-
+	//Pour une page
+	@Query(value = " SELECT SUM(total_views) as total_views " + 
+	" FROM dashboard.page p " + 
+	" JOIN dashboard.page_view pv ON pv.page_id = p.id " +
+	" WHERE EXTRACT(month FROM pv.view_date) = EXTRACT(MONTH FROM CURRENT_TIMESTAMP - INTERVAL '1' MONTH) AND p.id = :pageId ", nativeQuery = true)	
+  long getTotalViewsForOnePageForPreviousMonth(@Param("pageId") Long pageId);  
+  
 	@Query(value = "select * " + 
 			" from dashboard.page pg" + 
 			" where pg.label =?1", nativeQuery = true)	
 	Page findPageByLabel(String label); 
-
 
 	@Modifying(clearAutomatically = true)
     @Query(value = " UPDATE dashboard.page  " + 

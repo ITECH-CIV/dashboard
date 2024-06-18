@@ -1,5 +1,6 @@
 package org.itechciv.dashboard.controller;
 
+import java.util.List;
 import java.util.Optional;
 
 import org.itechciv.dashboard.iservice.AnalysisService;
@@ -216,13 +217,41 @@ public class PageController {
         return pageService.getTotalViewsForOnePage(pageId);
     }
 
-	
-
     @GetMapping("/getByLabel")
     public Page getByLabel(String label) {
         return pageService.getByLabel(label);
     }
-	
-	
+
+	@GetMapping("/totalviewforonemonth")
+    public long getTotalViewsForAllPagesForOneMonth() {
+        return pageService.getTotalViewsForAllPagesForOneMonth();
+    }
+
+
+	@GetMapping("/totalviewforonepageforonemonth")
+    public long getTotalViewsForOnePageForOneMonth(@RequestParam Long pageId) {
+        return pageService.getTotalViewsForOnePageForOneMonth(pageId);
+    }
+
+
+	@GetMapping("/totalviewsforallpagesforpreviousmonth")
+    public long getTotalViewsForAllPagesForPreviousMonth() {
+        return pageService.getTotalViewsForAllPagesForPreviousMonth();
+    }
+
+
+	@GetMapping("/totalviewsforonepageforpreviousmonth")
+    public long getTotalViewsForOnePageForPreviousMonth(@RequestParam Long pageId) {
+        return pageService.getTotalViewsForOnePageForPreviousMonth(pageId);
+    }
+
+
+
+
+
+
+
+
+
 
 }

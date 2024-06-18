@@ -1,10 +1,14 @@
 package org.itechciv.dashboard.impservice;
 
+import java.util.Collections;
+import java.util.List;
+
 import org.itechciv.dashboard.iservice.PageService;
 import org.itechciv.dashboard.model.Page;
 import org.itechciv.dashboard.model.Regimen;
 import org.itechciv.dashboard.repository.PageRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -42,6 +46,8 @@ public class PageServiceImpl extends GenericServiceImpl<Page, Long> implements P
 
 	} 
 
+
+
 @Override
 public Page getByLabel(String label) {
 		
@@ -66,6 +72,57 @@ public Page getByLabel(String label) {
 			return null;
 		}	
 	}
+
+@Override
+public long getTotalViewsForAllPagesForOneMonth() {
+	long total;
+
+	try{
+      total = pageRepository.getTotalViewsForAllPagesForOneMonth();
+	}catch(Exception ex){
+		ex.printStackTrace();
+		return 0;
+	}
+	return total;
+
+}
+
+@Override
+public long getTotalViewsForOnePageForOneMonth(Long pageId) {
+	long total;
+
+	try{
+		total = pageRepository.getTotalViewsForOnePageForOneMonth(pageId);
+	}catch(Exception ex){
+		ex.printStackTrace();
+		return 0;
+	}
+	return total;
+}
+
+@Override
+public long getTotalViewsForAllPagesForPreviousMonth() {
+	long total;
+	try{
+      total = pageRepository.getTotalViewsForAllPagesForPreviousMonth();
+	}catch(Exception ex){
+		ex.printStackTrace();
+		return 0;
+	}
+	return total;
+}
+
+@Override
+public long getTotalViewsForOnePageForPreviousMonth(Long pageId) {
+	long total;
+	try{
+      total = pageRepository.getTotalViewsForOnePageForPreviousMonth(pageId);
+	}catch(Exception ex){
+		ex.printStackTrace();
+		return 0;
+	}
+	return total;
+}
 
 
 
