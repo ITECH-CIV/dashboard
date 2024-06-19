@@ -5,5 +5,5 @@ import org.itechciv.dashboard.model.PageView;
 
 public interface PageViewService extends GenericService<PageView, Long> {
 
-    PageView savePageView(PageViewDto pageViewDto);
+    Object savePageView(PageViewDto pageViewDto);
 }

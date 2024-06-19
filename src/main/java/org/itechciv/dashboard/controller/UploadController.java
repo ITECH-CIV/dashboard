@@ -125,6 +125,7 @@ public class UploadController {
 			  } 
 			 } catch (Exception ex) {
 				  ex.printStackTrace();
+				  System.out.println(ex.getMessage());
 				  message = ConstantMessage.ERROR;
 			      return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(new ResponseMessage(message, ex.getMessage()));
 			  } 	 

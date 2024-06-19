@@ -1,6 +1,7 @@
 package org.itechciv.dashboard.impservice;
 
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.Collections;
 import java.util.Date;
 import java.util.List;
@@ -15,6 +16,8 @@ import org.itechciv.dashboard.repository.PageViewRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+
+import com.fasterxml.jackson.annotation.JsonTypeInfo.As;
 
 import jakarta.persistence.EntityManager;
 import jakarta.persistence.PersistenceContext;
@@ -53,7 +56,7 @@ public boolean isUniqueView(String visitorIp, Long pageId) {
        }
 } 
 
-public PageView savePageView(PageViewDto pageViewDto){
+public Object savePageView(PageViewDto pageViewDto){
 
 
     String ipVisitor = pageViewDto.getVisitorIp();
@@ -63,8 +66,16 @@ public PageView savePageView(PageViewDto pageViewDto){
     Page inPage = null;
     Page result = new Page();
     PageView pageView = new PageView();
-    PageView res = null;
+    Object res = null;
     Long pageId = null;
+    Date date = new Date();
+    Calendar calendar = Calendar.getInstance();
+    calendar.setTime(date);
+    int month = calendar.get(Calendar.MONTH) + 1;
+    int year = calendar.get(Calendar.YEAR);
+
+    PageView resultat = null;
+
 
 
     try{
@@ -77,27 +88,44 @@ public PageView savePageView(PageViewDto pageViewDto){
             inPage.setLabel(pageLabel);  
             inPage.setUrl(pageUrl);  
             inPage.setTotalViews(1);
+            inPage.setMonth(month);
+            inPage.setYear(year);
 
             page = pageRepository.save(inPage);
   
             pageView.setPage(page);
             pageView.setVisitorIp(ipVisitor);
             pageView.setViewDate(new Date());
+            pageView.setNbVisit(1);
 
         res = pageViewRepository.save(pageView);
           
         }else{
             pageId = page.getId();
             System.out.println("page-id:" +pageId );
+
+            resultat = pageViewRepository.findPageByIpAddress(ipVisitor);
             
-            pageRepository.updateTotalViews(pageId, pageLabel, pageUrl);
+            System.out.println("resultat:" +resultat );
 
-            pageView.setPage(page);
-            pageView.setVisitorIp(ipVisitor);
-            pageView.setViewDate(new Date());
+            if(resultat == null){
 
-        res = pageViewRepository.save(pageView); 
-        
+                pageRepository.updateTotalViews(pageId, pageLabel, pageUrl, month, year);
+
+                pageView.setPage(page);
+                pageView.setVisitorIp(ipVisitor);
+                pageView.setViewDate(new Date());
+                pageView.setNbVisit(1);
+
+                res = pageViewRepository.save(pageView);
+               
+            }else{
+
+                pageRepository.updateTotalViews(pageId, pageLabel, pageUrl, month, year);
+
+                res = pageViewRepository.updateViews(pageId, ipVisitor, date); 
+
+            }
         }
     }catch(Exception ex){
         ex.printStackTrace();

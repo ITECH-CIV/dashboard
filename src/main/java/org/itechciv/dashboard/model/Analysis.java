@@ -2,6 +2,7 @@ package org.itechciv.dashboard.model;
 
 import java.time.LocalDateTime;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
@@ -10,7 +11,6 @@ import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
-import jakarta.persistence.OneToMany;
 import jakarta.persistence.Table;
 
 @Entity
@@ -22,10 +22,10 @@ public class Analysis {
       private Long id;
 	  
 	  @Column(name = "completed_date")
-	  private LocalDateTime completedDate;
+	  private Date completedDate;
 	  
 	  @Column(name = "released_date")
-	  private LocalDateTime releasedDate;
+	  private Date releasedDate;
 	  
 	  @Column(name = "gross_result")
 	  private String grossResult;
@@ -34,16 +34,16 @@ public class Analysis {
 	  private int convertedResult;
 	  
 	  @Column(name="analysis_status")
-	  private int analysisStatus;
+	  private String analysisStatus;
 	  
 	  @Column(name="lab_no")
 	  private String labno;
 	  
 	  @Column(name = "drcpt")
-	  private LocalDateTime drcpt;
+	  private Date drcpt;
 	    
 	  @Column(name = "dintv")
-	  private LocalDateTime dintv;
+	  private Date dintv;
 	  
 	  @ManyToOne
 	  @JoinColumn(name ="sampleTypeId", nullable = false)
@@ -87,22 +87,6 @@ public class Analysis {
 			this.id = id;
 		}
 
-		public LocalDateTime getCompletedDate() {
-			return completedDate;
-		}
-
-		public void setCompletedDate(LocalDateTime completedDate) {
-			this.completedDate = completedDate;
-		}
-
-		public LocalDateTime getReleasedDate() {
-			return releasedDate;
-		}
-
-		public void setReleasedDate(LocalDateTime releasedDate) {
-			this.releasedDate = releasedDate;
-		}
-
 		public String getGrossResult() {
 			return grossResult;
 		}
@@ -119,36 +103,12 @@ public class Analysis {
 			this.convertedResult = convertedResult;
 		}
 
-		public int getAnalysisStatus() {
-			return analysisStatus;
-		}
-
-		public void setAnalysisStatus(int analysisStatus) {
-			this.analysisStatus = analysisStatus;
-		}
-
 		public String getLabno() {
 			return labno;
 		}
 
 		public void setLabno(String labno) {
 			this.labno = labno;
-		}
-
-		public LocalDateTime getDrcpt() {
-			return drcpt;
-		}
-
-		public void setDrcpt(LocalDateTime drcpt) {
-			this.drcpt = drcpt;
-		}
-
-		public LocalDateTime getDintv() {
-			return dintv;
-		}
-
-		public void setDintv(LocalDateTime dintv) {
-			this.dintv = dintv;
 		}
 
 		public SampleType getSampleType() {
@@ -215,18 +175,46 @@ public class Analysis {
 			this.ageNational = ageNational;
 		}
 
-		@Override
-		public String toString() {
-			return "Analysis [id=" + id + ", completedDate=" + completedDate + ", releasedDate=" + releasedDate
-					+ ", grossResult=" + grossResult + ", convertedResult=" + convertedResult + ", analysisStatus="
-					+ analysisStatus + ", labno=" + labno + ", drcpt=" + drcpt + ", dintv=" + dintv + ", sampleType="
-					+ sampleType + ", test=" + test + ", patient=" + patient + ", regimen=" + regimen + ", vlReason="
-					+ vlReason + ", lab=" + lab + ", ageCdc=" + ageCdc + ", ageNational=" + ageNational + "]";
+		public String getAnalysisStatus() {
+			return analysisStatus;
+		}
+
+		public void setAnalysisStatus(String analysisStatus) {
+			this.analysisStatus = analysisStatus;
+		}
+
+		public Date getCompletedDate() {
+			return completedDate;
+		}
+
+		public void setCompletedDate(Date completedDate) {
+			this.completedDate = completedDate;
+		}
+
+		public Date getReleasedDate() {
+			return releasedDate;
+		}
+
+		public void setReleasedDate(Date releasedDate) {
+			this.releasedDate = releasedDate;
+		}
+
+		public Date getDrcpt() {
+			return drcpt;
+		}
+
+		public void setDrcpt(Date drcpt) {
+			this.drcpt = drcpt;
+		}
+
+		public Date getDintv() {
+			return dintv;
+		}
+
+		public void setDintv(Date dintv) {
+			this.dintv = dintv;
 		}
 
 		
-
-		
-
 		
 }

@@ -33,9 +33,9 @@ public class PageViewController {
 
     @RequestMapping(method = RequestMethod.POST, value="/save")
 	@ResponseBody
-	public PageView savePageView(@RequestBody PageViewDto pageViewDto) {  
+	public Object savePageView(@RequestBody PageViewDto pageViewDto) {  
 		
-		PageView result = new PageView() ; 
+		Object result = null ; 
 				
 		result = pageViewService.savePageView(pageViewDto); 
 			

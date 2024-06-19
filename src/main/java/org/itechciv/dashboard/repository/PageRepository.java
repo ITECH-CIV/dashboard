@@ -1,5 +1,6 @@
 package org.itechciv.dashboard.repository;
 
+import java.util.Date;
 import java.util.List;
 
 import org.itechciv.dashboard.model.Page;
@@ -66,8 +67,8 @@ public interface PageRepository extends JpaRepository<Page, Long> {
 
 	@Modifying(clearAutomatically = true)
     @Query(value = " UPDATE dashboard.page  " + 
-			" SET total_views = total_views + 1 , label = :label, url = :url  " + 
+			" SET total_views = total_views + 1 , label = :label, url = :url , month = :month, year = :year " + 
 			" WHERE id = :pageId ", nativeQuery = true)	
-	Object updateTotalViews(@Param("pageId") Long pageId, @Param("label") String label, @Param("url") String url); 
+	Object updateTotalViews(@Param("pageId") Long pageId, @Param("label") String label, @Param("url") String url, @Param("month") int month, @Param("year") int year); 
 	
 }

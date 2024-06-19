@@ -15,12 +15,17 @@ public class Page {
 @GeneratedValue(strategy = GenerationType.IDENTITY)
 private Long id;
 
-
 @Column(name = "label", nullable = true)
 private String label;
 
 @Column(name = "url", nullable = true)
 private String url;
+
+@Column(name="month", nullable = true)
+ private int month;
+
+ @Column(name="year", nullable = true)
+ private int year;
 
  @Column(name="total_views", nullable = true)
  private int totalViews;
@@ -60,7 +65,21 @@ public void setUrl(String url) {
     this.url = url;
 }
 
+public int getMonth() {
+    return month;
+}
 
+public void setMonth(int month) {
+    this.month = month;
+}
+
+public int getYear() {
+    return year;
+}
+
+public void setYear(int year) {
+    this.year = year;
+}
 
 	  
 }

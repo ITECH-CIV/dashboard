@@ -26,18 +26,13 @@ public class PageView {
      @JoinColumn(name ="page_id", nullable = false)
      private Page page; 
 
-     @Column(name = "page_url")
-     private String pageUrl; 
-    
      @Column(name = "view_date")
      private Date viewDate; 
     
-     @Column(name = "year_date")
-     private int yearDate;
+     @Column(name = "nb_visit")
+     private int nbVisit;
      
-     @Column(name = "month_date")
-     private int monthDate;
-
+   
 public PageView() {
 }
 
@@ -73,30 +68,13 @@ public void setViewDate(Date viewDate) {
     this.viewDate = viewDate;
 }
 
-public int getYearDate() {
-    return yearDate;
+public int getNbVisit() {
+    return nbVisit;
 }
 
-public void setYearDate(int yearDate) {
-    this.yearDate = yearDate;
+public void setNbVisit(int nbVisit) {
+    this.nbVisit = nbVisit;
 }
-
-public int getMonthDate() {
-    return monthDate;
-}
-
-public void setMonthDate(int monthDate) {
-    this.monthDate = monthDate;
-}
-
-public String getPageUrl() {
-    return pageUrl;
-}
-
-public void setPageUrl(String pageUrl) {
-    this.pageUrl = pageUrl;
-}
-
 
       
 }

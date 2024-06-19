@@ -258,7 +258,7 @@ public class UploadServiceImpl implements UploadService {
 						inTest.setStudy(row.getCell(3).getStringCellValue());
 
 						t = testRepository.save(inTest);
-						System.out.println("Test:" + t.toString());
+						//System.out.println("Test:" + t.toString());
 					}
 				}
 				// Site
@@ -274,7 +274,7 @@ public class UploadServiceImpl implements UploadService {
 						} catch (Exception ex) {
 							ex.printStackTrace();
 						}
-						inSite.setNameSite(row.getCell(8).getStringCellValue());
+						inSite.setNameSite(ProcessType.getCellStringValue(row.getCell(8)));
 						inSite.setCodeSiteDatim(ProcessType.getCellStringValue(row.getCell(9)));
 						inSite.setNameSiteDatim(ProcessType.getCellStringValue(row.getCell(10)));
 
@@ -283,7 +283,8 @@ public class UploadServiceImpl implements UploadService {
 						// System.out.println("inserted-facilitys:" +f.getId()+"\n");
 
 					} else {
-						s.setNameSite(row.getCell(8).getStringCellValue());
+						//System.out.println(row.getCell(8).getRawValue());
+						s.setNameSite(ProcessType.getCellStringValue(row.getCell(8)));
 						s.setCodeSiteDatim(ProcessType.getCellStringValue(row.getCell(9)));
 						s.setNameSiteDatim(ProcessType.getCellStringValue(row.getCell(10)));
 
@@ -437,19 +438,29 @@ public class UploadServiceImpl implements UploadService {
 
 					System.out.println("row.getCell(13).getNumericCellValue(): "+row.getCell(13).getNumericCellValue());
 
-					System.out.println("listeCdci:" +this.getCDCAgeCategory().get(0).toString());
-					System.out.println("listeNational:" +this.getNationalAgeCategory().get(0).toString());
+					//System.out.println("listeCdci:" +this.getCDCAgeCategory().get(0).toString());
+					//System.out.println("listeNational:" +this.getNationalAgeCategory().get(0).toString());
 					System.out.println("ageCdcId:"+ageCdcId);
 					System.out.println("ageNationalId:"+ageNationalId);
 
+					System.out.println("completed-date:" +row.getCell(21));
+					System.out.println("released-date:" +row.getCell(22));
+					System.out.println("dintv:" +row.getCell(6));
+					System.out.println("drcpt:" +row.getCell(5));
+
+
+
+
+
 					a.setAgeCdc(ageCdcId);
 					a.setAgeNational(ageNationalId);
-					a.setAnalysisStatus((int) row.getCell(19).getNumericCellValue());
-					a.setCompletedDate(ProcessType.toLocalDateTime(evaluator, row.getCell(21)));
-					a.setReleasedDate(ProcessType.toLocalDateTime(evaluator, row.getCell(22)));
+					//a.setAnalysisStatus((int) row.getCell(19).getNumericCellValue());
+					a.setAnalysisStatus(ProcessType.getCellStringValue(row.getCell(19)));
+ 					a.setCompletedDate(ProcessType.getCellDateValue(evaluator, row.getCell(21)));
+					a.setReleasedDate(ProcessType.getCellDateValue(evaluator, row.getCell(22)));
 					a.setLabno(ProcessType.getCellStringValue(row.getCell(0)));
-					a.setDintv(ProcessType.toLocalDateTime(evaluator, row.getCell(6)));
-					a.setDrcpt(ProcessType.toLocalDateTime(evaluator, row.getCell(5)));
+					a.setDintv(ProcessType.getCellDateValue(evaluator, row.getCell(6)));
+					a.setDrcpt(ProcessType.getCellDateValue(evaluator, row.getCell(5)));
 					a.setSampleType(st);
 					a.setTest(t);
 					a.setPatient(p);
@@ -466,6 +477,7 @@ public class UploadServiceImpl implements UploadService {
 			return true;
 		} catch (Exception ex) {
 			ex.printStackTrace();
+			System.out.println(ex.getMessage());
 			return false;
 
 		}
@@ -553,7 +565,7 @@ public class UploadServiceImpl implements UploadService {
 
 			XSSFWorkbook workbook = new XSSFWorkbook(file.getInputStream());
 			XSSFSheet spreadsheet = workbook.getSheetAt(1);
-			System.out.println("SHEET-NAME: " + spreadsheet.getSheetName().toString() + "\n");
+			//System.out.println("SHEET-NAME: " + spreadsheet.getSheetName().toString() + "\n");
 
 			for (int i = 6; i < spreadsheet.getPhysicalNumberOfRows(); i++) {
 
@@ -630,7 +642,7 @@ public class UploadServiceImpl implements UploadService {
 
 			XSSFWorkbook workbook = new XSSFWorkbook(file.getInputStream());
 			XSSFSheet spreadsheet = workbook.getSheetAt(0);
-			System.out.println("SHEET-NAME: " + spreadsheet.getSheetName().toString() + "\n");
+			//System.out.println("SHEET-NAME: " + spreadsheet.getSheetName().toString() + "\n");
 
 			for (int i = 1; i < spreadsheet.getPhysicalNumberOfRows(); i++) {
 
