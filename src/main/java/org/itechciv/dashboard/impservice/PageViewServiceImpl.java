@@ -104,13 +104,13 @@ public Object savePageView(PageViewDto pageViewDto){
             pageId = page.getId();
             System.out.println("page-id:" +pageId );
 
-            resultat = pageViewRepository.findPageByIpAddress(ipVisitor);
+            resultat = pageViewRepository.findFirstVisitForOnePage(ipVisitor, pageId);
             
             System.out.println("resultat:" +resultat );
 
             if(resultat == null){
 
-                pageRepository.updateTotalViews(pageId, pageLabel, pageUrl, month, year);
+                pageRepository.updateTotalViews(pageId, page.getLabel(), page.getUrl(), page.getMonth(), page.getYear());
 
                 pageView.setPage(page);
                 pageView.setVisitorIp(ipVisitor);
@@ -121,7 +121,7 @@ public Object savePageView(PageViewDto pageViewDto){
                
             }else{
 
-                pageRepository.updateTotalViews(pageId, pageLabel, pageUrl, month, year);
+                pageRepository.updateTotalViews(pageId, page.getLabel(), page.getUrl(), page.getMonth(), page.getYear());
 
                 res = pageViewRepository.updateViews(pageId, ipVisitor, date); 
 

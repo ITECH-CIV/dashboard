@@ -29,7 +29,7 @@ public interface PageViewRepository extends JpaRepository<PageView, Long> {
 	@Modifying(clearAutomatically = true)
     @Query(value = " UPDATE dashboard.page_view  " + 
 			" SET nb_visit = nb_visit + 1 , view_date = :date , visitor_ip = :visitorIp, page_id = :pageId " + 
-			" WHERE page_id = :pageId ", nativeQuery = true)	
+			" WHERE page_id = :pageId AND visitor_ip = :visitorIp ", nativeQuery = true)	
 	Object updateViews(@Param("pageId") Long pageId, @Param("visitorIp") String visitorIp, @Param("date") Date date); 
 	
 	
@@ -41,8 +41,8 @@ public interface PageViewRepository extends JpaRepository<PageView, Long> {
 
 	@Query(value = "select * " + 
 			" from dashboard.page_view pv" + 
-			" where pv.visitor_ip =?1", nativeQuery = true)	
-	PageView findPageByIpAddress(@Param("addressIp") String addressIp); 
+			" where pv.visitor_ip =?1 and pv.page_id =?2", nativeQuery = true)	
+	PageView findFirstVisitForOnePage(@Param("addressIp") String addressIp, @Param("pageId") Long pageId ); 
 
 
 
