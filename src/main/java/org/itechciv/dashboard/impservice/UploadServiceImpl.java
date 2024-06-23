@@ -440,17 +440,13 @@ public class UploadServiceImpl implements UploadService {
 
 					//System.out.println("listeCdci:" +this.getCDCAgeCategory().get(0).toString());
 					//System.out.println("listeNational:" +this.getNationalAgeCategory().get(0).toString());
-					System.out.println("ageCdcId:"+ageCdcId);
-					System.out.println("ageNationalId:"+ageNationalId);
+					//System.out.println("ageCdcId:"+ageCdcId);
+					//System.out.println("ageNationalId:"+ageNationalId);
 
-					System.out.println("completed-date:" +row.getCell(21));
-					System.out.println("released-date:" +row.getCell(22));
-					System.out.println("dintv:" +row.getCell(6));
-					System.out.println("drcpt:" +row.getCell(5));
-
-
-
-
+					//System.out.println("completed-date:" +row.getCell(21));
+					//System.out.println("released-date:" +row.getCell(22));
+					//System.out.println("dintv:" +row.getCell(6));
+					//System.out.println("drcpt:" +row.getCell(5));
 
 					a.setAgeCdc(ageCdcId);
 					a.setAgeNational(ageNationalId);

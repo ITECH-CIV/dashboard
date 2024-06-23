@@ -213,8 +213,8 @@ public class PageController {
 	
 
     @GetMapping("/totalviewsforonepage")
-    public long getTotalViewsForOnePage(@RequestParam Long pageId) {
-        return pageService.getTotalViewsForOnePage(pageId);
+    public long getTotalViewsForOnePage(@RequestParam String label) {
+        return pageService.getTotalViewsForOnePage(label);
     }
 
     @GetMapping("/getByLabel")
@@ -228,10 +228,23 @@ public class PageController {
     }
 
 
+	@GetMapping("/totalviewotherforonemonth")
+    public long getTotalViewsForAllPagesOtherForOneMonth(@RequestParam int month, @RequestParam int year) {
+        return pageService.getTotalViewsForAllPagesOtherForOneMonth(month, year);
+    }
+
+	
 	@GetMapping("/totalviewforonepageforonemonth")
     public long getTotalViewsForOnePageForOneMonth(@RequestParam Long pageId) {
         return pageService.getTotalViewsForOnePageForOneMonth(pageId);
     }
+
+
+	@GetMapping("/totalviewotherforonepageforonemonth")
+    public long getTotalViewsForOnePageOtherForOneMonth(@RequestParam Long pageId, @RequestParam int month, @RequestParam int year) {
+        return pageService.getTotalViewsForOnePageOtherForOneMonth(pageId,  month,  year);
+    }
+
 
 
 	@GetMapping("/totalviewsforallpagesforpreviousmonth")
@@ -239,6 +252,10 @@ public class PageController {
         return pageService.getTotalViewsForAllPagesForPreviousMonth();
     }
 
+	@GetMapping("/totalviewsotherforallpagesforpreviousmonth")
+    public long getTotalViewsOtherForAllPagesForPreviousMonth(@RequestParam int month, @RequestParam int year) {
+        return pageService.getTotalViewsOtherForAllPagesForPreviousMonth(month, year);
+    }
 
 	@GetMapping("/totalviewsforonepageforpreviousmonth")
     public long getTotalViewsForOnePageForPreviousMonth(@RequestParam Long pageId) {
@@ -246,12 +263,10 @@ public class PageController {
     }
 
 
-
-
-
-
-
-
+	@GetMapping("/totalviewsotherforonepageforpreviousmonth")
+    public long getTotalViewsOtherForOnePageForPreviousMonth(@RequestParam Long pageId, @RequestParam int month, @RequestParam int year) {
+        return pageService.getTotalViewsOtherForOnePageForPreviousMonth(pageId, month, year);
+    }
 
 
 }

@@ -28,7 +28,14 @@ public class PageView {
 
      @Column(name = "view_date")
      private Date viewDate; 
-    
+
+
+    @Column(name="month", nullable = true)
+    private int month;
+
+    @Column(name="year", nullable = true)
+    private int year;
+        
      @Column(name = "nb_visit")
      private int nbVisit;
      
@@ -75,6 +82,24 @@ public int getNbVisit() {
 public void setNbVisit(int nbVisit) {
     this.nbVisit = nbVisit;
 }
+
+public int getMonth() {
+    return month;
+}
+
+public void setMonth(int month) {
+    this.month = month;
+}
+
+public int getYear() {
+    return year;
+}
+
+public void setYear(int year) {
+    this.year = year;
+}
+
+
 
       
 }

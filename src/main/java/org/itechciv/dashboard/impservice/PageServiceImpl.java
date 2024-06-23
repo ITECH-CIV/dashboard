@@ -1,14 +1,10 @@
 package org.itechciv.dashboard.impservice;
 
-import java.util.Collections;
-import java.util.List;
 
 import org.itechciv.dashboard.iservice.PageService;
 import org.itechciv.dashboard.model.Page;
-import org.itechciv.dashboard.model.Regimen;
 import org.itechciv.dashboard.repository.PageRepository;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -33,12 +29,12 @@ public class PageServiceImpl extends GenericServiceImpl<Page, Long> implements P
     } 
 
 	@Override
-	public long getTotalViewsForOnePage(Long pageId){
+	public long getTotalViewsForOnePage(String label){
 
         long total;
 
         try {
-            total = pageRepository.getTotalViewsForOnePage(pageId);
+            total = pageRepository.getTotalViewsForOnePage(label);
         } catch (Exception ex) {
             return 0;
         }
@@ -87,6 +83,21 @@ public long getTotalViewsForAllPagesForOneMonth() {
 
 }
 
+
+@Override
+public long getTotalViewsForAllPagesOtherForOneMonth(int month, int year) {
+	long total;
+
+	try{
+      total = pageRepository.getTotalViewsForAllPagesOtherForOneMonth(month, year);
+	}catch(Exception ex){
+		ex.printStackTrace();
+		return 0;
+	}
+	return total;
+
+}
+
 @Override
 public long getTotalViewsForOnePageForOneMonth(Long pageId) {
 	long total;
@@ -100,6 +111,21 @@ public long getTotalViewsForOnePageForOneMonth(Long pageId) {
 	return total;
 }
 
+
+@Override
+public long getTotalViewsForOnePageOtherForOneMonth(Long pageId, int month, int year) {
+	long total;
+
+	try{
+		total = pageRepository.getTotalViewsForOnePageOtherForOneMonth(pageId, month, year);
+	}catch(Exception ex){
+		ex.printStackTrace();
+		return 0;
+	}
+	return total;
+}
+
+
 @Override
 public long getTotalViewsForAllPagesForPreviousMonth() {
 	long total;
@@ -111,6 +137,20 @@ public long getTotalViewsForAllPagesForPreviousMonth() {
 	}
 	return total;
 }
+
+
+@Override
+public long getTotalViewsOtherForAllPagesForPreviousMonth(int month, int year) {
+	long total;
+	try{
+      total = pageRepository.getTotalViewsOtherForAllPagesForPreviousMonth(month, year);
+	}catch(Exception ex){
+		ex.printStackTrace();
+		return 0;
+	}
+	return total;
+}
+
 
 @Override
 public long getTotalViewsForOnePageForPreviousMonth(Long pageId) {
@@ -124,6 +164,19 @@ public long getTotalViewsForOnePageForPreviousMonth(Long pageId) {
 	return total;
 }
 
+
+
+@Override
+public long getTotalViewsOtherForOnePageForPreviousMonth(Long pageId, int month, int year) {
+	long total;
+	try{
+      total = pageRepository.getTotalViewsOtherForOnePageForPreviousMonth(pageId, month, year);
+	}catch(Exception ex){
+		ex.printStackTrace();
+		return 0;
+	}
+	return total;
+}
 
 
 

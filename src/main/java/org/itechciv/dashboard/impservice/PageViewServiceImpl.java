@@ -58,13 +58,11 @@ public boolean isUniqueView(String visitorIp, Long pageId) {
 
 public Object savePageView(PageViewDto pageViewDto){
 
-
     String ipVisitor = pageViewDto.getVisitorIp();
     String pageLabel = pageViewDto.getLabelPage();
     String pageUrl = pageViewDto.getPageUrl();
     Page page =  null;
     Page inPage = null;
-    Page result = new Page();
     PageView pageView = new PageView();
     Object res = null;
     Long pageId = null;
@@ -75,8 +73,6 @@ public Object savePageView(PageViewDto pageViewDto){
     int year = calendar.get(Calendar.YEAR);
 
     PageView resultat = null;
-
-
 
     try{
 
@@ -96,6 +92,8 @@ public Object savePageView(PageViewDto pageViewDto){
             pageView.setPage(page);
             pageView.setVisitorIp(ipVisitor);
             pageView.setViewDate(new Date());
+            pageView.setMonth(month);
+            pageView.setYear(year);
             pageView.setNbVisit(1);
 
         res = pageViewRepository.save(pageView);
@@ -115,6 +113,8 @@ public Object savePageView(PageViewDto pageViewDto){
                 pageView.setPage(page);
                 pageView.setVisitorIp(ipVisitor);
                 pageView.setViewDate(new Date());
+                pageView.setMonth(month);
+                pageView.setYear(year);
                 pageView.setNbVisit(1);
 
                 res = pageViewRepository.save(pageView);
@@ -123,7 +123,7 @@ public Object savePageView(PageViewDto pageViewDto){
 
                 pageRepository.updateTotalViews(pageId, page.getLabel(), page.getUrl(), page.getMonth(), page.getYear());
 
-                res = pageViewRepository.updateViews(pageId, ipVisitor, date); 
+                res = pageViewRepository.updateViews(pageId, ipVisitor, date, month , year); 
 
             }
         }
