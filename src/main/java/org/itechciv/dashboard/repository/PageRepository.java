@@ -38,8 +38,8 @@ public interface PageRepository extends JpaRepository<Page, Long> {
 
 	  //Pour toutes les pages - Methode 2
 	  @Query(value = " SELECT SUM(nb_visit) as total_views " + 
-	  " JOIN dashboard.page_view pv ON pv.page_id = p.id " +
 	  " FROM dashboard.page p " + 
+	  " JOIN dashboard.page_view pv ON pv.page_id = p.id " +
 	  " WHERE pv.month = :month AND pv.year = :year", nativeQuery = true)	
 	long getTotalViewsForAllPagesOtherForOneMonth(@Param("month") int month, @Param("year") int year);  
 
@@ -69,10 +69,9 @@ public interface PageRepository extends JpaRepository<Page, Long> {
   
   //Pour toutes les pages - Méthode 2
 	@Query(value = " SELECT SUM(nb_visit) as total_views " + 
-	" FROM dashboard.page p " + 
-	" JOIN dashboard.page_view pv ON pv.page_id = p.id " +
-	" WHERE p.id = :pageId AND p.month = :month AND p.year = :year ", nativeQuery = true)	
-  long getTotalViewsOtherForAllPagesForPreviousMonth(@Param("pageId") Long pageId, @Param("month") int month, @Param("year") int year);  
+	" FROM dashboard.page_view pv " + 
+	" WHERE pv.month = :month AND pv.year = :year ", nativeQuery = true)	
+  long getTotalViewsOtherForAllPagesForPreviousMonth(@Param("month") int month, @Param("year") int year);  
 
 	//Pour une page - Méthode 1
 	@Query(value = " SELECT SUM(nb_visit) as total_views " + 
@@ -84,9 +83,8 @@ public interface PageRepository extends JpaRepository<Page, Long> {
 
 	//Pour une page - Méthode 2
 	@Query(value = " SELECT SUM(nb_visit) as total_views " + 
-	" FROM dashboard.page p " + 
-	" JOIN dashboard.page_view pv ON pv.page_id = p.id " +
-	" WHERE p.id = :pageId AND p.month = :month, p.year = :year ", nativeQuery = true)	
+	" FROM dashboard.page_view pv " + 
+	" WHERE pv.page_id = :pageId AND pv.month = :month AND  pv.year = :year ", nativeQuery = true)	
   long getTotalViewsOtherForOnePageForPreviousMonth(@Param("pageId") Long pageId, @Param("month") int month, @Param("year") int year);  
   
   
