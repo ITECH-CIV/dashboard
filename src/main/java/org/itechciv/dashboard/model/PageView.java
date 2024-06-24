@@ -30,6 +30,10 @@ public class PageView {
      private Date viewDate; 
 
 
+     @Column(name = "last_view_date")
+     private Date lastViewDate; 
+
+
     @Column(name="month", nullable = true)
     private int month;
 
@@ -99,7 +103,12 @@ public void setYear(int year) {
     this.year = year;
 }
 
+public Date getLastViewDate() {
+    return lastViewDate;
+}
 
-
+public void setLastViewDate(Date lastViewDate) {
+    this.lastViewDate = lastViewDate;
+}
       
 }

@@ -25,7 +25,7 @@ public interface PageViewRepository extends JpaRepository<PageView, Long> {
 
 	@Modifying(clearAutomatically = true)
     @Query(value = " UPDATE dashboard.page_view  " + 
-			" SET nb_visit = nb_visit + 1 , view_date = :date , month = :month, year = :year, visitor_ip = :visitorIp, page_id = :pageId " + 
+			" SET nb_visit = nb_visit + 1 , view_date = :date , last_view_date = :date , month = :month, year = :year, visitor_ip = :visitorIp, page_id = :pageId " + 
 			" WHERE page_id = :pageId AND visitor_ip = :visitorIp ", nativeQuery = true)	
 	Object updateViews(@Param("pageId") Long pageId, @Param("visitorIp") String visitorIp, @Param("date") Date date, @Param("month") int month, @Param("year") int year); 
 	
@@ -38,5 +38,19 @@ public interface PageViewRepository extends JpaRepository<PageView, Long> {
 			" from dashboard.page_view pv" + 
 			" where pv.visitor_ip =?1 and pv.page_id =?2", nativeQuery = true)	
 	PageView findFirstVisitForOnePage(@Param("addressIp") String addressIp, @Param("pageId") Long pageId ); 
+
+	@Query(value = "SELECT * " + 
+	" FROM dashboard.page_view pv" + 
+	" WHERE EXTRACT(Day FROM pv.view_date) = EXTRACT(Day FROM now()) " +
+	" AND EXTRACT(month FROM pv.view_date) = EXTRACT(month FROM now()) " +
+	" AND EXTRACT(year FROM pv.view_date) = EXTRACT(year FROM now()) " + 
+	" AND pv.last_view_date >= :date ", nativeQuery = true)	
+    List<PageView> findListViewForLastTime(@Param("date") Date date); 
+
+	@Query(value = "SELECT * " + 
+	" FROM dashboard.page_view pv" + 
+	" WHERE EXTRACT(Day FROM pv.view_date) = EXTRACT(Day FROM now()) AND ", nativeQuery = true)	
+    List<PageView> findListViewForTheCurrentDays(); 
+
 
 }

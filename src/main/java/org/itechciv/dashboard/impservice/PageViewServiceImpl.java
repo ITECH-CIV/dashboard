@@ -92,6 +92,7 @@ public Object savePageView(PageViewDto pageViewDto){
             pageView.setPage(page);
             pageView.setVisitorIp(ipVisitor);
             pageView.setViewDate(new Date());
+            pageView.setLastViewDate(new Date());
             pageView.setMonth(month);
             pageView.setYear(year);
             pageView.setNbVisit(1);
@@ -113,6 +114,7 @@ public Object savePageView(PageViewDto pageViewDto){
                 pageView.setPage(page);
                 pageView.setVisitorIp(ipVisitor);
                 pageView.setViewDate(new Date());
+                pageView.setLastViewDate(new Date());
                 pageView.setMonth(month);
                 pageView.setYear(year);
                 pageView.setNbVisit(1);
@@ -132,6 +134,33 @@ public Object savePageView(PageViewDto pageViewDto){
     }
     return res;
 }
+
+
+@Override
+public List<PageView> findListViewForLastTime() {
+
+    List<PageView> listPageViews = null;
+
+    Date currentDate = new Date();
+    Calendar calendar = Calendar.getInstance();
+    calendar.setTime(currentDate);
+    calendar.add(Calendar.HOUR, -1);
+    Date oneHourBack = calendar.getTime();
+    System.out.println("Affichage-heure:" +oneHourBack);
+
+    try{
+        listPageViews = pageViewRepository.findListViewForLastTime(oneHourBack);
+
+       
+        return listPageViews;
+    }catch(Exception ex){
+        ex.printStackTrace();
+        return Collections.emptyList(); 
+    }
+}
+
+
+
 
     
 }
