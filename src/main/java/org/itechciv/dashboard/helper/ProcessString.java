@@ -92,7 +92,7 @@ public static String concatenateCurrentValue(XSSFCell current1, XSSFCell current
   }
  
 
-public static String labNoSubValue(XSSFCell currentCell) {
+  public static String labNoSubValue(XSSFCell currentCell) {
 	
 	Cell current = currentCell;
 	

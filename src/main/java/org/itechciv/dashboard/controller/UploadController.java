@@ -130,6 +130,41 @@ public class UploadController {
 			      return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(new ResponseMessage(message, ex.getMessage()));
 			  } 	 
 		} 
+
+		//Controller relatif à l'import de fichier(Csv) - OpenElis
+		@RequestMapping(method = RequestMethod.POST, value="upload/csv")
+		@ResponseBody 
+		public ResponseEntity<ResponseMessage> uploadCsvFile(@RequestParam("file") MultipartFile file) {
+	   
+			boolean req;
+			String message = null;
+			
+			try
+		
+		  {
+		   System.out.println("MESSAGE-1::::::::::::  " + file.getOriginalFilename());
+		   System.out.println("MESSAGE-2::::::::::::  " + file.getName());
+		   System.out.println("MESSAGE-3::::::::::::  " + file.getContentType());
+		   System.out.println("MESSAGE-4::::::::::::  " +file.getOriginalFilename());
+		   System.out.println("MESSAGE-5::::::::::::  " +file.getSize());
+
+		   req = uploadService.storeCsvImport(file);
+	   
+		   if(req) {
+			   message = ConstantMessage.INSERTED;
+			   return ResponseEntity.status(HttpStatus.OK).body(new ResponseMessage(message, null));
+		   } else { 
+			   message = ConstantMessage.FAILED;
+			   return ResponseEntity.status(HttpStatus.NOT_FOUND).body(new ResponseMessage(message, null));
+			} 
+		   } catch (Exception ex) {
+				ex.printStackTrace();
+				System.out.println(ex.getMessage());
+				message = ConstantMessage.ERROR;
+				return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(new ResponseMessage(message, ex.getMessage()));
+			} 	 
+	  } 
+  
 		  
 		  //Controller relatif à la mise à jour des sites avec nameSite, codeSiteDatim, nameSiteDatim
 		  @RequestMapping(method = RequestMethod.POST, value="update/site")

@@ -2,12 +2,17 @@ package org.itechciv.dashboard.impservice;
 
 
 import java.util.List;
+
+import org.apache.commons.csv.CSVFormat;
+import org.apache.commons.csv.CSVParser;
+import org.apache.commons.csv.CSVRecord;
 import org.apache.poi.ss.usermodel.CellType;
 import org.apache.poi.xssf.usermodel.XSSFRow;
 import org.apache.poi.xssf.usermodel.XSSFSheet;
 import org.apache.poi.xssf.usermodel.XSSFWorkbook;
 import org.itechciv.dashboard.helper.CategoryAge;
 import org.itechciv.dashboard.helper.Constants;
+import org.itechciv.dashboard.helper.ProcessData;
 import org.itechciv.dashboard.helper.ProcessString;
 import org.itechciv.dashboard.helper.ProcessType;
 import org.itechciv.dashboard.iservice.UploadService;
@@ -42,12 +47,18 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.multipart.MultipartFile;
 
+import com.opencsv.CSVReader;
+import com.opencsv.CSVReaderBuilder;
+
 import jakarta.persistence.EntityManager;
 import jakarta.persistence.PersistenceContext;
 import jakarta.persistence.Query;
 
 import org.apache.poi.ss.usermodel.FormulaEvaluator;
 
+import java.io.BufferedReader;
+import java.io.InputStream;
+import java.io.InputStreamReader;
 import java.util.ArrayList;
 import java.util.Arrays;
 
@@ -396,40 +407,23 @@ public class UploadServiceImpl implements UploadService {
 
 						String str = row.getCell(16).getStringCellValue();
 
-						// System.out.println("viral-load-string: " +
-						// row.getCell(16).getStringCellValue() + "\n");
-
 						List<String> tabConstants = Arrays.asList("<LL", "< LL", "LL");
-
-						// a = new Analysis();
 
 						if (tabConstants.contains(str)) {
 							a.setGrossResult(str);
 							a.setConvertedResult(0);
 
-							// System.out.println("valeur-49: " + a.getGrossResult() + " " +
-							// a.getConvertedResult() + "\n");
-
 						} else {
 							a.setGrossResult("");
 							a.setConvertedResult(-1);
-
-							// System.out.println("valeur-XXXX: " + a.getGrossResult() + " " +
-							// a.getConvertedResult() + "\n");
 
 						}
 					}
 
 					if (row.getCell(16).getCellType() == CellType.NUMERIC) {
 
-						// System.out.println("viral-load-numeric: " +
-						// row.getCell(16).getNumericCellValue() + "\n");
-
 						a.setGrossResult("");
 						a.setConvertedResult((int) row.getCell(16).getNumericCellValue());
-
-						// System.out.println("valeur-numeric: " + a.getGrossResult() + " " +
-						// a.getConvertedResult() + "\n");
 
 					}
 
@@ -786,6 +780,221 @@ public class UploadServiceImpl implements UploadService {
 			}
 		}
 		return cat;
+	} 
+
+	@SuppressWarnings("unused")
+	@Override
+	public boolean storeCsvImport(MultipartFile file) { 
+		Test t = null;
+		Site s = null;
+		VihType vt = null;
+		VihType inVht = null;
+		Lab lab = null;
+		Lab inLab = null;
+		Patient p = null;
+		Regimen reg = null;
+		Regimen inReg = null;
+		SampleType st = null;
+		VlReason vr = null;
+		Analysis a = null;
+
+		Integer ageCdcId = null;
+		Integer ageNationalId = null;
+
+		cdcAgeCategories = this.getCDCAgeCategory();
+		nationalAgeCategories = this.getNationalAgeCategory();
+
+
+		List<CSVRecord> csvRecords = null;
+
+		try (BufferedReader fileReader = new BufferedReader(new InputStreamReader(file.getInputStream(), "UTF-8"));
+		        @SuppressWarnings("deprecation")
+				CSVParser csvParser = new CSVParser(fileReader,
+				CSVFormat.DEFAULT.withFirstRecordAsHeader().withIgnoreHeaderCase().withTrim());) {
+		
+            csvRecords = csvParser.getRecords();
+
+			for (CSVRecord csvRecord : csvRecords) {
+
+			/* 	System.out.println("LABNO:" +csvRecord.get("LABNO"));
+				System.out.println("SAMPLE_STATUS:" +csvRecord.get("SAMPLE_STATUS"));
+				System.out.println("SUBJECTNO:" +csvRecord.get("SUBJECTNO"));
+				System.out.println("STUDY:" +csvRecord.get("STUDY"));
+				System.out.println("SUBJECTID:" +csvRecord.get("SUBJECTID"));
+				System.out.println("DRCPT:" +csvRecord.get("DRCPT"));
+				System.out.println("DINTV:" +csvRecord.get("DINTV"));
+				System.out.println("CODE_SITE:" +csvRecord.get("CODE_SITE"));
+				System.out.println("NAME_SITE:" +csvRecord.get("NAME_SITE"));
+				System.out.println("CODE_SITE_DATIM:" +csvRecord.get("CODE_SITE_DATIM"));
+				System.out.println("NAME_SITE_DATIM:" +csvRecord.get("NAME_SITE_DATIM"));
+				System.out.println("SEX:" +csvRecord.get("SEX"));
+				System.out.println("DATEBORN:" +csvRecord.get("DATEBORN"));
+				System.out.println("AGEYEARS:" +csvRecord.get("AGEYEARS"));
+				System.out.println("AGEMONTHS:" +csvRecord.get("AGEMONTHS"));
+				System.out.println("AGEWEEKS:" +csvRecord.get("AGEWEEKS"));
+				System.out.println("VIRAL_LOAD:" +csvRecord.get("VIRAL LOAD"));
+				System.out.println("VIRAL_LOAD_LOG:" +csvRecord.get("VIRAL LOAD LOG"));
+				System.out.println("TYPE_OF_SAMPLE:" +csvRecord.get("TYPE_OF_SAMPLE"));
+				System.out.println("ANALYSIS_STATUS:" +csvRecord.get("ANALYSIS_STATUS"));
+				System.out.println("STARTED_DATE:" +csvRecord.get("STARTED_DATE"));
+				System.out.println("COMPLETED_DATE:" +csvRecord.get("COMPLETED_DATE"));
+				System.out.println("RELEASED_DATE:" +csvRecord.get("RELEASED_DATE"));
+				System.out.println("STATVIH:" +csvRecord.get("STATVIH"));
+				System.out.println("NAMEMED:" +csvRecord.get("NAMEMED"));
+				System.out.println("NAMEPRELEV:" +csvRecord.get("NAMEPRELEV"));
+				System.out.println("ARV_INIT_DATE:" +csvRecord.get("ARV_INIT_DATE"));
+				System.out.println("ARVREG:" +csvRecord.get("ARVREG"));
+				System.out.println("CURRENT1:" +csvRecord.get("CURRENT1"));
+				System.out.println("CURRENT2:" +csvRecord.get("CURRENT2"));
+				System.out.println("CURRENT3:" +csvRecord.get("CURRENT3"));
+				System.out.println("CURRENT4:" +csvRecord.get("CURRENT4"));
+				System.out.println("CURRENT_ART:" +csvRecord.get("CURRENT_ART"));
+				System.out.println("VL_REASON:" +csvRecord.get("VL_REASON"));
+				System.out.println("REASON_OTHER:" +csvRecord.get("REASON_OTHER"));
+ */
+				//Test						
+				t = testRepository.findTestByName(csvRecord.get("STUDY"));
+				System.out.println("test:" +t.getName());
+
+				String str = String.valueOf(csvRecord.get("CODE_SITE"));
+
+				//Site
+				s = siteRepository.findSiteByOldCode(str);
+				
+				if (s == null) {
+					Site inSite = new Site();
+					try {
+						inSite.setOldCodeSiteDHIS2(str);
+					} catch (Exception ex) {
+						ex.printStackTrace();
+					}
+					inSite.setNameSite(ProcessData.getStringValue(csvRecord.get("NAME_SITE"))); 
+					inSite.setCodeSiteDatim(ProcessData.getStringValue(csvRecord.get("CODE_SITE_DATIM")));
+					inSite.setNameSiteDatim(ProcessData.getStringValue(csvRecord.get("NAME_SITE_DATIM")));
+
+					s = siteRepository.save(inSite);
+
+				} else {
+					s.setNameSite(ProcessData.getStringValue(csvRecord.get("NAME_SITE")));
+					s.setCodeSiteDatim(ProcessData.getStringValue(csvRecord.get("CODE_SITE_DATIM")));
+					s.setNameSiteDatim(ProcessData.getStringValue(csvRecord.get("NAME_SITE_DATIM")));
+
+					s = siteRepository.saveAndFlush(s);
+
+				}
+				//Patient
+				  		//VihType
+						    vt = vihTypeRepository.findVihTypeByName(ProcessData.getStringValue(csvRecord.get("STATVIH")));
+
+							boolean checkVihType = (vt == null);
+
+							if (checkVihType) {
+
+								inVht = vihTypeRepository.findVihTypeByName(Constants.VIH_TYPE_NAME_OTHER);
+	
+								vt = inVht;
+							}
+
+							p = new Patient();
+							p.setSubjectno(ProcessData.getStringValue(csvRecord.get("SUBJECTNO")));
+							p.setSubjectid(ProcessData.getStringValue(csvRecord.get("SUBJECTID")));
+							p.setGender(csvRecord.get("SEX"));
+							p.setBirthDate(ProcessData.getDateValue(csvRecord.get("DATEBORN")));
+							p.setAgeYears(ProcessData.getIntValue(csvRecord.get("AGEYEARS")));
+							p.setAgeMonths(ProcessData.getIntValue(csvRecord.get("AGEMONTHS")));
+							p.setAgeWeeks(ProcessData.getIntValue(csvRecord.get("AGEWEEKS")));
+							p.setArvInitDate(ProcessData.getDateValue(csvRecord.get("ARV_INIT_DATE")));
+							p.setSite(s);
+					        p.setVihType(vt);
+
+							p = patientRepository.save(p);
+
+					//Regimen
+					String molecule = ProcessData.concatenateCurrentValue(csvRecord.get("CURRENT1"), csvRecord.get("CURRENT2"), csvRecord.get("CURRENT3"));
+					reg = regimenRepository.findRegimenByName(molecule);
+					boolean checkRegimen = (reg == null);
+
+					if (checkRegimen) {
+						inReg = regimenRepository.findRegimenByName(Constants.REGIMEN_NAME_OTHER);
+						reg = inReg;
+					}
+					//Sample type
+						st = sampleTypeRepository.findSampleTypeByName(ProcessData.getStringValue(csvRecord.get("TYPE_OF_SAMPLE")));
+
+							if (st == null) {
+								SampleType inSampleType = new SampleType();
+								inSampleType.setLabel(ProcessData.getStringValue(csvRecord.get("TYPE_OF_SAMPLE")));
+
+								st = sampleTypeRepository.save(inSampleType);
+							}
+
+					//VlReason
+					vr = vlReasonRepository.findVlReasonByName(ProcessData.getStringValue(csvRecord.get("VL_REASON")));
+
+					if (vr == null) {
+						VlReason inVlReason = new VlReason();
+						inVlReason.setName(ProcessData.getStringValue(csvRecord.get("VL_REASON")));
+
+						vr = vlReasonRepository.save(inVlReason);
+					}
+                    
+						String labValue = ProcessData.labNoSubValue(csvRecord.get("LABNO"));
+
+						lab = labRepository.findLabByPrefix(labValue);
+
+						boolean checkLabValue = (lab == null);
+
+						if (checkLabValue) {
+							inLab = labRepository.findLabByPrefix(Constants.LAB_NAME_OTHER);
+
+							lab = inLab;
+						} 
+                        //Analysis   
+						  a = new Analysis();
+						  String stg = csvRecord.get("VIRAL LOAD");
+						  System.out.println("viral-load:" +stg);
+						  List<String> tabConstants = Arrays.asList("<LL", "< LL", "LL");
+
+						  if (tabConstants.contains(stg)) {
+							a.setGrossResult(stg);
+							a.setConvertedResult(0);
+						} else if(!tabConstants.contains(stg)) {
+							a.setGrossResult("");
+							a.setConvertedResult(-1);
+						}else{
+							a.setGrossResult("");
+						    a.setConvertedResult(ProcessData.getIntValue(csvRecord.get("VIRAL LOAD")));
+						}
+
+						ageCdcId = getCDCAgeCategorieId(ProcessData.getIntValue(csvRecord.get("AGEYEARS")));
+						ageNationalId = getNationalCategoriesId(ProcessData.getIntValue(csvRecord.get("AGEYEARS")));
+                        
+						a.setAgeCdc(ageCdcId);
+						a.setAgeNational(ageNationalId);
+						a.setAnalysisStatus(ProcessData.getStringValue(csvRecord.get("ANALYSIS_STATUS")));
+						a.setCompletedDate(ProcessData.getDateValue(csvRecord.get("COMPLETED_DATE")));
+						a.setReleasedDate(ProcessData.getDateValue(csvRecord.get("RELEASED_DATE")));
+						a.setLabno(ProcessData.getStringValue(csvRecord.get("LABNO")));
+						a.setDintv(ProcessData.getDateValue(csvRecord.get("DINTV")));
+						a.setDrcpt(ProcessData.getDateValue(csvRecord.get("DRCPT")));
+						a.setSampleType(st);
+						a.setTest(t);
+						a.setPatient(p);
+						a.setRegimen(reg);
+						a.setVlReason(vr);
+						a.setLab(lab);
+	
+						a = analysisRepository.save(a);
+						
+				csvParser.close();
+
+			}
+			return true;
+
+		}catch(Exception ex){
+			ex.printStackTrace();
+			return false;
+		}
 	}
 
 }
